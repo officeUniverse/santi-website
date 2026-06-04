@@ -170,7 +170,13 @@
         32
       ],
       "continueOnFail": true,
-      "onError": "continueRegularOutput"
+      "onError": "continueRegularOutput",
+      "credentials": {
+        "smtp": {
+          "id": "hookkDScF7OFAb80",
+          "name": "SMTP account"
+        }
+      }
     },
     {
       "parameters": {
