@@ -156,9 +156,9 @@
       "parameters": {
         "fromEmail": "santi@santi.co.za",
         "toEmail": "santi@santi.co.za",
-        "subject": "=New {{ $json.body.type }} lead \u2014 {{ $json.body.email }}",
+        "subject": "=New {{ $('Leads Webhook').item.json.body.type }} lead \u2014 {{ $('Leads Webhook').item.json.body.email }}",
         "emailFormat": "text",
-        "text": "=New website lead \ud83d\ude80\n\nType:     {{ $json.body.type }}\nName:     {{ $json.body.name }}\nEmail:    {{ $json.body.email }}\nPhone:    {{ $json.body.phone }}\nSubject / URL: {{ $json.body.subject || $json.body.url }}\nDetails / Issues: {{ $json.body.message || $json.body.issues }}\nAEO score: {{ $json.body.summary }}\nPage:     {{ $json.body.page }}\nTime:     {{ $json.body.submittedAt }}\n",
+        "text": "=New website lead \ud83d\ude80\n\nType:     {{ $('Leads Webhook').item.json.body.type }}\nName:     {{ $('Leads Webhook').item.json.body.name }}\nEmail:    {{ $('Leads Webhook').item.json.body.email }}\nPhone:    {{ $('Leads Webhook').item.json.body.phone }}\nSubject / URL: {{ $('Leads Webhook').item.json.body.subject || $('Leads Webhook').item.json.body.url }}\nDetails / Issues: {{ $('Leads Webhook').item.json.body.message || $('Leads Webhook').item.json.body.issues }}\nAEO score: {{ $('Leads Webhook').item.json.body.summary }}\nPage:     {{ $('Leads Webhook').item.json.body.page }}\nTime:     {{ $('Leads Webhook').item.json.body.submittedAt }}\n",
         "options": {}
       },
       "id": "a7e10b2c-1111-4c22-9a33-emailnode0001",
