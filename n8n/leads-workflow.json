@@ -1,0 +1,80 @@
+{
+  "name": "Santi Leads (contact + newsletter)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "santi-leads",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "id": "webhook-leads",
+      "name": "Leads Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        260,
+        300
+      ],
+      "webhookId": "santi-leads"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"ok\": true } }}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              }
+            ]
+          }
+        }
+      },
+      "id": "respond-leads",
+      "name": "Respond OK",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        760,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Add your lead handling here\n\nInsert nodes BETWEEN the Webhook and Respond (e.g. an **IF / Switch** on `{{$json.body.type}}` = `contact` vs `newsletter`, then **Send Email** to santi@santi.co.za, **Google Sheets \u2192 Append**, Slack, your CRM, etc.).\n\nIncoming JSON is under `{{$json.body}}`:\n- contact: type, name, email, phone, subject, message, page, submittedAt\n- newsletter: type, email, page, submittedAt",
+        "height": 320,
+        "width": 420
+      },
+      "id": "note-leads",
+      "name": "Setup note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        240,
+        480
+      ]
+    }
+  ],
+  "connections": {
+    "Leads Webhook": {
+      "main": [
+        [
+          {
+            "node": "Respond OK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false
+}
