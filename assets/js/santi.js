@@ -167,6 +167,24 @@
     // Cookie consent + (consent-gated) location personalisation
     initCookieConsent();
 
+    // Guarantee the mobile off-canvas always has navigation links
+    // (fallback in case the template's meanmenu doesn't build the menu)
+    (function mobileNavFallback() {
+      var container = document.querySelector(".mobile-menu");
+      var sourceUl = document.querySelector(".header__nav .main-menu > ul");
+      if (!container || !sourceUl) return;
+      function ensure() {
+        if (container.querySelector("a")) return; // already populated (by meanmenu or us)
+        var ul = sourceUl.cloneNode(true);
+        ul.removeAttribute("id");
+        ul.className = "santi-mobile-nav";
+        container.appendChild(ul);
+      }
+      setTimeout(ensure, 800);
+      var toggle = document.getElementById("side-toggle");
+      if (toggle) toggle.addEventListener("click", function () { setTimeout(ensure, 60); });
+    })();
+
     // Contact form -> webhook
     var cForm = document.getElementById("santi-contact-form");
     if (cForm) {

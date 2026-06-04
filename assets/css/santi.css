@@ -116,6 +116,22 @@ html.dark .services-17-wrapper .nav-tabs .nav-link.active:hover .title {
 html { overflow-x: hidden; }
 .santi-page-hero, .santi-section, .santi-section-tight { overflow-x: clip; }
 
+/* Fallback mobile navigation inside the off-canvas (guaranteed to work
+   even if the template's meanmenu doesn't build the menu) */
+.santi-mobile-nav { list-style: none; margin: 10px 0 28px; padding: 0; }
+.santi-mobile-nav > li { border-bottom: 1px solid var(--border); }
+.santi-mobile-nav > li > a {
+  display: block;
+  padding: 15px 2px;
+  color: var(--primary);
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  transition: color .2s ease, padding-left .2s ease;
+}
+.santi-mobile-nav > li > a:hover { color: var(--theme); padding-left: 8px; }
+.santi-mobile-nav ul { display: none; }
+
 /* ============================================================
    Cookie consent banner
    ============================================================ */
