@@ -1,0 +1,93 @@
+{
+  "name": "Santi AEO Tool",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "aeo-check",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "id": "webhook-aeo",
+      "name": "AEO Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        260,
+        300
+      ],
+      "webhookId": "santi-aeo-check"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Santi AEO \u2014 loads the analyzer from your deployed site and runs it.\n// Single source of truth: api/aeo-core.js in your git repo. Push git -> this\n// fetches the latest version automatically (no re-import needed).\n// If you host aeo-core.js elsewhere, change CORE_URL below.\nconst CORE_URL = 'https://santi.co.za/api/aeo-core.js';\n\nconst src = await this.helpers.httpRequest({ url: CORE_URL, json: false });\nconst mod = { exports: {} };\n(new Function('module', 'exports', src))(mod, mod.exports);\nconst core = mod.exports;\n\nconst httpGet = async (url) => {\n  const res = await this.helpers.httpRequest({\n    method: 'GET',\n    url,\n    headers: { 'User-Agent': 'SantiAEO-Bot/1.0 (+https://santi.co.za/aeo)' },\n    timeout: 9000,\n    returnFullResponse: true,\n    ignoreHttpStatusErrors: true,\n    json: false,\n  });\n  const body = typeof res.body === 'string' ? res.body : (res.body == null ? '' : JSON.stringify(res.body));\n  return { status: res.statusCode, body, finalUrl: url };\n};\n\nconst input = $input.first().json;\nconst url = (input.query && input.query.url) || (input.body && input.body.url) || input.url;\n\ntry {\n  const report = await core.analyze(url, httpGet);\n  return [{ json: report }];\n} catch (e) {\n  return [{ json: { error: (e && e.message) || 'Something went wrong.' } }];\n}\n"
+      },
+      "id": "code-aeo",
+      "name": "Run AEO analyzer",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        520,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Cache-Control",
+                "value": "no-store"
+              }
+            ]
+          }
+        }
+      },
+      "id": "respond-aeo",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        780,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "AEO Webhook": {
+      "main": [
+        [
+          {
+            "node": "Run AEO analyzer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run AEO analyzer": {
+      "main": [
+        [
+          {
+            "node": "Respond",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false
+}

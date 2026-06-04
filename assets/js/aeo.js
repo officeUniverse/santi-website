@@ -12,10 +12,12 @@
   function resolveEndpoint() {
     if (window.AEO_ENDPOINT) return window.AEO_ENDPOINT;
     var h = location.hostname;
+    // Local dev -> local Node server (api/server.js on :8849)
     if ((h === "localhost" || h === "127.0.0.1") && location.port !== "8849") {
       return "http://localhost:8849/api/aeo";
     }
-    return "/api/aeo";
+    // Production -> the AEO analyzer running on n8n
+    return "https://n8n.santi.co.za/webhook/aeo-check";
   }
 
   var ICONS = { pass: "✓", warn: "!", fail: "✕" };
