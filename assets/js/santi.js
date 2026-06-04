@@ -16,6 +16,45 @@
 
   function val(id) { var el = document.getElementById(id); return el ? (el.value || "").trim() : ""; }
 
+  /* ---- Shared "is this real?" validators (also used by aeo.js) ---- */
+  var FAKE_WORDS = ["test", "example", "fake", "demo", "sample", "asdf", "none", "noemail", "nomail", "xxx", "abc", "qwerty"];
+  var DISPOSABLE = ["mailinator", "yopmail", "guerrillamail", "tempmail", "temp-mail", "10minutemail", "trashmail",
+    "sharklasers", "getnada", "dispostable", "maildrop", "fakeinbox", "throwaway", "guerrilla"];
+
+  function validateEmail(v) {
+    v = String(v || "").trim().toLowerCase();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) return { ok: false, msg: "Please enter a valid email address." };
+    var parts = v.split("@"), local = parts[0], domain = parts[1];
+    var labels = domain.split("."), sld = labels.length >= 2 ? labels[labels.length - 2] : labels[0];
+    if (FAKE_WORDS.indexOf(local) > -1 || FAKE_WORDS.indexOf(sld) > -1)
+      return { ok: false, msg: "Please use your real email address — that one looks like a placeholder." };
+    for (var i = 0; i < DISPOSABLE.length; i++)
+      if (domain.indexOf(DISPOSABLE[i]) > -1) return { ok: false, msg: "Please use a permanent (non-disposable) email address." };
+    return { ok: true, value: v };
+  }
+
+  // South-African phone validation + obvious-fake detection. `required`=false allows empty.
+  function validatePhone(v, required) {
+    var raw = String(v || "").trim();
+    if (!raw) return required ? { ok: false, msg: "Please enter your phone number." } : { ok: true, value: "" };
+    var d = raw.replace(/[^\d+]/g, "");
+    if (d.indexOf("+27") === 0) d = "0" + d.slice(3);
+    else if (d.indexOf("0027") === 0) d = "0" + d.slice(4);
+    else if (d.indexOf("27") === 0 && d.length === 11) d = "0" + d.slice(2);
+    d = d.replace(/\D/g, "");
+    if (!/^0\d{9}$/.test(d)) return { ok: false, msg: "Please enter a valid 10-digit South African number (e.g. 071 234 5678)." };
+    var bad =
+      /^(\d)\1{9}$/.test(d) ||                         // all same digit
+      new Set(d.split("")).size <= 2 ||               // 1–2 distinct digits
+      /(\d)\1{5,}/.test(d) ||                          // 6+ of the same in a row (e.g. 0740000000)
+      "01234567890".indexOf(d) > -1 ||                // ascending run
+      "09876543210".indexOf(d) > -1;                  // descending run
+    if (bad) return { ok: false, msg: "That phone number doesn't look real — please double-check it." };
+    return { ok: true, value: d };
+  }
+
+  window.SantiValidate = { email: validateEmail, phone: validatePhone };
+
   function sendLead(data, opts) {
     opts = opts || {};
     var msgEl = opts.msgEl, btn = opts.btn, form = opts.form;
@@ -133,17 +172,23 @@
     if (cForm) {
       cForm.addEventListener("submit", function (e) {
         e.preventDefault();
+        var cMsg = document.getElementById("santi-contact-msg");
+        function fail(t) { if (cMsg) { cMsg.style.display = "block"; cMsg.className = "newsletter-msg err"; cMsg.textContent = t; } }
+        var em = validateEmail(val("email"));
+        if (!em.ok) { fail(em.msg); return; }
+        var ph = validatePhone(val("phone"), false); // optional on contact, but must be real if given
+        if (!ph.ok) { fail(ph.msg); return; }
         sendLead(
           {
             type: "contact",
-            name: val("full-name"), email: val("email"), phone: val("phone"),
+            name: val("full-name"), email: em.value, phone: ph.value,
             subject: val("subject"), message: val("message"),
             page: location.href, submittedAt: new Date().toISOString()
           },
           {
             form: cForm,
             btn: cForm.querySelector("button[type=submit]"),
-            msgEl: document.getElementById("santi-contact-msg"),
+            msgEl: cMsg,
             msgBaseClass: "newsletter-msg",
             successText: "Thank you! Your message is on its way — we'll reply within one business day."
           }
@@ -157,8 +202,11 @@
       nForm.addEventListener("submit", function (e) {
         e.preventDefault();
         var input = nForm.querySelector('input[type=email]');
+        var nMsg = document.getElementById("newsletter-msg");
+        var em = validateEmail(input ? input.value : "");
+        if (!em.ok) { if (nMsg) { nMsg.style.display = "block"; nMsg.className = "newsletter-msg err"; nMsg.textContent = em.msg; } return; }
         sendLead(
-          { type: "newsletter", email: input ? input.value.trim() : "", page: location.href, submittedAt: new Date().toISOString() },
+          { type: "newsletter", email: em.value, page: location.href, submittedAt: new Date().toISOString() },
           {
             form: nForm,
             btn: nForm.querySelector("button[type=submit]"),

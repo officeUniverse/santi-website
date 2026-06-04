@@ -88,7 +88,7 @@
   }
 
   // Send the AEO check as a qualified lead (with their score) to n8n.
-  function captureAeoLead(email, report) {
+  function captureAeoLead(email, phone, report) {
     var hook = window.SANTI_LEAD_WEBHOOK || "https://n8n.santi.co.za/webhook/santi-leads";
     var fails = report.checks.filter(function (c) { return c.status === "fail"; }).map(function (c) { return c.label; });
     var warns = report.checks.filter(function (c) { return c.status === "warn"; }).map(function (c) { return c.label; });
@@ -96,6 +96,7 @@
     var payload = {
       type: "aeo",
       email: email,
+      phone: phone || "",
       url: report.url,
       score: report.score,
       grade: report.grade,
@@ -120,19 +121,23 @@
     if (!form) return;
     var input = el("aeo-url");
     var emailInput = el("aeo-email");
+    var phoneInput = el("aeo-phone");
     var btn = el("aeo-submit");
+    var V = window.SantiValidate || {};
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       var url = (input.value || "").trim();
-      var email = (emailInput ? emailInput.value : "").trim();
       if (!url) return;
-      // Require a valid email before revealing the score
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        setStatus("Please enter a valid email so we can show your score and send your report.", true);
-        if (emailInput) emailInput.focus();
-        return;
-      }
+
+      // Require a real email + phone before revealing the score
+      var em = V.email ? V.email(emailInput ? emailInput.value : "")
+        : { ok: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((emailInput ? emailInput.value : "").trim()), value: (emailInput ? emailInput.value : "").trim(), msg: "Please enter a valid email." };
+      if (!em.ok) { setStatus(em.msg, true); if (emailInput) emailInput.focus(); return; }
+      var ph = V.phone ? V.phone(phoneInput ? phoneInput.value : "", true)
+        : { ok: !!(phoneInput && phoneInput.value.trim()), value: (phoneInput ? phoneInput.value : "").trim(), msg: "Please enter your phone number." };
+      if (!ph.ok) { setStatus(ph.msg, true); if (phoneInput) phoneInput.focus(); return; }
+      var email = em.value, phone = ph.value;
 
       el("aeo-results").hidden = true;
       setStatus("Analyzing " + url + " — reading it the way an AI would…", false);
@@ -146,7 +151,7 @@
         .then(function (res) {
           if (!res.ok || res.j.error) throw new Error(res.j.error || "We couldn't analyze that site.");
           el("aeo-status").hidden = true;
-          captureAeoLead(email, res.j);   // qualified lead + their score -> n8n
+          captureAeoLead(email, phone, res.j);   // qualified lead + their score -> n8n
           render(res.j);
         })
         .catch(function (err) {
