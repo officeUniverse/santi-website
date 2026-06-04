@@ -1,0 +1,162 @@
+/* service page css */
+.service-2 {
+    .section-title-wrapper {
+        display: grid;
+        gap: 15px 40px;
+        grid-template-columns: 300px 1fr;
+
+        @media #{$md} {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .title-wrapper {
+
+        img {
+            border-radius: 5px;
+        }
+
+        .designation {
+            font-size: 24px;
+            font-weight: 400;
+            margin-top: 90px;
+            max-width: 395px;
+            line-height: 28px;
+            color: var(--primary);
+            letter-spacing: -1.2px;
+            font-family: var(--font_bdogrotesk);
+
+            @media #{$xl} {
+                margin-top: 50px;
+            }
+
+            @media #{$md} {
+                margin-top: 40px;
+            }
+
+            @media #{$sm} {
+                margin-top: 20px;
+                max-width: 100%;
+                font-size: 20px;
+            }
+
+            span {
+                color: #999999;
+
+                @include dark {
+                    color: #555555;
+                }
+            }
+        }
+    }
+
+    .subtitle-wrapper {
+        border-right: 1px solid var(--border);
+    }
+
+    .service-2-box {
+        display: grid;
+        gap: 40px 80px;
+        padding-top: 40px;
+        align-items: center;
+        grid-template-columns: 660px 1fr;
+        border-top: 1px solid var(--border);
+
+        &:not(:last-child) {
+            padding-bottom: 40px;
+        }
+
+        @media #{$xl} {
+            gap: 40px 60px;
+            grid-template-columns: 500px 1fr;
+        }
+
+        @media #{$lg} {
+            gap: 40px 60px;
+            align-items: flex-start;
+            grid-template-columns: 400px 1fr;
+        }
+
+        @media #{$md} {
+            gap: 40px 60px;
+            align-items: flex-start;
+            grid-template-columns: 1fr;
+        }
+
+        .thumb {
+
+            @media #{$md} {
+                height: 500px;
+            }
+
+            @media #{$sm} {
+                height: 400px;
+            }
+
+            @media #{$xs} {
+                height: 300px;
+            }
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 15px;
+            }
+        }
+
+        .content {
+            .title {
+                font-size: 90px;
+                font-weight: 400;
+                line-height: 85px;
+                margin-bottom: 40px;
+                letter-spacing: -4.5px;
+
+                @media #{$lg} {
+                    font-size: 70px;
+                    line-height: 80px;
+                    letter-spacing: 0;
+                }
+
+                @media #{$md} {
+                    font-size: 60px;
+                    line-height: 70px;
+                }
+
+                @media #{$sm} {
+                    font-size: 50px;
+                    line-height: 60px;
+                    margin-bottom: 30px;
+                }
+
+                @media #{$xs} {
+                    font-size: 40px;
+                    line-height: 50px;
+                    margin-bottom: 20px;
+                }
+            }
+
+            .designation {
+                color: #555;
+                font-size: 18px;
+                font-weight: 400;
+                line-height: 26px;
+                margin-bottom: 30px;
+            }
+
+            .service-2-list {
+                margin-bottom: 43px;
+                margin-left: 16px;
+
+                li {
+                    list-style: disc;
+                    font-size: 18px;
+                    font-weight: 400;
+                    line-height: 26px;
+                    color: var(--primary);
+                }
+            }
+        }
+    }
+}

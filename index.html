@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Santi Universe — a web design, graphic design & AI engineering agency. We craft high-performance websites, brand identities and AI-powered solutions that drive real results.">
+
+  <title>Santi Universe — Web, Graphic Design & AI Engineering Agency</title>
+
+  <!-- Fav Icon -->
+  <link rel="icon" type="image/x-icon" href="assets/imgs/logo/favicon.png">
+
+  <!-- Theme bootstrap: apply saved theme before paint to avoid flash (dark = default) -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('santi-theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+        document.documentElement.classList.toggle('dark', t !== 'light');
+      } catch (e) {
+        document.documentElement.classList.add('dark');
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+
+
+  <!-- Dependencies CSS Files -->
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/fontawesome-pro.css">
+  <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+  <link rel="stylesheet" href="assets/css/progressbar.css">
+  <link rel="stylesheet" href="assets/css/meanmenu.min.css">
+  <link rel="stylesheet" href="assets/css/magnific-popup.css">
+  <link rel="stylesheet" href="assets/css/animate.min.css">
+  <link rel="stylesheet" href="assets/css/odometer-theme-default.css">
+
+  <!-- Template Main CSS File (single stylesheet; dark/light handled by the .dark class on <html>) -->
+  <link rel="stylesheet" id="theme-css" href="assets/css/style.css">
+
+  <!-- Santi Universe custom CSS -->
+  <link rel="stylesheet" href="assets/css/santi.css">
+
+  <!-- Organization structured data (AEO/SEO) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Santi Universe",
+    "alternateName": "Santi U",
+    "url": "https://santi.co.za",
+    "image": "https://santi.co.za/assets/imgs/logo/santi-white.png",
+    "description": "Santi Universe is a web design, graphic design and AI engineering studio based in Roodepoort, South Africa with a footprint in Kenya, serving clients worldwide.",
+    "email": "santi@santi.co.za",
+    "telephone": "+27 71 591 4495",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Zeiss Road, Wilgespruit",
+      "addressLocality": "Roodepoort",
+      "postalCode": "1724",
+      "addressRegion": "Gauteng",
+      "addressCountry": "ZA"
+    },
+    "openingHoursSpecification": [{
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens": "09:00",
+      "closes": "16:30"
+    }],
+    "areaServed": [
+      { "@type": "Country", "name": "South Africa" },
+      { "@type": "Country", "name": "Kenya" },
+      { "@type": "AdministrativeArea", "name": "Worldwide" }
+    ],
+    "knowsAbout": ["Web Design", "Web Development", "Graphic Design", "Branding", "AI Engineering", "Answer Engine Optimization", "Search Engine Optimization", "WordPress Development", "Web Hosting"],
+    "makesOffer": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Web Design & Development" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Graphic Design & Branding" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Engineering" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Answer Engine Optimization (AEO)" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Managed Web Hosting" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Custom WordPress Plugins" } }
+    ],
+    "sameAs": [
+      "https://www.facebook.com/santiuniverse",
+      "https://www.instagram.com/santi.co.za/",
+      "https://x.com/Santi_Universe",
+      "https://www.linkedin.com/company/originalsanti/",
+      "https://www.tiktok.com/@santi.co.za"
+    ]
+  }
+  </script>
+
+
+</head>
+
+
+<body class="body-wrapper body-ai-agency">
+
+  <!-- custom-cursor -->
+  <div class="custom-cursor">
+    <img src="assets/imgs/cursor/cursor-2-xs.svg" alt="cursor" id="cursorImg">
+  </div>
+
+  <div class="loader-wrap">
+    <svg viewBox="0 0 1000 1000" preserveAspectRatio="none">
+      <path id="svg" d="M0,1005S175,995,500,995s500,5,500,5V0H0Z"></path>
+    </svg>
+
+    <div class="loader-wrap-heading">
+      <div class="load-text">
+        <span>S</span>
+        <span>a</span>
+        <span>n</span>
+        <span>t</span>
+        <span>i</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Sroll to top -->
+  <div class="progress-wrap">
+    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+      <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"></path>
+    </svg>
+  </div>
+
+
+  <!-- side toggle start -->
+  <aside class="fix">
+    <div class="side-info">
+      <div class="side-info-content">
+        <div class="offset-widget offset-header">
+          <div class="offset-logo">
+            <a href="index.html">
+              <img class="show-light" src="assets/imgs/logo/santi-black.png" alt="site logo">
+              <img class="show-dark" src="assets/imgs/logo/santi-white.png" alt="site logo">
+            </a>
+          </div>
+          <button id="side-info-close" class="side-info-close">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="mobile-menu d-xl-none fix"></div>
+        <div class="offset-button">
+          <a href="contact.html" class="rr-btn">
+            <span class="btn-wrap">
+              <span class="text-one">Let's Talk</span>
+              <span class="text-two">Let's Talk</span>
+            </span>
+          </a>
+        </div>
+        <div class="offset-widget-box">
+          <h2 class="title">Contact US</h2>
+          <div class="contact-meta">
+            <div class="contact-item">
+              <span class="icon"><i class="fa-solid fa-location-dot"></i></span>
+              <span class="text">Roodepoort, South Africa</span>
+            </div>
+            <div class="contact-item">
+              <span class="icon"><i class="fa-solid fa-envelope"></i></span>
+              <span class="text"><a href="mailto:santi@santi.co.za">santi@santi.co.za</a></span>
+            </div>
+            <div class="contact-item">
+              <span class="icon"><i class="fa-solid fa-phone"></i></span>
+              <span class="text"><a href="tel:+27715914495">+27 71 591 4495</a></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="offcanvas-overlay"></div>
+  <!-- side toggle end -->
+
+
+
+
+  <div class="has-smooth" id="has_smooth"></div>
+  <div id="smooth-wrapper">
+    <div id="smooth-content">
+
+      <!-- Header area start -->
+      <header class="header-area-17">
+        <div class="header-main">
+          <div class="container rr-container-1750">
+            <div class="header-area-17__inner">
+              <div class="header__logo">
+                <a href="index.html">
+                  <img class="normal-logo show-light" src="assets/imgs/logo/santi-black.png" alt="Site Logo">
+                  <img class="normal-logo show-dark" src="assets/imgs/logo/santi-white.png" alt="Site Logo">
+                </a>
+                <span class="info">Web · Graphic · AI</span>
+              </div>
+              <div class="header__nav">
+                <nav class="main-menu">
+                  <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="portfolio.html">Portfolio</a></li>
+                    <li><a href="aeo.html">AEO Tool</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                  </ul>
+                </nav>
+              </div>
+              <div class="header__btn">
+                <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle light and dark theme" title="Toggle light / dark">
+                  <i class="fa-solid fa-moon icon-dark"></i>
+                  <i class="fa-solid fa-sun icon-light"></i>
+                </button>
+                <a class="rr-btn-classic" href="contact.html">Book a consultation
+                  <span class="icon">
+                    <i class="fa-classic fa-solid fa-arrow-right fa-fw first"></i>
+                    <i class="fa-classic fa-solid fa-arrow-right fa-fw second"></i>
+                  </span></a>
+              </div>
+              <div class="header__navicon d-xl-none">
+                <button class="side-toggle" id="side-toggle"></button>
+              </div>
+            </div>
+          </div>
+          <div class="rr-h-line"></div>
+        </div>
+      </header>
+      <!-- Header area end -->
+
+      <main>
+
+        <!-- hero area start  -->
+        <section class="hero-area-17">
+          <div class="container rr-container-1750">
+            <div class="hero-17-inner rr-line-area">
+              <div class="rr-v-lines">
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+              </div>
+              <div class="rr-h-line outerline-left">
+                <div class="diagonal-line-right"></div>
+              </div>
+              <div class="hero-17-header">
+                <div class="title-wrapper">
+                  <h1 class="hero-17-title">Design, Build &amp;
+                    AI-power your
+                    brand</h1>
+                </div>
+              </div>
+              <div class="rr-h-line outerline-left outerline-right"></div>
+              <div class="hero-17-content">
+                <div class="location-wrapper">
+                  <div class="area-shape-1">
+                    <img src="assets/imgs/gallery/gallery-s-13.webp" alt="image">
+                  </div>
+                  <span class="location">Roodepoort, South Africa</span>
+                  <div class="rr-h-line outerline-left"></div>
+                </div>
+                <div class="experience-wrapper">
+                  <span class="experience">CLIENTS</span>
+                  <div class="rr-h-line"></div>
+
+                  <span class="year">50</span>
+                </div>
+                <div class="text-wrapper">
+                  <p class="text">We're a web design, graphic design &amp; AI engineering studio. We craft
+                    high-performance websites, sharp brand identities and AI-powered tools that turn visitors into
+                    customers.</p>
+                  <div class="btn-wrapper">
+                    <a class="rr-btn-classic" href="portfolio.html">View our work
+                      <span class="icon">
+                        <i class="fa-classic fa-solid fa-arrow-right fa-fw first"></i>
+                        <i class="fa-classic fa-solid fa-arrow-right fa-fw second"></i>
+                      </span></a>
+                  </div>
+                </div>
+              </div>
+              <div class="rr-h-line outerline-left outerline-right"></div>
+              <div class="rr-h-line outerline-left outerline-right space-t-50"></div>
+              <div class="hero-17-image parallax-view">
+                <img class="w-100" src="assets/imgs/gallery/gallery-s-14.webp" alt="image" data-speed="0.5">
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- hero area end  -->
+
+        <!-- service area start  -->
+        <section class="service-area-17">
+          <div class="container rr-container-1750">
+            <div class="service-17-inner rr-line-area">
+              <div class="rr-v-lines">
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+              </div>
+              <div class="rr-h-line outerline-left outerline-right"></div>
+              <div class="rr-h-line outerline-left outerline-right space-t-50"></div>
+              <div class="service-17-header">
+                <div class="section-title-wrapper">
+                  <div class="subtitle-wrapper">
+                    <span class="section-subtitle-5">What we do</span>
+                    <div class="rr-h-line outerline-left"></div>
+                  </div>
+                  <div class="title-wrapper">
+                    <h2 class="section-title font-astronebula-light">Services built <br>
+                      to drive real <br>
+                      results</h2>
+                  </div>
+                </div>
+              </div>
+              <div class="rr-h-line outerline-left outerline-right"></div>
+              <div class="services-17-wrapper-box">
+                <div class="services-17-wrapper">
+                  <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link active" id="s1-tab" data-bs-toggle="tab" data-bs-target="#s1-tab-pane"
+                        type="button" role="tab" aria-controls="s1-tab-pane" aria-selected="true">
+                        <span class="service-17-name">
+                          <span class="number">[ 01 ]</span>
+                          <span class="title">Web Design</span>
+                        </span>
+                      </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="s2-tab" data-bs-toggle="tab" data-bs-target="#s2-tab-pane"
+                        type="button" role="tab" aria-controls="s2-tab-pane" aria-selected="false">
+                        <span class="service-17-name">
+                          <span class="number">[ 02 ]</span>
+                          <span class="title">Graphic Design</span>
+                        </span>
+                      </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="s3-tab" data-bs-toggle="tab" data-bs-target="#s3-tab-pane"
+                        type="button" role="tab" aria-controls="s3-tab-pane" aria-selected="false">
+                        <span class="service-17-name">
+                          <span class="number">[ 03 ]</span>
+                          <span class="title">AI Engineering</span>
+                        </span>
+                      </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="s4-tab" data-bs-toggle="tab" data-bs-target="#s4-tab-pane"
+                        type="button" role="tab" aria-controls="s4-tab-pane" aria-selected="false">
+                        <span class="service-17-name">
+                          <span class="number">[ 04 ]</span>
+                          <span class="title">AEO</span>
+                        </span>
+                      </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="s5-tab" data-bs-toggle="tab" data-bs-target="#s5-tab-pane"
+                        type="button" role="tab" aria-controls="s5-tab-pane" aria-selected="false">
+                        <span class="service-17-name">
+                          <span class="number">[ 05 ]</span>
+                          <span class="title">Web Hosting</span>
+                        </span>
+                      </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="s6-tab" data-bs-toggle="tab" data-bs-target="#s6-tab-pane"
+                        type="button" role="tab" aria-controls="s6-tab-pane" aria-selected="false">
+                        <span class="service-17-name">
+                          <span class="number">[ 06 ]</span>
+                          <span class="title">WP Plugins</span>
+                        </span>
+                      </button>
+                    </li>
+                  </ul>
+                  <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="s1-tab-pane" role="tabpanel" aria-labelledby="s1-tab"
+                      tabindex="0">
+                      <div class="service-17-content">
+                        <div class="text-wrapper">
+                          <h3 class="title"><a href="services.html">Web Design &amp; Development</a></h3>
+                          <p class="text">Conversion-focused, lightning-fast websites — from business sites and eCommerce to custom web apps. Built on speed, security and scalability.</p>
+                        </div>
+                        <div class="logo-wrapper-box">
+                          <div class="logo-wrapper">
+                            <div class="bg-area">
+                              <div class="corner-shape-border">
+                                <span class="shape-1"></span>
+                                <span class="shape-2"></span>
+                                <span class="shape-3"></span>
+                                <span class="shape-4"></span>
+                              </div>
+                            </div>
+                            <img src="assets/imgs/shape/shape-s-5.webp" alt="image">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="s2-tab-pane" role="tabpanel" aria-labelledby="s2-tab" tabindex="0">
+                      <div class="service-17-content">
+                        <div class="text-wrapper">
+                          <h3 class="title"><a href="services.html">Graphic Design &amp; Branding</a></h3>
+                          <p class="text">Logos, full brand identities and marketing visuals that make a lasting impression and tell your brand story with a consistent, striking look.</p>
+                        </div>
+                        <div class="logo-wrapper-box">
+                          <div class="logo-wrapper">
+                            <div class="bg-area">
+                              <div class="corner-shape-border">
+                                <span class="shape-1"></span>
+                                <span class="shape-2"></span>
+                                <span class="shape-3"></span>
+                                <span class="shape-4"></span>
+                              </div>
+                            </div>
+                            <img src="assets/imgs/shape/shape-s-5.webp" alt="image">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="s3-tab-pane" role="tabpanel" aria-labelledby="s3-tab" tabindex="0">
+                      <div class="service-17-content">
+                        <div class="text-wrapper">
+                          <h3 class="title"><a href="services.html">AI Engineering</a></h3>
+                          <p class="text">Custom AI solutions — chatbots, automations, RAG assistants and integrations — that put cutting-edge models to work inside your real business.</p>
+                        </div>
+                        <div class="logo-wrapper-box">
+                          <div class="logo-wrapper">
+                            <div class="bg-area">
+                              <div class="corner-shape-border">
+                                <span class="shape-1"></span>
+                                <span class="shape-2"></span>
+                                <span class="shape-3"></span>
+                                <span class="shape-4"></span>
+                              </div>
+                            </div>
+                            <img src="assets/imgs/shape/shape-s-5.webp" alt="image">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="s4-tab-pane" role="tabpanel" aria-labelledby="s4-tab" tabindex="0">
+                      <div class="service-17-content">
+                        <div class="text-wrapper">
+                          <h3 class="title"><a href="aeo.html">AEO — AI Engine Optimization</a></h3>
+                          <p class="text">Get found by AI. We optimise your site so ChatGPT, Gemini and AI search can read, understand and recommend you. Try our free AEO checker.</p>
+                        </div>
+                        <div class="logo-wrapper-box">
+                          <div class="logo-wrapper">
+                            <div class="bg-area">
+                              <div class="corner-shape-border">
+                                <span class="shape-1"></span>
+                                <span class="shape-2"></span>
+                                <span class="shape-3"></span>
+                                <span class="shape-4"></span>
+                              </div>
+                            </div>
+                            <img src="assets/imgs/shape/shape-s-5.webp" alt="image">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="s5-tab-pane" role="tabpanel" aria-labelledby="s5-tab" tabindex="0">
+                      <div class="service-17-content">
+                        <div class="text-wrapper">
+                          <h3 class="title"><a href="services.html">Web Hosting</a></h3>
+                          <p class="text">Reliable, fast and secure managed hosting, tuned for performance and uptime so your site stays online and loads instantly.</p>
+                        </div>
+                        <div class="logo-wrapper-box">
+                          <div class="logo-wrapper">
+                            <div class="bg-area">
+                              <div class="corner-shape-border">
+                                <span class="shape-1"></span>
+                                <span class="shape-2"></span>
+                                <span class="shape-3"></span>
+                                <span class="shape-4"></span>
+                              </div>
+                            </div>
+                            <img src="assets/imgs/shape/shape-s-5.webp" alt="image">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="s6-tab-pane" role="tabpanel" aria-labelledby="s6-tab" tabindex="0">
+                      <div class="service-17-content">
+                        <div class="text-wrapper">
+                          <h3 class="title"><a href="services.html">WordPress Plugins</a></h3>
+                          <p class="text">Custom WordPress development, including our booking plugin that lets agencies take bookings directly through their WordPress site.</p>
+                        </div>
+                        <div class="logo-wrapper-box">
+                          <div class="logo-wrapper">
+                            <div class="bg-area">
+                              <div class="corner-shape-border">
+                                <span class="shape-1"></span>
+                                <span class="shape-2"></span>
+                                <span class="shape-3"></span>
+                                <span class="shape-4"></span>
+                              </div>
+                            </div>
+                            <img src="assets/imgs/shape/shape-s-5.webp" alt="image">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- service area end  -->
+
+        <!-- portfolio area start  -->
+        <section class="portfolio-area-17">
+          <div class="container rr-container-1750">
+            <div class="portfolio-17-inner rr-line-area">
+              <div class="rr-v-lines">
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+              </div>
+              <div class="rr-h-line outerline-left outerline-right"></div>
+              <div class="rr-h-line outerline-left outerline-right space-t-50"></div>
+              <div class="portfolio-17-header">
+                <div class="section-title-wrapper">
+                  <div class="subtitle-wrapper">
+                    <span class="section-subtitle-5">Selected work</span>
+                    <div class="rr-h-line outerline-left"></div>
+                  </div>
+                  <div class="title-wrapper">
+                    <h2 class="section-title font-astronebula-light">Works</h2>
+                  </div>
+                </div>
+              </div>
+              <div class="rr-h-line outerline-left outerline-right"></div>
+              <div class="portfolio-17-wrapper-box">
+                <div class="portfolio-17-wrapper">
+                  <div class="portfolio-17-nav">
+                    <div class="portfolio-17-button-prev portfolio-17-nav-btn">
+                      <svg width="12" height="18" viewBox="0 0 12 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                          d="M7.26564 10.8964C6.48187 10.2784 5.62396 9.77888 4.71829 9.40696C4.33043 9.24769 3.93382 9.11181 3.53051 9.00006C3.53044 9.00008 3.53037 9.0001 3.53029 9.00012C4.87541 9.37281 6.14616 10.0138 7.26564 10.8966C9.13772 12.3726 10.4835 14.4421 11.0944 16.7842L11.0944 16.7842C11.0304 16.5388 10.9584 16.2965 10.8785 16.0575C10.1958 14.015 8.94164 12.2179 7.26564 10.8964ZM11.0945 1.21564C11.0945 1.2156 11.0945 1.21556 11.0945 1.21552L10.0591 0.930425C9.50931 3.03841 8.29812 4.90113 6.61294 6.22966C4.92776 7.5582 2.86315 8.27831 0.739344 8.27831L0.739344 8.27843C2.86315 8.27843 4.92776 7.55832 6.61294 6.22979C8.29812 4.90125 9.50931 3.03854 10.0591 0.930547L11.0945 1.21564ZM7.71574 10.2937C7.07217 9.78628 6.38185 9.35356 5.65758 9C6.38185 8.64643 7.07217 8.21372 7.71574 7.70624C9.71705 6.12829 11.1557 3.91587 11.8086 1.41215L12 0.678382L9.53636 -4.16848e-07L9.34498 0.733776C8.83728 2.68028 7.7189 4.40024 6.16288 5.62696C4.6068 6.85371 2.70039 7.51863 0.739344 7.51863L-4.58155e-07 7.51863L-3.2865e-07 10.4814L0.739344 10.4814C2.70039 10.4814 4.6068 11.1463 6.16288 12.373C7.7189 13.5997 8.83728 15.3197 9.34498 17.2662L9.53636 18L12 17.3216L11.8086 16.5878C11.1557 14.0841 9.71705 11.8717 7.71574 10.2937Z"
+                          fill="#111111" />
+                      </svg>
+                    </div>
+                    <div class="portfolio-17-button-next portfolio-17-nav-btn">
+                      <svg width="12" height="18" viewBox="0 0 12 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                          d="M4.73436 10.8964C5.51813 10.2784 6.37604 9.77888 7.28171 9.40696C7.66957 9.24769 8.06618 9.11181 8.46949 9.00006C8.46956 9.00008 8.46963 9.0001 8.46971 9.00012C7.12459 9.37281 5.85384 10.0138 4.73436 10.8966C2.86228 12.3726 1.51648 14.4421 0.905611 16.7842L0.905582 16.7842C0.969573 16.5388 1.04163 16.2965 1.12152 16.0575C1.80419 14.015 3.05836 12.2179 4.73436 10.8964ZM0.905538 1.21564C0.905529 1.2156 0.905518 1.21556 0.905509 1.21552L1.94088 0.930425C2.49069 3.03841 3.70188 4.90113 5.38706 6.22966C7.07224 7.5582 9.13685 8.27831 11.2607 8.27831L11.2607 8.27843C9.13685 8.27843 7.07224 7.55832 5.38706 6.22979C3.70188 4.90125 2.49069 3.03854 1.94088 0.930547L0.905538 1.21564ZM4.28426 10.2937C4.92783 9.78628 5.61815 9.35356 6.34242 9C5.61815 8.64643 4.92783 8.21372 4.28426 7.70624C2.28295 6.12829 0.844305 3.91587 0.191359 1.41215L-1.96522e-07 0.678382L2.46364 -4.16848e-07L2.65502 0.733776C3.16272 2.68028 4.2811 4.40024 5.83712 5.62696C7.3932 6.85371 9.29961 7.51863 11.2607 7.51863L12 7.51863L12 10.4814L11.2607 10.4814C9.29961 10.4814 7.3932 11.1463 5.83712 12.373C4.2811 13.5997 3.16272 15.3197 2.65502 17.2662L2.46364 18L-9.24021e-07 17.3216L0.191359 16.5878C0.844304 14.0841 2.28295 11.8717 4.28426 10.2937Z"
+                          fill="#111111" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="swiper portfolio-17-active">
+                    <div class="swiper-wrapper">
+                      <div class="swiper-slide">
+                        <div class="portfolio-17-item">
+                          <div class="meta">
+                            <span class="tag">Web Design</span>
+                            <span class="year">2026</span>
+                          </div>
+                          <div class="thumb">
+                            <a href="portfolio.html"> <img src="assets/imgs/project/project-s-73.webp"
+                                alt="image"></a>
+                          </div>
+                          <div class="content">
+                            <h3 class="title"><a href="portfolio.html">Aurora Studio</a></h3>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="portfolio-17-item">
+                          <div class="meta">
+                            <span class="tag">Branding</span>
+                            <span class="year">2026</span>
+                          </div>
+                          <div class="thumb">
+                            <a href="portfolio.html"> <img src="assets/imgs/project/project-s-74.webp"
+                                alt="image"></a>
+                          </div>
+                          <div class="content">
+                            <h3 class="title"><a href="portfolio.html">Northwind Co.</a></h3>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="portfolio-17-item">
+                          <div class="meta">
+                            <span class="tag">AI Engineering</span>
+                            <span class="year">2026</span>
+                          </div>
+                          <div class="thumb">
+                            <a href="portfolio.html"> <img src="assets/imgs/project/project-s-75.webp"
+                                alt="image"></a>
+                          </div>
+                          <div class="content">
+                            <h3 class="title"><a href="portfolio.html">Lumen Assistant</a></h3>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="portfolio-17-item">
+                          <div class="meta">
+                            <span class="tag">Booking Plugin</span>
+                            <span class="year">2025</span>
+                          </div>
+                          <div class="thumb">
+                            <a href="portfolio.html"> <img src="assets/imgs/project/project-s-76.webp"
+                                alt="image"></a>
+                          </div>
+                          <div class="content">
+                            <h3 class="title"><a href="portfolio.html">Kasi Bookings</a></h3>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- portfolio area end  -->
+
+        <!-- feature area start  -->
+        <section class="feature-area-17">
+          <div class="container rr-container-1750">
+            <div class="feature-17-inner rr-line-area">
+              <div class="rr-v-lines">
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+              </div>
+              <div class="rr-h-line outerline-left outerline-right"></div>
+              <div class="rr-h-line outerline-left outerline-right space-t-50"></div>
+              <div class="feature-17-header">
+                <div class="section-title-wrapper">
+                  <div class="subtitle-wrapper">
+                    <span class="section-subtitle-5">Why Santi</span>
+                    <div class="rr-h-line outerline-left"></div>
+                  </div>
+                  <div class="title-wrapper">
+                    <h2 class="section-title font-astronebula-light">Why brands <br>
+                      choose us</h2>
+                  </div>
+                </div>
+              </div>
+              <div class="rr-h-line outerline-left outerline-right"></div>
+              <div class="features-17-wrapper-box">
+                <div class="features-17-wrapper">
+                  <div class="feature-17-box">
+                    <div class="logo-wrapper-box">
+                      <div class="logo-wrapper">
+                        <div class="bg-area">
+                          <div class="corner-shape-border">
+                            <span class="shape-1"></span>
+                            <span class="shape-2"></span>
+                            <span class="shape-3"></span>
+                            <span class="shape-4"></span>
+                          </div>
+                        </div>
+                        <img src="assets/imgs/shape/shape-s-7.webp" alt="image">
+                      </div>
+                      <div class="title-wrapper">
+                        <h3 class="title">Design that <br>
+                          converts</h3>
+                      </div>
+                    </div>
+                    <div class="content">
+                      <p class="text">Strategy, design and development under one roof — beautiful interfaces engineered to load fast and turn visitors into paying customers.</p>
+                    </div>
+                  </div>
+                  <div class="feature-17-box">
+                    <div class="logo-wrapper-box">
+                      <div class="logo-wrapper">
+                        <div class="bg-area">
+                          <div class="corner-shape-border">
+                            <span class="shape-1"></span>
+                            <span class="shape-2"></span>
+                            <span class="shape-3"></span>
+                            <span class="shape-4"></span>
+                          </div>
+                        </div>
+                        <img src="assets/imgs/shape/shape-s-8.webp" alt="image">
+                      </div>
+                      <div class="title-wrapper">
+                        <h3 class="title">Built for <br>
+                          AI search</h3>
+                      </div>
+                    </div>
+                    <div class="content">
+                      <p class="text">We make your site readable by AI. Structured data, clean semantics and AEO so ChatGPT, Gemini and AI search recommend your brand.</p>
+                    </div>
+                  </div>
+                  <div class="feature-17-box">
+                    <div class="logo-wrapper-box">
+                      <div class="logo-wrapper">
+                        <div class="bg-area">
+                          <div class="corner-shape-border">
+                            <span class="shape-1"></span>
+                            <span class="shape-2"></span>
+                            <span class="shape-3"></span>
+                            <span class="shape-4"></span>
+                          </div>
+                        </div>
+                        <img src="assets/imgs/shape/shape-s-9.webp" alt="image">
+                      </div>
+                      <div class="title-wrapper">
+                        <h3 class="title">Fast, friendly <br>
+                          support</h3>
+                      </div>
+                    </div>
+                    <div class="content">
+                      <p class="text">Real people, quick replies. From first concept to post-launch tweaks, we stay in your corner across every time zone.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- feature area end  -->
+
+        <!-- fun fact area start  -->
+        <section class="funfact-area-17">
+          <div class="container rr-container-1750">
+            <div class="funfact-17-inner rr-line-area">
+              <div class="rr-v-lines">
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+              </div>
+              <div class="rr-h-line outerline-left outerline-right"></div>
+              <div class="rr-h-line outerline-left outerline-right space-t-50"></div>
+              <div class="funfact-17-header">
+                <div class="section-title-wrapper">
+                  <div class="subtitle-wrapper">
+                    <span class="section-subtitle-5">By the numbers</span>
+                    <div class="rr-h-line outerline-left"></div>
+                  </div>
+                  <div class="title-wrapper">
+                    <h2 class="section-title font-astronebula-light">We help brands <br>
+                      grow with design, <br>
+                      code and <br>
+                      AI </h2>
+                  </div>
+                </div>
+              </div>
+              <div class="rr-h-line outerline-left outerline-right"></div>
+              <div class="funfact-17-content-box">
+                <div class="growth-cube-wrapper">
+                  <div class="bg-area">
+                    <div class="corner-shape-border">
+                      <span class="shape-1"></span>
+                      <span class="shape-2"></span>
+                      <span class="shape-3"></span>
+                      <span class="shape-4"></span>
+                    </div>
+                  </div>
+                  <h3 class="title">[ growth cube ]</h3>
+                  <div id="cube-container" class="cubes-wrapper">
+                    <img class="cube-1 cube-one" src="assets/imgs/shape/shape-s-10.webp" alt="image">
+                    <img class="cube-2 cube-two" src="assets/imgs/shape/shape-s-11.webp" alt="image">
+                    <img class="cube-3 cube-three" src="assets/imgs/shape/shape-s-12.webp" alt="image">
+                  </div>
+                </div>
+                <div class="content-end">
+                  <div class="funfact-17-content">
+                    <div class="title-wrapper">
+                      <h3 class="title">Let's build <br>
+                        yours next </h3>
+                    </div>
+                    <div class="text-wrapper">
+                      <p class="text">From first sketch to launch and beyond, we partner with you to design, build
+                        and AI-power a brand your customers remember.</p>
+                      <div class="btn-wrapper">
+                        <a class="rr-btn-classic" href="contact.html">Book a consultation
+                          <span class="icon">
+                            <i class="fa-classic fa-solid fa-arrow-right fa-fw first"></i>
+                            <i class="fa-classic fa-solid fa-arrow-right fa-fw second"></i>
+                          </span></a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="rr-h-line outerline-right"></div>
+                  <div class="funfact-17-wrapper">
+                    <div class="funfact-17-box">
+                      <p class="text">Happy clients served <br>
+                        worldwide</p>
+                      <span class="number">50</span>
+                    </div>
+                    <div class="funfact-17-box">
+                      <p class="text">Projects designed <br>
+                        &amp; shipped</p>
+                      <span class="number">120</span>
+                    </div>
+                    <div class="funfact-17-box">
+                      <p class="text">Years crafting <br>
+                        digital brands</p>
+                      <span class="number">8</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="rr-h-line outerline-left outerline-right"></div>
+              <div class="rr-h-line outerline-left outerline-right space-t-50"></div>
+              <div class="funfact-17-image parallax-view">
+                <img class="w-100" src="assets/imgs/gallery/gallery-s-15.webp" alt="image" data-speed="0.5">
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- fun fact area start  -->
+
+        <!-- testimonial area start  -->
+        <section class="testimonial-area-17">
+          <div class="container rr-container-1750">
+            <div class="testimonial-17-inner rr-line-area">
+              <div class="rr-v-lines">
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+              </div>
+              <div class="rr-h-line outerline-left outerline-right"></div>
+              <div class="rr-h-line outerline-left outerline-right space-t-50"></div>
+              <div class="testimonial-17-header">
+                <div class="section-title-wrapper">
+                  <div class="subtitle-wrapper">
+                    <span class="section-subtitle-5">Testimonial</span>
+                    <div class="rr-h-line outerline-left"></div>
+                  </div>
+                  <div class="title-wrapper">
+                    <h2 class="section-title font-astronebula-light">Don't take our <br>
+                      word for it</h2>
+                  </div>
+                </div>
+              </div>
+              <div class="rr-h-line outerline-left outerline-right"></div>
+              <div class="testimonial-17-wrapper-box">
+                <div class="testimonial-17-wrapper">
+                  <div class="testimonial-17-nav">
+                    <div class="testimonial-17-button-prev testimonial-17-nav-btn">
+                      <svg width="12" height="18" viewBox="0 0 12 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                          d="M7.26564 10.8964C6.48187 10.2784 5.62396 9.77888 4.71829 9.40696C4.33043 9.24769 3.93382 9.11181 3.53051 9.00006C3.53044 9.00008 3.53037 9.0001 3.53029 9.00012C4.87541 9.37281 6.14616 10.0138 7.26564 10.8966C9.13772 12.3726 10.4835 14.4421 11.0944 16.7842L11.0944 16.7842C11.0304 16.5388 10.9584 16.2965 10.8785 16.0575C10.1958 14.015 8.94164 12.2179 7.26564 10.8964ZM11.0945 1.21564C11.0945 1.2156 11.0945 1.21556 11.0945 1.21552L10.0591 0.930425C9.50931 3.03841 8.29812 4.90113 6.61294 6.22966C4.92776 7.5582 2.86315 8.27831 0.739344 8.27831L0.739344 8.27843C2.86315 8.27843 4.92776 7.55832 6.61294 6.22979C8.29812 4.90125 9.50931 3.03854 10.0591 0.930547L11.0945 1.21564ZM7.71574 10.2937C7.07217 9.78628 6.38185 9.35356 5.65758 9C6.38185 8.64643 7.07217 8.21372 7.71574 7.70624C9.71705 6.12829 11.1557 3.91587 11.8086 1.41215L12 0.678382L9.53636 -4.16848e-07L9.34498 0.733776C8.83728 2.68028 7.7189 4.40024 6.16288 5.62696C4.6068 6.85371 2.70039 7.51863 0.739344 7.51863L-4.58155e-07 7.51863L-3.2865e-07 10.4814L0.739344 10.4814C2.70039 10.4814 4.6068 11.1463 6.16288 12.373C7.7189 13.5997 8.83728 15.3197 9.34498 17.2662L9.53636 18L12 17.3216L11.8086 16.5878C11.1557 14.0841 9.71705 11.8717 7.71574 10.2937Z"
+                          fill="#111111" />
+                      </svg>
+                    </div>
+                    <div class="testimonial-17-button-next testimonial-17-nav-btn">
+                      <svg width="12" height="18" viewBox="0 0 12 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                          d="M4.73436 10.8964C5.51813 10.2784 6.37604 9.77888 7.28171 9.40696C7.66957 9.24769 8.06618 9.11181 8.46949 9.00006C8.46956 9.00008 8.46963 9.0001 8.46971 9.00012C7.12459 9.37281 5.85384 10.0138 4.73436 10.8966C2.86228 12.3726 1.51648 14.4421 0.905611 16.7842L0.905582 16.7842C0.969573 16.5388 1.04163 16.2965 1.12152 16.0575C1.80419 14.015 3.05836 12.2179 4.73436 10.8964ZM0.905538 1.21564C0.905529 1.2156 0.905518 1.21556 0.905509 1.21552L1.94088 0.930425C2.49069 3.03841 3.70188 4.90113 5.38706 6.22966C7.07224 7.5582 9.13685 8.27831 11.2607 8.27831L11.2607 8.27843C9.13685 8.27843 7.07224 7.55832 5.38706 6.22979C3.70188 4.90125 2.49069 3.03854 1.94088 0.930547L0.905538 1.21564ZM4.28426 10.2937C4.92783 9.78628 5.61815 9.35356 6.34242 9C5.61815 8.64643 4.92783 8.21372 4.28426 7.70624C2.28295 6.12829 0.844305 3.91587 0.191359 1.41215L-1.96522e-07 0.678382L2.46364 -4.16848e-07L2.65502 0.733776C3.16272 2.68028 4.2811 4.40024 5.83712 5.62696C7.3932 6.85371 9.29961 7.51863 11.2607 7.51863L12 7.51863L12 10.4814L11.2607 10.4814C9.29961 10.4814 7.3932 11.1463 5.83712 12.373C4.2811 13.5997 3.16272 15.3197 2.65502 17.2662L2.46364 18L-9.24021e-07 17.3216L0.191359 16.5878C0.844304 14.0841 2.28295 11.8717 4.28426 10.2937Z"
+                          fill="#111111" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="swiper testimonial-17-active">
+                    <div class="swiper-wrapper">
+                      <div class="swiper-slide">
+                        <div class="testimonial-17-item">
+                          <div class="bg-area">
+                            <div class="corner-shape-border">
+                              <span class="shape-1"></span>
+                              <span class="shape-2"></span>
+                              <span class="shape-3"></span>
+                              <span class="shape-4"></span>
+                            </div>
+                          </div>
+                          <div class="content">
+                            <div class="icon">
+                              <img class="quote-icon show-light" src="assets/imgs/icon/icon-s-15.webp" alt="Quote Icon">
+                              <img class="quote-icon show-dark" src="assets/imgs/icon/icon-s-15-light.webp"
+                                alt="Quote Icon">
+                            </div>
+                            <div class="text-wrapper">
+                              <p class="text">Santi rebuilt our website and it finally feels like us. It loads fast, looks stunning, and enquiries have genuinely gone up since launch.</p>
+                            </div>
+                          </div>
+                          <div class="author">
+                            <div class="avatar">
+                              <img src="assets/imgs/client/client-1.webp" alt="image">
+                            </div>
+                            <div class="meta">
+                              <h3 class="name">Thabo M.</h3>
+                              <span class="post">Founder, Aurora Studio</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="testimonial-17-item">
+                          <div class="bg-area">
+                            <div class="corner-shape-border">
+                              <span class="shape-1"></span>
+                              <span class="shape-2"></span>
+                              <span class="shape-3"></span>
+                              <span class="shape-4"></span>
+                            </div>
+                          </div>
+                          <div class="content">
+                            <div class="icon">
+                              <img class="quote-icon show-light" src="assets/imgs/icon/icon-s-15.webp" alt="Quote Icon">
+                              <img class="quote-icon show-dark" src="assets/imgs/icon/icon-s-15-light.webp"
+                                alt="Quote Icon">
+                            </div>
+                            <div class="text-wrapper">
+                              <p class="text">The branding work was spot on. They took a vague idea and turned it into a complete identity we are proud to put on everything.</p>
+                            </div>
+                          </div>
+                          <div class="author">
+                            <div class="avatar">
+                              <img src="assets/imgs/client/client-2.webp" alt="image">
+                            </div>
+                            <div class="meta">
+                              <h3 class="name">Lerato N.</h3>
+                              <span class="post">Owner, Northwind Co.</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="testimonial-17-item">
+                          <div class="bg-area">
+                            <div class="corner-shape-border">
+                              <span class="shape-1"></span>
+                              <span class="shape-2"></span>
+                              <span class="shape-3"></span>
+                              <span class="shape-4"></span>
+                            </div>
+                          </div>
+                          <div class="content">
+                            <div class="icon">
+                              <img class="quote-icon show-light" src="assets/imgs/icon/icon-s-15.webp" alt="Quote Icon">
+                              <img class="quote-icon show-dark" src="assets/imgs/icon/icon-s-15-light.webp"
+                                alt="Quote Icon">
+                            </div>
+                            <div class="text-wrapper">
+                              <p class="text">Their AI assistant now handles most of our first-line questions. Setup was smooth and the team explained everything in plain language.</p>
+                            </div>
+                          </div>
+                          <div class="author">
+                            <div class="avatar">
+                              <img src="assets/imgs/client/client-3.webp" alt="image">
+                            </div>
+                            <div class="meta">
+                              <h3 class="name">James P.</h3>
+                              <span class="post">CEO, Lumen</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="testimonial-17-item">
+                          <div class="bg-area">
+                            <div class="corner-shape-border">
+                              <span class="shape-1"></span>
+                              <span class="shape-2"></span>
+                              <span class="shape-3"></span>
+                              <span class="shape-4"></span>
+                            </div>
+                          </div>
+                          <div class="content">
+                            <div class="icon">
+                              <img class="quote-icon show-light" src="assets/imgs/icon/icon-s-15.webp" alt="Quote Icon">
+                              <img class="quote-icon show-dark" src="assets/imgs/icon/icon-s-15-light.webp"
+                                alt="Quote Icon">
+                            </div>
+                            <div class="text-wrapper">
+                              <p class="text">From booking plugin to hosting, Santi handles the technical side so we can focus on our clients. Reliable and easy to work with.</p>
+                            </div>
+                          </div>
+                          <div class="author">
+                            <div class="avatar">
+                              <img src="assets/imgs/client/client-4.webp" alt="image">
+                            </div>
+                            <div class="meta">
+                              <h3 class="name">Sarah K.</h3>
+                              <span class="post">Manager, Kasi Bookings</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- testimonial area end  -->
+
+        <!-- cta area start  -->
+        <section class="cta-area-17">
+          <div class="container rr-container-1750">
+            <div class="cta-17-inner rr-line-area">
+              <div class="rr-v-lines">
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+              </div>
+              <div class="rr-h-line outerline-left outerline-right"></div>
+              <div class="rr-h-line outerline-left outerline-right space-t-50"></div>
+              <div class="cta-17-header">
+                <div class="section-title-wrapper">
+                  <div class="subtitle-wrapper">
+                    <span class="section-subtitle-5">Conclusion</span>
+                    <div class="rr-h-line outerline-left"></div>
+                  </div>
+                  <div class="title-wrapper">
+                    <h2 class="section-title font-astronebula-light">let’s
+                      <span>talk</span>
+                    </h2>
+                    <a class="action-btn" href="contact.html">
+                      <svg width="58" height="86" viewBox="0 0 58 86" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                          d="M22.8827 33.9393C26.671 36.8921 30.8175 39.2787 35.1949 41.0556C37.0696 41.8166 38.9866 42.4658 40.9358 42.9997C40.9362 42.9996 40.9366 42.9995 40.9369 42.9994C34.4355 41.2188 28.2936 38.1562 22.8827 33.9387C13.8343 26.8864 7.32968 16.9986 4.37713 5.80881L4.37698 5.80885C4.68628 6.98109 5.03456 8.13905 5.42067 9.28095C8.72023 19.0395 14.7821 27.6257 22.8827 33.9393ZM4.37677 80.192C4.37672 80.1921 4.37667 80.1923 4.37663 80.1925L9.38092 81.5546C12.0384 71.4831 17.8924 62.5835 26.0375 56.236C34.1825 49.8886 44.1614 46.4481 54.4265 46.4481L54.4265 46.4475C44.1614 46.4475 34.1825 49.888 26.0375 56.2355C17.8924 62.5829 12.0384 71.4825 9.38092 81.554L4.37677 80.192ZM20.7073 36.8188C23.8179 39.2433 27.1544 41.3108 30.655 43C27.1544 44.6893 23.8179 46.7567 20.7073 49.1813C11.0343 56.7204 4.08081 67.2908 0.924904 79.2531L1.97194e-07 82.7588L11.9076 86L12.8326 82.4942C15.2865 73.1942 20.692 64.9766 28.2127 59.1157C35.7338 53.2545 44.9481 50.0776 54.4265 50.0776L58 50.0776L58 35.9224L54.4265 35.9224C44.9481 35.9224 35.7338 32.7455 28.2127 26.8844C20.692 21.0234 15.2865 12.8058 12.8326 3.50582L11.9076 -2.01476e-06L3.67302e-06 3.24116L0.924907 6.74694C4.08081 18.7092 11.0343 29.2796 20.7073 36.8188Z"
+                          fill="#111111" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- cta area start  -->
+
+      </main>
+
+      <!-- footer area start  -->
+      <footer class="footer-area-17">
+        <div class="container rr-container-1750">
+          <div class="footer-17-inner rr-line-area">
+            <div class="rr-v-lines"><div class="rr-line"></div><div class="rr-line"></div><div class="rr-line"></div><div class="rr-line"></div><div class="rr-line"></div></div>
+            <div class="rr-h-line outerline-left outerline-right"></div>
+            <div class="santi-footer-grid">
+              <div class="santi-footer-col">
+                <a href="index.html" class="footer-logo">
+                  <img class="show-light" src="assets/imgs/logo/santi-black.png" alt="Santi Universe">
+                  <img class="show-dark" src="assets/imgs/logo/santi-white.png" alt="Santi Universe">
+                </a>
+                <p class="santi-footer-tag">Website Design &amp; Development, Graphic Design &amp; Website Hosting.</p>
+                <ul class="santi-footer-contact">
+                  <li><i class="fa-solid fa-location-dot"></i><span>Zeiss Road, Wilgespruit, Roodepoort, 1724, South Africa</span></li>
+                  <li><i class="fa-solid fa-phone"></i><a href="tel:+27715914495">+27 71 591 4495</a></li>
+                  <li><i class="fa-solid fa-envelope"></i><a href="mailto:santi@santi.co.za">santi@santi.co.za</a></li>
+                </ul>
+              </div>
+              <div class="santi-footer-col">
+                <h4>Operating Hours</h4>
+                <ul class="santi-footer-hours">
+                  <li>Mon &ndash; Fri <span>9am &ndash; 4:30pm</span></li>
+                  <li>Sat &ndash; Sun <span>Closed</span></li>
+                  <li>Public Holidays <span>Closed</span></li>
+                </ul>
+              </div>
+              <div class="santi-footer-col">
+                <h4>Santi Communication</h4>
+                <ul class="santi-footer-links">
+                  <li><a href="contact.html">Contact Us</a></li>
+                  <li><a href="terms.html">Terms &amp; Conditions</a></li>
+                  <li><a href="privacy.html">Privacy</a></li>
+                  <li><a href="cookies.html">Cookies</a></li>
+                </ul>
+              </div>
+              <div class="santi-footer-col">
+                <h4>Our Socials</h4>
+                <p>Stay updated with our latest news.</p>
+                <form class="santi-newsletter" id="newsletter-form">
+                  <input type="email" name="email" placeholder="Your email" required>
+                  <button type="submit" aria-label="Subscribe"><i class="fa-solid fa-arrow-right"></i></button>
+                </form>
+                <div class="newsletter-msg" id="newsletter-msg"></div>
+                <div class="santi-social-row">
+                  <a href="https://www.facebook.com/santiuniverse" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                  <a href="https://www.instagram.com/santi.co.za/" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                  <a href="https://x.com/Santi_Universe" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+                  <a href="https://www.linkedin.com/company/originalsanti/" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                  <a href="https://www.tiktok.com/@santi.co.za" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="rr-h-line outerline-left outerline-right"></div>
+            <div class="santi-footer-bottom">
+              <span>&copy; 2026 Santi Universe (Santi U). All rights reserved.</span>
+              <span>Web &middot; Graphic &middot; AI</span>
+            </div>
+          </div>
+        </div>
+      </footer>
+      <!-- footer area end  -->
+
+    </div>
+  </div>
+
+
+
+  <!-- Dependencies JS Files -->
+  <script src="assets/js/jquery-3.6.0.min.js"></script>
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/jquery.magnific-popup.min.js"></script>
+  <script src="assets/js/swiper-bundle.min.js"></script>
+  <script src="assets/js/odometer.min.js"></script>
+  <script src="assets/js/waypoints.min.js"></script>
+  <script src="assets/js/progressbar.js"></script>
+  <script src="assets/js/gsap.min.js"></script>
+  <script src="assets/js/ScrollSmoother.min.js"></script>
+  <script src="assets/js/ScrollTrigger.min.js"></script>
+  <script src="assets/js/SplitText.min.js"></script>
+  <script src="assets/js/TextPlugin.js"></script>
+  <script src="assets/js/SplitType.js"></script>
+  <script src="assets/js/customEase.js"></script>
+  <script src="assets/js/jquery.meanmenu.min.js"></script>
+  <script src="assets/js/backToTop.js"></script>
+  <script src="assets/js/magiccursor.js"></script>
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Santi Universe custom JS -->
+  <script src="assets/js/santi.js"></script>
+
+
+
+</body>
+
+</html>

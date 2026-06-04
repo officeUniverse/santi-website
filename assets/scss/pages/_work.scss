@@ -1,0 +1,48 @@
+/* work page css */
+.work-wrapper {
+    display: grid;
+    gap: 0px 70px;
+    margin-top: 110px;
+    grid-template-columns: 1fr 1fr;
+
+    @media #{$xxl} {
+        margin-top: 90px;
+    }
+
+    @media #{$xl} {
+        margin-top: 80px;
+    }
+
+    @media #{$lg} {
+        margin-top: 60px;
+    }
+
+    @media #{$md} {
+        gap: 0px 50px;
+    }
+
+    @media #{$sm} {
+        grid-template-columns: 1fr;
+        gap: 50px 50px;
+    }
+
+    >* {
+        &:nth-child(even) {
+            margin-top: 150px;
+
+            @media #{$lg} {
+                margin-top: 100px;
+            }
+
+            @media #{$md} {
+                margin-top: 50px;
+            }
+
+            @media #{$sm} {
+                margin-top: 0px;
+            }
+        }
+    }
+
+
+}

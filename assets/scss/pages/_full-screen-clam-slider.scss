@@ -1,0 +1,375 @@
+/* full screen clam slider page css */
+.clam-slider {
+    .header-area-8__inner {
+        padding: 50px 0;
+    }
+}
+
+.clam-slider {
+
+    .horizontal-line {
+        .line-1 {
+            left: 0;
+            right: 0;
+            top: 118px;
+            z-index: 2;
+            height: 1px;
+            width: 100%;
+            position: absolute;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .line-2 {
+            left: 0;
+            right: 0;
+            bottom: 390px;
+            z-index: 2;
+            height: 1px;
+            width: 100%;
+            position: absolute;
+            background: rgba(255, 255, 255, 0.15);
+
+            @media #{$md} {
+                bottom: 340px;
+            }
+
+            @media #{$sm} {
+                bottom: 240px;
+            }
+        }
+
+        .line-3 {
+            left: 0;
+            right: 0;
+            z-index: 2;
+            height: 1px;
+            width: 100%;
+            bottom: 112px;
+            position: absolute;
+            background: rgba(255, 255, 255, 0.15);
+        }
+    }
+
+    .vertical-line {
+        @media #{$sm} {
+            display: none;
+        }
+
+        .line-1 {
+            left: 250px;
+            top: 0;
+            bottom: 0;
+            z-index: 2;
+            width: 1px;
+            height: 100%;
+            position: absolute;
+            background: rgba(255, 255, 255, 0.15);
+
+            @media #{$lg} {
+                left: 200px;
+            }
+
+        }
+
+        .line-2 {
+            right: 250px;
+            top: 0;
+            bottom: 0;
+            z-index: 2;
+            width: 1px;
+            height: 100%;
+            position: absolute;
+            background: rgba(255, 255, 255, 0.15);
+
+            @media #{$lg} {
+                right: 200px;
+            }
+        }
+    }
+
+    #clam-slider-holder {
+        width: 100%;
+        height: 100vh;
+        position: relative;
+        overflow: hidden;
+        opacity: 0;
+    }
+
+    #clam-slider-main {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        overflow: visible;
+    }
+
+    #canvas-slider {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        right: 0;
+        overflow: hidden;
+        -webkit-transition: width 0.5s ease-in-out 0;
+        transition: width 0.5s ease-in-out 0s;
+
+        .slider-img {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background-size: cover;
+            background-position: center center;
+            background-color: black;
+            visibility: hidden;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            opacity: 0;
+            -webkit-transform: scale(1.01);
+            transform: scale(1.01);
+            -webkit-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: none;
+            z-index: 100;
+            cursor: pointer;
+            object-position: center;
+            object-fit: cover;
+        }
+    }
+
+
+    &__content {
+        overflow: hidden;
+        z-index: 9;
+        left: 321px;
+        bottom: 155px;
+        position: absolute;
+
+        @media #{$lg} {
+            left: 290px;
+        }
+
+        @media #{$md} {
+            left: 240px;
+        }
+
+        @media #{$sm} {
+            left: 120px;
+            bottom: 135px;
+        }
+
+        @media #{$xs} {
+            left: 15px;
+        }
+
+
+        span {
+
+            opacity: 0;
+            font-size: 110px;
+            line-height: 95px;
+            letter-spacing: -3px;
+            color: var(--white);
+            overflow: hidden;
+            transform: translateY(-100%);
+            display: inline-block;
+
+            @media #{$xl} {
+                font-size: 100px;
+            }
+
+            @media #{$lg} {
+                font-size: 90px;
+                letter-spacing: 0;
+            }
+
+            @media #{$md} {
+                font-size: 70px;
+                line-height: 70px;
+            }
+
+            @media #{$sm} {
+                font-size: 40px;
+                line-height: 40px;
+            }
+        }
+
+        &-wrapper {
+            overflow: hidden;
+            margin: 0 50px;
+            margin-top: 183px;
+
+            @media #{$xs} {
+                margin: 0px;
+                margin-top: 183px;
+            }
+        }
+    }
+
+
+    &__meta-list {
+        opacity: 0;
+        display: grid;
+        overflow: hidden;
+        transform: translateY(-100%);
+        justify-content: space-between;
+        grid-template-columns: 270px auto 1fr;
+
+        @media #{$xs} {
+            grid-template-columns: auto;
+            gap: 10px;
+            margin: 0 15px;
+        }
+
+        li {
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 16px;
+            list-style: none;
+            color: var(--white);
+            letter-spacing: -0.75px;
+            text-transform: uppercase;
+
+            &.year {
+                margin-left: auto;
+
+                @media #{$xs} {
+                    margin-left: initial;
+                }
+            }
+        }
+    }
+
+    .swiper-slide-active {
+
+        .clam-slider {
+
+            &__content {
+
+                &-title {}
+
+                span {
+                    opacity: 1;
+                    transform: translatey(0px);
+                    display: block;
+                    transition: all 2000ms ease;
+                }
+            }
+
+            &__meta-list {
+                opacity: 1;
+                transform: translatey(0px);
+                transition: all 1500ms ease;
+            }
+        }
+    }
+
+    &__arrow {
+        gap: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        @media #{$xs} {
+            display: none;
+        }
+
+        &-prev,
+        &-next {
+            gap: 8px;
+            width: 65px;
+            height: 65px;
+            display: flex;
+            font-size: 20px;
+            font-weight: 400;
+            color: var(--white);
+            align-items: center;
+            border-radius: 500px;
+            transition: all 0.3s;
+            justify-content: center;
+            border: 1px solid transparent;
+
+            &:hover {
+                border-color: rgba(255, 255, 255, 0.30);
+            }
+        }
+
+        &-next {
+            position: absolute;
+            right: 50px;
+            bottom: 215px;
+            z-index: 99;
+
+            @media #{$md} {
+                bottom: 200px;
+            }
+
+            @media #{$sm} {
+                right: 15px;
+                bottom: 145px;
+            }
+
+        }
+
+        &-prev {
+            position: absolute;
+            left: 50px;
+            bottom: 215px;
+            z-index: 99;
+
+            @media #{$md} {
+                bottom: 200px;
+
+            }
+
+            @media #{$sm} {
+                left: 15px;
+                bottom: 145px;
+            }
+        }
+    }
+
+    .clam-slider-pagination-wrapper {
+        left: 0%;
+        right: 0;
+        z-index: 9;
+        bottom: 52px;
+        margin: 0 auto;
+        position: absolute;
+        display: inline-block;
+
+        @media #{$xs} {
+            display: none;
+        }
+
+        .clam-slider-pagination {
+            gap: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    .swiper-pagination-bullet {
+        width: 7px;
+        opacity: 1;
+        height: 7px;
+        overflow: hidden;
+        transition: 0.4s;
+        margin: 0 !important;
+        border-radius: 500px;
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.40);
+    }
+
+    .swiper-pagination-bullet-active {
+        opacity: 1;
+        background-color: var(--white);
+    }
+}

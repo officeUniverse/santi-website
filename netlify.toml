@@ -1,0 +1,12 @@
+# Netlify deploy config for the Santi Universe site
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+# Make the AEO front-end's default /api/aeo call hit the serverless function
+[[redirects]]
+  from = "/api/aeo"
+  to = "/.netlify/functions/aeo"
+  status = 200
+
+# Pretty URLs / SPA-style fallback is NOT needed (multi-page static site)

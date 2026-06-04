@@ -1,0 +1,16 @@
+# OS
+.DS_Store
+**/.DS_Store
+
+# Node / tooling
+node_modules/
+*.log
+
+# Local editor / agent config
+.claude/
+
+# Original ThemeForest template (reference only — not part of the live site)
+/light/
+/dark/
+/documentation/
+/themeforest-mct3j58k-adon-creative-agency-portfolio-html-template/

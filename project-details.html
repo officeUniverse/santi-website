@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Case study: how Santi Universe designed and built a fast, AI-ready website for Aurora Studio — +48% more enquiries and a 1.2s load time.">
+
+  <title>Aurora Studio — Case Study | Santi Universe</title>
+
+  <!-- Fav Icon -->
+  <link rel="icon" type="image/x-icon" href="assets/imgs/logo/favicon.png">
+
+  <!-- Theme bootstrap: apply saved theme before paint to avoid flash (dark = default) -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('santi-theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+        document.documentElement.classList.toggle('dark', t !== 'light');
+      } catch (e) {
+        document.documentElement.classList.add('dark');
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+
+
+  <!-- Dependencies CSS Files -->
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/fontawesome-pro.css">
+  <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+  <link rel="stylesheet" href="assets/css/progressbar.css">
+  <link rel="stylesheet" href="assets/css/meanmenu.min.css">
+  <link rel="stylesheet" href="assets/css/magnific-popup.css">
+  <link rel="stylesheet" href="assets/css/animate.min.css">
+  <link rel="stylesheet" href="assets/css/odometer-theme-default.css">
+
+  <!-- Template Main CSS File (single stylesheet; dark/light handled by the .dark class on <html>) -->
+  <link rel="stylesheet" id="theme-css" href="assets/css/style.css">
+
+  <!-- Santi Universe custom CSS -->
+  <link rel="stylesheet" href="assets/css/santi.css">
+
+  <!-- Organization structured data (AEO/SEO) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Santi Universe",
+    "alternateName": "Santi U",
+    "url": "https://santi.co.za",
+    "image": "https://santi.co.za/assets/imgs/logo/santi-white.png",
+    "description": "Santi Universe is a web design, graphic design and AI engineering studio based in Roodepoort, South Africa with a footprint in Kenya, serving clients worldwide.",
+    "email": "santi@santi.co.za",
+    "telephone": "+27 71 591 4495",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Zeiss Road, Wilgespruit",
+      "addressLocality": "Roodepoort",
+      "postalCode": "1724",
+      "addressRegion": "Gauteng",
+      "addressCountry": "ZA"
+    },
+    "openingHoursSpecification": [{
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens": "09:00",
+      "closes": "16:30"
+    }],
+    "areaServed": [
+      { "@type": "Country", "name": "South Africa" },
+      { "@type": "Country", "name": "Kenya" },
+      { "@type": "AdministrativeArea", "name": "Worldwide" }
+    ],
+    "knowsAbout": ["Web Design", "Web Development", "Graphic Design", "Branding", "AI Engineering", "Answer Engine Optimization", "Search Engine Optimization", "WordPress Development", "Web Hosting"],
+    "makesOffer": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Web Design & Development" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Graphic Design & Branding" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Engineering" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Answer Engine Optimization (AEO)" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Managed Web Hosting" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Custom WordPress Plugins" } }
+    ],
+    "sameAs": [
+      "https://www.facebook.com/santiuniverse",
+      "https://www.instagram.com/santi.co.za/",
+      "https://x.com/Santi_Universe",
+      "https://www.linkedin.com/company/originalsanti/",
+      "https://www.tiktok.com/@santi.co.za"
+    ]
+  }
+  </script>
+
+
+</head>
+
+
+<body class="body-wrapper body-ai-agency">
+
+  <!-- custom-cursor -->
+  <div class="custom-cursor">
+    <img src="assets/imgs/cursor/cursor-2-xs.svg" alt="cursor" id="cursorImg">
+  </div>
+
+  <div class="loader-wrap">
+    <svg viewBox="0 0 1000 1000" preserveAspectRatio="none">
+      <path id="svg" d="M0,1005S175,995,500,995s500,5,500,5V0H0Z"></path>
+    </svg>
+
+    <div class="loader-wrap-heading">
+      <div class="load-text">
+        <span>S</span>
+        <span>a</span>
+        <span>n</span>
+        <span>t</span>
+        <span>i</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Sroll to top -->
+  <div class="progress-wrap">
+    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+      <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"></path>
+    </svg>
+  </div>
+
+
+  <!-- side toggle start -->
+  <aside class="fix">
+    <div class="side-info">
+      <div class="side-info-content">
+        <div class="offset-widget offset-header">
+          <div class="offset-logo">
+            <a href="index.html">
+              <img class="show-light" src="assets/imgs/logo/santi-black.png" alt="site logo">
+              <img class="show-dark" src="assets/imgs/logo/santi-white.png" alt="site logo">
+            </a>
+          </div>
+          <button id="side-info-close" class="side-info-close">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="mobile-menu d-xl-none fix"></div>
+        <div class="offset-button">
+          <a href="contact.html" class="rr-btn">
+            <span class="btn-wrap">
+              <span class="text-one">Let's Talk</span>
+              <span class="text-two">Let's Talk</span>
+            </span>
+          </a>
+        </div>
+        <div class="offset-widget-box">
+          <h2 class="title">Contact US</h2>
+          <div class="contact-meta">
+            <div class="contact-item">
+              <span class="icon"><i class="fa-solid fa-location-dot"></i></span>
+              <span class="text">Roodepoort, South Africa</span>
+            </div>
+            <div class="contact-item">
+              <span class="icon"><i class="fa-solid fa-envelope"></i></span>
+              <span class="text"><a href="mailto:santi@santi.co.za">santi@santi.co.za</a></span>
+            </div>
+            <div class="contact-item">
+              <span class="icon"><i class="fa-solid fa-phone"></i></span>
+              <span class="text"><a href="tel:+27715914495">+27 71 591 4495</a></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="offcanvas-overlay"></div>
+  <!-- side toggle end -->
+
+
+
+
+  <div class="has-smooth" id="has_smooth"></div>
+  <div id="smooth-wrapper">
+    <div id="smooth-content">
+
+      <!-- Header area start -->
+      <header class="header-area-17">
+        <div class="header-main">
+          <div class="container rr-container-1750">
+            <div class="header-area-17__inner">
+              <div class="header__logo">
+                <a href="index.html">
+                  <img class="normal-logo show-light" src="assets/imgs/logo/santi-black.png" alt="Site Logo">
+                  <img class="normal-logo show-dark" src="assets/imgs/logo/santi-white.png" alt="Site Logo">
+                </a>
+                <span class="info">Web · Graphic · AI</span>
+              </div>
+              <div class="header__nav">
+                <nav class="main-menu">
+                  <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="portfolio.html">Portfolio</a></li>
+                    <li><a href="aeo.html">AEO Tool</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                  </ul>
+                </nav>
+              </div>
+              <div class="header__btn">
+                <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle light and dark theme" title="Toggle light / dark">
+                  <i class="fa-solid fa-moon icon-dark"></i>
+                  <i class="fa-solid fa-sun icon-light"></i>
+                </button>
+                <a class="rr-btn-classic" href="contact.html">Book a consultation
+                  <span class="icon">
+                    <i class="fa-classic fa-solid fa-arrow-right fa-fw first"></i>
+                    <i class="fa-classic fa-solid fa-arrow-right fa-fw second"></i>
+                  </span></a>
+              </div>
+              <div class="header__navicon d-xl-none">
+                <button class="side-toggle" id="side-toggle"></button>
+              </div>
+            </div>
+          </div>
+          <div class="rr-h-line"></div>
+        </div>
+      </header>
+      <!-- Header area end -->
+
+      <main>
+
+        <!-- project hero -->
+        <section class="santi-page-hero">
+          <div class="container rr-container-1750">
+            <div class="rr-line-area">
+              <div class="rr-v-lines"><div class="rr-line"></div><div class="rr-line"></div><div class="rr-line"></div><div class="rr-line"></div><div class="rr-line"></div></div>
+              <div class="rr-h-line outerline-left outerline-right"></div>
+              <div class="section-title-wrapper">
+                <div class="subtitle-wrapper">
+                  <span class="section-subtitle-5">Case study &middot; Web Design</span>
+                  <div class="rr-h-line outerline-left"></div>
+                </div>
+                <div class="title-wrapper">
+                  <h1 class="section-title font-astronebula-light">Aurora<br>Studio</h1>
+                </div>
+                <p class="santi-lead">A fast, refined website for a creative studio &mdash; built to show their work
+                  beautifully and turn visitors into booked projects.</p>
+              </div>
+
+              <div class="proj-meta-grid">
+                <div class="proj-meta"><div class="k">Client</div><div class="v">Aurora Studio</div></div>
+                <div class="proj-meta"><div class="k">Year</div><div class="v">2026</div></div>
+                <div class="proj-meta"><div class="k">Services</div><div class="v">Web Design &amp; Development</div></div>
+                <div class="proj-meta"><div class="k">Industry</div><div class="v">Creative</div></div>
+              </div>
+
+              <div class="proj-hero-img"><img src="assets/imgs/project/project-s-70.webp" alt="Aurora Studio website"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- overview -->
+        <section class="santi-section">
+          <div class="container rr-container-1750">
+            <div class="proj-body">
+              <h3>The brief</h3>
+              <p>Aurora Studio had outgrown a slow, dated website that buried their best work. They needed a site that
+                felt as considered as the work itself &mdash; fast, minimal, and built to convert curious visitors into
+                real enquiries.</p>
+              <h3>The challenge</h3>
+              <p>The old site took too long to load, wasn't mobile-friendly, and gave search engines (and AI) almost
+                nothing to understand. Bounce rates were high and enquiries were trickling in.</p>
+              <h3>What we did</h3>
+              <p>We rebuilt the site from the ground up: a clean, content-first design; lightning-fast performance;
+                structured data and clear semantics so both people and AI can read it; and a simple enquiry flow that
+                makes getting in touch effortless.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- gallery -->
+        <section class="santi-section-tight">
+          <div class="container rr-container-1750">
+            <div class="proj-gallery">
+              <img src="assets/imgs/project/project-s-71.webp" alt="Aurora Studio — page design">
+              <img src="assets/imgs/project/project-s-72.webp" alt="Aurora Studio — work showcase">
+            </div>
+          </div>
+        </section>
+
+        <!-- results -->
+        <section class="santi-section">
+          <div class="container rr-container-1750">
+            <div class="rr-line-area">
+              <div class="rr-v-lines"><div class="rr-line"></div><div class="rr-line"></div><div class="rr-line"></div><div class="rr-line"></div><div class="rr-line"></div></div>
+              <div class="rr-h-line outerline-left outerline-right"></div>
+              <div class="section-title-wrapper" style="margin:40px 0">
+                <div class="subtitle-wrapper"><span class="section-subtitle-5">The results</span>
+                  <div class="rr-h-line outerline-left"></div></div>
+              </div>
+              <div class="proj-meta-grid" style="border-bottom:0">
+                <div class="proj-meta"><div class="v" style="font-size:42px;font-family:var(--font_astronebula);color:var(--theme)">+48%</div><div class="k" style="margin-top:8px">More enquiries</div></div>
+                <div class="proj-meta"><div class="v" style="font-size:42px;font-family:var(--font_astronebula);color:var(--theme)">1.2s</div><div class="k" style="margin-top:8px">Load time</div></div>
+                <div class="proj-meta"><div class="v" style="font-size:42px;font-family:var(--font_astronebula);color:var(--theme)">3 wk</div><div class="k" style="margin-top:8px">To launch</div></div>
+                <div class="proj-meta"><div class="v" style="font-size:42px;font-family:var(--font_astronebula);color:var(--theme)">100</div><div class="k" style="margin-top:8px">Lighthouse score</div></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+<section class="cta-area-17">
+          <div class="container rr-container-1750">
+            <div class="cta-17-inner rr-line-area">
+              <div class="rr-v-lines">
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+              </div>
+              <div class="rr-h-line outerline-left outerline-right"></div>
+              <div class="rr-h-line outerline-left outerline-right space-t-50"></div>
+              <div class="cta-17-header">
+                <div class="section-title-wrapper">
+                  <div class="subtitle-wrapper">
+                    <span class="section-subtitle-5">Conclusion</span>
+                    <div class="rr-h-line outerline-left"></div>
+                  </div>
+                  <div class="title-wrapper">
+                    <h2 class="section-title font-astronebula-light">let’s
+                      <span>talk</span>
+                    </h2>
+                    <a class="action-btn" href="contact.html">
+                      <svg width="58" height="86" viewBox="0 0 58 86" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                          d="M22.8827 33.9393C26.671 36.8921 30.8175 39.2787 35.1949 41.0556C37.0696 41.8166 38.9866 42.4658 40.9358 42.9997C40.9362 42.9996 40.9366 42.9995 40.9369 42.9994C34.4355 41.2188 28.2936 38.1562 22.8827 33.9387C13.8343 26.8864 7.32968 16.9986 4.37713 5.80881L4.37698 5.80885C4.68628 6.98109 5.03456 8.13905 5.42067 9.28095C8.72023 19.0395 14.7821 27.6257 22.8827 33.9393ZM4.37677 80.192C4.37672 80.1921 4.37667 80.1923 4.37663 80.1925L9.38092 81.5546C12.0384 71.4831 17.8924 62.5835 26.0375 56.236C34.1825 49.8886 44.1614 46.4481 54.4265 46.4481L54.4265 46.4475C44.1614 46.4475 34.1825 49.888 26.0375 56.2355C17.8924 62.5829 12.0384 71.4825 9.38092 81.554L4.37677 80.192ZM20.7073 36.8188C23.8179 39.2433 27.1544 41.3108 30.655 43C27.1544 44.6893 23.8179 46.7567 20.7073 49.1813C11.0343 56.7204 4.08081 67.2908 0.924904 79.2531L1.97194e-07 82.7588L11.9076 86L12.8326 82.4942C15.2865 73.1942 20.692 64.9766 28.2127 59.1157C35.7338 53.2545 44.9481 50.0776 54.4265 50.0776L58 50.0776L58 35.9224L54.4265 35.9224C44.9481 35.9224 35.7338 32.7455 28.2127 26.8844C20.692 21.0234 15.2865 12.8058 12.8326 3.50582L11.9076 -2.01476e-06L3.67302e-06 3.24116L0.924907 6.74694C4.08081 18.7092 11.0343 29.2796 20.7073 36.8188Z"
+                          fill="#111111" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+      <!-- footer area start  -->
+      <footer class="footer-area-17">
+        <div class="container rr-container-1750">
+          <div class="footer-17-inner rr-line-area">
+            <div class="rr-v-lines"><div class="rr-line"></div><div class="rr-line"></div><div class="rr-line"></div><div class="rr-line"></div><div class="rr-line"></div></div>
+            <div class="rr-h-line outerline-left outerline-right"></div>
+            <div class="santi-footer-grid">
+              <div class="santi-footer-col">
+                <a href="index.html" class="footer-logo">
+                  <img class="show-light" src="assets/imgs/logo/santi-black.png" alt="Santi Universe">
+                  <img class="show-dark" src="assets/imgs/logo/santi-white.png" alt="Santi Universe">
+                </a>
+                <p class="santi-footer-tag">Website Design &amp; Development, Graphic Design &amp; Website Hosting.</p>
+                <ul class="santi-footer-contact">
+                  <li><i class="fa-solid fa-location-dot"></i><span>Zeiss Road, Wilgespruit, Roodepoort, 1724, South Africa</span></li>
+                  <li><i class="fa-solid fa-phone"></i><a href="tel:+27715914495">+27 71 591 4495</a></li>
+                  <li><i class="fa-solid fa-envelope"></i><a href="mailto:santi@santi.co.za">santi@santi.co.za</a></li>
+                </ul>
+              </div>
+              <div class="santi-footer-col">
+                <h4>Operating Hours</h4>
+                <ul class="santi-footer-hours">
+                  <li>Mon &ndash; Fri <span>9am &ndash; 4:30pm</span></li>
+                  <li>Sat &ndash; Sun <span>Closed</span></li>
+                  <li>Public Holidays <span>Closed</span></li>
+                </ul>
+              </div>
+              <div class="santi-footer-col">
+                <h4>Santi Communication</h4>
+                <ul class="santi-footer-links">
+                  <li><a href="contact.html">Contact Us</a></li>
+                  <li><a href="terms.html">Terms &amp; Conditions</a></li>
+                  <li><a href="privacy.html">Privacy</a></li>
+                  <li><a href="cookies.html">Cookies</a></li>
+                </ul>
+              </div>
+              <div class="santi-footer-col">
+                <h4>Our Socials</h4>
+                <p>Stay updated with our latest news.</p>
+                <form class="santi-newsletter" id="newsletter-form">
+                  <input type="email" name="email" placeholder="Your email" required>
+                  <button type="submit" aria-label="Subscribe"><i class="fa-solid fa-arrow-right"></i></button>
+                </form>
+                <div class="newsletter-msg" id="newsletter-msg"></div>
+                <div class="santi-social-row">
+                  <a href="https://www.facebook.com/santiuniverse" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                  <a href="https://www.instagram.com/santi.co.za/" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                  <a href="https://x.com/Santi_Universe" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+                  <a href="https://www.linkedin.com/company/originalsanti/" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                  <a href="https://www.tiktok.com/@santi.co.za" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="rr-h-line outerline-left outerline-right"></div>
+            <div class="santi-footer-bottom">
+              <span>&copy; 2026 Santi Universe (Santi U). All rights reserved.</span>
+              <span>Web &middot; Graphic &middot; AI</span>
+            </div>
+          </div>
+        </div>
+      </footer>
+      <!-- footer area end  -->
+
+    </div>
+  </div>
+
+
+
+  <!-- Dependencies JS Files -->
+  <script src="assets/js/jquery-3.6.0.min.js"></script>
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/jquery.magnific-popup.min.js"></script>
+  <script src="assets/js/swiper-bundle.min.js"></script>
+  <script src="assets/js/odometer.min.js"></script>
+  <script src="assets/js/waypoints.min.js"></script>
+  <script src="assets/js/progressbar.js"></script>
+  <script src="assets/js/gsap.min.js"></script>
+  <script src="assets/js/ScrollSmoother.min.js"></script>
+  <script src="assets/js/ScrollTrigger.min.js"></script>
+  <script src="assets/js/SplitText.min.js"></script>
+  <script src="assets/js/TextPlugin.js"></script>
+  <script src="assets/js/SplitType.js"></script>
+  <script src="assets/js/customEase.js"></script>
+  <script src="assets/js/jquery.meanmenu.min.js"></script>
+  <script src="assets/js/backToTop.js"></script>
+  <script src="assets/js/magiccursor.js"></script>
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Santi Universe custom JS -->
+  <script src="assets/js/santi.js"></script>
+
+
+
+</body>
+
+</html>

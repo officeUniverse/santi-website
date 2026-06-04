@@ -1,0 +1,149 @@
+/* team details page css */
+/* team details area style  */
+.team-details-area {
+    .section-content-wrapper {
+        margin-top: 37px;
+        display: grid;
+        gap: 40px 100px;
+        grid-template-columns: 590px 600px;
+        justify-content: space-between;
+
+        @media #{$xl} {
+            grid-template-columns: 1fr 500px;
+        }
+
+        @media #{$lg} {
+            grid-template-columns: 1fr 430px;
+        }
+
+        @media #{$md} {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .team-thumb {
+        margin-top: 13px;
+        order: 2;
+
+        @media #{$md} {
+            order: unset;
+            max-width: 500px;
+        }
+
+        img {
+            width: 100%;
+        }
+    }
+
+    .subtitle {
+        font-size: 30px;
+        font-weight: 310;
+        line-height: 0.93;
+        letter-spacing: -0.05em;
+        color: var(--primary);
+        text-transform: unset;
+        font-family: var(--font_bdogrotesk);
+
+        @media #{$xl} {
+            font-size: 24px;
+        }
+
+        @media #{$md} {
+            font-size: 22px;
+        }
+    }
+
+    .subtitle-wrapper {
+        margin-top: 29px;
+
+        @media #{$xl} {
+            margin-top: 19px;
+        }
+    }
+
+    .section-content {
+
+        .section-title {
+            letter-spacing: -4.5px;
+            line-height: 85px;
+
+            @media #{$md} {
+                letter-spacing: 0;
+                line-height: 45px;
+            }
+        }
+
+        .text-wrapper {
+            margin-top: 60px;
+
+            @media #{$xl} {
+                margin-top: 41px;
+            }
+
+            @media #{$md} {
+                margin-top: 31px;
+            }
+        }
+
+        .text {
+            font-size: 20px;
+            font-weight: 400;
+            line-height: 28px;
+
+            &:not(:first-child) {
+                margin-top: 28px;
+            }
+        }
+
+
+    }
+
+    .social-links {
+        margin-top: 53px;
+        border-top: 1px dashed #878482;
+        display: grid;
+
+        @include dark {
+            border-color: #626262;
+        }
+
+        @media #{$xl} {
+            margin-top: 43px;
+        }
+
+        @media #{$md} {
+            margin-top: 33px;
+        }
+
+        a {
+            font-size: 20px;
+            font-weight: 400;
+            line-height: 28px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            border-bottom: 1px dashed #878482;
+            padding: 11px 0;
+            transition: all 0.5s;
+
+            @include dark {
+                border-color: #626262;
+            }
+
+            &:hover {
+                background-color: #F1F1F1;
+                padding-left: 20px;
+
+                @include dark {
+                    background-color: #1A1A1A;
+                }
+            }
+
+            &:before {
+                content: "+";
+                margin-right: 6px;
+            }
+
+        }
+    }
+}

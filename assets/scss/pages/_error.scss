@@ -1,0 +1,93 @@
+/* error page css */
+// error area style 
+.error-area {
+    &-inner {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .subtitle {
+        font-size: 300px;
+        font-weight: 400;
+        line-height: 0.7;
+        letter-spacing: -0.07em;
+        color: var(--primary);
+
+        @media #{$xxl} {
+            font-size: 240px;
+        }
+
+        @media #{$xl} {
+            font-size: 180px;
+        }
+
+        @media #{$lg} {
+            font-size: 140px;
+        }
+
+        @media #{$md} {
+            font-size: 120px;
+        }
+    }
+
+    .section-title {
+        max-width: 740px;
+        font-weight: 400;
+        line-height: 0.94;
+        letter-spacing: -4.5px;
+
+        @media #{$xxl} {
+            max-width: 640px;
+        }
+
+        @media #{$lg} {
+            letter-spacing: 0;
+            line-height: 1.22;
+        }
+    }
+
+    .section-content {
+        align-self: center;
+
+        .title-wrapper {
+            margin-top: 37px;
+
+            @media #{$xxl} {
+                margin-top: 27px;
+
+            }
+
+            @media #{$lg} {
+                margin-top: 17px;
+
+            }
+        }
+
+        .btn-wrapper {
+            margin-top: 64px;
+
+            @media #{$xxl} {
+                margin-top: 44px;
+
+            }
+
+            @media #{$lg} {
+                margin-top: 34px;
+
+            }
+
+            @media #{$md} {
+                margin-top: 24px;
+
+            }
+        }
+
+        .rr-btn {
+            padding: 25px 48px;
+        }
+    }
+
+}

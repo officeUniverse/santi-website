@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Santi Universe services: web design &amp; development, graphic design &amp; branding, AI engineering, AEO, managed hosting and custom WordPress plugins.">
+
+  <title>Services — Web, Graphic Design &amp; AI Engineering | Santi Universe</title>
+
+  <!-- Fav Icon -->
+  <link rel="icon" type="image/x-icon" href="assets/imgs/logo/favicon.png">
+
+  <!-- Theme bootstrap: apply saved theme before paint to avoid flash (dark = default) -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('santi-theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+        document.documentElement.classList.toggle('dark', t !== 'light');
+      } catch (e) {
+        document.documentElement.classList.add('dark');
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+
+
+  <!-- Dependencies CSS Files -->
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/fontawesome-pro.css">
+  <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+  <link rel="stylesheet" href="assets/css/progressbar.css">
+  <link rel="stylesheet" href="assets/css/meanmenu.min.css">
+  <link rel="stylesheet" href="assets/css/magnific-popup.css">
+  <link rel="stylesheet" href="assets/css/animate.min.css">
+  <link rel="stylesheet" href="assets/css/odometer-theme-default.css">
+
+  <!-- Template Main CSS File (single stylesheet; dark/light handled by the .dark class on <html>) -->
+  <link rel="stylesheet" id="theme-css" href="assets/css/style.css">
+
+  <!-- Santi Universe custom CSS -->
+  <link rel="stylesheet" href="assets/css/santi.css">
+
+  <!-- Organization structured data (AEO/SEO) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Santi Universe",
+    "alternateName": "Santi U",
+    "url": "https://santi.co.za",
+    "image": "https://santi.co.za/assets/imgs/logo/santi-white.png",
+    "description": "Santi Universe is a web design, graphic design and AI engineering studio based in Roodepoort, South Africa with a footprint in Kenya, serving clients worldwide.",
+    "email": "santi@santi.co.za",
+    "telephone": "+27 71 591 4495",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Zeiss Road, Wilgespruit",
+      "addressLocality": "Roodepoort",
+      "postalCode": "1724",
+      "addressRegion": "Gauteng",
+      "addressCountry": "ZA"
+    },
+    "openingHoursSpecification": [{
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens": "09:00",
+      "closes": "16:30"
+    }],
+    "areaServed": [
+      { "@type": "Country", "name": "South Africa" },
+      { "@type": "Country", "name": "Kenya" },
+      { "@type": "AdministrativeArea", "name": "Worldwide" }
+    ],
+    "knowsAbout": ["Web Design", "Web Development", "Graphic Design", "Branding", "AI Engineering", "Answer Engine Optimization", "Search Engine Optimization", "WordPress Development", "Web Hosting"],
+    "makesOffer": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Web Design & Development" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Graphic Design & Branding" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Engineering" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Answer Engine Optimization (AEO)" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Managed Web Hosting" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Custom WordPress Plugins" } }
+    ],
+    "sameAs": [
+      "https://www.facebook.com/santiuniverse",
+      "https://www.instagram.com/santi.co.za/",
+      "https://x.com/Santi_Universe",
+      "https://www.linkedin.com/company/originalsanti/",
+      "https://www.tiktok.com/@santi.co.za"
+    ]
+  }
+  </script>
+
+
+</head>
+
+
+<body class="body-wrapper body-ai-agency">
+
+  <!-- custom-cursor -->
+  <div class="custom-cursor">
+    <img src="assets/imgs/cursor/cursor-2-xs.svg" alt="cursor" id="cursorImg">
+  </div>
+
+  <div class="loader-wrap">
+    <svg viewBox="0 0 1000 1000" preserveAspectRatio="none">
+      <path id="svg" d="M0,1005S175,995,500,995s500,5,500,5V0H0Z"></path>
+    </svg>
+
+    <div class="loader-wrap-heading">
+      <div class="load-text">
+        <span>S</span>
+        <span>a</span>
+        <span>n</span>
+        <span>t</span>
+        <span>i</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Sroll to top -->
+  <div class="progress-wrap">
+    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+      <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"></path>
+    </svg>
+  </div>
+
+
+  <!-- side toggle start -->
+  <aside class="fix">
+    <div class="side-info">
+      <div class="side-info-content">
+        <div class="offset-widget offset-header">
+          <div class="offset-logo">
+            <a href="index.html">
+              <img class="show-light" src="assets/imgs/logo/santi-black.png" alt="site logo">
+              <img class="show-dark" src="assets/imgs/logo/santi-white.png" alt="site logo">
+            </a>
+          </div>
+          <button id="side-info-close" class="side-info-close">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="mobile-menu d-xl-none fix"></div>
+        <div class="offset-button">
+          <a href="contact.html" class="rr-btn">
+            <span class="btn-wrap">
+              <span class="text-one">Let's Talk</span>
+              <span class="text-two">Let's Talk</span>
+            </span>
+          </a>
+        </div>
+        <div class="offset-widget-box">
+          <h2 class="title">Contact US</h2>
+          <div class="contact-meta">
+            <div class="contact-item">
+              <span class="icon"><i class="fa-solid fa-location-dot"></i></span>
+              <span class="text">Roodepoort, South Africa</span>
+            </div>
+            <div class="contact-item">
+              <span class="icon"><i class="fa-solid fa-envelope"></i></span>
+              <span class="text"><a href="mailto:santi@santi.co.za">santi@santi.co.za</a></span>
+            </div>
+            <div class="contact-item">
+              <span class="icon"><i class="fa-solid fa-phone"></i></span>
+              <span class="text"><a href="tel:+27715914495">+27 71 591 4495</a></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="offcanvas-overlay"></div>
+  <!-- side toggle end -->
+
+
+
+
+  <div class="has-smooth" id="has_smooth"></div>
+  <div id="smooth-wrapper">
+    <div id="smooth-content">
+
+      <!-- Header area start -->
+      <header class="header-area-17">
+        <div class="header-main">
+          <div class="container rr-container-1750">
+            <div class="header-area-17__inner">
+              <div class="header__logo">
+                <a href="index.html">
+                  <img class="normal-logo show-light" src="assets/imgs/logo/santi-black.png" alt="Site Logo">
+                  <img class="normal-logo show-dark" src="assets/imgs/logo/santi-white.png" alt="Site Logo">
+                </a>
+                <span class="info">Web · Graphic · AI</span>
+              </div>
+              <div class="header__nav">
+                <nav class="main-menu">
+                  <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="portfolio.html">Portfolio</a></li>
+                    <li><a href="aeo.html">AEO Tool</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                  </ul>
+                </nav>
+              </div>
+              <div class="header__btn">
+                <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle light and dark theme" title="Toggle light / dark">
+                  <i class="fa-solid fa-moon icon-dark"></i>
+                  <i class="fa-solid fa-sun icon-light"></i>
+                </button>
+                <a class="rr-btn-classic" href="contact.html">Book a consultation
+                  <span class="icon">
+                    <i class="fa-classic fa-solid fa-arrow-right fa-fw first"></i>
+                    <i class="fa-classic fa-solid fa-arrow-right fa-fw second"></i>
+                  </span></a>
+              </div>
+              <div class="header__navicon d-xl-none">
+                <button class="side-toggle" id="side-toggle"></button>
+              </div>
+            </div>
+          </div>
+          <div class="rr-h-line"></div>
+        </div>
+      </header>
+      <!-- Header area end -->
+
+      <main>
+
+        <!-- page hero -->
+        <section class="santi-page-hero">
+          <div class="container rr-container-1750">
+            <div class="santi-hero-inner rr-line-area">
+              <div class="rr-v-lines"><div class="rr-line"></div><div class="rr-line"></div><div class="rr-line"></div><div class="rr-line"></div><div class="rr-line"></div></div>
+              <div class="rr-h-line outerline-left outerline-right"></div>
+              <div class="section-title-wrapper">
+                <div class="subtitle-wrapper">
+                  <span class="section-subtitle-5">Our services</span>
+                  <div class="rr-h-line outerline-left"></div>
+                </div>
+                <div class="title-wrapper">
+                  <h1 class="section-title font-astronebula-light">Built to grow<br>your business</h1>
+                </div>
+                <p class="santi-lead">Web design, graphic design, AI engineering, AEO, hosting and custom WordPress &mdash; everything you need to launch, grow and get found in the AI era.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+<section class="service-area-17">
+          <div class="container rr-container-1750">
+            <div class="service-17-inner rr-line-area">
+              <div class="rr-v-lines">
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+              </div>
+              <div class="rr-h-line outerline-left outerline-right"></div>
+              <div class="rr-h-line outerline-left outerline-right space-t-50"></div>
+              <div class="service-17-header">
+                <div class="section-title-wrapper">
+                  <div class="subtitle-wrapper">
+                    <span class="section-subtitle-5">What we do</span>
+                    <div class="rr-h-line outerline-left"></div>
+                  </div>
+                  <div class="title-wrapper">
+                    <h2 class="section-title font-astronebula-light">Services built <br>
+                      to drive real <br>
+                      results</h2>
+                  </div>
+                </div>
+              </div>
+              <div class="rr-h-line outerline-left outerline-right"></div>
+              <div class="services-17-wrapper-box">
+                <div class="services-17-wrapper">
+                  <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link active" id="s1-tab" data-bs-toggle="tab" data-bs-target="#s1-tab-pane"
+                        type="button" role="tab" aria-controls="s1-tab-pane" aria-selected="true">
+                        <span class="service-17-name">
+                          <span class="number">[ 01 ]</span>
+                          <span class="title">Web Design</span>
+                        </span>
+                      </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="s2-tab" data-bs-toggle="tab" data-bs-target="#s2-tab-pane"
+                        type="button" role="tab" aria-controls="s2-tab-pane" aria-selected="false">
+                        <span class="service-17-name">
+                          <span class="number">[ 02 ]</span>
+                          <span class="title">Graphic Design</span>
+                        </span>
+                      </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="s3-tab" data-bs-toggle="tab" data-bs-target="#s3-tab-pane"
+                        type="button" role="tab" aria-controls="s3-tab-pane" aria-selected="false">
+                        <span class="service-17-name">
+                          <span class="number">[ 03 ]</span>
+                          <span class="title">AI Engineering</span>
+                        </span>
+                      </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="s4-tab" data-bs-toggle="tab" data-bs-target="#s4-tab-pane"
+                        type="button" role="tab" aria-controls="s4-tab-pane" aria-selected="false">
+                        <span class="service-17-name">
+                          <span class="number">[ 04 ]</span>
+                          <span class="title">AEO</span>
+                        </span>
+                      </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="s5-tab" data-bs-toggle="tab" data-bs-target="#s5-tab-pane"
+                        type="button" role="tab" aria-controls="s5-tab-pane" aria-selected="false">
+                        <span class="service-17-name">
+                          <span class="number">[ 05 ]</span>
+                          <span class="title">Web Hosting</span>
+                        </span>
+                      </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="s6-tab" data-bs-toggle="tab" data-bs-target="#s6-tab-pane"
+                        type="button" role="tab" aria-controls="s6-tab-pane" aria-selected="false">
+                        <span class="service-17-name">
+                          <span class="number">[ 06 ]</span>
+                          <span class="title">WP Plugins</span>
+                        </span>
+                      </button>
+                    </li>
+                  </ul>
+                  <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="s1-tab-pane" role="tabpanel" aria-labelledby="s1-tab"
+                      tabindex="0">
+                      <div class="service-17-content">
+                        <div class="text-wrapper">
+                          <h3 class="title"><a href="services.html">Web Design &amp; Development</a></h3>
+                          <p class="text">Conversion-focused, lightning-fast websites — from business sites and eCommerce to custom web apps. Built on speed, security and scalability.</p>
+                        </div>
+                        <div class="logo-wrapper-box">
+                          <div class="logo-wrapper">
+                            <div class="bg-area">
+                              <div class="corner-shape-border">
+                                <span class="shape-1"></span>
+                                <span class="shape-2"></span>
+                                <span class="shape-3"></span>
+                                <span class="shape-4"></span>
+                              </div>
+                            </div>
+                            <img src="assets/imgs/shape/shape-s-5.webp" alt="image">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="s2-tab-pane" role="tabpanel" aria-labelledby="s2-tab" tabindex="0">
+                      <div class="service-17-content">
+                        <div class="text-wrapper">
+                          <h3 class="title"><a href="services.html">Graphic Design &amp; Branding</a></h3>
+                          <p class="text">Logos, full brand identities and marketing visuals that make a lasting impression and tell your brand story with a consistent, striking look.</p>
+                        </div>
+                        <div class="logo-wrapper-box">
+                          <div class="logo-wrapper">
+                            <div class="bg-area">
+                              <div class="corner-shape-border">
+                                <span class="shape-1"></span>
+                                <span class="shape-2"></span>
+                                <span class="shape-3"></span>
+                                <span class="shape-4"></span>
+                              </div>
+                            </div>
+                            <img src="assets/imgs/shape/shape-s-5.webp" alt="image">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="s3-tab-pane" role="tabpanel" aria-labelledby="s3-tab" tabindex="0">
+                      <div class="service-17-content">
+                        <div class="text-wrapper">
+                          <h3 class="title"><a href="services.html">AI Engineering</a></h3>
+                          <p class="text">Custom AI solutions — chatbots, automations, RAG assistants and integrations — that put cutting-edge models to work inside your real business.</p>
+                        </div>
+                        <div class="logo-wrapper-box">
+                          <div class="logo-wrapper">
+                            <div class="bg-area">
+                              <div class="corner-shape-border">
+                                <span class="shape-1"></span>
+                                <span class="shape-2"></span>
+                                <span class="shape-3"></span>
+                                <span class="shape-4"></span>
+                              </div>
+                            </div>
+                            <img src="assets/imgs/shape/shape-s-5.webp" alt="image">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="s4-tab-pane" role="tabpanel" aria-labelledby="s4-tab" tabindex="0">
+                      <div class="service-17-content">
+                        <div class="text-wrapper">
+                          <h3 class="title"><a href="aeo.html">AEO — AI Engine Optimization</a></h3>
+                          <p class="text">Get found by AI. We optimise your site so ChatGPT, Gemini and AI search can read, understand and recommend you. Try our free AEO checker.</p>
+                        </div>
+                        <div class="logo-wrapper-box">
+                          <div class="logo-wrapper">
+                            <div class="bg-area">
+                              <div class="corner-shape-border">
+                                <span class="shape-1"></span>
+                                <span class="shape-2"></span>
+                                <span class="shape-3"></span>
+                                <span class="shape-4"></span>
+                              </div>
+                            </div>
+                            <img src="assets/imgs/shape/shape-s-5.webp" alt="image">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="s5-tab-pane" role="tabpanel" aria-labelledby="s5-tab" tabindex="0">
+                      <div class="service-17-content">
+                        <div class="text-wrapper">
+                          <h3 class="title"><a href="services.html">Web Hosting</a></h3>
+                          <p class="text">Reliable, fast and secure managed hosting, tuned for performance and uptime so your site stays online and loads instantly.</p>
+                        </div>
+                        <div class="logo-wrapper-box">
+                          <div class="logo-wrapper">
+                            <div class="bg-area">
+                              <div class="corner-shape-border">
+                                <span class="shape-1"></span>
+                                <span class="shape-2"></span>
+                                <span class="shape-3"></span>
+                                <span class="shape-4"></span>
+                              </div>
+                            </div>
+                            <img src="assets/imgs/shape/shape-s-5.webp" alt="image">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="s6-tab-pane" role="tabpanel" aria-labelledby="s6-tab" tabindex="0">
+                      <div class="service-17-content">
+                        <div class="text-wrapper">
+                          <h3 class="title"><a href="services.html">WordPress Plugins</a></h3>
+                          <p class="text">Custom WordPress development, including our booking plugin that lets agencies take bookings directly through their WordPress site.</p>
+                        </div>
+                        <div class="logo-wrapper-box">
+                          <div class="logo-wrapper">
+                            <div class="bg-area">
+                              <div class="corner-shape-border">
+                                <span class="shape-1"></span>
+                                <span class="shape-2"></span>
+                                <span class="shape-3"></span>
+                                <span class="shape-4"></span>
+                              </div>
+                            </div>
+                            <img src="assets/imgs/shape/shape-s-5.webp" alt="image">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- services detail -->
+        <section class="santi-section">
+          <div class="container rr-container-1750">
+            <div class="rr-line-area">
+              <div class="rr-v-lines"><div class="rr-line"></div><div class="rr-line"></div><div class="rr-line"></div><div class="rr-line"></div><div class="rr-line"></div></div>
+              <div class="rr-h-line outerline-left outerline-right"></div>
+              <div class="section-title-wrapper" style="margin:40px 0">
+                <div class="subtitle-wrapper"><span class="section-subtitle-5">In detail</span>
+                  <div class="rr-h-line outerline-left"></div></div>
+                <div class="title-wrapper"><h2 class="section-title font-astronebula-light">What's included</h2></div>
+              </div>
+                <div class="santi-srv">
+                  <div class="santi-srv-head"><span class="num">[ 01 ]</span><h3 class="santi-srv-title">Web Design & Development</h3></div>
+                  <div class="santi-srv-body">
+                    <p>Conversion-focused, lightning-fast websites — from business sites and eCommerce to custom web apps. Strategy, design and development under one roof, built on speed, security and scalability.</p>
+                    <ul class="santi-srv-list">
+                    <li>Business &amp; marketing sites</li>
+                    <li>eCommerce stores</li>
+                    <li>Custom web apps</li>
+                    <li>Landing pages</li>
+                    <li>Responsive design</li>
+                    <li>Performance &amp; SEO</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="santi-srv">
+                  <div class="santi-srv-head"><span class="num">[ 02 ]</span><h3 class="santi-srv-title">Graphic Design & Branding</h3></div>
+                  <div class="santi-srv-body">
+                    <p>Your brand is more than a logo — it's a story. We craft complete identities that make a lasting impression and stay consistent across every touchpoint.</p>
+                    <ul class="santi-srv-list">
+                    <li>Logo design</li>
+                    <li>Full brand identity</li>
+                    <li>Brand guidelines</li>
+                    <li>Marketing collateral</li>
+                    <li>Social media kits</li>
+                    <li>Art direction</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="santi-srv">
+                  <div class="santi-srv-head"><span class="num">[ 03 ]</span><h3 class="santi-srv-title">AI Engineering</h3></div>
+                  <div class="santi-srv-body">
+                    <p>We put cutting-edge AI to work inside your business — chatbots, automations and integrations that save time and unlock revenue, explained in plain language.</p>
+                    <ul class="santi-srv-list">
+                    <li>AI chatbots &amp; assistants</li>
+                    <li>Workflow automation</li>
+                    <li>RAG &amp; knowledge bases</li>
+                    <li>API &amp; model integration</li>
+                    <li>Custom AI tools</li>
+                    <li>AI strategy &amp; training</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="santi-srv">
+                  <div class="santi-srv-head"><span class="num">[ 04 ]</span><h3 class="santi-srv-title">AEO — AI Engine Optimization</h3></div>
+                  <div class="santi-srv-body">
+                    <p>Get found and recommended by AI. We optimise your site so ChatGPT, Gemini and AI search can read, understand and cite you — the new SEO.</p>
+                    <ul class="santi-srv-list">
+                    <li>Free AEO audit</li>
+                    <li>llms.txt setup</li>
+                    <li>Structured data (Schema.org)</li>
+                    <li>Semantic content</li>
+                    <li>AI-crawler config</li>
+                    <li>Ongoing optimisation</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="santi-srv">
+                  <div class="santi-srv-head"><span class="num">[ 05 ]</span><h3 class="santi-srv-title">Web Hosting</h3></div>
+                  <div class="santi-srv-body">
+                    <p>Reliable, fast and secure managed hosting, tuned for performance and uptime so your site stays online and loads instantly.</p>
+                    <ul class="santi-srv-list">
+                    <li>Managed hosting</li>
+                    <li>SSL &amp; security</li>
+                    <li>Automated backups</li>
+                    <li>Speed optimisation</li>
+                    <li>Uptime monitoring</li>
+                    <li>Maintenance &amp; support</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="santi-srv">
+                  <div class="santi-srv-head"><span class="num">[ 06 ]</span><h3 class="santi-srv-title">WordPress &amp; Plugins</h3></div>
+                  <div class="santi-srv-body">
+                    <p>Custom WordPress development — including our own booking plugin that lets agencies take bookings directly through their WordPress site.</p>
+                    <ul class="santi-srv-list">
+                    <li>Custom plugin development</li>
+                    <li>Booking plugin</li>
+                    <li>Third-party integrations</li>
+                    <li>Plugin maintenance</li>
+                    <li>WordPress builds</li>
+                    <li>Migrations</li>
+                    </ul>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </section>
+
+                <!-- how we work -->
+        <section class="santi-section">
+          <div class="container rr-container-1750">
+            <div class="rr-line-area">
+              <div class="rr-v-lines"><div class="rr-line"></div><div class="rr-line"></div><div class="rr-line"></div><div class="rr-line"></div><div class="rr-line"></div></div>
+              <div class="rr-h-line outerline-left outerline-right"></div>
+              <div class="section-title-wrapper" style="margin:40px 0">
+                <div class="subtitle-wrapper"><span class="section-subtitle-5">How we work</span>
+                  <div class="rr-h-line outerline-left"></div></div>
+                <div class="title-wrapper"><h2 class="section-title font-astronebula-light">From idea<br>to launch</h2></div>
+              </div>
+              <div class="santi-process">
+                <div class="santi-step">
+                  <span class="num">01</span>
+                  <h4>Discovery &amp; Strategy</h4>
+                  <p>We start by understanding your brand, goals and audience, then craft a strategic foundation for the project.</p>
+                </div>
+                <div class="santi-step">
+                  <span class="num">02</span>
+                  <h4>Concept &amp; Design</h4>
+                  <p>We turn insight into stunning visuals and intuitive layouts that fit your brand and feel effortless to use.</p>
+                </div>
+                <div class="santi-step">
+                  <span class="num">03</span>
+                  <h4>Development &amp; Execution</h4>
+                  <p>We build it fast, secure and scalable — clean code, structured so both people and AI can read it.</p>
+                </div>
+                <div class="santi-step">
+                  <span class="num">04</span>
+                  <h4>Launch &amp; Support</h4>
+                  <p>We fine-tune every detail before launch and provide ongoing support to keep you optimised and future-proof.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="feature-area-17">
+          <div class="container rr-container-1750">
+            <div class="feature-17-inner rr-line-area">
+              <div class="rr-v-lines">
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+              </div>
+              <div class="rr-h-line outerline-left outerline-right"></div>
+              <div class="rr-h-line outerline-left outerline-right space-t-50"></div>
+              <div class="feature-17-header">
+                <div class="section-title-wrapper">
+                  <div class="subtitle-wrapper">
+                    <span class="section-subtitle-5">Why Santi</span>
+                    <div class="rr-h-line outerline-left"></div>
+                  </div>
+                  <div class="title-wrapper">
+                    <h2 class="section-title font-astronebula-light">Why brands <br>
+                      choose us</h2>
+                  </div>
+                </div>
+              </div>
+              <div class="rr-h-line outerline-left outerline-right"></div>
+              <div class="features-17-wrapper-box">
+                <div class="features-17-wrapper">
+                  <div class="feature-17-box">
+                    <div class="logo-wrapper-box">
+                      <div class="logo-wrapper">
+                        <div class="bg-area">
+                          <div class="corner-shape-border">
+                            <span class="shape-1"></span>
+                            <span class="shape-2"></span>
+                            <span class="shape-3"></span>
+                            <span class="shape-4"></span>
+                          </div>
+                        </div>
+                        <img src="assets/imgs/shape/shape-s-7.webp" alt="image">
+                      </div>
+                      <div class="title-wrapper">
+                        <h3 class="title">Design that <br>
+                          converts</h3>
+                      </div>
+                    </div>
+                    <div class="content">
+                      <p class="text">Strategy, design and development under one roof — beautiful interfaces engineered to load fast and turn visitors into paying customers.</p>
+                    </div>
+                  </div>
+                  <div class="feature-17-box">
+                    <div class="logo-wrapper-box">
+                      <div class="logo-wrapper">
+                        <div class="bg-area">
+                          <div class="corner-shape-border">
+                            <span class="shape-1"></span>
+                            <span class="shape-2"></span>
+                            <span class="shape-3"></span>
+                            <span class="shape-4"></span>
+                          </div>
+                        </div>
+                        <img src="assets/imgs/shape/shape-s-8.webp" alt="image">
+                      </div>
+                      <div class="title-wrapper">
+                        <h3 class="title">Built for <br>
+                          AI search</h3>
+                      </div>
+                    </div>
+                    <div class="content">
+                      <p class="text">We make your site readable by AI. Structured data, clean semantics and AEO so ChatGPT, Gemini and AI search recommend your brand.</p>
+                    </div>
+                  </div>
+                  <div class="feature-17-box">
+                    <div class="logo-wrapper-box">
+                      <div class="logo-wrapper">
+                        <div class="bg-area">
+                          <div class="corner-shape-border">
+                            <span class="shape-1"></span>
+                            <span class="shape-2"></span>
+                            <span class="shape-3"></span>
+                            <span class="shape-4"></span>
+                          </div>
+                        </div>
+                        <img src="assets/imgs/shape/shape-s-9.webp" alt="image">
+                      </div>
+                      <div class="title-wrapper">
+                        <h3 class="title">Fast, friendly <br>
+                          support</h3>
+                      </div>
+                    </div>
+                    <div class="content">
+                      <p class="text">Real people, quick replies. From first concept to post-launch tweaks, we stay in your corner across every time zone.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+<section class="cta-area-17">
+          <div class="container rr-container-1750">
+            <div class="cta-17-inner rr-line-area">
+              <div class="rr-v-lines">
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+                <div class="rr-line"></div>
+              </div>
+              <div class="rr-h-line outerline-left outerline-right"></div>
+              <div class="rr-h-line outerline-left outerline-right space-t-50"></div>
+              <div class="cta-17-header">
+                <div class="section-title-wrapper">
+                  <div class="subtitle-wrapper">
+                    <span class="section-subtitle-5">Conclusion</span>
+                    <div class="rr-h-line outerline-left"></div>
+                  </div>
+                  <div class="title-wrapper">
+                    <h2 class="section-title font-astronebula-light">let’s
+                      <span>talk</span>
+                    </h2>
+                    <a class="action-btn" href="contact.html">
+                      <svg width="58" height="86" viewBox="0 0 58 86" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                          d="M22.8827 33.9393C26.671 36.8921 30.8175 39.2787 35.1949 41.0556C37.0696 41.8166 38.9866 42.4658 40.9358 42.9997C40.9362 42.9996 40.9366 42.9995 40.9369 42.9994C34.4355 41.2188 28.2936 38.1562 22.8827 33.9387C13.8343 26.8864 7.32968 16.9986 4.37713 5.80881L4.37698 5.80885C4.68628 6.98109 5.03456 8.13905 5.42067 9.28095C8.72023 19.0395 14.7821 27.6257 22.8827 33.9393ZM4.37677 80.192C4.37672 80.1921 4.37667 80.1923 4.37663 80.1925L9.38092 81.5546C12.0384 71.4831 17.8924 62.5835 26.0375 56.236C34.1825 49.8886 44.1614 46.4481 54.4265 46.4481L54.4265 46.4475C44.1614 46.4475 34.1825 49.888 26.0375 56.2355C17.8924 62.5829 12.0384 71.4825 9.38092 81.554L4.37677 80.192ZM20.7073 36.8188C23.8179 39.2433 27.1544 41.3108 30.655 43C27.1544 44.6893 23.8179 46.7567 20.7073 49.1813C11.0343 56.7204 4.08081 67.2908 0.924904 79.2531L1.97194e-07 82.7588L11.9076 86L12.8326 82.4942C15.2865 73.1942 20.692 64.9766 28.2127 59.1157C35.7338 53.2545 44.9481 50.0776 54.4265 50.0776L58 50.0776L58 35.9224L54.4265 35.9224C44.9481 35.9224 35.7338 32.7455 28.2127 26.8844C20.692 21.0234 15.2865 12.8058 12.8326 3.50582L11.9076 -2.01476e-06L3.67302e-06 3.24116L0.924907 6.74694C4.08081 18.7092 11.0343 29.2796 20.7073 36.8188Z"
+                          fill="#111111" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+      <!-- footer area start  -->
+      <footer class="footer-area-17">
+        <div class="container rr-container-1750">
+          <div class="footer-17-inner rr-line-area">
+            <div class="rr-v-lines"><div class="rr-line"></div><div class="rr-line"></div><div class="rr-line"></div><div class="rr-line"></div><div class="rr-line"></div></div>
+            <div class="rr-h-line outerline-left outerline-right"></div>
+            <div class="santi-footer-grid">
+              <div class="santi-footer-col">
+                <a href="index.html" class="footer-logo">
+                  <img class="show-light" src="assets/imgs/logo/santi-black.png" alt="Santi Universe">
+                  <img class="show-dark" src="assets/imgs/logo/santi-white.png" alt="Santi Universe">
+                </a>
+                <p class="santi-footer-tag">Website Design &amp; Development, Graphic Design &amp; Website Hosting.</p>
+                <ul class="santi-footer-contact">
+                  <li><i class="fa-solid fa-location-dot"></i><span>Zeiss Road, Wilgespruit, Roodepoort, 1724, South Africa</span></li>
+                  <li><i class="fa-solid fa-phone"></i><a href="tel:+27715914495">+27 71 591 4495</a></li>
+                  <li><i class="fa-solid fa-envelope"></i><a href="mailto:santi@santi.co.za">santi@santi.co.za</a></li>
+                </ul>
+              </div>
+              <div class="santi-footer-col">
+                <h4>Operating Hours</h4>
+                <ul class="santi-footer-hours">
+                  <li>Mon &ndash; Fri <span>9am &ndash; 4:30pm</span></li>
+                  <li>Sat &ndash; Sun <span>Closed</span></li>
+                  <li>Public Holidays <span>Closed</span></li>
+                </ul>
+              </div>
+              <div class="santi-footer-col">
+                <h4>Santi Communication</h4>
+                <ul class="santi-footer-links">
+                  <li><a href="contact.html">Contact Us</a></li>
+                  <li><a href="terms.html">Terms &amp; Conditions</a></li>
+                  <li><a href="privacy.html">Privacy</a></li>
+                  <li><a href="cookies.html">Cookies</a></li>
+                </ul>
+              </div>
+              <div class="santi-footer-col">
+                <h4>Our Socials</h4>
+                <p>Stay updated with our latest news.</p>
+                <form class="santi-newsletter" id="newsletter-form">
+                  <input type="email" name="email" placeholder="Your email" required>
+                  <button type="submit" aria-label="Subscribe"><i class="fa-solid fa-arrow-right"></i></button>
+                </form>
+                <div class="newsletter-msg" id="newsletter-msg"></div>
+                <div class="santi-social-row">
+                  <a href="https://www.facebook.com/santiuniverse" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                  <a href="https://www.instagram.com/santi.co.za/" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                  <a href="https://x.com/Santi_Universe" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+                  <a href="https://www.linkedin.com/company/originalsanti/" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                  <a href="https://www.tiktok.com/@santi.co.za" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="rr-h-line outerline-left outerline-right"></div>
+            <div class="santi-footer-bottom">
+              <span>&copy; 2026 Santi Universe (Santi U). All rights reserved.</span>
+              <span>Web &middot; Graphic &middot; AI</span>
+            </div>
+          </div>
+        </div>
+      </footer>
+      <!-- footer area end  -->
+
+    </div>
+  </div>
+
+
+
+  <!-- Dependencies JS Files -->
+  <script src="assets/js/jquery-3.6.0.min.js"></script>
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/jquery.magnific-popup.min.js"></script>
+  <script src="assets/js/swiper-bundle.min.js"></script>
+  <script src="assets/js/odometer.min.js"></script>
+  <script src="assets/js/waypoints.min.js"></script>
+  <script src="assets/js/progressbar.js"></script>
+  <script src="assets/js/gsap.min.js"></script>
+  <script src="assets/js/ScrollSmoother.min.js"></script>
+  <script src="assets/js/ScrollTrigger.min.js"></script>
+  <script src="assets/js/SplitText.min.js"></script>
+  <script src="assets/js/TextPlugin.js"></script>
+  <script src="assets/js/SplitType.js"></script>
+  <script src="assets/js/customEase.js"></script>
+  <script src="assets/js/jquery.meanmenu.min.js"></script>
+  <script src="assets/js/backToTop.js"></script>
+  <script src="assets/js/magiccursor.js"></script>
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Santi Universe custom JS -->
+  <script src="assets/js/santi.js"></script>
+
+
+
+</body>
+
+</html>
