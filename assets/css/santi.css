@@ -110,6 +110,13 @@ html.dark .services-17-wrapper .nav-tabs .nav-link.active:hover .title {
 .santi-footer-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 26px 0; color: var(--secondary); font-size: 14px; }
 
 /* ============================================================
+   Mobile safety: never allow horizontal page scroll
+   (guards against the off-canvas menu / decorative elements)
+   ============================================================ */
+html { overflow-x: hidden; }
+.santi-page-hero, .santi-section, .santi-section-tight { overflow-x: clip; }
+
+/* ============================================================
    Cookie consent banner
    ============================================================ */
 .santi-cookie-banner {
