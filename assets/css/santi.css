@@ -373,6 +373,15 @@ html.dark .services-17-wrapper .nav-tabs .nav-link.active:hover .title {
 .aeo-submit:hover { filter: brightness(1.08); transform: translateY(-2px); }
 .aeo-submit:disabled { opacity: .6; cursor: progress; transform: none; }
 
+.aeo-form-note {
+  margin-top: 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--secondary);
+  max-width: 760px;
+}
+.aeo-form-note a { color: var(--theme); }
+
 .aeo-status {
   margin-top: 28px;
   font-size: 16px;

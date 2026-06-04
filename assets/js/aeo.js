@@ -87,16 +87,52 @@
     s.innerHTML = isError ? esc(msg) : '<span class="spinner"></span>' + esc(msg);
   }
 
+  // Send the AEO check as a qualified lead (with their score) to n8n.
+  function captureAeoLead(email, report) {
+    var hook = window.SANTI_LEAD_WEBHOOK || "https://n8n.santi.co.za/webhook/santi-leads";
+    var fails = report.checks.filter(function (c) { return c.status === "fail"; }).map(function (c) { return c.label; });
+    var warns = report.checks.filter(function (c) { return c.status === "warn"; }).map(function (c) { return c.label; });
+    var s = report.summary || {};
+    var payload = {
+      type: "aeo",
+      email: email,
+      url: report.url,
+      score: report.score,
+      grade: report.grade,
+      summary: report.score + "/100 (" + report.grade + ") · " +
+        (s.pass || 0) + " pass / " + (s.warn || 0) + " warn / " + (s.fail || 0) + " fail",
+      issues: fails.concat(warns).join("; "),
+      page: location.href,
+      submittedAt: new Date().toISOString()
+    };
+    // Fire-and-forget — never block showing the user their results
+    try {
+      fetch(hook, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      }).catch(function () {});
+    } catch (e) {}
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     var form = el("aeo-form");
     if (!form) return;
     var input = el("aeo-url");
+    var emailInput = el("aeo-email");
     var btn = el("aeo-submit");
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       var url = (input.value || "").trim();
+      var email = (emailInput ? emailInput.value : "").trim();
       if (!url) return;
+      // Require a valid email before revealing the score
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        setStatus("Please enter a valid email so we can show your score and send your report.", true);
+        if (emailInput) emailInput.focus();
+        return;
+      }
 
       el("aeo-results").hidden = true;
       setStatus("Analyzing " + url + " — reading it the way an AI would…", false);
@@ -110,6 +146,7 @@
         .then(function (res) {
           if (!res.ok || res.j.error) throw new Error(res.j.error || "We couldn't analyze that site.");
           el("aeo-status").hidden = true;
+          captureAeoLead(email, res.j);   // qualified lead + their score -> n8n
           render(res.j);
         })
         .catch(function (err) {
