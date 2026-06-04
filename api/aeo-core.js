@@ -64,17 +64,32 @@
     return "F";
   }
 
-  async function analyze(targetUrl, httpGet) {
-    var raw = String(targetUrl || "").trim();
-    if (!raw) throw new Error("Please enter a website address.");
-    if (!/^https?:\/\//i.test(raw)) raw = "https://" + raw;
-    var parsed;
-    try { parsed = new URL(raw); } catch (e) { throw new Error("That doesn't look like a valid web address."); }
+  // Self-contained URL parser (no dependency on the global URL constructor,
+  // which isn't available in some sandboxes such as n8n's Code node).
+  function parseUrl(raw) {
+    var s = String(raw || "").trim();
+    if (!s) return null;
+    if (!/^https?:\/\//i.test(s)) s = "https://" + s;
+    var m = s.match(/^(https?):\/\/([^\/?#]+)([^]*)$/i);
+    if (!m) return null;
+    var host = m[2];
+    if (!/\./.test(host) && host.toLowerCase().indexOf("localhost") !== 0) return null;
+    var scheme = m[1].toLowerCase();
+    var origin = scheme + "://" + host;
+    var path = m[3] || "/";
+    return { protocol: scheme + ":", host: host, origin: origin, href: origin + path };
+  }
 
-    var main = await httpGet(parsed.toString());
+  async function analyze(targetUrl, httpGet) {
+    var rawInput = String(targetUrl || "").trim();
+    if (!rawInput) throw new Error("Please enter a website address.");
+    var parsed = parseUrl(rawInput);
+    if (!parsed) throw new Error("That doesn't look like a valid web address.");
+
+    var main = await httpGet(parsed.href);
     if (main.status >= 400) throw new Error("The site returned an error (HTTP " + main.status + ").");
     var html = main.body || "";
-    var finalUrl = new URL(main.finalUrl || parsed.toString());
+    var finalUrl = parseUrl(main.finalUrl || parsed.href) || parsed;
     var origin = finalUrl.origin;
     var text = stripTags(html);
     var wordCount = text ? text.split(/\s+/).length : 0;
@@ -190,7 +205,7 @@
     var pct = Math.round((gained / totalW) * 100);
 
     return {
-      url: finalUrl.toString(),
+      url: finalUrl.href,
       fetchedAt: new Date().toISOString(),
       score: pct,
       grade: grade(pct),
