@@ -10,15 +10,147 @@
           "allowedOrigins": "*"
         }
       },
-      "id": "webhook-leads",
+      "id": "b125064c-0232-46e2-b160-aaadd3787c39",
       "name": "Leads Webhook",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        260,
-        300
+        -400,
+        32
       ],
       "webhookId": "santi-leads"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1IAPhd6eelg8CcgePlRvk5Er0LBZp9b0WoNPrkNuVB0c",
+          "mode": "list",
+          "cachedResultName": "Santi AEO Leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1IAPhd6eelg8CcgePlRvk5Er0LBZp9b0WoNPrkNuVB0c/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1IAPhd6eelg8CcgePlRvk5Er0LBZp9b0WoNPrkNuVB0c/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "submittedAt": "={{ $json.body.submittedAt }}",
+            "name": "={{ $json.body.name || '' }}",
+            "email": "={{ $json.body.email || '' }}",
+            "phone": "={{ $json.body.phone || '' }}",
+            "subject": "={{ $json.body.subject || $json.body.url || '' }}",
+            "message": "={{ $json.body.message || $json.body.issues || '' }}",
+            "page": "={{ $json.body.page || '' }}",
+            "report results": "={{ $json.body.summary || '' }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "submittedAt",
+              "displayName": "submittedAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "subject",
+              "displayName": "subject",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "page",
+              "displayName": "page",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "report results",
+              "displayName": "report results",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "id": "1f180333-8fcc-4033-ae05-c1222456cd6b",
+      "name": "Append row in sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -32,
+        32
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "5XMhAf7N5WBMGYKl",
+          "name": "Office N8n"
+        }
+      }
     },
     {
       "parameters": {
@@ -35,33 +167,29 @@
           }
         }
       },
-      "id": "respond-leads",
+      "id": "387c1765-79ce-41a3-ad95-c75cfc080892",
       "name": "Respond OK",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
       "position": [
-        760,
-        300
-      ]
-    },
-    {
-      "parameters": {
-        "content": "## Add your lead handling here\n\nInsert nodes BETWEEN the Webhook and Respond (e.g. an **IF / Switch** on `{{$json.body.type}}` = `contact` vs `newsletter`, then **Send Email** to santi@santi.co.za, **Google Sheets \u2192 Append**, Slack, your CRM, etc.).\n\nIncoming JSON is under `{{$json.body}}`:\n- contact: type, name, email, phone, subject, message, page, submittedAt\n- newsletter: type, email, page, submittedAt",
-        "height": 320,
-        "width": 420
-      },
-      "id": "note-leads",
-      "name": "Setup note",
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        240,
-        480
+        272,
+        32
       ]
     }
   ],
   "connections": {
     "Leads Webhook": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
       "main": [
         [
           {
@@ -76,5 +204,5 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "active": false
+  "pinData": {}
 }
