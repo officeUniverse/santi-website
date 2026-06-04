@@ -263,6 +263,28 @@ html.dark .services-17-wrapper .nav-tabs .nav-link.active:hover .title {
 @media (max-width: 760px) { .proj-gallery { grid-template-columns: 1fr; } }
 .proj-gallery img { width: 100%; aspect-ratio: 4/3; object-fit: cover; background: var(--border); }
 
+/* Legal pages: lists, tables, meta, disclaimer */
+.proj-body ul, .proj-body ol { color: var(--secondary); font-size: 17px; line-height: 1.7; margin: 0 0 24px; padding-left: 22px; }
+.proj-body li { margin-bottom: 10px; }
+.proj-body a { color: var(--theme); }
+.proj-body a:hover { text-decoration: underline; }
+.proj-body h3 { margin-top: 38px; }
+.proj-body h3:first-of-type { margin-top: 0; }
+.legal-meta { color: var(--secondary); font-size: 15px; margin: 0 0 28px; }
+.legal-disclaimer {
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--theme);
+  padding: 18px 22px;
+  margin: 0 0 40px;
+  color: var(--secondary);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.legal-table { width: 100%; border-collapse: collapse; margin: 6px 0 30px; font-size: 15px; }
+.legal-table th, .legal-table td { text-align: left; padding: 12px 14px; border: 1px solid var(--border); color: var(--secondary); vertical-align: top; line-height: 1.5; }
+.legal-table th { color: var(--primary); font-weight: 600; background: rgba(250,129,77,0.06); }
+@media (max-width: 640px) { .legal-table, .legal-table tbody, .legal-table tr, .legal-table td, .legal-table th { display: block; width: 100%; } .legal-table th { border-bottom: 0; } }
+
 /* ============================================================
    AEO tool UI
    ============================================================ */
