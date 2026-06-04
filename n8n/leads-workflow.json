@@ -15,7 +15,7 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        -400,
+        -460,
         32
       ],
       "webhookId": "santi-leads"
@@ -142,7 +142,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        -32,
+        -180,
         32
       ],
       "credentials": {
@@ -151,6 +151,26 @@
           "name": "Office N8n"
         }
       }
+    },
+    {
+      "parameters": {
+        "fromEmail": "santi@santi.co.za",
+        "toEmail": "santi@santi.co.za",
+        "subject": "=New {{ $json.body.type }} lead \u2014 {{ $json.body.email }}",
+        "emailFormat": "text",
+        "text": "=New website lead \ud83d\ude80\n\nType:     {{ $json.body.type }}\nName:     {{ $json.body.name }}\nEmail:    {{ $json.body.email }}\nPhone:    {{ $json.body.phone }}\nSubject / URL: {{ $json.body.subject || $json.body.url }}\nDetails / Issues: {{ $json.body.message || $json.body.issues }}\nAEO score: {{ $json.body.summary }}\nPage:     {{ $json.body.page }}\nTime:     {{ $json.body.submittedAt }}\n",
+        "options": {}
+      },
+      "id": "a7e10b2c-1111-4c22-9a33-emailnode0001",
+      "name": "Email me the lead",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        100,
+        32
+      ],
+      "continueOnFail": true,
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -172,7 +192,7 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
       "position": [
-        272,
+        380,
         32
       ]
     }
@@ -190,6 +210,17 @@
       ]
     },
     "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Email me the lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email me the lead": {
       "main": [
         [
           {
