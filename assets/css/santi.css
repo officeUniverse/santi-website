@@ -110,6 +110,45 @@ html.dark .services-17-wrapper .nav-tabs .nav-link.active:hover .title {
 .santi-footer-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 26px 0; color: var(--secondary); font-size: 14px; }
 
 /* ============================================================
+   Cookie consent banner
+   ============================================================ */
+.santi-cookie-banner {
+  position: fixed;
+  left: 20px; right: 20px; bottom: 20px;
+  z-index: 99990;
+  max-width: 880px;
+  margin: 0 auto;
+  background: #16181d;
+  color: #cfd2d6;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+  padding: 22px 26px;
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  transform: translateY(140%);
+  transition: transform .45s cubic-bezier(.16,.84,.44,1);
+}
+.santi-cookie-banner.is-visible { transform: translateY(0); }
+.santi-cookie-banner .cc-text { margin: 0; font-size: 14.5px; line-height: 1.6; flex: 1; }
+.santi-cookie-banner .cc-text a { color: var(--theme); }
+.santi-cookie-banner .cc-text a:hover { text-decoration: underline; }
+.santi-cookie-banner .cc-actions { display: flex; gap: 12px; flex: 0 0 auto; }
+.santi-cookie-banner .cc-btn {
+  cursor: pointer; border: 1px solid transparent;
+  padding: 12px 24px; font-size: 14px; letter-spacing: .03em; text-transform: uppercase;
+  transition: all .2s ease; white-space: nowrap;
+}
+.santi-cookie-banner .cc-accept { background: var(--theme); color: #fff; }
+.santi-cookie-banner .cc-accept:hover { filter: brightness(1.08); }
+.santi-cookie-banner .cc-decline { background: transparent; color: #cfd2d6; border-color: rgba(255,255,255,.25); }
+.santi-cookie-banner .cc-decline:hover { border-color: #cfd2d6; }
+@media (max-width: 700px) {
+  .santi-cookie-banner { flex-direction: column; align-items: stretch; gap: 16px; left: 12px; right: 12px; bottom: 12px; padding: 20px; }
+  .santi-cookie-banner .cc-actions .cc-btn { flex: 1; }
+}
+
+/* ============================================================
    Shared page hero + lead (homepage "-17" design language)
    ============================================================ */
 .santi-page-hero { padding: 150px 0 40px; }

@@ -58,6 +58,64 @@
     try { localStorage.setItem(STORAGE_KEY, isDark ? "dark" : "light"); } catch (e) {}
   }
 
+  /* ---- Location-aware About line (only runs with consent) ---- */
+  function runGeoPersonalisation() {
+    var geo = document.getElementById("santi-geo");
+    if (!geo) return;
+    var providers = [
+      { url: "https://get.geojs.io/v1/ip/geo.json", map: function (d) { return { cc: d.country_code, city: d.city, country: d.country }; } },
+      { url: "https://ipapi.co/json/", map: function (d) { return d.error ? null : { cc: d.country_code, city: d.city, country: d.country_name }; } },
+      { url: "https://ipwho.is/", map: function (d) { return d.success === false ? null : { cc: d.country_code, city: d.city, country: d.country }; } }
+    ];
+    function personalise(g) {
+      if (!g || !g.cc) return;
+      var msg;
+      if (g.cc === "ZA") msg = "Proudly based in South Africa — serving businesses in " + (g.city || "your area") + ", across the country and worldwide.";
+      else if (g.cc === "KE") msg = "On the ground in Kenya — partnering with businesses in " + (g.city || "Nairobi") + " and across the region.";
+      else msg = "Based in South Africa & Kenya — working with clients in " + (g.country || "your region") + " and worldwide.";
+      geo.textContent = msg; // textContent avoids any injection from API values
+    }
+    (function tryNext(i) {
+      if (i >= providers.length) return; // keep the static, SEO-friendly fallback
+      fetch(providers[i].url)
+        .then(function (r) { return r.json(); })
+        .then(function (d) { var g = providers[i].map(d); if (g && g.cc) personalise(g); else tryNext(i + 1); })
+        .catch(function () { tryNext(i + 1); });
+    })(0);
+  }
+
+  /* ---- Cookie consent ---- */
+  var CONSENT_KEY = "santi-cookie-consent";
+  function getConsent() { try { return localStorage.getItem(CONSENT_KEY); } catch (e) { return null; } }
+  function setConsent(v) { try { localStorage.setItem(CONSENT_KEY, v); } catch (e) {} }
+
+  function initCookieConsent() {
+    var choice = getConsent();
+    if (choice === "accepted") { runGeoPersonalisation(); return; }
+    if (choice === "rejected") { return; }
+
+    var bar = document.createElement("div");
+    bar.className = "santi-cookie-banner";
+    bar.setAttribute("role", "dialog");
+    bar.setAttribute("aria-label", "Cookie consent");
+    bar.innerHTML =
+      '<p class="cc-text">We use essential cookies to make this site work, plus optional cookies and approximate ' +
+      'location to improve your experience. See our <a href="cookies.html">Cookie Policy</a>.</p>' +
+      '<div class="cc-actions">' +
+      '<button type="button" class="cc-btn cc-decline">Decline</button>' +
+      '<button type="button" class="cc-btn cc-accept">Accept</button>' +
+      '</div>';
+    document.body.appendChild(bar);
+    requestAnimationFrame(function () { bar.classList.add("is-visible"); });
+
+    function close() {
+      bar.classList.remove("is-visible");
+      setTimeout(function () { if (bar.parentNode) bar.parentNode.removeChild(bar); }, 500);
+    }
+    bar.querySelector(".cc-accept").addEventListener("click", function () { setConsent("accepted"); close(); runGeoPersonalisation(); });
+    bar.querySelector(".cc-decline").addEventListener("click", function () { setConsent("rejected"); close(); });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     var btn = document.getElementById("theme-toggle");
     if (btn) {
@@ -66,44 +124,8 @@
       });
     }
 
-    // Location-aware About line (progressive enhancement over static SEO copy)
-    var geo = document.getElementById("santi-geo");
-    if (geo) {
-      // Try providers in order; each normalised to {cc, city, country}
-      var providers = [
-        { url: "https://get.geojs.io/v1/ip/geo.json", map: function (d) { return { cc: d.country_code, city: d.city, country: d.country }; } },
-        { url: "https://ipapi.co/json/", map: function (d) { return d.error ? null : { cc: d.country_code, city: d.city, country: d.country_name }; } },
-        { url: "https://ipwho.is/", map: function (d) { return d.success === false ? null : { cc: d.country_code, city: d.city, country: d.country }; } }
-      ];
-
-      function personalise(g) {
-        if (!g || !g.cc) return;
-        var msg;
-        if (g.cc === "ZA") {
-          msg = "Proudly based in South Africa — serving businesses in " +
-            (g.city || "your area") + ", across the country and worldwide.";
-        } else if (g.cc === "KE") {
-          msg = "On the ground in Kenya — partnering with businesses in " +
-            (g.city || "Nairobi") + " and across the region.";
-        } else {
-          msg = "Based in South Africa & Kenya — working with clients in " +
-            (g.country || "your region") + " and worldwide.";
-        }
-        geo.textContent = msg; // textContent avoids any injection from API values
-      }
-
-      (function tryNext(i) {
-        if (i >= providers.length) return; // keep static SEO-friendly fallback
-        fetch(providers[i].url)
-          .then(function (r) { return r.json(); })
-          .then(function (d) {
-            var g = providers[i].map(d);
-            if (g && g.cc) personalise(g);
-            else tryNext(i + 1);
-          })
-          .catch(function () { tryNext(i + 1); });
-      })(0);
-    }
+    // Cookie consent + (consent-gated) location personalisation
+    initCookieConsent();
 
     // Contact form -> webhook
     var cForm = document.getElementById("santi-contact-form");
