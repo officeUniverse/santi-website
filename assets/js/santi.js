@@ -9,7 +9,7 @@
      to receive contact-form + newsletter submissions as JSON.
      e.g. "https://your-n8n.app/webhook/santi-leads"
      ============================================================ */
-  var SANTI_LEAD_WEBHOOK = window.SANTI_LEAD_WEBHOOK || "";
+  var SANTI_LEAD_WEBHOOK = window.SANTI_LEAD_WEBHOOK || "https://n8n.santi.co.za/webhook/santi-leads";
 
   var STORAGE_KEY = "santi-theme";
 
