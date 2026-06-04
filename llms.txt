@@ -1,0 +1,25 @@
+# Santi Universe (Santi U)
+
+> Santi Universe is a web design, graphic design and AI engineering studio based in Roodepoort, South Africa, with a footprint in Kenya and clients worldwide. We build fast, high-performance websites, brand identities, AI solutions and AEO (Answer Engine Optimization) that turn visitors into customers.
+
+## Services
+- [Web Design & Development](https://santi.co.za/services.html): business sites, eCommerce, custom web apps, landing pages.
+- [Graphic Design & Branding](https://santi.co.za/services.html): logos, brand identity, guidelines, marketing collateral.
+- [AI Engineering](https://santi.co.za/services.html): chatbots, automation, RAG assistants, API & model integration.
+- [AEO — Answer Engine Optimization](https://santi.co.za/aeo.html): get found and recommended by ChatGPT, Gemini and AI search.
+- [Web Hosting](https://santi.co.za/services.html): managed, fast, secure hosting.
+- [WordPress & Plugins](https://santi.co.za/services.html): custom development, including a booking plugin.
+
+## Key pages
+- [Home](https://santi.co.za/)
+- [Services](https://santi.co.za/services.html)
+- [Portfolio](https://santi.co.za/portfolio.html)
+- [Free AEO Tool](https://santi.co.za/aeo.html): a free checker that scores how AI-ready any website is.
+- [About](https://santi.co.za/about.html)
+- [Contact](https://santi.co.za/contact.html)
+
+## Contact
+- Email: santi@santi.co.za
+- Phone: +27 71 591 4495
+- Location: Zeiss Road, Wilgespruit, Roodepoort, 1724, South Africa (remote-first; also serving Kenya and worldwide)
+- Hours: Monday–Friday, 9am–4:30pm SAST

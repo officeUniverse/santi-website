@@ -10,6 +10,7 @@ cp -a \
   ~/_santi_deploy/about.html ~/_santi_deploy/contact.html ~/_santi_deploy/aeo.html \
   ~/_santi_deploy/project-details.html ~/_santi_deploy/terms.html ~/_santi_deploy/privacy.html \
   ~/_santi_deploy/cookies.html ~/_santi_deploy/assets ~/_santi_deploy/api ~/_santi_deploy/.htaccess \
+  ~/_santi_deploy/llms.txt ~/_santi_deploy/robots.txt ~/_santi_deploy/sitemap.xml \
   ~/public_html/
 rm -rf ~/_santi_deploy
 echo "✓ santi.co.za updated $(date)"
