@@ -116,6 +116,13 @@ html.dark .services-17-wrapper .nav-tabs .nav-link.active:hover .title {
 html { overflow-x: hidden; }
 .santi-page-hero, .santi-section, .santi-section-tight { overflow-x: clip; }
 
+/* No horizontal scroll on mobile — clip on the body-wrapper (ScrollSmoother
+   manages html's overflow, so the guard has to live here) */
+.body-wrapper { width: 100vw; overflow-x: hidden !important; }
+
+/* Let the open off-canvas menu scroll if its content is taller than the screen */
+.side-info.info-open { overflow-y: auto !important; -webkit-overflow-scrolling: touch; }
+
 /* ---- Softer decorative grid lines (kept, just lighter & cleaner) ---- */
 .rr-h-line,
 .rr-v-lines .rr-line,
