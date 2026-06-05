@@ -20,8 +20,18 @@
   var FAKE_WORDS = ["test", "example", "fake", "demo", "sample", "asdf", "none", "noemail", "nomail", "xxx", "abc", "qwerty"];
   var DISPOSABLE = ["mailinator", "yopmail", "guerrillamail", "tempmail", "temp-mail", "10minutemail", "trashmail",
     "sharklasers", "getnada", "dispostable", "maildrop", "fakeinbox", "throwaway", "guerrilla"];
+  // Free / personal webmail. Matched by the FIRST domain label so ccTLD variants
+  // are caught too (gmail.com, yahoo.co.za, hotmail.co.uk all match). Only enforced
+  // where a business email is required — pass {businessOnly:true} (e.g. the AEO tool).
+  var FREE_EMAIL_BRANDS = ["gmail", "googlemail", "yahoo", "ymail", "rocketmail", "hotmail", "outlook",
+    "live", "msn", "icloud", "aol", "gmx", "protonmail", "yandex", "zoho", "fastmail"];
+  var FREE_EMAIL_EXACT = ["me.com", "mac.com", "mail.com", "mail.ru", "proton.me", "pm.me",
+    "qq.com", "163.com", "126.com", "naver.com", "hey.com"];
+  function isFreeEmail(domain) {
+    return FREE_EMAIL_BRANDS.indexOf(domain.split(".")[0]) > -1 || FREE_EMAIL_EXACT.indexOf(domain) > -1;
+  }
 
-  function validateEmail(v) {
+  function validateEmail(v, opts) {
     v = String(v || "").trim().toLowerCase();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) return { ok: false, msg: "Please enter a valid email address." };
     var parts = v.split("@"), local = parts[0], domain = parts[1];
@@ -30,6 +40,8 @@
       return { ok: false, msg: "Please use your real email address — that one looks like a placeholder." };
     for (var i = 0; i < DISPOSABLE.length; i++)
       if (domain.indexOf(DISPOSABLE[i]) > -1) return { ok: false, msg: "Please use a permanent (non-disposable) email address." };
+    if (opts && opts.businessOnly && isFreeEmail(domain))
+      return { ok: false, msg: "Please use your business email address — personal inboxes (Gmail, Yahoo, Outlook, etc.) aren't accepted for this report." };
     return { ok: true, value: v };
   }
 

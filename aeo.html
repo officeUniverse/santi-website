@@ -49,10 +49,10 @@
   <link rel="stylesheet" href="assets/css/odometer-theme-default.css">
 
   <!-- Template Main CSS File (single stylesheet; dark/light handled by the .dark class on <html>) -->
-  <link rel="stylesheet" id="theme-css" href="assets/css/style.css?v=6">
+  <link rel="stylesheet" id="theme-css" href="assets/css/style.css?v=7">
 
   <!-- Santi Universe custom CSS -->
-  <link rel="stylesheet" href="assets/css/santi.css?v=6">
+  <link rel="stylesheet" href="assets/css/santi.css?v=7">
 
   <!-- Organization structured data (AEO/SEO) -->
   <script type="application/ld+json">
@@ -276,16 +276,50 @@
                     <span class="aeo-grade" id="aeo-grade">&ndash;</span>
                     <p id="aeo-score-label"></p>
                     <p class="aeo-url-line" id="aeo-url-line"></p>
+                    <div class="aeo-score-actions">
+                      <button type="button" id="aeo-download" class="aeo-ghost-btn">
+                        <i class="fa-solid fa-download"></i> Download my report (PDF)
+                      </button>
+                    </div>
                   </div>
                 </div>
+
+                <div class="aeo-legend">
+                  <span class="aeo-legend-item"><span class="dot pass"></span> Looking good</span>
+                  <span class="aeo-legend-item"><span class="dot warn"></span> Could be better</span>
+                  <span class="aeo-legend-item"><span class="dot fail"></span> Needs fixing</span>
+                  <span class="aeo-legend-note">Sorted worst-first &mdash; start at the top.</span>
+                </div>
+
                 <ul class="aeo-checklist" id="aeo-checklist"></ul>
+
+                <div class="aeo-note">
+                  <div class="aeo-note-icon"><i class="fa-solid fa-hourglass-half"></i></div>
+                  <div>
+                    <h4>One important thing: this isn't instant</h4>
+                    <p>The scan above takes seconds &mdash; but getting AI engines like ChatGPT, Gemini and
+                      Perplexity to actually find, trust and recommend you is a slower journey. Once these fixes
+                      are in place, AI tools still need to re-crawl your site, and trust builds over
+                      <b>weeks to a few months</b> as your content, reviews and reputation grow. This is your
+                      head start, not a magic switch &mdash; the sooner you act, the sooner you show up.</p>
+                  </div>
+                </div>
+
                 <div class="aeo-cta">
-                  <h3>Want us to fix these and get you AI-ready?</h3>
-                  <a class="rr-btn-classic" href="contact.html">Book a consultation
-                    <span class="icon">
-                      <i class="fa-classic fa-solid fa-arrow-right fa-fw first"></i>
-                      <i class="fa-classic fa-solid fa-arrow-right fa-fw second"></i>
-                    </span></a>
+                  <h3>Want us to fix this for you?</h3>
+                  <p class="aeo-cta-sub">We'll handle the technical fixes and get your site AI-ready, so you can
+                    focus on your business. Book a free, no-pressure consultation and we'll walk you through your
+                    report together.</p>
+                  <div class="aeo-cta-btns">
+                    <a class="rr-btn-classic" href="contact.html">Get help &mdash; book a free consultation
+                      <span class="icon">
+                        <i class="fa-classic fa-solid fa-arrow-right fa-fw first"></i>
+                        <i class="fa-classic fa-solid fa-arrow-right fa-fw second"></i>
+                      </span></a>
+                    <a class="aeo-wa-btn" id="aeo-wa-btn" href="https://wa.me/27715914495" target="_blank" rel="noopener">
+                      <i class="fa-brands fa-whatsapp"></i> WhatsApp us
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -384,12 +418,12 @@
   <script src="assets/js/main.js"></script>
 
   <!-- Santi Universe custom JS -->
-  <script src="assets/js/santi.js?v=6"></script>
+  <script src="assets/js/santi.js?v=7"></script>
 
   <!-- AEO tool: by default the page calls /api/aeo on the same domain.
        If your analyzer runs elsewhere (e.g. a Vercel/Netlify function), set its URL here: -->
   <!-- <script>window.AEO_ENDPOINT = "https://your-analyzer.example.com/api/aeo";</script> -->
-  <script src="assets/js/aeo.js?v=6"></script>
+  <script src="assets/js/aeo.js?v=7"></script>
 
 
 
