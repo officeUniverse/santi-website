@@ -55,6 +55,34 @@
 
   window.SantiValidate = { email: validateEmail, phone: validatePhone };
 
+  /* ---- Mobile off-canvas navigation (independent of everything else) ----
+     The template's meanmenu doesn't reliably build the mobile menu, so we
+     clone the main nav into it. Runs on its own so nothing can block it. */
+  (function mobileNav() {
+    function ensure() {
+      var container = document.querySelector(".mobile-menu");
+      var sourceUl = document.querySelector(".header__nav .main-menu > ul");
+      if (!container || !sourceUl) return false;
+      if (container.querySelector(".mean-nav a")) return true;        // meanmenu built it
+      if (container.querySelector(".santi-mobile-nav a")) return true; // we already built it
+      var ul = sourceUl.cloneNode(true);
+      ul.removeAttribute("id");
+      ul.className = "santi-mobile-nav";
+      container.appendChild(ul);
+      return !!container.querySelector(".santi-mobile-nav a");
+    }
+    function start() {
+      ensure();
+      var tries = 0;
+      var iv = setInterval(function () { if (ensure() || ++tries > 15) clearInterval(iv); }, 350);
+      var toggle = document.getElementById("side-toggle");
+      if (toggle) toggle.addEventListener("click", function () { setTimeout(ensure, 50); });
+    }
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
+    else start();
+    window.addEventListener("load", function () { setTimeout(ensure, 100); });
+  })();
+
   function sendLead(data, opts) {
     opts = opts || {};
     var msgEl = opts.msgEl, btn = opts.btn, form = opts.form;
@@ -166,24 +194,6 @@
 
     // Cookie consent + (consent-gated) location personalisation
     initCookieConsent();
-
-    // Guarantee the mobile off-canvas always has navigation links
-    // (fallback in case the template's meanmenu doesn't build the menu)
-    (function mobileNavFallback() {
-      var container = document.querySelector(".mobile-menu");
-      var sourceUl = document.querySelector(".header__nav .main-menu > ul");
-      if (!container || !sourceUl) return;
-      function ensure() {
-        if (container.querySelector("a")) return; // already populated (by meanmenu or us)
-        var ul = sourceUl.cloneNode(true);
-        ul.removeAttribute("id");
-        ul.className = "santi-mobile-nav";
-        container.appendChild(ul);
-      }
-      setTimeout(ensure, 800);
-      var toggle = document.getElementById("side-toggle");
-      if (toggle) toggle.addEventListener("click", function () { setTimeout(ensure, 60); });
-    })();
 
     // Contact form -> webhook
     var cForm = document.getElementById("santi-contact-form");
