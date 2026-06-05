@@ -17,8 +17,8 @@ DirectoryIndex index.html
 # Light caching for static assets
 <IfModule mod_expires.c>
   ExpiresActive On
-  ExpiresByType text/css "access plus 7 days"
-  ExpiresByType application/javascript "access plus 7 days"
+  ExpiresByType text/css "access plus 1 hour"
+  ExpiresByType application/javascript "access plus 1 hour"
   ExpiresByType image/webp "access plus 30 days"
   ExpiresByType image/png "access plus 30 days"
   ExpiresByType font/woff2 "access plus 30 days"
