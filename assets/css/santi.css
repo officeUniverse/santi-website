@@ -1,6 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
 /* ============================================================
    Santi Universe — custom styles layered on top of the Adon theme
    ============================================================ */
+
+/* --- Display font: Space Mono (Google Fonts) — replaces Astro-Nebula.
+   Everything uses var(--font_astronebula), so repointing that one
+   variable swaps the loader + all headings at once.
+   Note: Space Mono ships 400/700 only, so light headings render at 400. */
+:root {
+  --font_astronebula: "Space Mono", monospace;
+}
 
 /* --- Theme driving ---
    The template applies dark mode via a `.dark` ancestor class. We put `.dark`
@@ -717,9 +727,35 @@ html.dark .aeo-score-ring {
 .santi-universe {
   display: block;
   width: 100%;
-  aspect-ratio: 410 / 582;
+  aspect-ratio: 1 / 1;
   touch-action: none;            /* let us handle drag-to-spin on touch */
 }
+/* Make the hero universe a much bigger focal point (it's absolutely
+   positioned, so growing it doesn't push the layout — it overflows its
+   column). Sits in the left zone, clear of the "50" and the buttons. */
+.hero-17-content .location-wrapper .area-shape-1 { width: 1120px; }
+@media (max-width: 1919px) { .hero-17-content .location-wrapper .area-shape-1 { width: 960px; } }
+@media (max-width: 1399px) { .hero-17-content .location-wrapper .area-shape-1 { width: 720px; } }
+@media (max-width: 1199px) { .hero-17-content .location-wrapper .area-shape-1 { width: 460px; } }
+/* Keep the hero copy (CLIENTS / 50 / paragraph / buttons) crisp above the
+   enlarged starfield, so the universe reads as a background layer. */
+.hero-17-content .experience-wrapper,
+.hero-17-content .text-wrapper { position: relative; z-index: 3; }
+
+/* Hero intro paragraph — clean, readable sentence case (was heavy ALL-CAPS).
+   BDOGrotesk (the grotesk also used on the buttons + section subtitles). */
+.hero-17-content .text {
+  font-family: var(--font_bdogrotesk), sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  text-transform: none;
+}
+
+/* Slimmer header — tighter vertical padding on nav links + CTA (was 42px),
+   and a narrower CTA. width is scoped to the header so the hero "View our
+   work" and AEO buttons keep their full width. */
+.header-area-17 .main-menu > ul > li > a { padding: 20px 20px; }
+.header-area-17 .rr-btn-classic { padding: 20px 20px; width: 77%; }
 
 /* ============================================================
    "Let's talk" CTA arrow — gentle left/right loop (invites the click)
