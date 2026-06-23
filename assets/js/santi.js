@@ -32,16 +32,18 @@
   }
 
   function validateEmail(v, opts) {
+    var biz = !!(opts && opts.businessOnly);
     v = String(v || "").trim().toLowerCase();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) return { ok: false, msg: "Please enter a valid email address." };
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v))
+      return { ok: false, msg: biz ? "Please enter a valid business email address." : "Please enter a valid email address." };
     var parts = v.split("@"), local = parts[0], domain = parts[1];
     var labels = domain.split("."), sld = labels.length >= 2 ? labels[labels.length - 2] : labels[0];
     if (FAKE_WORDS.indexOf(local) > -1 || FAKE_WORDS.indexOf(sld) > -1)
       return { ok: false, msg: "Please use your real email address — that one looks like a placeholder." };
     for (var i = 0; i < DISPOSABLE.length; i++)
       if (domain.indexOf(DISPOSABLE[i]) > -1) return { ok: false, msg: "Please use a permanent (non-disposable) email address." };
-    if (opts && opts.businessOnly && isFreeEmail(domain))
-      return { ok: false, msg: "Please use your business email address — personal inboxes (Gmail, Yahoo, Outlook, etc.) aren't accepted for this report." };
+    if (biz && isFreeEmail(domain))
+      return { ok: false, msg: "Please enter a valid business email address." };
     return { ok: true, value: v };
   }
 

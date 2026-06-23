@@ -340,6 +340,27 @@ html.dark .diagonal-line-right::after { background-color: rgba(255, 255, 255, 0.
 @media (max-width: 760px) { .proj-gallery { grid-template-columns: 1fr; } }
 .proj-gallery img { width: 100%; aspect-ratio: 4/3; object-fit: cover; background: var(--border); }
 
+/* Single full-width figure with caption */
+.proj-figure { margin: 0; }
+.proj-figure img { width: 100%; display: block; object-fit: cover; background: var(--border); }
+.proj-figure.is-wide img { aspect-ratio: 16/9; }
+.proj-figure.is-soft img { aspect-ratio: 16/9; object-fit: contain; background: var(--border); }
+.proj-cap { color: var(--secondary); font-size: 14px; letter-spacing: .02em; margin-top: 14px; }
+
+/* Pull-quote (brand rationale) */
+.proj-quote { max-width: 980px; margin: 10px 0 0; padding-left: 28px; border-left: 3px solid var(--theme); }
+.proj-quote p { color: var(--primary); font-size: clamp(20px, 2.6vw, 30px); line-height: 1.5; font-weight: 300; margin: 0 0 16px; }
+.proj-quote cite { color: var(--secondary); font-size: 15px; font-style: normal; letter-spacing: .04em; text-transform: uppercase; }
+
+/* Colour palette swatches */
+.santi-swatches { display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px; margin-top: 40px; }
+@media (max-width: 680px) { .santi-swatches { grid-template-columns: repeat(2, 1fr); } }
+.santi-swatch { border: 1px solid var(--border); }
+.santi-swatch .chip { aspect-ratio: 3/2; }
+.santi-swatch .lbl { padding: 12px 14px; }
+.santi-swatch .name { display: block; color: var(--primary); font-size: 14px; }
+.santi-swatch .hex { display: block; color: var(--secondary); font-size: 13px; letter-spacing: .04em; margin-top: 3px; }
+
 /* Legal pages: lists, tables, meta, disclaimer */
 .proj-body ul, .proj-body ol { color: var(--secondary); font-size: 17px; line-height: 1.7; margin: 0 0 24px; padding-left: 22px; }
 .proj-body li { margin-bottom: 10px; }
