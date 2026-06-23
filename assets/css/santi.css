@@ -712,6 +712,16 @@ html.dark .aeo-score-ring {
 }
 
 /* ============================================================
+   Hero interactive "universe" (replaces the placeholder image)
+   ============================================================ */
+.santi-universe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 410 / 582;
+  touch-action: none;            /* let us handle drag-to-spin on touch */
+}
+
+/* ============================================================
    "Let's talk" CTA arrow — gentle left/right loop (invites the click)
    ============================================================ */
 @keyframes santi-arrow-nudge {
