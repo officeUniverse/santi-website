@@ -710,3 +710,22 @@ html.dark .aeo-score-ring {
   .header-area-17 .header__logo .info { display: none; }
   .header-area-17 .main-menu > ul > li > a { font-size: 15px; }
 }
+
+/* ============================================================
+   "Let's talk" CTA arrow — gentle left/right loop (invites the click)
+   ============================================================ */
+@keyframes santi-arrow-nudge {
+  0%, 100% { transform: translateX(-5px); }
+  50%      { transform: translateX(7px); }
+}
+.cta-17-header .title-wrapper .action-btn svg {
+  animation: santi-arrow-nudge 1.3s ease-in-out infinite;
+  will-change: transform;
+}
+/* hold still while hovering so the click target feels stable */
+.cta-17-header .title-wrapper .action-btn:hover svg {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta-17-header .title-wrapper .action-btn svg { animation: none; }
+}
