@@ -757,6 +757,25 @@ html.dark .aeo-score-ring {
 .header-area-17 .main-menu > ul > li > a { padding: 20px 20px; }
 .header-area-17 .rr-btn-classic { padding: 20px 20px; width: 77%; }
 
+/* Service tabs — a distinct icon per service, in the brand orange */
+.service-17-content .logo-wrapper .service-17-icon {
+  position: relative;
+  z-index: 1;
+  font-size: 110px;
+  line-height: 1;
+  color: var(--theme);
+}
+@media (max-width: 1399px) { .service-17-content .logo-wrapper .service-17-icon { font-size: 80px; } }
+@media (max-width: 575px)  { .service-17-content .logo-wrapper .service-17-icon { font-size: 56px; } }
+
+/* Body paragraphs in sentence case at a light weight (not shouty ALL-CAPS) */
+.service-17-content .text,
+.feature-17-box .text,
+.funfact-17-content .text {
+  font-weight: 300;
+  text-transform: none;
+}
+
 /* ============================================================
    "Let's talk" CTA arrow — gentle left/right loop (invites the click)
    ============================================================ */
