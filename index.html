@@ -49,10 +49,10 @@
   <link rel="stylesheet" href="assets/css/odometer-theme-default.css">
 
   <!-- Template Main CSS File (single stylesheet; dark/light handled by the .dark class on <html>) -->
-  <link rel="stylesheet" id="theme-css" href="assets/css/style.css?v=22">
+  <link rel="stylesheet" id="theme-css" href="assets/css/style.css?v=23">
 
   <!-- Santi Universe custom CSS -->
-  <link rel="stylesheet" href="assets/css/santi.css?v=22">
+  <link rel="stylesheet" href="assets/css/santi.css?v=23">
 
   <!-- Organization structured data (AEO/SEO) -->
   <script type="application/ld+json">
@@ -105,6 +105,8 @@
   </script>
 
 
+  <link rel="stylesheet" href="assets/css/creative-studio.css?v=7">
+  <link rel="stylesheet" href="assets/css/studio-numbers.css?v=3">
 </head>
 
 
@@ -268,7 +270,7 @@
                   <span class="experience">CLIENTS</span>
                   <div class="rr-h-line"></div>
 
-                  <span class="year">50</span>
+                  <span class="year">51</span>
                 </div>
                 <div class="text-wrapper">
                   <p class="text">We're a web design, graphic design &amp; AI engineering studio. We craft
@@ -285,9 +287,38 @@
               </div>
               <div class="rr-h-line outerline-left outerline-right"></div>
               <div class="rr-h-line outerline-left outerline-right space-t-50"></div>
-              <div class="hero-17-image parallax-view">
-                <img class="w-100" src="assets/imgs/gallery/gallery-s-14.webp" alt="image" data-speed="0.5">
-              </div>
+              <section class="creative-studio" aria-label="Santi interactive creative studio">
+                <div class="lab-heading"><div><span class="studio-label">THE SANTI PLAYGROUND</span><h2>Made to be explored.</h2></div><p>Draw something. Discover our work.<br>Find a little unexpected.</p></div>
+                <div class="studio-tabs" role="tablist" aria-label="Creative disciplines"><button type="button" id="studio-tab-design" role="tab" aria-selected="true" aria-controls="studio-design" data-mode="design">01 <span>Design</span></button><button type="button" id="studio-tab-websites" role="tab" aria-selected="false" aria-controls="studio-websites" tabindex="-1" data-mode="websites">02 <span>Websites</span></button><button type="button" id="studio-tab-ai" role="tab" aria-selected="false" aria-controls="studio-ai" tabindex="-1" data-mode="ai">03 <span>AI</span></button></div>
+                <div id="studio-design" class="studio-panel" role="tabpanel" aria-labelledby="studio-tab-design">
+                  <div class="lab-tools"><span class="studio-label">YOUR NEXT IDEA STARTS HERE</span><h3>Leave your mark.</h3><p>Drag across the canvas. Try eight brushes, from fine ink and calligraphy to neon, spray and rainbow trails.</p>
+                    <label>Brush<select id="paint-brush"><option value="ribbon">Light ribbons</option><option value="ink">Classic ink</option><option value="goo">Gooey paint</option><option value="neon">Neon glow</option><option value="dots">Dotted line</option><option value="spray">Spray paint</option><option value="calligraphy">Calligraphy</option><option value="rainbow">Rainbow trail</option></select></label>
+                    <label>Colour<input id="paint-colour" type="color" value="#fa814d"></label><label>Brush size <output id="paint-size-label">18</output><input id="paint-size" type="range" min="3" max="50" value="18"></label>
+                    <div class="lab-actions"><button type="button" id="paint-undo">Undo</button><button type="button" id="paint-clear">Clear</button><button type="button" id="paint-example">Try an example</button><button type="button" id="paint-save" class="lab-primary">Save artwork &#8595;</button></div>
+                    <p class="lab-note">Mouse, touch or pen. With the canvas focused, use arrows to move and Space to draw.</p>
+                  </div><div class="lab-surface"><canvas id="paint-canvas" width="1100" height="600" tabindex="0" aria-label="Drawing canvas. Drag to paint. Arrow keys move the brush, Space toggles drawing, Escape stops.">Your browser needs canvas support for drawing.</canvas><span class="lab-canvas-caption">A SMALL SPACE FOR BIG IDEAS</span></div>
+                </div>
+                <div id="studio-websites" class="studio-panel" role="tabpanel" aria-labelledby="studio-tab-websites" hidden>
+                  <div class="santi-gallery-toolbar"><p>Drag to explore. Click an image to view the case study.</p><div><button type="button" data-gallery-zoom="-1" aria-label="Zoom out">−</button><button type="button" data-gallery-zoom="1" aria-label="Zoom in">+</button><button type="button" data-gallery-reset>Reset view</button></div></div>
+                  <canvas id="santi-gallery" tabindex="0" aria-label="Repeating case-study image gallery. Click or tap an image to open its case study. Drag to explore, use arrow keys to move, plus and minus to zoom. Case-study links follow below."></canvas>
+                  <div class="santi-gallery-links" aria-label="Explore case studies"></div>
+                  <p class="santi-number-credit">Gallery inspired by <a href="https://codepen.io/ol-ivier/pen/emdjmBQ" target="_blank" rel="noopener noreferrer">ol-ivier</a>.</p>
+                </div>
+                <div id="studio-ai" class="studio-panel" role="tabpanel" aria-labelledby="studio-tab-ai" hidden>
+                  <div class="santi-numbers">
+                    <form class="santi-number-form">
+                      <label for="ai-number">Turn a number into a geometric pattern.</label>
+                      <input id="ai-number" type="text" inputmode="numeric" pattern="[0-9]{1,3}" maxlength="3" placeholder="123" autocomplete="off" required aria-describedby="ai-number-status">
+                      <button type="submit" aria-label="Generate number pattern">Generate &#8594;</button>
+                    </form>
+                    <div class="santi-number-art" role="group" tabindex="0" hidden></div>
+                    <div class="santi-number-actions" hidden><button type="button" data-number-reset>Reset</button><button type="button" data-number-remix>Rebuild circles</button></div>
+                    <p id="ai-number-status" class="santi-number-status" role="status"></p>
+                  </div>
+
+                </div>
+                <p id="studio-feedback" role="status" class="lab-feedback"></p>
+              </section>
             </div>
           </div>
         </section>
@@ -544,7 +575,23 @@
                     </div>
                   </div>
                   <div class="swiper portfolio-17-active">
-                    <div class="swiper-wrapper">
+                    <div class="swiper-wrapper"><div class="swiper-slide"><div class="portfolio-17-item"><div class="meta"><span class="tag">Brand &amp; Website</span><span class="year">2026</span></div><div class="thumb"><a href="project-crowsnest.html"><img src="assets/imgs/projects/crowsnest/welcome-mockup.png" alt="Crow’s Nest coastal welcome stationery concept"></a></div><div class="content"><h3 class="title"><a href="project-crowsnest.html">Crow’s Nest</a></h3></div></div></div><div class="swiper-slide"><div class="portfolio-17-item"><div class="meta"><span class="tag">Brand &amp; Website</span><span class="year">Guildco</span></div><div class="thumb"><a href="project-guildco.html"><img src="assets/imgs/projects/guildco/hero.jpg" alt="Guildco bold wordmark and colour stripe brand identity"></a></div><div class="content"><h3 class="title"><a href="project-guildco.html">Guildco</a></h3></div></div></div><div class="swiper-slide"><div class="portfolio-17-item"><div class="meta"><span class="tag">Brand Identity</span><span class="year">Logo System</span></div><div class="thumb"><a href="project-she.html"><img src="assets/imgs/projects/she/hero-v2.png" alt="SHE Foundation brand collection concept"></a></div><div class="content"><h3 class="title"><a href="project-she.html">SHE Foundation</a></h3></div></div></div><div class="swiper-slide"><div class="portfolio-17-item"><div class="meta"><span class="tag">Brand Identity</span><span class="year">Brand Guide</span></div><div class="thumb"><a href="project-isiphethu.html"><img src="assets/imgs/projects/isiphethu/reception.png" alt="Isiphethu Group Holdings reception branding concept"></a></div><div class="content"><h3 class="title"><a href="project-isiphethu.html">Isiphethu</a></h3></div></div></div>
+                      <div class="swiper-slide"><div class="portfolio-17-item"><div class="meta"><span class="tag">Brand &amp; Website</span><span class="year">Forestry</span></div><div class="thumb"><a href="project-awethu.html"><img src="assets/imgs/projects/awethu/hero.jpg" alt="Awethu Forestry brand identity against a forest canopy"></a></div><div class="content"><h3 class="title"><a href="project-awethu.html">Awethu Forestry</a></h3></div></div></div>
+                      <div class="swiper-slide">
+                        <div class="portfolio-17-item">
+                          <div class="meta">
+                            <span class="tag">Web Design &amp; Care</span>
+                            <span class="year">Ongoing</span>
+                          </div>
+                          <div class="thumb">
+                            <a href="project-glni.html"><img src="assets/imgs/projects/glni/studio-hero-v2.png"
+                                alt="GLNI website on desktop, laptop, tablet and phone"></a>
+                          </div>
+                          <div class="content">
+                            <h3 class="title"><a href="project-glni.html">GLNI</a></h3>
+                          </div>
+                        </div>
+                      </div>
                       <div class="swiper-slide">
                         <div class="portfolio-17-item">
                           <div class="meta">
@@ -769,7 +816,7 @@
                     <div class="funfact-17-box">
                       <p class="text">Happy clients served <br>
                         worldwide</p>
-                      <span class="number">50</span>
+                      <span class="number">51</span>
                     </div>
                     <div class="funfact-17-box">
                       <p class="text">Projects designed <br>
@@ -1088,10 +1135,15 @@
   <script src="assets/js/main.js"></script>
 
   <!-- Santi Universe custom JS -->
-  <script src="assets/js/santi.js?v=22"></script>
+  <script src="assets/js/santi.js?v=23"></script>
 
 
 
+  <script src="assets/js/creative-studio.js?v=7"></script>
+  <script src="assets/js/studio-numbers.js?v=3"></script>
+  <script src="assets/js/studio-number-physics.js?v=1"></script>
+  <script src="assets/js/case-studies.js?v=14"></script>
+  <script src="assets/js/studio-gallery.js?v=2"></script>
 </body>
 
 </html>

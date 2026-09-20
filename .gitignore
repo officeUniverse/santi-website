@@ -17,3 +17,18 @@ node_modules/
 
 # Deploy bundle (build artifact)
 santi-site-deploy.zip
+
+# Agent / tooling caches (not part of the site)
+/graft/
+/.reticle/
+
+# Separate project — not part of santi.co.za (kept local)
+/unplugg.html
+/Unplugg/
+/assets/unplugg/
+/unplugg-website-v2.zip
+
+# Unused local fonts (display font loads from Google Fonts)
+/font/
+/assets/fonts/Astonpoliz-Regular.otf
+/assets/fonts/Astonpoliz-Regular.ttf

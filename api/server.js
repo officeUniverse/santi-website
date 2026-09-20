@@ -6,13 +6,15 @@
 
 const http = require("http");
 const { handler } = require("./aeo");
+const chatHandler = require("./studio-chat");
 
 const PORT = process.env.PORT || 8849;
 
 http
   .createServer((req, res) => {
-    // route everything under /api/aeo (and root) to the handler
-    handler(req, res).catch((e) => {
+    const path = req.url.split("?")[0];
+    const route = path === "/api/studio-chat" ? chatHandler : handler;
+    route(req, res).catch((e) => {
       res.writeHead(500, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ error: String(e) }));
     });

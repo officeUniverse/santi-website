@@ -272,7 +272,7 @@
         });
         var f = b.getAttribute("data-filter");
         grid.querySelectorAll(".santi-pf-card").forEach(function (card) {
-          var show = f === "all" || card.getAttribute("data-category") === f;
+          var show = f === "all" || (card.getAttribute("data-category") || "").split(/\s+/).indexOf(f) !== -1;
           card.style.display = show ? "" : "none";
         });
       });

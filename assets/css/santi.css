@@ -776,6 +776,34 @@ html.dark .aeo-score-ring {
   text-transform: none;
 }
 
+/* Selected Work: consistent card and image heights across the carousel. */
+.portfolio-17-active .swiper-slide {
+  height: auto;
+}
+.portfolio-17-active .portfolio-17-item {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.portfolio-17-active .thumb {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+.portfolio-17-active .thumb a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.portfolio-17-active .thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.portfolio-17-active .content {
+  flex: 1;
+}
+
 /* ============================================================
    "Let's talk" CTA arrow — gentle left/right loop (invites the click)
    ============================================================ */

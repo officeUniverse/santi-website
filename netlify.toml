@@ -10,3 +10,8 @@
   status = 200
 
 # Pretty URLs / SPA-style fallback is NOT needed (multi-page static site)
+
+[[redirects]]
+  from = "/api/studio-chat"
+  to = "/.netlify/functions/studio-chat"
+  status = 200

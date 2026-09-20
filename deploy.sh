@@ -9,6 +9,9 @@ cp -a \
   ~/_santi_deploy/index.html ~/_santi_deploy/services.html ~/_santi_deploy/portfolio.html \
   ~/_santi_deploy/about.html ~/_santi_deploy/contact.html ~/_santi_deploy/aeo.html \
   ~/_santi_deploy/project-details.html ~/_santi_deploy/project-algafusion.html \
+  ~/_santi_deploy/project-awethu.html ~/_santi_deploy/project-crowsnest.html \
+  ~/_santi_deploy/project-glni.html ~/_santi_deploy/project-guildco.html \
+  ~/_santi_deploy/project-isiphethu.html ~/_santi_deploy/project-she.html \
   ~/_santi_deploy/terms.html ~/_santi_deploy/privacy.html \
   ~/_santi_deploy/cookies.html ~/_santi_deploy/assets ~/_santi_deploy/api ~/_santi_deploy/.htaccess \
   ~/_santi_deploy/llms.txt ~/_santi_deploy/robots.txt ~/_santi_deploy/sitemap.xml \
