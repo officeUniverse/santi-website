@@ -30,5 +30,7 @@ santi-site-deploy.zip
 
 # Unused local fonts (display font loads from Google Fonts)
 /font/
+# Personal-use / non-redistributable downloaded fonts — never commit to a public repo
+/NewFont/
 /assets/fonts/Astonpoliz-Regular.otf
 /assets/fonts/Astonpoliz-Regular.ttf
