@@ -1,6 +1,6 @@
 /* Digit shapes and pattern gradients adapted from cobra_winfrey:
    https://codepen.io/cobra_winfrey/pen/xvjbYy */
-.santi-numbers{--bg:transparent;background:#222;min-height:560px;padding:35px 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;font-family:"Space Mono",monospace}
+.santi-numbers{--bg:transparent;background:#0a1b50;min-height:560px;padding:35px 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;font-family:"Space Mono",monospace}
 .santi-numbers [hidden]{display:none!important}
 .santi-number-form{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px;width:100%;max-width:520px}
 .santi-number-form label{width:100%;text-align:center;color:#ccc;font-size:14px}
@@ -41,8 +41,8 @@
         background:linear-gradient(45deg, transparent, transparent calc(75% - 1px), var(--color1) calc(75% - 1px), var(--color1) calc(75% + 0px), transparent calc(75% + 0px)), repeating-linear-gradient(45deg, var(--bg), var(--bg) calc(12.5% - 1px), var(--color2) calc(12.5% - 1px), var(--color2) 12.5%, var(--bg) 12.5%), var(--bg);}
 
 /* Playfield keeps the number suspended until a projectile hits it. */
-.santi-number-art{position:relative;height:420px;align-items:flex-start;padding-top:24px;overflow:hidden;cursor:crosshair;touch-action:pan-y;border-bottom:1px solid #fa814d}
-.santi-number-art::after{content:"↑";position:absolute;bottom:4px;left:calc(50% - 8px);color:#ffc08a;font:24px Arial;pointer-events:none}
+.santi-number-art{position:relative;height:420px;align-items:flex-start;padding-top:24px;overflow:hidden;cursor:crosshair;touch-action:pan-y;border-bottom:1px solid #ffd147}
+.santi-number-art::after{content:"↑";position:absolute;bottom:4px;left:calc(50% - 8px);color:#08becc;font:24px Arial;pointer-events:none}
 .number-physics-layer{position:absolute;inset:0;pointer-events:none}
 .number-physics-body{position:absolute!important;left:0;top:0;animation:none!important;clip-path:none!important;opacity:1!important}
-.number-projectile{position:absolute;left:0;top:0;width:16px;height:16px;border-radius:50%;background:#fff1d6;box-shadow:0 0 14px #ff7415}
+.number-projectile{position:absolute;left:0;top:0;width:16px;height:16px;border-radius:50%;background:#fffbe8;box-shadow:0 0 14px #ffd147}

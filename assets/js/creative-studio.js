@@ -7,7 +7,7 @@
   var tabs=all('[role=tab]');
   function activate(tab){tabs.forEach(function(t){var yes=t===tab;t.setAttribute('aria-selected',String(yes));t.tabIndex=yes?0:-1;document.getElementById(t.getAttribute('aria-controls')).hidden=!yes;});}
   tabs.forEach(function(tab,i){tab.addEventListener('click',function(){activate(tab);});tab.addEventListener('keydown',function(e){var next={ArrowRight:(i+1)%3,ArrowLeft:(i+2)%3,Home:0,End:2}[e.key];if(next!==undefined){e.preventDefault();tabs[next].focus();activate(tabs[next]);}});});
-  function download(canvas,name){var out=document.createElement('canvas');out.width=canvas.width;out.height=canvas.height;var ctx=out.getContext('2d');ctx.fillStyle='#0c0d11';ctx.fillRect(0,0,out.width,out.height);ctx.drawImage(canvas,0,0);out.toBlob(function(blob){if(!blob){feedback.textContent='Could not save the artwork. Please try again.';return;}var url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},1500);feedback.textContent='Your artwork is ready to download.';},'image/png');}
+  function download(canvas,name){var out=document.createElement('canvas');out.width=canvas.width;out.height=canvas.height;var ctx=out.getContext('2d');ctx.fillStyle='#081844';ctx.fillRect(0,0,out.width,out.height);ctx.drawImage(canvas,0,0);out.toBlob(function(blob){if(!blob){feedback.textContent='Could not save the artwork. Please try again.';return;}var url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},1500);feedback.textContent='Your artwork is ready to download.';},'image/png');}
   // Strokes are retained in logical canvas coordinates, so resizing does not erase them.
   function drawing(canvas,start,move,end){var active=null,keyDrawing=false,cursor={x:canvas.width/2,y:canvas.height/2};
     function point(e){var r=canvas.getBoundingClientRect();return{x:(e.clientX-r.left)*canvas.width/r.width,y:(e.clientY-r.top)*canvas.height/r.height};}
@@ -70,7 +70,7 @@
       g[1].forEach(function(st){out.push({brush:'ribbon',colour:colours[word%colours.length],size:16,points:st.map(function(p){return{x:x+p[0]*S,y:base-p[1]*S};})});});
       x+=g[0]*S;}
     return out;}
-  function paintExample(){stopWriting();current=null;strokes=[];var full=textStrokes('design here',['#fb7515','#9ebaef']);
+  function paintExample(){stopWriting();current=null;strokes=[];var full=textStrokes('design here',['#ffd147','#08becc']);
     if(reduced.matches){strokes=full;schedulePaint();return;}
     var si=0,pi=0,live=null;
     (function tick(){for(var n=0;n<6&&si<full.length;n++){if(!live){live={brush:full[si].brush,colour:full[si].colour,size:full[si].size,points:[]};strokes.push(live);}

@@ -254,7 +254,7 @@
     var bar = document.createElement("div");
     bar.className = "cookie"; bar.setAttribute("role", "dialog"); bar.setAttribute("aria-label", "Cookie consent");
     bar.innerHTML = '<p>We use essential cookies to run this site, plus optional ones to improve it. See our <a href="cookies.html">Cookie Policy</a>.</p>' +
-      '<div><button type="button" class="btn btn--ghost" data-c="rejected">Decline</button><button type="button" class="btn btn--orange" data-c="accepted">Accept</button></div>';
+      '<div><button type="button" class="btn btn--ghost" data-c="rejected">Decline</button><button type="button" class="btn btn--accent" data-c="accepted">Accept</button></div>';
     document.body.appendChild(bar);
     requestAnimationFrame(function () { bar.classList.add("is-visible"); });
     $$("button", bar).forEach(function (b) {

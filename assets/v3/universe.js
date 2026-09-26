@@ -10,7 +10,7 @@
   "use strict";
 
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var BASE = "242,240,235", ACCENT = "251,117,21", FOCAL = 2.3;
+  var BASE = "244,247,248", GOLD = "255,209,71", TEAL = "8,190,204", FOCAL = 2.3;
 
   function Universe(canvas) {
     var interactive = canvas.dataset.universe === "interactive";
@@ -27,8 +27,8 @@
       var golden = Math.PI * (3 - Math.sqrt(5));
       pts = [];
       for (var i = 0; i < n; i++) {
-        var y = 1 - (i / (n - 1)) * 2, r = Math.sqrt(1 - y * y), th = golden * i;
-        pts.push({ x: Math.cos(th) * r, y: y, z: Math.sin(th) * r, accent: Math.random() < 0.12,
+        var y = 1 - (i / (n - 1)) * 2, r = Math.sqrt(1 - y * y), th = golden * i, pick = Math.random();
+        pts.push({ x: Math.cos(th) * r, y: y, z: Math.sin(th) * r, accent: pick < 0.07 ? GOLD : pick < 0.14 ? TEAL : null, // ~7% gold, ~7% turquoise
           tw: Math.random() * 6.283, ox: 0, oy: 0, ovx: 0, ovy: 0, sx: 0, sy: 0 });
       }
     }
@@ -101,7 +101,7 @@
         for (var j = 0; j < proj.length; j++) {
           var q = proj[j], dx = q.sx - px, dy = q.sy - py, d = Math.sqrt(dx * dx + dy * dy);
           if (d < R * 0.9) {
-            ctx.strokeStyle = "rgba(" + (q.p.accent ? ACCENT : BASE) + "," + ((1 - d / (R * 0.9)) * 0.45 * (0.4 + q.depth)).toFixed(3) + ")";
+            ctx.strokeStyle = "rgba(" + (q.p.accent || BASE) + "," + ((1 - d / (R * 0.9)) * 0.45 * (0.4 + q.depth)).toFixed(3) + ")";
             ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(q.sx, q.sy); ctx.stroke();
           }
         }
@@ -115,7 +115,7 @@
           var ex = s.sx - px, ey = s.sy - py, dd = Math.sqrt(ex * ex + ey * ey);
           if (dd < 70) { a = Math.min(1, a + (1 - dd / 70) * 0.6); rad += (1 - dd / 70) * 1.6; }
         }
-        ctx.fillStyle = "rgba(" + (s.p.accent ? ACCENT : BASE) + "," + a.toFixed(3) + ")";
+        ctx.fillStyle = "rgba(" + (s.p.accent || BASE) + "," + a.toFixed(3) + ")";
         ctx.beginPath(); ctx.arc(s.sx, s.sy, rad, 0, 6.283); ctx.fill();
       }
 
@@ -123,7 +123,7 @@
         var rg = rings[ri];
         rg.r += R * 0.05; rg.a *= 0.93;
         if (rg.a < 0.03) { rings.splice(ri, 1); continue; }
-        ctx.strokeStyle = "rgba(" + (rg.accent ? ACCENT : BASE) + "," + rg.a.toFixed(3) + ")";
+        ctx.strokeStyle = "rgba(" + (rg.accent ? GOLD : BASE) + "," + rg.a.toFixed(3) + ")";
         ctx.lineWidth = rg.accent ? 1.6 : 1; ctx.beginPath(); ctx.arc(rg.x, rg.y, rg.r, 0, 6.283); ctx.stroke();
       }
     }
