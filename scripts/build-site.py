@@ -132,7 +132,7 @@ def tail(href, scripts=()):
     extra = "".join(f'\n  <script src="{a(src)}"></script>' for src in scripts)
     return f"""{current(FOOTER, href)}{MODAL}  <div class="pblur" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 
-  <script src="assets/v3/universe.js?v=3"></script>
+  <script src="assets/v3/universe.js?v=4"></script>
   <script src="assets/v3/site.js?{V}"></script>{extra}
 </body>
 </html>

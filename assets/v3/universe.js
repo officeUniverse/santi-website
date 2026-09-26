@@ -75,7 +75,7 @@
     function num(v, d) { var n = parseFloat(v); return isNaN(n) ? d : n; }
 
     function build() {
-      var n = icon ? Math.max(420, Math.min(720, Math.round(Math.min(W, H) * 1.1)))
+      var n = icon ? Math.max(520, Math.min(1000, Math.round(Math.min(W, H) * 1.5)))
         : Math.max(90, Math.min(200, Math.round(Math.min(W, H) / 2.6)));
       var golden = Math.PI * (3 - Math.sqrt(5)), home = icon ? iconPoints(n) : null, dome = icon ? 0.42 : 1;
       pts = [];
