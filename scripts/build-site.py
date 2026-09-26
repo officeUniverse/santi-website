@@ -29,7 +29,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CONTENT = ROOT / "content" / "case-studies"
 PAGES = ROOT / "content" / "pages"
 SITE = "https://santi.co.za/"
-V = "v=7"  # cache stamp for v3.css / case.css / pages.css / site.js
+V = "v=8"  # cache stamp for v3.css / case.css / pages.css / site.js
 
 
 def t(s):  # text node
@@ -243,8 +243,8 @@ def render_project(p, nxt):
 
     <section class="case-cta" aria-labelledby="cta-title">
       <span class="eyebrow">Your project</span>
-      <h2 id="cta-title">Want work like this<span class="star">*</span></h2>
-      <span class="foot">*Tell us about it in four quick steps</span>
+      <h2 id="cta-title">Want work like this<span class="star" aria-hidden="true">!</span></h2>
+      <span class="foot">Tell us about it in four quick steps</span>
       <div class="case-cta__actions"><a class="btn btn--accent" href="contact.html" data-quote>Get a quote <span class="arr" aria-hidden="true">→</span></a><a class="btn btn--ghost" href="portfolio.html">More work</a></div>
     </section>
   </main>
@@ -289,8 +289,8 @@ def render_index(projects):
 
     <section class="case-cta" aria-labelledby="cta-title">
       <span class="eyebrow">Your project</span>
-      <h2 id="cta-title">Your brand could be next<span class="star">*</span></h2>
-      <span class="foot">*Tell us about it in four quick steps</span>
+      <h2 id="cta-title">Your brand could be next<span class="star" aria-hidden="true">!</span></h2>
+      <span class="foot">Tell us about it in four quick steps</span>
       <div class="case-cta__actions"><a class="btn btn--accent" href="contact.html" data-quote>Get a quote <span class="arr" aria-hidden="true">→</span></a></div>
     </section>
   </main>
