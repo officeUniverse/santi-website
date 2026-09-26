@@ -42,10 +42,41 @@
   }
   function schedulePaint(){if(!paintFrame)paintFrame=requestAnimationFrame(paintRender);}
   function append(s,p){if(!s||s.points.length>=800)return;var last=s.points[s.points.length-1];if(Math.hypot(p.x-last.x,p.y-last.y)>1)s.points.push(p);}
-  drawing(paint,function(p){if(strokes.length>=60){feedback.textContent='Canvas full. Save your artwork, undo a stroke or clear to start again.';return;}current={brush:one('#paint-brush').value,colour:one('#paint-colour').value,size:+one('#paint-size').value,points:[p]};strokes.push(current);schedulePaint();},function(p){append(current,p);schedulePaint();},function(){current=null;});
+  drawing(paint,function(p){stopWriting();if(strokes.length>=60){feedback.textContent='Canvas full. Save your artwork, undo a stroke or clear to start again.';return;}current={brush:one('#paint-brush').value,colour:one('#paint-colour').value,size:+one('#paint-size').value,points:[p]};strokes.push(current);schedulePaint();},function(p){append(current,p);schedulePaint();},function(){current=null;});
   one('#paint-size').addEventListener('input',function(){one('#paint-size-label').value=this.value;});
-  one('#paint-undo').addEventListener('click',function(){current=null;strokes.pop();schedulePaint();});
-  one('#paint-clear').addEventListener('click',function(){current=null;strokes=[];schedulePaint();feedback.textContent='Canvas cleared. Make something new.';});
-  function paintExample(){current=null;strokes=[];for(var k=0;k<3;k++){var points=[];for(var i=0;i<220;i++){var t=i/219*Math.PI*2;points.push({x:550+Math.sin(t*(k===2?2:1))*(220+k*35),y:300+Math.cos(t*3+k*.7)*(95+k*10)});}strokes.push({points:points,brush:one('#paint-brush').value,colour:['#fa814d','#9ebaef','#d5b3ed'][k],size:18+k*4});}schedulePaint();}
-  one('#paint-example').addEventListener('click',paintExample);one('#paint-save').addEventListener('click',function(){paintRender();download(paint,'santi-my-artwork.png');});paintExample();
+  one('#paint-undo').addEventListener('click',function(){stopWriting();current=null;strokes.pop();schedulePaint();});
+  one('#paint-clear').addEventListener('click',function(){stopWriting();current=null;strokes=[];schedulePaint();feedback.textContent='Canvas cleared. Make something new.';});
+
+  // Example: the light-ribbon brush hand-writes "design here", stroke by stroke.
+  var writing=0;
+  function stopWriting(){if(writing){cancelAnimationFrame(writing);writing=0;}}
+  function arc(cx,cy,r,a0,a1){var pts=[],n=Math.max(6,Math.ceil(Math.abs(a1-a0)/7));for(var i=0;i<=n;i++){var a=(a0+(a1-a0)*i/n)*Math.PI/180;pts.push([cx+r*Math.cos(a),cy+r*Math.sin(a)]);}return pts;}
+  function line(x0,y0,x1,y1){var pts=[],n=Math.max(2,Math.ceil(Math.hypot(x1-x0,y1-y0)*14));for(var i=0;i<=n;i++)pts.push([x0+(x1-x0)*i/n,y0+(y1-y0)*i/n]);return pts;}
+  // Single-stroke glyphs in x-height units (baseline 0, x-height 1, y up): [advance, strokes]
+  var GLYPHS={
+    d:[1.05,[arc(.45,.5,.45,40,400),line(.9,1.9,.9,0)]],
+    e:[1,[line(.07,.5,.9,.5).concat(arc(.48,.5,.43,0,315))]],
+    s:[.85,[arc(.42,.74,.26,20,270).concat(arc(.42,.26,.26,90,-160))]],
+    i:[.45,[line(.22,1,.22,0),arc(.22,1.38,.05,0,360)]],
+    g:[1.05,[arc(.45,.5,.45,40,400),line(.9,1,.9,-.35).concat(arc(.5,-.35,.4,0,-190))]],
+    n:[1,[line(.12,1,.12,0),arc(.47,.62,.35,180,0).concat(line(.82,.62,.82,0))]],
+    h:[1,[line(.12,1.9,.12,0),arc(.47,.62,.35,180,0).concat(line(.82,.62,.82,0))]],
+    r:[.75,[line(.12,1,.12,0),arc(.42,.6,.3,180,45)]],
+    ' ':[.45,[]]
+  };
+  function textStrokes(text,colours){var total=0,out=[],word=0;for(var c=0;c<text.length;c++)total+=GLYPHS[text[c]][0];
+    var S=Math.min(102,980/total),x=(1100-total*S)/2,base=300+.575*S; // centre the 1.9…-.75 extent vertically
+    for(var k=0;k<text.length;k++){var g=GLYPHS[text[k]];if(text[k]===' ')word++;
+      g[1].forEach(function(st){out.push({brush:'ribbon',colour:colours[word%colours.length],size:16,points:st.map(function(p){return{x:x+p[0]*S,y:base-p[1]*S};})});});
+      x+=g[0]*S;}
+    return out;}
+  function paintExample(){stopWriting();current=null;strokes=[];var full=textStrokes('design here',['#fb7515','#9ebaef']);
+    if(reduced.matches){strokes=full;schedulePaint();return;}
+    var si=0,pi=0,live=null;
+    (function tick(){for(var n=0;n<6&&si<full.length;n++){if(!live){live={brush:full[si].brush,colour:full[si].colour,size:full[si].size,points:[]};strokes.push(live);}
+        live.points.push(full[si].points[pi++]);if(pi>=full[si].points.length){si++;pi=0;live=null;}}
+      schedulePaint();writing=si<full.length?requestAnimationFrame(tick):0;})();}
+  one('#paint-example').addEventListener('click',paintExample);one('#paint-save').addEventListener('click',function(){paintRender();download(paint,'santi-my-artwork.png');});
+  // Write it when the canvas scrolls into view, so visitors see it happen.
+  if('IntersectionObserver' in window){var seen=new IntersectionObserver(function(en){if(en[0].isIntersecting){seen.disconnect();paintExample();}},{threshold:.4});seen.observe(paint);}else paintExample();
 })();

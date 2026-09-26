@@ -181,7 +181,9 @@
   if (canHover && !reduce) {
     $$(".tile[data-project]").forEach(function (tile) {
       var media = $(".tile__media", tile), cover = $("img", media);
-      var list = (registry[tile.dataset.project] || []).filter(function (s) { return s !== cover.getAttribute("src"); });
+      // Curated, mockups-first reel from data-reel; fall back to the case-study registry.
+      var source = tile.dataset.reel ? tile.dataset.reel.split("|") : (registry[tile.dataset.project] || []);
+      var list = source.filter(function (s) { return s && s !== cover.getAttribute("src"); });
       if (!list.length) return;
       var orig = cover.getAttribute("src"), a = cover, b = cover.cloneNode();
       b.removeAttribute("srcset"); b.removeAttribute("loading"); b.alt = ""; b.setAttribute("aria-hidden", "true"); b.classList.add("is-next");
@@ -196,7 +198,7 @@
         pre.onload = function () { if (hovering) swapTo(src); };
         pre.src = src;
       };
-      tile.addEventListener("pointerenter", function () { hovering = true; step(); timer = setInterval(step, 1100); });
+      tile.addEventListener("pointerenter", function () { hovering = true; step(); timer = setInterval(step, 1400); });
       tile.addEventListener("pointerleave", function () {
         hovering = false; clearInterval(timer); timer = null;
         if (showing.getAttribute("src") !== orig) swapTo(orig);

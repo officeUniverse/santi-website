@@ -199,11 +199,18 @@ p { margin: 0; }
 @keyframes marquee { to { transform: translateX(-50%); } }
 
 /* ---------- featured work ---------- */
-.work { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--gutter); padding: 0 var(--gutter); }
-.tile { position: relative; display: block; border-radius: var(--radius); overflow: hidden; background: var(--paper-2); isolation: isolate; }
-.tile--l { grid-column: span 8; aspect-ratio: 16 / 10.4; }
-.tile--s { grid-column: span 4; }
-.tile--third { grid-column: span 4; aspect-ratio: 4 / 4.6; }
+.work { display: grid; gap: var(--gutter); padding: 0 var(--gutter); }
+/* Each row is a flex strip: the hovered tile takes a bigger share, neighbours give way. */
+.work-row { display: flex; gap: var(--gutter); height: clamp(360px, 42vw, 660px); }
+.work-row--3 { height: clamp(340px, 36vw, 560px); }
+.tile { position: relative; display: block; border-radius: var(--radius); overflow: hidden; background: var(--paper-2); isolation: isolate; min-width: 0; }
+.work .tile { flex: var(--grow, 1) 1 0; transition: flex-grow .7s var(--ease), transform .9s var(--ease), opacity .9s var(--ease); }
+.tile--l { --grow: 2; }
+.tile--s, .tile--third { --grow: 1; }
+@media (hover: hover) and (min-width: 861px) {
+  .work-row:hover .tile { --grow: 1; }
+  .work-row .tile:hover, .work-row .tile:focus-visible { --grow: 2.8; }
+}
 .tile__media { position: absolute; inset: 0; }
 .tile__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity .6s var(--ease), transform 1.2s var(--ease); }
 .tile__media img.is-next { opacity: 0; }
@@ -405,9 +412,10 @@ p { margin: 0; }
   .footer__top { grid-template-columns: 1fr; }
 }
 @media (max-width: 860px) {
-  .work { grid-template-columns: 1fr 1fr; }
-  .tile--l { grid-column: 1 / -1; aspect-ratio: 16 / 11; }
-  .tile--s, .tile--third { grid-column: span 1; aspect-ratio: 4 / 5; }
+  .work-row { display: grid; grid-template-columns: 1fr 1fr; height: auto; }
+  .work-row--3 { grid-template-columns: repeat(3, 1fr); }
+  .work-row .tile--l { grid-column: 1 / -1; aspect-ratio: 16 / 11; }
+  .work-row .tile--s, .work-row .tile--third { aspect-ratio: 4 / 5; }
   .quotes { grid-template-columns: 1fr; }
   .quote:nth-child(n) { margin-top: 0; }
   .aeo-band { grid-template-columns: 1fr; }
@@ -418,8 +426,8 @@ p { margin: 0; }
 }
 @media (max-width: 560px) {
   :root { --gutter: 8px; }
-  .work { grid-template-columns: 1fr; }
-  .tile--s, .tile--third { aspect-ratio: 4 / 4.4; }
+  .work-row, .work-row--3 { grid-template-columns: 1fr; }
+  .work-row .tile--s, .work-row .tile--third { aspect-ratio: 4 / 4.4; }
   .hero__hint { display: none; }
   .fields { grid-template-columns: 1fr; }
   .cookie { flex-direction: column; align-items: stretch; }
