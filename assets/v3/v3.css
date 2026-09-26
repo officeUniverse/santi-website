@@ -146,10 +146,10 @@ p { margin: 0; }
 }
 .nav__links a:hover { opacity: 1; background: rgba(255, 255, 255, .08); }
 .nav.is-solid .nav__links a:hover { background: rgba(14, 27, 61, .06); }
-.nav__links a[aria-current="page"] { opacity: 1; background: rgba(255, 255, 255, .12); box-shadow: inset 0 -2px 0 var(--gold); }
-.nav.is-solid .nav__links a[aria-current="page"] { background: rgba(23, 59, 154, .08); box-shadow: inset 0 -2px 0 var(--brand); }
-.sheet a[aria-current="page"] { color: var(--gold); }
-.footer__cols a[aria-current="page"] { color: var(--paper); }
+/* current page: turquoise text only (teal-ink on the light nav, where plain turquoise is unreadable) */
+.nav__links a[aria-current="page"], .nav__links a[aria-current="page"]:hover { opacity: 1; background: none; color: var(--teal); }
+.nav.is-solid .nav__links a[aria-current="page"] { color: var(--teal-ink); }
+.sheet a[aria-current="page"], .footer__cols a[aria-current="page"] { color: var(--teal); }
 .nav__actions { display: flex; align-items: center; gap: 8px; }
 .nav .btn { padding: 12px 16px; }
 .nav.is-solid .btn--accent { background: var(--brand); color: #fff; border-color: var(--brand); }
