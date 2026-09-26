@@ -73,9 +73,9 @@ p { margin: 0; }
 .eyebrow::before { content: "[ "; }
 .eyebrow::after { content: " ]"; }
 .on-dark .eyebrow { color: var(--night-muted); }
-/* yellow "!" accent; on light surfaces a thin royal outline keeps it legible */
-.star { margin-left: .04em; color: var(--gold); font-weight: 600; -webkit-text-stroke: .045em var(--brand); paint-order: stroke fill; }
-.on-dark .star { -webkit-text-stroke: 0; }
+/* degree-sign accent: yellow on dark frames, turquoise on light (yellow vanishes on soft white) */
+.star { position: relative; top: -.14em; margin-left: .02em; color: var(--teal); font-weight: 500; }
+.on-dark .star { color: var(--gold); }
 .foot {
   display: block; margin-top: 8px;
   font-family: var(--mono); font-size: 11px; letter-spacing: .1em;
