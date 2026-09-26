@@ -159,21 +159,6 @@
     });
   }
 
-  /* ---------- newsletter ---------- */
-  var news = $("#newsletter");
-  if (news) {
-    news.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var out = $(".form-msg", news.parentNode), em = validateEmail(news.email.value);
-      if (!em.ok) { say(out, em.msg, "err"); return; }
-      var b = $("button", news); b.disabled = true; say(out, "Subscribing…");
-      postLead({ type: "newsletter", email: em.value, page: location.href, submittedAt: new Date().toISOString() })
-        .then(function () { say(out, "You're subscribed — thank you!", "ok"); news.reset(); })
-        .catch(function () { say(out, "Couldn't subscribe right now. Please try again later.", "err"); })
-        .finally(function () { b.disabled = false; });
-    });
-  }
-
   /* ---------- work tiles: cycle a project's images on hover ---------- */
   var registry = {};
   (window.SANTI_CASE_STUDIES || []).forEach(function (p) { registry[p.href] = p.images.map(function (im) { return im.src; }); });
@@ -329,7 +314,7 @@
   if (!consent) {
     var bar = document.createElement("div");
     bar.className = "cookie"; bar.setAttribute("role", "dialog"); bar.setAttribute("aria-label", "Cookie consent");
-    bar.innerHTML = '<p>We use essential cookies to run this site, plus optional ones to improve it. See our <a href="cookies.html">Cookie Policy</a>.</p>' +
+    bar.innerHTML = '<p>No tracking here. We only remember your choice, and with your OK show a location-aware message. See our <a href="cookies.html">Cookie Policy</a>.</p>' +
       '<div><button type="button" class="btn btn--ghost" data-c="rejected">Decline</button><button type="button" class="btn btn--accent" data-c="accepted">Accept</button></div>';
     document.body.appendChild(bar);
     requestAnimationFrame(function () { bar.classList.add("is-visible"); });
