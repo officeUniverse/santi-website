@@ -114,8 +114,10 @@ def head(title, description, canonical, image, og_type, schemas, css=("case.css"
   <meta name="twitter:description" content="{a(description)}">
   <meta name="twitter:image" content="{a(image)}">
   <meta name="theme-color" content="#0d2466">
-  <link rel="icon" type="image/png" href="assets/imgs/logo/favicon.png">
+  <link rel="icon" href="favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="96x96" href="assets/imgs/logo/favicon-96.png">
   <link rel="apple-touch-icon" href="assets/imgs/logo/apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Space+Mono:wght@400;700&display=swap">

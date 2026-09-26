@@ -1,0 +1,26 @@
+{
+  "name": "Santi Universe",
+  "short_name": "Santi U",
+  "icons": [
+    {
+      "src": "assets/imgs/logo/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/imgs/logo/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/imgs/logo/icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "theme_color": "#0d2466",
+  "background_color": "#f4f7f8",
+  "display": "browser",
+  "start_url": "/"
+}

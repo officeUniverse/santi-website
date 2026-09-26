@@ -17,6 +17,8 @@ DirectoryIndex index.html
   AddType application/javascript .js
   AddType image/webp .webp
   AddType image/svg+xml .svg
+  AddType image/x-icon .ico
+  AddType application/manifest+json .webmanifest
 </IfModule>
 
 # Light caching for static assets
