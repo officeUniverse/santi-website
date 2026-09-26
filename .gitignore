@@ -34,3 +34,8 @@ santi-site-deploy.zip
 /NewFont/
 /assets/fonts/Astonpoliz-Regular.otf
 /assets/fonts/Astonpoliz-Regular.ttf
+
+# internal mockup prompts / source notes (stay local, never deployed)
+assets/imgs/projects/*/MOCKUP-PROMPTS.md
+assets/imgs/projects/*/SOURCES.md
+assets/imgs/projects/*/SERVICE-MOCKUPS.md

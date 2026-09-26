@@ -5,24 +5,52 @@ window.SANTI_CASE_STUDIES = [
     "href": "project-algafusion.html",
     "images": [
       {
-        "src": "assets/imgs/projects/algafusion/lifestyle.jpg",
-        "alt": "Algafusion brand in context — a luxury desert camp at dusk with the logo and ‘The Architecture of Escape’ tagline"
+        "src": "assets/imgs/projects/algafusion/stationery-clean.jpg",
+        "alt": "Algafusion stationery presentation with orange business-card box, patterned notebook, letterhead, name tag and phone"
       },
       {
-        "src": "assets/imgs/projects/algafusion/hero.jpg",
-        "alt": "Algafusion brand applied across a luxury desert camp — logo and ‘The Architecture of Escape’ tagline over a mountain lodge"
+        "src": "assets/imgs/projects/algafusion/escape-lodge.jpg",
+        "alt": "Algafusion landscape presentation showing a lodge beneath mountains with The Architecture of Escape headline"
       },
       {
-        "src": "assets/imgs/projects/algafusion/logo-colour.jpg",
-        "alt": "Algafusion full-colour logo — tiered ‘A’ icon above the ALGAFUSION wordmark and ‘The Architecture of Escape’ tagline"
+        "src": "assets/imgs/projects/algafusion/logo-horizontal.jpg",
+        "alt": "Algafusion black horizontal logo with tiered A emblem and The Architecture of Escape tagline"
       },
       {
-        "src": "assets/imgs/projects/algafusion/palette.jpg",
-        "alt": "Algafusion colour palette swatches and the signature kaleidoscopic geometric pattern"
+        "src": "assets/imgs/projects/algafusion/logo-stacked.jpg",
+        "alt": "Algafusion black stacked wordmark beside the tiered A emblem"
       },
       {
-        "src": "assets/imgs/projects/algafusion/stationery.jpg",
-        "alt": "Algafusion brand applied across stationery — business cards, letterhead, notebook, name tag, email signature, stickers and tags"
+        "src": "assets/imgs/projects/algafusion/primary-colour-logo.jpg",
+        "alt": "Algafusion primary logo with orange and green tiered emblem, green wordmark and orange tagline"
+      },
+      {
+        "src": "assets/imgs/projects/algafusion/colour-pattern-system.jpg",
+        "alt": "Algafusion presentation showing dark neutrals, greens, cream and orange alongside a repeating geometric pattern"
+      },
+      {
+        "src": "assets/imgs/projects/algafusion/application-overview.jpg",
+        "alt": "Annotated Algafusion application board showing stationery, name tag, email signature and website preview"
+      },
+      {
+        "src": "assets/imgs/projects/algafusion/lodge-sign-concept.jpg",
+        "alt": "Algafusion entrance-sign concept in cream stone with orange and green emblem beside a wilderness lodge"
+      },
+      {
+        "src": "assets/imgs/projects/algafusion/welcome-kit-concept.jpg",
+        "alt": "Algafusion guest welcome-kit concept with orange gift box, patterned tissue, canvas tote, bottle and room-key tag"
+      },
+      {
+        "src": "assets/imgs/projects/algafusion/staff-uniform-concept.jpg",
+        "alt": "Algafusion staff-uniform concept with embroidered sand shirts and a green-and-orange patterned scarf"
+      },
+      {
+        "src": "assets/imgs/projects/algafusion/safari-vehicle-concept.jpg",
+        "alt": "Algafusion safari-vehicle concept with cream body, three-colour emblem and geometric patterned trim"
+      },
+      {
+        "src": "assets/imgs/projects/algafusion/escape-campfire.jpg",
+        "alt": "Algafusion brand presentation with a campfire, outdoor chairs and desert landscape under The Architecture of Escape headline"
       }
     ]
   },
@@ -147,20 +175,24 @@ window.SANTI_CASE_STUDIES = [
         "alt": "GLNI homepage displayed on a silver laptop and black phone in a blue architectural studio"
       },
       {
-        "src": "assets/imgs/projects/glni/home-desktop.png",
-        "alt": "GLNI desktop homepage, with the Lead Where You Care headline and global event imagery"
+        "src": "assets/imgs/projects/glni/desktop-workspace-mockup.jpg",
+        "alt": "GLNI homepage displayed on a desktop monitor in a blue workspace concept"
       },
       {
-        "src": "assets/imgs/projects/glni/home-phone.png",
-        "alt": "GLNI mobile homepage with the Lead Where You Help headline"
+        "src": "assets/imgs/projects/glni/mobile-studio-mockup.jpg",
+        "alt": "GLNI mobile homepage on a black phone in a blue studio concept"
       },
       {
-        "src": "assets/imgs/projects/glni/about-laptop.png",
-        "alt": "GLNI About page in a laptop presentation"
+        "src": "assets/imgs/projects/glni/about-laptop-mockup.jpg",
+        "alt": "GLNI About page displayed on a silver laptop in a blue-and-charcoal workspace concept"
       },
       {
-        "src": "assets/imgs/projects/glni/network-tablet.png",
-        "alt": "GLNI interactive network globe, showing Africa and Europe, presented on a tablet"
+        "src": "assets/imgs/projects/glni/network-tablet-mockup.jpg",
+        "alt": "GLNI network globe displayed on a landscape tablet in a workspace concept"
+      },
+      {
+        "src": "assets/imgs/projects/glni/meeting-display-mockup.jpg",
+        "alt": "GLNI homepage displayed on a wall-mounted screen in a meeting-room concept"
       }
     ]
   },
@@ -277,6 +309,68 @@ window.SANTI_CASE_STUDIES = [
       {
         "src": "assets/imgs/projects/isiphethu/water-services.jpg",
         "alt": "Isiphethu Water Service logo reconstruction study"
+      }
+    ]
+  },
+  {
+    "title": "Latroforce",
+    "href": "project-latroforce.html",
+    "images": [
+      {
+        "src": "assets/imgs/projects/latroforce/stationery-concept.jpg",
+        "alt": "Latroforce stationery concept with navy folder, notebook, letterhead and business cards"
+      },
+      {
+        "src": "assets/imgs/projects/latroforce/original-identity.jpg",
+        "alt": "Earlier Latroforce identity shown at the beginning of the supplied proposal"
+      },
+      {
+        "src": "assets/imgs/projects/latroforce/proposed-identity.jpg",
+        "alt": "Proposed Latroforce identity with a line-drawn runner and refined wordmark"
+      },
+      {
+        "src": "assets/imgs/projects/latroforce/brand-elements.jpg",
+        "alt": "Latroforce proposed logo arrangements and emblem studies on a landscape background"
+      },
+      {
+        "src": "assets/imgs/projects/latroforce/pattern-studies.jpg",
+        "alt": "Three Latroforce pattern studies from the rebrand proposal"
+      },
+      {
+        "src": "assets/imgs/projects/latroforce/presentation-pattern.jpg",
+        "alt": "Navy and sand looping ribbon graphic from the Latroforce presentation template"
+      },
+      {
+        "src": "assets/imgs/projects/latroforce/presentation-cover.jpg",
+        "alt": "Latroforce presentation cover with landscape photography and a white looping pattern"
+      },
+      {
+        "src": "assets/imgs/projects/latroforce/presentation-landscape.jpg",
+        "alt": "Latroforce presentation layout combining landscape details and curved line patterns"
+      },
+      {
+        "src": "assets/imgs/projects/latroforce/presentation-frame.jpg",
+        "alt": "Latroforce white presentation template with navy and sand corner patterns"
+      },
+      {
+        "src": "assets/imgs/projects/latroforce/presentation-minimal.jpg",
+        "alt": "Minimal Latroforce presentation template with a small emblem and fine-line pattern"
+      },
+      {
+        "src": "assets/imgs/projects/latroforce/cleaning-team-concept.jpg",
+        "alt": "Concept mockup of two cleaning staff wearing Latroforce navy polos and sand aprons beside a cleaning trolley"
+      },
+      {
+        "src": "assets/imgs/projects/latroforce/cleaning-equipment-concept.jpg",
+        "alt": "Concept mockup of a Latroforce-branded floor scrubber and cleaning trolley in an office corridor"
+      },
+      {
+        "src": "assets/imgs/projects/latroforce/waste-management-concept.jpg",
+        "alt": "Concept mockup of Latroforce-branded bins labelled paper, plastic and general waste"
+      },
+      {
+        "src": "assets/imgs/projects/latroforce/access-point-concept.jpg",
+        "alt": "Concept mockup of a staffed Latroforce gatehouse with vehicle barrier and visitor check-in signage"
       }
     ]
   },
