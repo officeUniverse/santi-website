@@ -1,0 +1,67 @@
+{
+  "slug": "glni",
+  "order": 4,
+  "title": "GLNI",
+  "titleSub": "Global Leadership Network International",
+  "org": "Global Leadership Network International",
+  "orgUrl": "https://glni.org/",
+  "schemaName": "GLNI — Website Strategy, Design & Ongoing Care",
+  "metaTitle": "GLNI Website Design & Ongoing Care — Case Study | Santi Universe",
+  "description": "Website strategy, design and ongoing maintenance for Global Leadership Network International, featuring an interactive network globe and English, French and Spanish website support.",
+  "genre": "Web Design",
+  "category": "Website & ongoing care",
+  "tags": ["web"],
+  "pills": ["Website", "Ongoing care"],
+  "cardSub": "International leadership network",
+  "tagline": ["A global network.", "A place to connect."],
+  "tint": "#1c1b22",
+  "cover": "studio-hero-v2.png",
+  "reel": ["home-desktop.png", "about-laptop.png", "network-tablet.png", "home-phone.png"],
+  "hero": { "src": "studio-hero-v2.png", "alt": "GLNI homepage displayed on a silver laptop and black phone in a blue architectural studio", "caption": "One international presence, across every screen" },
+  "meta": [["Services", "Website strategy, design & ongoing care"], ["Sector", "Nonprofit & leadership"], ["Engagement", "Multi-year partnership"], ["Languages", "English · French · Spanish"], ["Website", "glni.org", "https://glni.org/"]],
+  "chapters": [
+    {
+      "label": "The brief",
+      "heading": ["Its own voice.", "A shared mission."],
+      "text": [
+        "GLNI needed a dedicated international website, separate from the Global Leadership Summit site. A home for its story, its programmes and the people connecting its network around the world.",
+        "Santi handled strategy and website design, then continued into ongoing maintenance and client website support. The challenge was to create a distinct international presence while retaining a clear connection to the wider GLN identity."
+      ],
+      "links": [["Visit the website", "https://glni.org/"]],
+      "board": { "layout": "browser", "url": "glni.org", "images": [
+        { "src": "home-desktop.png", "alt": "GLNI desktop homepage, with the Lead Where You Care headline and global event imagery", "caption": "Desktop homepage" }
+      ] }
+    },
+    {
+      "label": "The experience",
+      "heading": ["Designed around", "people and purpose."],
+      "text": [
+        "The mountain mark and blue accents connect the website to the wider GLN brand. Confident typography, event imagery and clear navigation bring the international organisation’s story into focus.",
+        "From the homepage to the About page, the design gives visitors clear routes into the organisation, its Summit experiences and its network."
+      ],
+      "board": { "layout": "two", "images": [
+        { "src": "home-phone.png", "alt": "GLNI mobile homepage with the Lead Where You Help headline", "caption": "Mobile experience" },
+        { "src": "about-laptop.png", "alt": "GLNI About page in a laptop presentation", "caption": "About GLNI" }
+      ] }
+    },
+    {
+      "label": "The network",
+      "heading": ["A world of", "connections."],
+      "text": ["The centrepiece is an interactive globe. Visitors can rotate it, explore countries and find the people leading local GLN initiatives. A country directory offers another route to those connections."],
+      "links": [["Explore the live globe", "https://network.glni.org/"]],
+      "board": { "layout": "one", "images": [
+        { "src": "network-tablet.png", "alt": "GLNI interactive network globe, showing Africa and Europe, presented on a tablet", "caption": "Interactive network globe" }
+      ] }
+    },
+    {
+      "label": "Beyond launch",
+      "heading": ["Built to connect.", "Supported to grow."],
+      "text": [
+        "The relationship continues through updates, backups, security maintenance, fixes and website changes as the client’s needs develop.",
+        "GLNI supplies the French and Spanish translations. Santi maintains the website experience across those languages alongside English, keeping design and ongoing care connected."
+      ],
+      "links": [["English", "https://network.glni.org/"], ["Français", "https://network.glni.org/fr/"], ["Español", "https://network.glni.org/es/"]]
+    }
+  ],
+  "outcomes": [["Strategy", "A dedicated international home"], ["Design", "Connected desktop & mobile experiences"], ["Ongoing care", "Updates, backups & security"]]
+}

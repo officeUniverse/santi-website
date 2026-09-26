@@ -1,0 +1,91 @@
+{
+  "slug": "awethu",
+  "order": 2,
+  "title": "Awethu Forestry",
+  "org": "Awethu Forestry",
+  "schemaName": "Awethu Forestry — Brand Identity and Website",
+  "metaTitle": "Awethu Forestry Brand Identity & Website — Case Study | Santi Universe",
+  "description": "Awethu Forestry brand identity and website: a tree-and-handshake logo, a nature-inspired colour system, brand applications and a live digital presence.",
+  "genre": ["Brand Identity", "Website Design"],
+  "category": "Brand identity & website",
+  "tags": ["branding", "web"],
+  "pills": ["Brand", "Website"],
+  "cardSub": "Forestry",
+  "tagline": ["Rooted in nature.", "Built on connection."],
+  "tint": "#123b2e",
+  "cover": "signage-concept.png",
+  "reel": ["vehicle-concept.png", "workwear-concept.png", "fieldkit-concept.png", "stationery.jpg", "apparel.jpg", "website-home.png"],
+  "hero": { "src": "signage-concept.png", "alt": "Awethu Forestry concept: branded entrance sign at the edge of a pine forest", "caption": "Entrance sign · concept mockup" },
+  "meta": [["Services", "Brand identity & website"], ["Sector", "Forestry"], ["Scope", "Logo · Colour · Applications · Website"], ["Website", "awethuforestry.co.za", "https://awethuforestry.co.za/"]],
+  "chapters": [
+    {
+      "label": "The idea",
+      "heading": ["A story of", "shared growth."],
+      "text": [
+        "The Awethu Forestry presentation centres on collaboration, sustainability and collective responsibility. It describes a brand whose story reaches beyond trees and timber to the people and partnerships connected to the land.",
+        "The identity concept brings that direction into a visual language: a handshake, a tree and an expressive palette drawn from nature."
+      ],
+      "board": { "layout": "two", "images": [
+        { "src": "hero.jpg", "alt": "Awethu Forestry logo over a forest canopy, framed by green and yellow graphic ribbons", "caption": "Identity over the canopy" },
+        { "src": "identity.jpg", "alt": "Awethu Forestry wordmark and tree-handshake symbol on a warm ivory background", "caption": "Wordmark and symbol" }
+      ] }
+    },
+    {
+      "label": "The mark",
+      "heading": ["Partnership,", "in every branch."],
+      "text": [
+        "The symbol combines the gesture of a handshake with the shape of a tree. The tree expresses forestry and growth; the handshake introduces trust, unity and human connection.",
+        "Angular forms create a distinctive emblem that works alongside the Awethu wordmark or stands on its own."
+      ],
+      "board": { "layout": "one", "images": [
+        { "src": "concept.jpg", "alt": "Logo concept development: a handshake plus a tree becomes the Awethu forest-handshake emblem", "caption": "Concept development" }
+      ] }
+    },
+    {
+      "label": "The visual language",
+      "heading": ["Forest tones.", "A brighter energy."],
+      "text": [
+        "Deep greens, leafy tones and bright yellow-green accents give the identity both a natural foundation and a lively presence. Warm ivory provides space for the logo and typography.",
+        "Flowing graphic ribbons carry those colours across the presentation, framing photography and creating continuity between brand applications."
+      ],
+      "board": { "layout": "one", "images": [
+        { "src": "colour-system.jpg", "alt": "White Awethu Forestry logo on green with flowing ivory, dark-green and yellow-green ribbons", "caption": "Colour system" }
+      ] }
+    },
+    {
+      "label": "In application",
+      "heading": ["From the mark", "to the everyday."],
+      "text": ["The presentation explores how the identity could extend across stationery and clothing. A notebook, cards and pens bring the system into printed materials; a cap and polo show the mark at a smaller, wearable scale."],
+      "note": "These presentation mockups show the proposed identity in context.",
+      "board": { "layout": "two", "images": [
+        { "src": "stationery.jpg", "alt": "Awethu stationery concept: branded notebook, business cards and pens", "caption": "Stationery · presentation mockup" },
+        { "src": "apparel.jpg", "alt": "Awethu apparel concept: white branded cap and polo shirt", "caption": "Apparel · presentation mockup" }
+      ] }
+    },
+    {
+      "label": "Out in the world",
+      "heading": ["A presence", "in the landscape."],
+      "text": ["Further concepts explore the identity in the field: entrance signage, a forestry vehicle, workwear and a portable field kit."],
+      "note": "These AI-generated mockups explore possible applications of the identity, rather than documenting produced items or a completed rollout.",
+      "board": { "layout": "grid", "images": [
+        { "src": "signage-concept.png", "alt": "Awethu Forestry concept: branded entrance sign at the edge of a pine forest", "caption": "Entrance sign · concept mockup" },
+        { "src": "vehicle-concept.png", "alt": "Awethu Forestry concept: white pickup with forest-green and lime vehicle graphics", "caption": "Work vehicle · concept mockup" },
+        { "src": "workwear-concept.png", "alt": "Awethu Forestry concept: branded green work jacket and white hard hat", "caption": "Workwear · concept mockup" },
+        { "src": "fieldkit-concept.png", "alt": "Awethu Forestry concept: ivory canvas tote and green reusable bottle", "caption": "Field kit · concept mockup" }
+      ] }
+    },
+    {
+      "label": "The website",
+      "heading": ["From the forest.", "To the screen."],
+      "text": [
+        "The website brings Awethu’s identity into a digital setting. Forest imagery, the tree-and-handshake emblem and bright green accents connect the homepage to the wider brand system.",
+        "Clear routes to About, Impact, Services, Articles and Contact help visitors explore the business, its forestry services and its latest stories."
+      ],
+      "links": [["Visit Awethu Forestry", "https://awethuforestry.co.za/"]],
+      "board": { "layout": "browser", "url": "awethuforestry.co.za", "images": [
+        { "src": "website-home.png", "alt": "Live Awethu Forestry homepage with forest imagery, green brand accents and the headline Bridging Opportunity and Empowerment", "caption": "Live website · homepage · September 2026" }
+      ] }
+    }
+  ],
+  "outcomes": [["Symbol", "Nature and partnership, together"], ["System", "A recognisable colour and graphic language"], ["Application", "Identity across print, clothing and the web"]]
+}

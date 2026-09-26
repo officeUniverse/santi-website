@@ -62,8 +62,8 @@
   var nav = $(".nav"), hero = $(".hero");
   if (nav) {
     var onScroll = function () {
-      var edge = hero ? hero.getBoundingClientRect().bottom - 80 : 80;
-      nav.classList.toggle("is-solid", edge <= 0);
+      // Light pages (no dark hero) get the solid nav straight away.
+      nav.classList.toggle("is-solid", !hero || hero.getBoundingClientRect().bottom - 80 <= 0);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
@@ -179,8 +179,10 @@
   (window.SANTI_CASE_STUDIES || []).forEach(function (p) { registry[p.href] = p.images.map(function (im) { return im.src; }); });
   var canHover = window.matchMedia("(hover: hover)").matches;
   if (canHover && !reduce) {
-    $$(".tile[data-project]").forEach(function (tile) {
-      var media = $(".tile__media", tile), cover = $("img", media);
+    $$("[data-project]").forEach(function (tile) { // homepage tiles + All-work cards
+      var media = $(".tile__media", tile);
+      if (!media) return;
+      var cover = $("img", media);
       // Curated, mockups-first reel from data-reel; fall back to the case-study registry.
       var source = tile.dataset.reel ? tile.dataset.reel.split("|") : (registry[tile.dataset.project] || []);
       var list = source.filter(function (s) { return s && s !== cover.getAttribute("src"); });
@@ -219,6 +221,28 @@
       window.addEventListener("load", function () { window.scrollTo(0, parseInt(saved, 10) || 0); });
     }
   } catch (e) {}
+
+  /* ---------- "← Back": return through history so the list keeps its scroll ---------- */
+  $$("[data-back]").forEach(function (link) {
+    link.addEventListener("click", function (e) {
+      var fromHere = false;
+      try { fromHere = !!document.referrer && new URL(document.referrer).origin === location.origin; } catch (err) {}
+      if (fromHere && history.length > 1) { e.preventDefault(); history.back(); }
+      // otherwise the plain href (All work) handles it
+    });
+  });
+
+  /* ---------- All-work filters ---------- */
+  var filterBtns = $$(".filters [data-filter]");
+  filterBtns.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var f = btn.dataset.filter;
+      filterBtns.forEach(function (b) { b.setAttribute("aria-pressed", String(b === btn)); });
+      $$(".card[data-tags]").forEach(function (c) {
+        c.hidden = f !== "all" && c.dataset.tags.split(" ").indexOf(f) === -1;
+      });
+    });
+  });
 
   /* ---------- gentle reveal (content is never left hidden) ---------- */
   var reveals = $$(".reveal");

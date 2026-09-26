@@ -1,0 +1,65 @@
+{
+  "slug": "algafusion",
+  "order": 1,
+  "title": "Algafusion",
+  "org": "Algafusion",
+  "schemaName": "Algafusion Brand Identity",
+  "metaTitle": "Algafusion Brand Identity — Case Study | Santi Universe",
+  "description": "Case study: how Santi Universe created the Algafusion brand identity — a tiered ‘A’ mark, a Hermès-inspired orange and earthy-green palette, a signature pattern and a full stationery suite for a luxury eco-tourism brand.",
+  "genre": "Brand Identity",
+  "dateCreated": "2026",
+  "category": "Brand identity",
+  "tags": ["branding"],
+  "pills": ["Brand identity"],
+  "cardSub": "Luxury eco-tourism brand",
+  "tagline": ["The architecture", "of escape."],
+  "intro": "A complete brand identity for a luxury eco-tourism escape — built around a single, ownable mark.",
+  "tint": "#023023",
+  "cover": "stationery.jpg",
+  "reel": ["lifestyle.jpg", "hero.jpg"],
+  "hero": { "src": "lifestyle.jpg", "alt": "Algafusion brand in context — a luxury desert camp at dusk with the logo and ‘The Architecture of Escape’ tagline", "caption": "The identity in context" },
+  "meta": [["Client", "Algafusion"], ["Year", "2026"], ["Services", "Brand identity & logo design"], ["Industry", "Luxury eco-tourism"]],
+  "chapters": [
+    {
+      "label": "The brief",
+      "heading": ["Rustic posh.", "Refined, and real."],
+      "text": [
+        "Algafusion is a luxury eco-tourism brand offering a complete, 360-degree escape — one that fuses five-star comfort, local heritage and the raw beauty of the natural world. They needed an identity that could carry that “rustic posh” promise to international travellers: refined enough to feel exclusive, grounded enough to feel real.",
+        "The hard part was distilling an entire vertically-integrated travel model — from the foundations of the campsites to the apex of exclusive travel — into one mark that works everywhere, from a tiny name tag to signage and screens."
+      ],
+      "board": { "layout": "one", "images": [
+        { "src": "hero.jpg", "alt": "Algafusion brand applied across a luxury desert camp — logo and ‘The Architecture of Escape’ tagline over a mountain lodge", "caption": "The architecture of escape" }
+      ] }
+    },
+    {
+      "label": "The mark",
+      "heading": ["Three chevrons.", "One ownable mark."],
+      "text": [
+        "We built the identity outward from a single idea: a tiered “A” icon. Three nested chevrons read at once as a mountain peak, a sheltering tent and the summit of a journey — mirroring Algafusion’s layered, ground-to-apex model.",
+        "The primary logo pairs the tiered “A” with a clean, modern wordmark and the tagline. It was drawn to stay legible at any size, in full colour, solid black or a single ink."
+      ],
+      "quote": { "text": "The tiered ‘A’ represents our vertically integrated model — from the physical foundation of our campsites to the elevated apex of exclusive travel.", "cite": "Algafusion brand rationale" },
+      "board": { "layout": "one", "images": [
+        { "src": "logo-colour.jpg", "alt": "Algafusion full-colour logo — tiered ‘A’ icon above the ALGAFUSION wordmark and ‘The Architecture of Escape’ tagline", "caption": "Primary colour logo" }
+      ] }
+    },
+    {
+      "label": "Colour & pattern",
+      "heading": ["Luxury, meeting", "the outdoors."],
+      "text": ["A sophisticated, Hermès-inspired orange is balanced by grounding shades of earthy green and a warm cream. From the geometry of the mark we built a kaleidoscopic signature pattern for textiles, packaging and digital touchpoints."],
+      "swatches": [["Escape Orange", "#FF6713"], ["Forest Green", "#023023"], ["Leaf Green", "#8CC74F"], ["Warm Cream", "#F5EBE1"], ["Charcoal", "#1E1E1E"]],
+      "board": { "layout": "one", "images": [
+        { "src": "palette.jpg", "alt": "Algafusion colour palette swatches and the signature kaleidoscopic geometric pattern", "caption": "Core palette and signature pattern" }
+      ] }
+    },
+    {
+      "label": "The brand in use",
+      "heading": ["Every guest", "touchpoint."],
+      "text": ["We rolled the identity out across a full stationery and digital suite — business cards, letterhead, notebook, name tags, email signature, stickers, tags and web — so Algafusion could launch with a cohesive look everywhere."],
+      "board": { "layout": "one", "images": [
+        { "src": "stationery.jpg", "alt": "Algafusion brand applied across stationery — business cards, letterhead, notebook, name tag, email signature, stickers and tags", "caption": "Stationery system" }
+      ] }
+    }
+  ],
+  "outcomes": [["3", "Logo lock-ups"], ["5", "Colour palette"], ["1", "Signature pattern"], ["10+", "Branded touchpoints"]]
+}

@@ -5,12 +5,16 @@ window.SANTI_CASE_STUDIES = [
     "href": "project-algafusion.html",
     "images": [
       {
+        "src": "assets/imgs/projects/algafusion/lifestyle.jpg",
+        "alt": "Algafusion brand in context — a luxury desert camp at dusk with the logo and ‘The Architecture of Escape’ tagline"
+      },
+      {
         "src": "assets/imgs/projects/algafusion/hero.jpg",
-        "alt": "Algafusion brand applied across a luxury desert camp — logo and 'The Architecture of Escape' tagline over a mountain lodge"
+        "alt": "Algafusion brand applied across a luxury desert camp — logo and ‘The Architecture of Escape’ tagline over a mountain lodge"
       },
       {
         "src": "assets/imgs/projects/algafusion/logo-colour.jpg",
-        "alt": "Algafusion full-colour logo — tiered 'A' icon above the ALGAFUSION wordmark and 'The Architecture of Escape' tagline"
+        "alt": "Algafusion full-colour logo — tiered ‘A’ icon above the ALGAFUSION wordmark and ‘The Architecture of Escape’ tagline"
       },
       {
         "src": "assets/imgs/projects/algafusion/palette.jpg",
@@ -19,10 +23,6 @@ window.SANTI_CASE_STUDIES = [
       {
         "src": "assets/imgs/projects/algafusion/stationery.jpg",
         "alt": "Algafusion brand applied across stationery — business cards, letterhead, notebook, name tag, email signature, stickers and tags"
-      },
-      {
-        "src": "assets/imgs/projects/algafusion/lifestyle.jpg",
-        "alt": "Algafusion brand in context — a luxury desert camp at dusk with the logo and 'The Architecture of Escape' tagline"
       }
     ]
   },
@@ -30,6 +30,10 @@ window.SANTI_CASE_STUDIES = [
     "title": "Awethu Forestry",
     "href": "project-awethu.html",
     "images": [
+      {
+        "src": "assets/imgs/projects/awethu/signage-concept.png",
+        "alt": "Awethu Forestry concept: branded entrance sign at the edge of a pine forest"
+      },
       {
         "src": "assets/imgs/projects/awethu/hero.jpg",
         "alt": "Awethu Forestry logo over a forest canopy, framed by green and yellow graphic ribbons"
@@ -53,10 +57,6 @@ window.SANTI_CASE_STUDIES = [
       {
         "src": "assets/imgs/projects/awethu/apparel.jpg",
         "alt": "Awethu apparel concept: white branded cap and polo shirt"
-      },
-      {
-        "src": "assets/imgs/projects/awethu/signage-concept.png",
-        "alt": "Awethu Forestry concept: branded entrance sign at the edge of a pine forest"
       },
       {
         "src": "assets/imgs/projects/awethu/vehicle-concept.png",
@@ -169,6 +169,10 @@ window.SANTI_CASE_STUDIES = [
     "href": "project-guildco.html",
     "images": [
       {
+        "src": "assets/imgs/projects/guildco/vehicle-mockup.png",
+        "alt": "Guildco concept mockup: work vehicle"
+      },
+      {
         "src": "assets/imgs/projects/guildco/hero.jpg",
         "alt": "Guildco white wordmark on black with green, teal, brown and ivory identity stripes"
       },
@@ -215,10 +219,6 @@ window.SANTI_CASE_STUDIES = [
       {
         "src": "assets/imgs/projects/guildco/signage-mockup.png",
         "alt": "Guildco concept mockup: site signage"
-      },
-      {
-        "src": "assets/imgs/projects/guildco/vehicle-mockup.png",
-        "alt": "Guildco concept mockup: work vehicle"
       },
       {
         "src": "assets/imgs/projects/guildco/workwear-mockup.png",

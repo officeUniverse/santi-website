@@ -17,7 +17,9 @@ for path in sorted(root.glob('project-*.html')):
   if data.get('@type')=='CreativeWork':work=data
  if not work:continue
  parser=Images();parser.feed(text);images=[]
+ own='assets/imgs/projects/'+path.stem[len('project-'):]+'/'  # skip e.g. the "Next project" teaser image
  for image in parser.images:
+  if not image['src'].startswith(own):continue
   if not (root/image['src']).is_file():raise SystemExit('Missing image: '+image['src'])
   if image['src'] not in [x['src'] for x in images]:images.append(image)
  if not images:continue

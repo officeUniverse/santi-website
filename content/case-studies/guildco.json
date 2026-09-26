@@ -1,0 +1,94 @@
+{
+  "slug": "guildco",
+  "order": 5,
+  "title": "Guildco",
+  "org": "Guildco",
+  "schemaName": "Guildco — Brand Identity and Website",
+  "metaTitle": "Guildco Brand Identity & Website — Case Study | Santi Universe",
+  "description": "Guildco brand identity and website: a bold wordmark, a structured colour system, business cards, company profiles and a connected digital presence.",
+  "genre": ["Brand Identity", "Website Design"],
+  "category": "Brand identity & website",
+  "tags": ["branding", "web"],
+  "pills": ["Brand", "Website"],
+  "cardSub": "Construction & mining",
+  "tagline": ["Built on trust.", "Designed to connect."],
+  "tint": "#416d3c",
+  "cover": "vehicle-mockup.png",
+  "reel": ["signage-mockup.png", "laptop-mockup.png", "cards-mockup.png", "booklet-mockup.png", "workwear-mockup.png", "website-home.png"],
+  "hero": { "src": "vehicle-mockup.png", "alt": "Guildco concept mockup: work vehicle", "caption": "Work vehicle · concept mockup" },
+  "meta": [["Services", "Brand identity & website"], ["Sector", "Construction · Property · Mining"], ["Website", "guildco.co.za", "https://guildco.co.za/"]],
+  "chapters": [
+    {
+      "label": "The identity",
+      "heading": ["A strong name.", "A clear presence."],
+      "text": [
+        "Guildco operates across construction, property development and mining services. The identity gives that broad offering a consistent visual presence, from a first introduction to a detailed company profile.",
+        "A bold wordmark anchors the system. A compact band of colour and oversized outline forms add recognition without competing with the company name."
+      ],
+      "board": { "layout": "two", "images": [
+        { "src": "hero.jpg", "alt": "Guildco white wordmark on black with green, teal, brown and ivory identity stripes", "caption": "Wordmark on dark" },
+        { "src": "wordmark.jpg", "alt": "Guildco black wordmark and colour accent on a light background", "caption": "Wordmark on light" }
+      ] }
+    },
+    {
+      "label": "The system",
+      "heading": ["Structure, with", "character."],
+      "text": [
+        "The starter guide pairs the Montserrat family with near-black, forest green, teal, earthy brown and a light neutral. These elements give the brand a practical vocabulary for headings, page structure and graphic accents.",
+        "Vertical colour bands and outline letterforms connect the materials while allowing photography and content to take the lead."
+      ],
+      "swatches": [["Ink", "#111215"], ["Green", "#416D3C"], ["Teal", "#5EB7B3"], ["Earth", "#8A603A"]],
+      "board": { "layout": "one", "images": [
+        { "src": "brand-guide.jpg", "alt": "Guildco starter brand guide showing Montserrat, colours and graphic elements", "caption": "Starter brand guide" }
+      ] }
+    },
+    {
+      "label": "In print",
+      "heading": ["Small details.", "A lasting impression."],
+      "text": ["The business-card artwork carries the same wordmark, narrow colour band and large outline motif into a compact format. The restrained front places the brand first."],
+      "board": { "layout": "one", "images": [
+        { "src": "business-card.jpg", "alt": "Guildco business card front with bold wordmark, colour stripe and fine outline artwork", "caption": "Business card · front artwork" }
+      ] }
+    },
+    {
+      "label": "Company profiles",
+      "heading": ["One identity.", "A broader story."],
+      "text": [
+        "The supplied profiles show how the system extends across construction and mining communications. Large industrial photographs introduce each document, while clear headings and consistent accents organise the service information.",
+        "The later mining profile uses colour panels and modular layouts to make a more detailed offering easier to navigate."
+      ],
+      "board": { "layout": "grid", "images": [
+        { "src": "construction-profile.jpg", "alt": "Guildco construction company profile cover with infrastructure photography", "caption": "Construction · profile cover" },
+        { "src": "mining-profile.jpg", "alt": "Guildco mining company profile cover with industrial equipment", "caption": "Mining · profile cover" },
+        { "src": "profile-services.jpg", "alt": "Guildco mining profile service introduction with equipment photography", "caption": "Service introduction" },
+        { "src": "profile-spread.jpg", "alt": "Guildco teal company profile layout presenting core services and project footprint", "caption": "Core services spread" }
+      ] }
+    },
+    {
+      "label": "The website",
+      "heading": ["The brand,", "working online."],
+      "text": [
+        "The live website brings the identity into a digital setting, combining the white wordmark and dark navigation with construction imagery and green and teal accents.",
+        "Dedicated routes to Construction and Mining Services help visitors find the relevant offering, alongside company information and contact details."
+      ],
+      "links": [["Visit Guildco", "https://guildco.co.za/"]],
+      "board": { "layout": "browser", "url": "guildco.co.za", "images": [
+        { "src": "website-home.png", "alt": "Guildco live homepage with construction photography, white wordmark and green call to action", "caption": "Live website · homepage · September 2026" }
+      ] }
+    },
+    {
+      "label": "The brand in context",
+      "heading": ["Built for", "the real world."],
+      "text": ["Six concept mockups bring Guildco’s identity into print, the workplace and a digital setting."],
+      "note": "These AI-generated visualisations explore possible applications of the brand.",
+      "board": { "layout": "grid", "images": [
+        { "src": "cards-mockup.png", "alt": "Guildco concept mockup: business cards", "caption": "Business cards · concept mockup" },
+        { "src": "booklet-mockup.png", "alt": "Guildco concept mockup: company-profile booklet", "caption": "Profile booklet · concept mockup" },
+        { "src": "signage-mockup.png", "alt": "Guildco concept mockup: site signage", "caption": "Site signage · concept mockup" },
+        { "src": "vehicle-mockup.png", "alt": "Guildco concept mockup: work vehicle", "caption": "Work vehicle · concept mockup" },
+        { "src": "workwear-mockup.png", "alt": "Guildco concept mockup: workwear", "caption": "Workwear · concept mockup" },
+        { "src": "laptop-mockup.png", "alt": "Guildco concept mockup: website on laptop", "caption": "Website on laptop · concept mockup" }
+      ] }
+    }
+  ]
+}
