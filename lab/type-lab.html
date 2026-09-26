@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en" data-font="a">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Santi v3 Type Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Martian+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --paper: #f2f0eb;
+    --ink: #121211;
+    --muted: #6d6b66;
+    --line: rgba(18, 18, 17, .12);
+    --night: #0f0f10;
+    --night-2: #1a1a1c;
+    --night-line: rgba(255, 255, 255, .1);
+    --night-muted: #9b9a95;
+    --orange: #fb7515;
+    --radius: 24px;
+    --mono: "Martian Mono", ui-monospace, monospace;
+    --display: "Familjen Grotesk", system-ui, sans-serif;
+  }
+  html[data-font="a"] { --display: "Familjen Grotesk", system-ui, sans-serif; --track: -0.035em; }
+  html[data-font="b"] { --display: "Schibsted Grotesk", system-ui, sans-serif; --track: -0.04em; }
+  html[data-font="c"] { --display: "Bricolage Grotesque", system-ui, sans-serif; --track: -0.035em; }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--display); font-size: 17px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { padding: 0 12px; }
+
+  /* shared details */
+  .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+  .eyebrow::before { content: "[ "; } .eyebrow::after { content: " ]"; }
+  .star { color: var(--orange); }
+  .foot { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); margin-top: 6px; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; padding: 13px 18px; border-radius: 10px; }
+  .btn.light { background: #f2f0eb; color: var(--ink); }
+  .btn.dark { background: var(--ink); color: #f2f0eb; }
+  .btn.orange { background: var(--orange); color: var(--ink); }
+  h1, h2, h3 { font-weight: 500; letter-spacing: var(--track); margin: 0; }
+
+  /* switcher */
+  .switch { position: fixed; top: 20px; right: 20px; z-index: 50; display: flex; gap: 4px; padding: 5px; border-radius: 14px; background: rgba(18,18,17,.82); backdrop-filter: blur(12px); }
+  .switch button { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #cfcdc7; background: transparent; border: 0; padding: 9px 12px; border-radius: 10px; cursor: pointer; }
+  .switch button[aria-pressed="true"] { background: var(--orange); color: var(--ink); }
+  .switch button:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+
+  /* specimens */
+  .specimens { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 96px 12px 12px; }
+  .spec { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px 26px; }
+  .spec .eyebrow { color: var(--muted); }
+  .spec p.big { font-size: clamp(30px, 3.6vw, 52px); line-height: .98; margin: 18px 0 0; font-weight: 500; }
+  .spec[data-f="a"] p.big { font-family: "Familjen Grotesk"; letter-spacing: -0.035em; }
+  .spec[data-f="b"] p.big { font-family: "Schibsted Grotesk"; letter-spacing: -0.04em; }
+  .spec[data-f="c"] p.big { font-family: "Bricolage Grotesque"; letter-spacing: -0.035em; }
+  .spec .glyphs { font-size: 15px; color: var(--muted); margin-top: 14px; }
+  .spec[data-f="a"] .glyphs { font-family: "Familjen Grotesk"; } .spec[data-f="b"] .glyphs { font-family: "Schibsted Grotesk"; } .spec[data-f="c"] .glyphs { font-family: "Bricolage Grotesque"; }
+
+  /* hero frame */
+  .hero { position: relative; margin: 12px; min-height: 640px; border-radius: var(--radius); overflow: hidden; background: radial-gradient(90% 70% at 72% 40%, #3a1d0c 0%, #140b06 45%, var(--night) 75%); color: #f2f0eb; display: flex; flex-direction: column; }
+  .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .nav { position: relative; z-index: 2; margin: 16px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; border-radius: 16px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08); backdrop-filter: blur(14px); }
+  .nav .brand { font-weight: 600; letter-spacing: -0.02em; font-size: 18px; }
+  .nav ul { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; }
+  .nav li { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: #d9d7d1; }
+  .hero-copy { position: relative; z-index: 2; margin-top: auto; padding: 0 40px 44px; max-width: 780px; }
+  .hero-copy .eyebrow { color: #cfcdc7; }
+  .hero-copy h1 { font-size: clamp(48px, 7.4vw, 108px); line-height: .92; margin: 16px 0 18px; }
+  .hero-copy p { color: #cfcdc7; max-width: 52ch; margin: 0 0 26px; }
+  .ctas { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  /* logos */
+  .logos { display: flex; justify-content: space-between; align-items: center; gap: 28px; padding: 44px 40px; overflow-x: auto; }
+  .logos span { font-weight: 600; font-size: 22px; letter-spacing: -0.03em; color: #3b3a37; white-space: nowrap; }
+
+  /* featured work */
+  .section-head { display: flex; align-items: end; justify-content: space-between; padding: 28px 28px 20px; }
+  .section-head h2 { font-size: clamp(34px, 4.4vw, 64px); line-height: .95; }
+  .section-head .all { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+  .bento { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; padding: 0 12px; }
+  .tile { position: relative; border-radius: var(--radius); overflow: hidden; min-height: 420px; background: #d9d4ca; display: flex; align-items: end; }
+  .tile.b { background: #1f1c19; }
+  .tile .cap { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 18px 20px; background: linear-gradient(transparent, rgba(0,0,0,.45)); color: #f2f0eb; }
+  .tile .cap strong { font-weight: 500; font-size: 20px; letter-spacing: -0.02em; }
+  .pills { display: flex; gap: 6px; }
+  .pill { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; padding: 5px 9px; border-radius: 999px; background: rgba(255,255,255,.14); }
+  .tile .ph { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: rgba(18,18,17,.45); }
+  .tile.b .ph { color: rgba(255,255,255,.35); }
+
+  /* dark services = playground */
+  .dark-frame { margin: 12px; border-radius: var(--radius); background: var(--night); color: #f2f0eb; padding: 56px 28px 28px; }
+  .dark-frame .eyebrow { color: var(--night-muted); }
+  .dark-frame h2 { font-size: clamp(34px, 4.4vw, 64px); line-height: .95; margin: 14px 0 12px; }
+  .dark-frame .lede { color: var(--night-muted); max-width: 54ch; margin: 0 0 32px; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .card { background: var(--night-2); border: 1px solid var(--night-line); border-radius: 18px; min-height: 300px; padding: 22px; display: flex; flex-direction: column; }
+  .card .ph { flex: 1; display: grid; place-items: center; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.3); }
+  .card h3 { font-size: 24px; }
+  .card p { color: var(--night-muted); font-size: 15px; margin: 6px 0 0; }
+
+  /* testimonial */
+  .testi { padding: 72px 28px; text-align: center; }
+  .testi h2 { font-size: clamp(34px, 4.4vw, 64px); line-height: .95; margin-top: 14px; }
+  .testi .eyebrow { color: var(--muted); }
+  .quote { max-width: 420px; margin: 34px auto 0; text-align: left; background: var(--night); color: #f2f0eb; border-radius: 18px; padding: 24px 24px 20px; }
+  .quote p { margin: 0 0 20px; }
+  .who { display: flex; align-items: center; gap: 12px; }
+  .avatar { width: 36px; height: 36px; border-radius: 50%; background: #3a3936; }
+  .who strong { display: block; font-weight: 500; font-size: 15px; }
+  .who span { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--night-muted); }
+  .sample { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); margin-top: 14px; }
+
+  /* footer */
+  .footer { margin: 12px; border-radius: var(--radius); min-height: 360px; background: radial-gradient(80% 90% at 30% 110%, #3a1d0c, var(--night) 60%); color: #f2f0eb; padding: 32px 36px; display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 180px; }
+  .footer .top { display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+  .footer .name { font-size: 30px; font-weight: 500; letter-spacing: -0.03em; }
+  .footer .meta { color: var(--night-muted); font-size: 14px; margin-top: 6px; }
+  .cols { display: flex; gap: 48px; }
+  .cols h4 { font-weight: 500; font-size: 15px; margin: 0 0 10px; }
+  .cols a { display: block; color: var(--night-muted); font-size: 14px; margin-bottom: 6px; }
+  .footer small { color: var(--night-muted); font-size: 13px; }
+
+  /* progressive blur (Nick Clement signature) */
+  .pblur { position: fixed; left: 0; right: 0; bottom: 0; height: 160px; pointer-events: none; z-index: 40; }
+  .pblur div { position: absolute; inset: 0; }
+  .pblur div:nth-child(1) { backdrop-filter: blur(.25px); -webkit-backdrop-filter: blur(.25px); mask: linear-gradient(transparent 0%, #000 12.5%, #000 25%, transparent 37.5%); -webkit-mask: linear-gradient(transparent 0%, #000 12.5%, #000 25%, transparent 37.5%); }
+  .pblur div:nth-child(2) { backdrop-filter: blur(.5px); -webkit-backdrop-filter: blur(.5px); mask: linear-gradient(transparent 12.5%, #000 25%, #000 37.5%, transparent 50%); -webkit-mask: linear-gradient(transparent 12.5%, #000 25%, #000 37.5%, transparent 50%); }
+  .pblur div:nth-child(3) { backdrop-filter: blur(1px); -webkit-backdrop-filter: blur(1px); mask: linear-gradient(transparent 25%, #000 37.5%, #000 50%, transparent 62.5%); -webkit-mask: linear-gradient(transparent 25%, #000 37.5%, #000 50%, transparent 62.5%); }
+  .pblur div:nth-child(4) { backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); mask: linear-gradient(transparent 37.5%, #000 50%, #000 62.5%, transparent 75%); -webkit-mask: linear-gradient(transparent 37.5%, #000 50%, #000 62.5%, transparent 75%); }
+  .pblur div:nth-child(5) { backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); mask: linear-gradient(transparent 50%, #000 62.5%, #000 75%, transparent 87.5%); -webkit-mask: linear-gradient(transparent 50%, #000 62.5%, #000 75%, transparent 87.5%); }
+  .pblur div:nth-child(6) { backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); mask: linear-gradient(transparent 62.5%, #000 75%, #000 87.5%, transparent 100%); -webkit-mask: linear-gradient(transparent 62.5%, #000 75%, #000 87.5%, transparent 100%); }
+  .pblur div:nth-child(7) { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); mask: linear-gradient(transparent 75%, #000 87.5%, #000 100%); -webkit-mask: linear-gradient(transparent 75%, #000 87.5%, #000 100%); }
+
+  @media (max-width: 860px) {
+    .specimens, .cards, .bento { grid-template-columns: 1fr; }
+    .nav ul { display: none; }
+    .hero-copy { padding: 0 22px 30px; }
+    .cols { gap: 28px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .hero canvas { display: none; } }
+</style>
+</head>
+<body>
+
+<div class="switch" role="group" aria-label="Choose a typeface">
+  <button type="button" data-f="a" aria-pressed="true">A · Familjen</button>
+  <button type="button" data-f="b" aria-pressed="false">B · Schibsted</button>
+  <button type="button" data-f="c" aria-pressed="false">C · Bricolage</button>
+</div>
+
+<!-- side-by-side specimens -->
+<section class="specimens" aria-label="Typeface specimens">
+  <div class="spec" data-f="a"><span class="eyebrow">A · Familjen Grotesk</span><p class="big">Transform your brand, today</p><p class="glyphs">Rr Tt Yy Aa Gg 0123456789 &amp; — closest character to radix</p></div>
+  <div class="spec" data-f="b"><span class="eyebrow">B · Schibsted Grotesk</span><p class="big">Transform your brand, today</p><p class="glyphs">Rr Tt Yy Aa Gg 0123456789 &amp; — clean and compact, like radix</p></div>
+  <div class="spec" data-f="c"><span class="eyebrow">C · Bricolage Grotesque</span><p class="big">Transform your brand, today</p><p class="glyphs">Rr Tt Yy Aa Gg 0123456789 &amp; — the most expressive option</p></div>
+</section>
+
+<!-- hero -->
+<header class="hero">
+  <canvas id="stars" aria-hidden="true"></canvas>
+  <nav class="nav" aria-label="Main">
+    <span class="brand">Santi Universe</span>
+    <ul><li>Work</li><li>Playground</li><li>AEO Tool</li><li>About</li></ul>
+    <a class="btn light" href="#">Get a quote →</a>
+  </nav>
+  <div class="hero-copy">
+    <span class="eyebrow">We are Santi Universe</span>
+    <h1>Design, build &amp; AI-power your brand</h1>
+    <p>A web design, graphic design and AI engineering studio in South Africa — high-performance websites, sharp brand identities and AI tools that turn visitors into customers.</p>
+    <div class="ctas"><a class="btn light" href="#">View projects →</a><a class="btn orange" href="#">Get a quote →</a></div>
+  </div>
+</header>
+
+<!-- logos -->
+<div class="logos" aria-label="Clients">
+  <span>Algafusion</span><span>Awethu</span><span>Crowsnest</span><span>GLNI</span><span>Guildco</span><span>Isiphethu</span><span>SHE</span>
+</div>
+
+<!-- featured work -->
+<div class="section-head"><h2>Featured work</h2><a class="all" href="#">All work →</a></div>
+<div class="bento">
+  <div class="tile"><div class="ph">project mockups cycle on hover</div><div class="cap"><strong>Algafusion</strong><div class="pills"><span class="pill">Brand identity</span><span class="pill">2026</span></div></div></div>
+  <div class="tile b"><div class="ph">mockup</div><div class="cap"><strong>Guildco</strong><div class="pills"><span class="pill">Branding</span></div></div></div>
+</div>
+
+<!-- playground -->
+<section class="dark-frame">
+  <span class="eyebrow">Services &amp; expertise</span>
+  <h2>Our playground<span class="star">*</span></h2>
+  <span class="foot">*Try it — everything here is live</span>
+  <p class="lede" style="margin-top:18px">Three experiments that show how we think: draw, explore our work, and play with generative code.</p>
+  <div class="cards">
+    <div class="card"><div class="ph">live drawing canvas</div><h3>Design</h3><p>Eight brushes, from light ribbons to gooey paint.</p></div>
+    <div class="card"><div class="ph">concave work gallery</div><h3>Websites</h3><p>Drag through every case study we've shipped.</p></div>
+    <div class="card"><div class="ph">generative numbers</div><h3>AI</h3><p>Procedural art with physics you can shoot at.</p></div>
+  </div>
+</section>
+
+<!-- testimonial -->
+<section class="testi">
+  <span class="eyebrow">Testimonials</span>
+  <h2>Don't take our word for it<span class="star">*</span></h2>
+  <span class="foot">*Take theirs</span>
+  <div class="quote">
+    <p>Placeholder quote — real client words go here before launch. Short, specific, about the result.</p>
+    <div class="who"><div class="avatar"></div><div><strong>Client name</strong><span>Role · Company</span></div></div>
+  </div>
+  <p class="sample">Sample content — not a real testimonial</p>
+</section>
+
+<!-- footer -->
+<footer class="footer">
+  <div class="top">
+    <div><div class="name">Santi Universe</div><div class="meta">Roodepoort — South Africa · santi@santi.co.za</div></div>
+    <div class="cols">
+      <div><h4>Index</h4><a href="#">Work</a><a href="#">Playground</a><a href="#">AEO Tool</a></div>
+      <div><h4>Legal</h4><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a></div>
+      <div><h4>Socials</h4><a href="#">Instagram ↗</a><a href="#">LinkedIn ↗</a><a href="#">X ↗</a></div>
+    </div>
+  </div>
+  <small>© 2026 Santi Universe. Universe canvas plays behind this in the real build.</small>
+</footer>
+
+<div class="pblur" aria-hidden="true"><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+
+<script>
+  // typeface switcher
+  document.querySelectorAll('.switch button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.documentElement.setAttribute('data-font', b.dataset.f);
+      document.querySelectorAll('.switch button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+    });
+  });
+
+  // lightweight starfield stand-in for the universe canvas
+  (function () {
+    var c = document.getElementById('stars');
+    if (!c || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var x = c.getContext('2d'), w, h, dpr, stars = [];
+    function size() {
+      dpr = Math.min(devicePixelRatio || 1, 2);
+      w = c.clientWidth; h = c.clientHeight;
+      c.width = w * dpr; c.height = h * dpr; x.setTransform(dpr, 0, 0, dpr, 0, 0);
+      stars = [];
+      for (var i = 0; i < 160; i++) stars.push({ x: Math.random() * w, y: Math.random() * h, r: Math.random() * 1.4 + .2, s: Math.random() * .25 + .05, o: Math.random() < .1 });
+    }
+    function tick() {
+      x.clearRect(0, 0, w, h);
+      for (var i = 0; i < stars.length; i++) {
+        var s = stars[i]; s.x -= s.s; if (s.x < 0) s.x = w;
+        x.fillStyle = s.o ? 'rgba(251,117,21,.9)' : 'rgba(242,240,235,.7)';
+        x.beginPath(); x.arc(s.x, s.y, s.r, 0, Math.PI * 2); x.fill();
+      }
+      requestAnimationFrame(tick);
+    }
+    size(); addEventListener('resize', size); tick();
+  })();
+</script>
+</body>
+</html>
