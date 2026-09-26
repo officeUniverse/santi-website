@@ -24,7 +24,7 @@ The AI artwork is explicitly labelled generative code. It does not pretend to be
 
 ## Adding a case study to the website showcase
 
-> **v3:** case-study pages are now generated. Edit `content/case-studies/<slug>.json`, run `python3 scripts/build-case-studies.py`, then `python3 scripts/sync-case-studies.py` — see AGENTS.md. The manual steps below describe the v2 workflow.
+> **v3:** case-study pages are now generated. Edit `content/case-studies/<slug>.json`, run `python3 scripts/build-site.py`, then `python3 scripts/sync-case-studies.py` — see AGENTS.md. The manual steps below describe the v2 workflow.
 
 1. Create a project-*.html page with CreativeWork JSON-LD, including about.name.
 2. Add real local case-study images under assets/imgs/projects/<project>/ and reference them in that page's img elements.

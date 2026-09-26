@@ -90,8 +90,10 @@ node api/server.js
 ```
 
 ## What's where
-- `index.html`, `services.html`, `portfolio.html`, `about.html`, `contact.html`,
-  `aeo.html`, `project-details.html`, `terms.html`, `privacy.html`, `cookies.html` — pages
-- `assets/` — CSS, JS, fonts, images (`assets/css/santi.css`, `assets/js/santi.js` are the custom ones)
+- `index.html` (hand-built homepage; source of the shared nav/footer) plus generated pages:
+  `services.html`, `portfolio.html`, `about.html`, `contact.html`, `aeo.html`, `project-*.html`,
+  `terms.html`, `privacy.html`, `cookies.html` — built by `python3 scripts/build-site.py` from `content/`
+- `project-details.html` — retired sample page; a noindex stub (and a 301 in `.htaccess`) pointing to `portfolio.html`
+- `assets/v3/` — v3 design system (`v3.css`, `case.css`, `pages.css`, `site.js`, `universe.js`); `assets/js/aeo.js` runs the AEO tool
 - `api/aeo.js` — AEO analyzer (shared); `api/server.js` — local server; `api/README.md` — details
 - `netlify/functions/aeo.js`, `netlify.toml` — Netlify serverless setup

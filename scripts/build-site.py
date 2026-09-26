@@ -1,15 +1,24 @@
-"""Build the v3 case-study pages and the All-work index from content/case-studies/*.json.
+"""Build every v3 page except the homepage.
 
-    python3 scripts/build-case-studies.py      # then: python3 scripts/sync-case-studies.py
+    python3 scripts/build-site.py      # then: python3 scripts/sync-case-studies.py
 
-Writes project-<slug>.html for every JSON file plus portfolio.html. Site chrome
-(nav, footer, quote pop-up) is lifted from index.html so it only lives in one place.
-Output keeps a CreativeWork JSON-LD with about.name and <img src="assets/imgs/projects/...">
+- content/case-studies/*.json -> project-<slug>.html + portfolio.html (All work)
+- content/pages/*.html        -> services, about, contact, aeo, terms, privacy, cookies
+
+Site chrome (nav, footer, quote pop-up, organisation JSON-LD) is lifted from index.html
+so it only lives in one place; each page gets aria-current on its own menu link.
+Case pages keep a CreativeWork JSON-LD with about.name and <img src="assets/imgs/projects/...">
 tags, which is what scripts/sync-case-studies.py reads.
+
+A page fragment starts with a JSON meta comment, then the <main> content:
+    <!--meta {"file": "about.html", "title": "...", "description": "...", "crumb": "About"} -->
+Optional meta: "current" (menu href to highlight, default = file), "scripts" (extra JS),
+"robots". The marker <!-- cards:N --> inserts the first N case-study cards.
 """
 from html import escape
 from pathlib import Path
 import json
+import re
 
 try:
     from PIL import Image  # image sizes -> width/height attributes (prevents layout shift)
@@ -18,8 +27,9 @@ except ImportError:  # still builds without Pillow, just without dimensions
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTENT = ROOT / "content" / "case-studies"
+PAGES = ROOT / "content" / "pages"
 SITE = "https://santi.co.za/"
-V = "v=5"  # cache stamp for v3.css / case.css / site.js
+V = "v=6"  # cache stamp for v3.css / case.css / pages.css / site.js
 
 
 def t(s):  # text node
@@ -68,9 +78,22 @@ def subpage_links(fragment):  # homepage anchors -> absolute routes on sub-pages
 
 
 NAV, FOOTER = subpage_links(NAV), subpage_links(FOOTER)
+ORG = json.loads(between(home, '<script type="application/ld+json">', "</script>")[len('<script type="application/ld+json">'):])
 
 
-def head(title, description, canonical, image, og_type, schemas):
+def current(fragment, href):  # highlight this page's menu links
+    fragment = fragment.replace(' aria-current="page"', "")
+    return fragment.replace(f'<a href="{href}">', f'<a href="{href}" aria-current="page">')
+
+
+def crumbs(*trail):
+    return {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": i + 1, "name": name, "item": url} for i, (name, url) in enumerate((("Home", SITE),) + trail)]}
+
+
+def head(title, description, canonical, image, og_type, schemas, css=("case.css",), robots=None):
+    styles = "\n".join(f'  <link rel="stylesheet" href="assets/v3/{c}?{V}">' for c in css)
+    robots = f'\n  <meta name="robots" content="{a(robots)}">' if robots else ""
     ld = "\n".join(f'  <script type="application/ld+json">\n{json.dumps(s, ensure_ascii=False, indent=2)}\n  </script>' for s in schemas)
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -78,7 +101,7 @@ def head(title, description, canonical, image, og_type, schemas):
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{t(title)}</title>
-  <meta name="description" content="{a(description)}">
+  <meta name="description" content="{a(description)}">{robots}
   <link rel="canonical" href="{a(canonical)}">
   <meta property="og:type" content="{og_type}">
   <meta property="og:site_name" content="Santi Universe">
@@ -92,21 +115,23 @@ def head(title, description, canonical, image, og_type, schemas):
   <meta name="twitter:image" content="{a(image)}">
   <meta name="theme-color" content="#0d2466">
   <link rel="icon" type="image/png" href="assets/imgs/logo/favicon.png">
+  <link rel="apple-touch-icon" href="assets/imgs/logo/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Space+Mono:wght@400;700&display=swap">
   <link rel="stylesheet" href="assets/v3/v3.css?{V}">
-  <link rel="stylesheet" href="assets/v3/case.css?{V}">
+{styles}
 {ld}
 </head>
 """
 
 
-def tail():
-    return f"""{FOOTER}{MODAL}  <div class="pblur" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+def tail(href, scripts=()):
+    extra = "".join(f'\n  <script src="{a(src)}"></script>' for src in scripts)
+    return f"""{current(FOOTER, href)}{MODAL}  <div class="pblur" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 
   <script src="assets/v3/universe.js?v=2"></script>
-  <script src="assets/v3/site.js?{V}"></script>
+  <script src="assets/v3/site.js?{V}"></script>{extra}
 </body>
 </html>
 """
@@ -172,10 +197,7 @@ def render_project(p, nxt):
             "about": {"@type": "Organization", "name": p["org"], **({"url": p["orgUrl"]} if p.get("orgUrl") else {})}}
     if p.get("dateCreated"):
         work["dateCreated"] = p["dateCreated"]
-    crumbs = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
-        {"@type": "ListItem", "position": 1, "name": "Home", "item": SITE},
-        {"@type": "ListItem", "position": 2, "name": "Work", "item": SITE + "portfolio.html"},
-        {"@type": "ListItem", "position": 3, "name": p["title"], "item": url}]}
+    trail = crumbs(("Work", SITE + "portfolio.html"), (p["title"], url))
 
     dark = luminance(p["tint"]) < .35
     tint_ink = "rgba(255,255,255,.74)" if dark else "rgba(14,27,61,.72)"
@@ -191,10 +213,10 @@ def render_project(p, nxt):
             f'<div class="outcome"><strong>{t(big)}</strong><span>{t(lbl)}</span></div>' for big, lbl in p["outcomes"]) + "</section>"
     next_src = img_path(nxt["slug"], nxt["cover"])
 
-    return head(p["metaTitle"], p["description"], url, SITE + hero_src, "article", [work, crumbs]) + f"""<body class="page-case">
+    return head(p["metaTitle"], p["description"], url, SITE + hero_src, "article", [work, trail]) + f"""<body class="page-case">
   <a class="skip-link" href="#main">Skip to content</a>
 
-{NAV}  <main id="main">
+{current(NAV, "portfolio.html")}  <main id="main">
     <article class="case" style="--tint:{p['tint']}; --tint-ink:{tint_ink}">
       <header class="case-hero">
         <a class="back" href="portfolio.html" data-back><span aria-hidden="true">←</span> Back</a>
@@ -227,10 +249,10 @@ def render_project(p, nxt):
     </section>
   </main>
 
-""" + tail()
+""" + tail("portfolio.html")
 
 
-def render_index(projects):
+def cards_html(projects):
     cards = ""
     for p in projects:
         cover = img_path(p["slug"], p["cover"])
@@ -240,15 +262,18 @@ def render_index(projects):
           <div class="tile__media"><img src="{a(cover)}" alt="{a(p['hero']['alt'] if p['hero']['src'] == p['cover'] else p['title'] + ' — ' + p['category'])}"{dims(cover)} loading="lazy" decoding="async"></div>
           <div class="card__info"><div><strong>{t(p['title'])}</strong><span>{t(p['cardSub'])}</span></div><div class="pills">{pills}</div></div>
         </a>"""
+    return cards
+
+
+def render_index(projects):
+    cards = cards_html(projects)
     title = "Work — Brand Identity, Websites & AI | Santi Universe"
     desc = "Selected brand identity and website projects by Santi Universe, from luxury eco-tourism to construction, forestry, hospitality and international nonprofits."
-    crumbs = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
-        {"@type": "ListItem", "position": 1, "name": "Home", "item": SITE},
-        {"@type": "ListItem", "position": 2, "name": "Work", "item": SITE + "portfolio.html"}]}
-    return head(title, desc, SITE + "portfolio.html", SITE + "assets/imgs/og-image.png", "website", [crumbs]) + f"""<body class="page-case">
+    trail = crumbs(("Work", SITE + "portfolio.html"))
+    return head(title, desc, SITE + "portfolio.html", SITE + "assets/imgs/og-image.png", "website", [trail]) + f"""<body class="page-case">
   <a class="skip-link" href="#main">Skip to content</a>
 
-{NAV}  <main id="main">
+{current(NAV, "portfolio.html")}  <main id="main">
     <header class="index-head">
       <span class="eyebrow">Selected work</span>
       <h1>All work <sup>({len(projects):02d})</sup></h1>
@@ -270,7 +295,29 @@ def render_index(projects):
     </section>
   </main>
 
-""" + tail()
+""" + tail("portfolio.html")
+
+
+def render_page(src, projects):
+    raw = src.read_text(encoding="utf-8")
+    m = re.match(r"\s*<!--meta\s*(\{.*?\})\s*-->\s*", raw, re.S)
+    if not m:
+        raise SystemExit(f"{src.name}: missing <!--meta {{...}} --> header")
+    meta, body = json.loads(m.group(1)), raw[m.end():]
+    body = re.sub(r"<!-- cards:(\d+) -->", lambda c: cards_html(projects[:int(c.group(1))]), body)
+    f = meta["file"]
+    url = SITE + f
+    schemas = [ORG] + ([crumbs((meta["crumb"], url))] if meta.get("crumb") else [])
+    here = meta.get("current", f)
+    return head(meta["title"], meta["description"], url, SITE + "assets/imgs/og-image.png", "website", schemas,
+                css=("case.css", "pages.css"), robots=meta.get("robots")) + f"""<body class="page-sub">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+{current(NAV, here)}  <main id="main">
+{body.rstrip()}
+  </main>
+
+""" + tail(here, meta.get("scripts", ()))
 
 
 def main():
@@ -281,7 +328,12 @@ def main():
         out = ROOT / f"project-{p['slug']}.html"
         out.write_text(render_project(p, projects[(i + 1) % len(projects)]), encoding="utf-8")
     (ROOT / "portfolio.html").write_text(render_index(projects), encoding="utf-8")
-    print(f"Built {len(projects)} case studies + portfolio.html")
+    pages = sorted(PAGES.glob("*.html"))
+    for src in pages:
+        html = render_page(src, projects)
+        name = re.search(r'"file"\s*:\s*"([^"]+)"', src.read_text(encoding="utf-8")).group(1)
+        (ROOT / name).write_text(html, encoding="utf-8")
+    print(f"Built {len(projects)} case studies + portfolio.html + {len(pages)} pages")
 
 
 if __name__ == "__main__":

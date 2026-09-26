@@ -1,0 +1,91 @@
+<!--meta
+{
+  "file": "aeo.html",
+  "title": "Free AEO Check — Is Your Site Ready for AI? | Santi Universe",
+  "description": "Free AEO checker — see how well ChatGPT, Gemini and AI search can read, understand and recommend your website. Get an instant score and fixes.",
+  "crumb": "Free AEO Check",
+  "scripts": ["assets/js/aeo.js?v=24"]
+}
+-->
+    <header class="frame frame--dark page-hero aeo-hero on-dark">
+      <canvas class="page-hero__universe" data-universe="ambient" data-cx=".86" data-cy=".4" data-cx-mobile=".8" data-cy-mobile=".14" data-radius=".42" aria-hidden="true"></canvas>
+      <span class="eyebrow">Free tool · AEO</span>
+      <h1>Is your site ready<br>for AI?<span class="star">*</span></h1>
+      <p class="page-hero__lead">Answer Engine Optimization (AEO) is the new SEO. Check how well ChatGPT, Gemini, Perplexity and AI search can read, understand and recommend your website — free, in seconds. Then we will help you fix what is holding you back.</p>
+      <form id="aeo-form" class="aeo-form" novalidate>
+        <label class="visually-hidden" for="aeo-url">Your website</label>
+        <input type="text" id="aeo-url" class="aeo-input" placeholder="yourwebsite.com" autocomplete="url" required>
+        <label class="visually-hidden" for="aeo-email">Email</label>
+        <input type="email" id="aeo-email" class="aeo-input" placeholder="you@company.com" autocomplete="email" required>
+        <label class="visually-hidden" for="aeo-phone">Phone</label>
+        <input type="tel" id="aeo-phone" class="aeo-input" placeholder="071 234 5678" autocomplete="tel" required>
+        <button type="submit" id="aeo-submit" class="btn btn--accent aeo-submit">Get my score <span class="arr" aria-hidden="true">→</span></button>
+      </form>
+      <p class="aeo-form-note">Enter your site and email to get your free AI-readiness score in seconds. We’ll only use your email to send your report and AEO tips — see our <a href="privacy.html">Privacy Policy</a>.</p>
+      <div id="aeo-status" class="aeo-status" role="status" hidden></div>
+    </header>
+
+    <section id="aeo-results" class="aeo-results" aria-label="Your AEO results" hidden>
+      <div class="aeo-scoreboard">
+        <div class="aeo-score-ring"><div><span id="aeo-score">0</span><small>/ 100</small></div></div>
+        <div class="aeo-grade-wrap">
+          <span class="aeo-grade" id="aeo-grade">–</span>
+          <p id="aeo-score-label"></p>
+          <p class="aeo-url-line" id="aeo-url-line"></p>
+          <div class="aeo-score-actions">
+            <button type="button" id="aeo-download" class="btn btn--dark aeo-ghost-btn">Download my report (PDF) <span aria-hidden="true">↓</span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="aeo-legend">
+        <span class="aeo-legend-item"><span class="dot pass"></span> Looking good</span>
+        <span class="aeo-legend-item"><span class="dot warn"></span> Could be better</span>
+        <span class="aeo-legend-item"><span class="dot fail"></span> Needs fixing</span>
+        <span class="aeo-legend-note">Sorted worst-first — start at the top.</span>
+      </div>
+
+      <ul class="aeo-checklist" id="aeo-checklist"></ul>
+
+      <div class="aeo-note">
+        <div class="aeo-note-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M6 2h12M6 22h12M7 2v4a5 5 0 0 0 10 0V2M7 22v-4a5 5 0 0 1 10 0v4"/></svg></div>
+        <div>
+          <h3>One important thing: this isn’t instant</h3>
+          <p>The scan above takes seconds — but getting AI engines like ChatGPT, Gemini and Perplexity to actually find, trust and recommend you is a slower journey. Once these fixes are in place, AI tools still need to re-crawl your site, and trust builds over <b>weeks to a few months</b> as your content, reviews and reputation grow. This is your head start, not a magic switch — the sooner you act, the sooner you show up.</p>
+        </div>
+      </div>
+
+      <div class="aeo-cta on-dark">
+        <h3>Want us to fix this for you?</h3>
+        <p class="aeo-cta-sub">We’ll handle the technical fixes and get your site AI-ready, so you can focus on your business. Book a free, no-pressure consultation and we’ll walk you through your report together.</p>
+        <div class="aeo-cta-btns">
+          <a class="btn btn--accent" href="contact.html">Get help — book a free consultation <span class="arr" aria-hidden="true">→</span></a>
+          <a class="btn btn--ghost aeo-wa-btn" id="aeo-wa-btn" href="https://wa.me/27635594183" target="_blank" rel="noopener">WhatsApp us <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="aeo-checks" aria-labelledby="checks-title">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">What we check</span>
+          <h2 class="h2" id="checks-title">14 signals AI<br>reads first</h2>
+        </div>
+      </div>
+      <ol class="aeo-checks__list">
+        <li><h3>Structured data (Schema.org)</h3><p>A behind-the-scenes label that spells out who you are, what you offer and how to reach you — in a format AI understands perfectly. This is the single biggest win.</p></li>
+        <li><h3>Substantial readable text</h3><p>AI reads words, not pictures. If your message lives inside images, or only appears after a click, AI simply can't see it.</p></li>
+        <li><h3>AI crawlers allowed (robots.txt)</h3><p>A small text file that can accidentally tell AI to 'go away'. We make sure it isn't blocking ChatGPT, Claude, Perplexity or Google's AI.</p></li>
+        <li><h3>llms.txt present</h3><p>A simple 'cheat sheet' file made just for AI — it points the AI straight to your most important pages and what your business does. New, but powerful.</p></li>
+        <li><h3>Descriptive page title</h3><p>The headline AI and Google show for your page. It's the very first thing they read to understand what you do.</p></li>
+        <li><h3>Meta description</h3><p>The short summary shown under your link in search results and AI answers — think of it as your one-line sales pitch.</p></li>
+        <li><h3>Clear heading structure</h3><p>These are the 'chapter titles' on your page. They let AI follow your content instead of seeing one big wall of text.</p></li>
+        <li><h3>Served over HTTPS</h3><p>This is the padlock in the address bar. It keeps your visitors safe, and AI engines trust secure sites far more than unsecured ones.</p></li>
+        <li><h3>Social / Open Graph tags</h3><p>Controls the little preview card (image + text) shown when your link is shared or surfaced by AI. It makes you look established and trustworthy.</p></li>
+        <li><h3>XML sitemap</h3><p>A map of all your pages, so AI and Google can find every one — not just your homepage.</p></li>
+        <li><h3>Canonical URL</h3><p>Tells AI which version of a page is the 'real' one, so you're not marked down for looking like duplicate pages.</p></li>
+        <li><h3>Language declared</h3><p>Tells AI which language your site is written in, so it reads and quotes you correctly instead of guessing.</p></li>
+        <li><h3>Mobile-friendly viewport</h3><p>Makes sure your site works properly on phones. Most people — and AI's mobile checks — see the phone version first.</p></li>
+        <li><h3>Favicon</h3><p>The tiny icon in the browser tab. A small thing, but it signals a real, cared-for website.</p></li>
+      </ol>
+    </section>

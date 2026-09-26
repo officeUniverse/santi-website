@@ -59,7 +59,7 @@
   function say(el, text, cls) { if (!el) return; el.textContent = text; el.className = "form-msg" + (cls ? " " + cls : ""); }
 
   /* ---------- nav: solid state + mobile sheet ---------- */
-  var nav = $(".nav"), hero = $(".hero");
+  var nav = $(".nav"), hero = $(".hero, .page-hero");
   if (nav) {
     var onScroll = function () {
       // Light pages (no dark hero) get the solid nav straight away.
@@ -271,9 +271,61 @@
     tick();
   }
 
+  /* ---------- contact form (contact.html) ---------- */
+  var cForm = $("#santi-contact-form");
+  if (cForm) {
+    cForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var out = $("#santi-contact-msg"), btn = $("button[type=submit]", cForm);
+      var field = function (id) { var el = document.getElementById(id); return el ? el.value.trim() : ""; };
+      if (!field("full-name") || !field("subject") || !field("message")) { say(out, "Please fill in your name, subject and message.", "err"); return; }
+      var em = validateEmail(field("email"));
+      if (!em.ok) { say(out, em.msg, "err"); return; }
+      var ph = validatePhone(field("phone"), false); // optional, but must be real if given
+      if (!ph.ok) { say(out, ph.msg, "err"); return; }
+      btn.disabled = true; say(out, "Sending…");
+      postLead({
+        type: "contact", name: field("full-name"), email: em.value, phone: ph.value,
+        subject: field("subject"), message: field("message"),
+        page: location.href, submittedAt: new Date().toISOString()
+      }).then(function () {
+        say(out, "Thank you! Your message is on its way — we'll reply within one business day.", "ok");
+        cForm.reset();
+      }).catch(function () {
+        say(out, "Sorry, that didn't send. Please email santi@santi.co.za or try again.", "err");
+      }).finally(function () { btn.disabled = false; });
+    });
+  }
+
+  /* ---------- location-aware line (about.html; only after cookie consent) ---------- */
+  function personaliseGeo() {
+    var geo = $("#santi-geo");
+    if (!geo || !window.fetch) return;
+    var providers = [
+      { url: "https://get.geojs.io/v1/ip/geo.json", map: function (d) { return { cc: d.country_code, city: d.city, country: d.country }; } },
+      { url: "https://ipapi.co/json/", map: function (d) { return d.error ? null : { cc: d.country_code, city: d.city, country: d.country_name }; } },
+      { url: "https://ipwho.is/", map: function (d) { return d.success === false ? null : { cc: d.country_code, city: d.city, country: d.country }; } }
+    ];
+    var show = function (g) {
+      var msg;
+      if (g.cc === "ZA") msg = "Proudly based in South Africa — serving businesses in " + (g.city || "your area") + ", across the country and worldwide.";
+      else if (g.cc === "KE") msg = "On the ground in Kenya — partnering with businesses in " + (g.city || "Nairobi") + " and across the region.";
+      else msg = "Based in South Africa & Kenya — working with clients in " + (g.country || "your region") + " and worldwide.";
+      geo.textContent = msg; // textContent: API values never become markup
+    };
+    (function tryNext(i) {
+      if (i >= providers.length) return; // keep the static fallback
+      fetch(providers[i].url)
+        .then(function (r) { return r.json(); })
+        .then(function (d) { var g = providers[i].map(d); if (g && g.cc) show(g); else tryNext(i + 1); })
+        .catch(function () { tryNext(i + 1); });
+    })(0);
+  }
+
   /* ---------- cookie consent (POPIA / GDPR) ---------- */
   var CK = "santi-cookie-consent";
   var consent = null; try { consent = localStorage.getItem(CK); } catch (e) {}
+  if (consent === "accepted") personaliseGeo();
   if (!consent) {
     var bar = document.createElement("div");
     bar.className = "cookie"; bar.setAttribute("role", "dialog"); bar.setAttribute("aria-label", "Cookie consent");
@@ -284,6 +336,7 @@
     $$("button", bar).forEach(function (b) {
       b.addEventListener("click", function () {
         try { localStorage.setItem(CK, b.dataset.c); } catch (e) {}
+        if (b.dataset.c === "accepted") personaliseGeo();
         bar.classList.remove("is-visible");
         setTimeout(function () { bar.remove(); }, 400);
       });

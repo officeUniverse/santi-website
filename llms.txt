@@ -3,20 +3,29 @@
 > Santi Universe is a web design, graphic design and AI engineering studio based in Roodepoort, South Africa, with a footprint in Kenya and clients worldwide. We build fast, high-performance websites, brand identities, AI solutions and AEO (Answer Engine Optimization) that turn visitors into customers.
 
 ## Services
-- [Web Design & Development](https://santi.co.za/services.html): business sites, eCommerce, custom web apps, landing pages.
-- [Graphic Design & Branding](https://santi.co.za/services.html): logos, brand identity, guidelines, marketing collateral.
-- [AI Engineering](https://santi.co.za/services.html): chatbots, automation, RAG assistants, API & model integration.
+- [Web Design & Development](https://santi.co.za/services.html#web): business sites, eCommerce, custom web apps, landing pages.
+- [Graphic Design & Branding](https://santi.co.za/services.html#branding): logos, brand identity, guidelines, marketing collateral.
+- [AI Engineering](https://santi.co.za/services.html#ai): chatbots, automation, RAG assistants, API & model integration.
 - [AEO — Answer Engine Optimization](https://santi.co.za/aeo.html): get found and recommended by ChatGPT, Gemini and AI search.
-- [Web Hosting](https://santi.co.za/services.html): managed, fast, secure hosting.
-- [WordPress & Plugins](https://santi.co.za/services.html): custom development, including a booking plugin.
+- [Web Hosting](https://santi.co.za/services.html#hosting): managed, fast, secure hosting.
+- [WordPress & Plugins](https://santi.co.za/services.html#wordpress): custom development, including a booking plugin.
 
 ## Key pages
 - [Home](https://santi.co.za/)
 - [Services](https://santi.co.za/services.html)
-- [Portfolio](https://santi.co.za/portfolio.html)
+- [Work / portfolio](https://santi.co.za/portfolio.html): all case studies.
 - [Free AEO Tool](https://santi.co.za/aeo.html): a free checker that scores how AI-ready any website is.
 - [About](https://santi.co.za/about.html)
 - [Contact](https://santi.co.za/contact.html)
+
+## Case studies
+- [Algafusion](https://santi.co.za/project-algafusion.html): Brand identity — Luxury eco-tourism brand.
+- [Awethu Forestry](https://santi.co.za/project-awethu.html): Brand identity & website — Forestry.
+- [Crow’s Nest](https://santi.co.za/project-crowsnest.html): Brand identity & website — Saldanha Bay accommodation.
+- [GLNI](https://santi.co.za/project-glni.html): Website & ongoing care — International leadership network.
+- [Guildco](https://santi.co.za/project-guildco.html): Brand identity & website — Construction & mining.
+- [Isiphethu](https://santi.co.za/project-isiphethu.html): Visual identity & brand guidelines — Engineering & water services.
+- [S.H.E Foundation](https://santi.co.za/project-she.html): Visual identity — Strength, Hope & Empowerment.
 
 ## Contact
 - Email: santi@santi.co.za

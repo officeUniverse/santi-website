@@ -200,24 +200,24 @@
 
   function reportCss() {
     return "*{box-sizing:border-box}" +
-      "body{margin:0;background:#f4f4f5;color:#1a1a1a;font:16px/1.6 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}" +
-      ".bar{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;gap:16px;background:#111;color:#fff;padding:12px 20px;font-size:14px}" +
-      ".bar button{background:#FA814D;color:#fff;border:0;padding:10px 18px;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer}" +
+      "body{margin:0;background:#f4f7f8;color:#0e1b3d;font:16px/1.6 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}" +
+      ".bar{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;gap:16px;background:#0d2466;color:#fff;padding:12px 20px;font-size:14px}" +
+      ".bar button{background:#ffd147;color:#0e1b3d;border:0;padding:10px 18px;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer}" +
       ".page{max-width:820px;margin:24px auto;background:#fff;padding:48px}" +
-      ".rhead{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid #FA814D;padding-bottom:18px}" +
-      ".brand{font-size:26px;font-weight:800;letter-spacing:-.02em}" +
-      ".brand span{color:#FA814D;margin-left:6px;font-weight:500}" +
+      ".rhead{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid #173b9a;padding-bottom:18px}" +
+      ".brand{font-size:26px;font-weight:800;letter-spacing:-.02em;color:#173b9a}" +
+      ".brand span{color:#03707a;margin-left:6px;font-weight:500}" +
       ".rhead-meta{text-align:right;font-size:15px;font-weight:600;color:#444}" +
       ".rhead-meta small{color:#999;font-weight:400}" +
       ".meta{display:flex;gap:48px;margin:22px 0 28px;font-size:14px}" +
       ".meta .k{display:block;color:#999;text-transform:uppercase;letter-spacing:.06em;font-size:11px;margin-bottom:3px}" +
       ".meta .v{font-weight:600;word-break:break-all}" +
-      ".hero{display:flex;align-items:center;gap:28px;background:#faf7f5;border:1px solid #eee;border-radius:12px;padding:26px;margin-bottom:18px}" +
+      ".hero{display:flex;align-items:center;gap:28px;background:#eef3f7;border:1px solid #dde6ee;border-radius:12px;padding:26px;margin-bottom:18px}" +
       ".score{flex:0 0 auto;width:118px;height:118px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff}" +
       ".score.s-good{background:#27ae60}.score.s-mid{background:#e8a000}.score.s-low{background:#e74c3c}" +
       ".score .num{font-size:42px;font-weight:800;line-height:1}" +
       ".score .den{font-size:13px;opacity:.85}" +
-      ".grade{font-size:30px;font-weight:800;color:#FA814D;line-height:1}" +
+      ".grade{font-size:30px;font-weight:800;color:#173b9a;line-height:1}" +
       ".verdict{margin:4px 0 8px;font-size:18px;font-weight:600}" +
       ".counts{margin:0;font-size:14px;color:#555}" +
       ".sec-title{font-size:15px;text-transform:uppercase;letter-spacing:.08em;color:#999;margin:26px 0 14px}" +
@@ -230,15 +230,15 @@
       ".r-plain{margin:9px 0 0;color:#2b2b2b}" +
       ".r-detail{margin:6px 0 0;color:#999;font-size:13px}" +
       ".r-fix{margin:9px 0 0;font-size:14px;color:#2b2b2b}" +
-      ".r-fix strong{color:#FA814D}" +
+      ".r-fix strong{color:#173b9a}" +
       ".note,.cta{border-radius:10px;padding:22px 24px;margin-top:24px}" +
-      ".note{background:#fff7f2;border:1px solid #ffe0cf}" +
+      ".note{background:#e9f7f8;border:1px solid #bfe6ea}" +
       ".note h3,.cta h3{margin:0 0 8px;font-size:19px}" +
-      ".cta{background:#111;color:#fff}" +
-      ".cta p{margin:6px 0;color:#ddd}" +
+      ".cta{background:#0d2466;color:#fff}" +
+      ".cta p{margin:6px 0;color:#c9d3e6}" +
       ".cta .contact{font-size:15px}" +
       ".cta .book{margin-top:10px}" +
-      ".cta .book a{color:#FA814D;font-weight:700;text-decoration:none}" +
+      ".cta .book a{color:#ffd147;font-weight:700;text-decoration:none}" +
       ".rfoot{margin-top:28px;padding-top:16px;border-top:1px solid #eee;color:#aaa;font-size:12px;text-align:center}" +
       "@media print{body{background:#fff}.no-print{display:none}.page{margin:0;max-width:none;padding:0}@page{margin:14mm}}";
   }
