@@ -130,13 +130,16 @@ Note on n8n plumbing, already discovered by Resu: on this n8n instance the HTTP 
 
 **W3 — the ITN gate.** Path `/webhook/santi-deposit` (must not resemble `resu-pay`; both live on the same n8n). Ported from `resu-payfast-handler.json`, substituting ERPNext for Cloudflare KV and email for WhatsApp, keeping the Telegram alert on every rejection branch.
 
-Order of checks — all of them, before any ERPNext write, treating every posted field as hostile:
+Order of checks — all six, before any ERPNext write, treating every posted field as hostile:
 
 1. **Signature** — via the Worker. Mismatch → reject.
 2. **Source host** — must be a Payfast-published host/IP. *(New; Resu does not do this.)*
 3. **Server-side validation** — POST the payload back to Payfast's validation endpoint and require confirmation. *(New; Resu validates the MD5 locally only. Fine at R45, not at four figures.)*
-4. **Amount** — `amount_gross` against `custom_deposit_amount` on the Quotation the token maps to, to the cent. **Never trust an amount, item name or reference from the callback or the browser.**
-5. **`payment_status`** must be complete; anything else is logged and stopped.
+4. **Ownership** — `m_payment_id` must start with `SANTI-`, and `custom_str1` must be a 64-hex token that resolves to a submitted Quotation. Mandatory because the merchant account is shared with Resu: the signature check above cannot tell the two systems' payments apart. *(New; Resu approximates this by rejecting an unresolvable slug.)*
+5. **Amount** — `amount_gross` against `custom_deposit_amount` on the Quotation that token resolved to, to the cent. **Never trust an amount, item name or reference from the callback or the browser.**
+6. **`payment_status`** must be complete; anything else is logged and stopped.
+
+The checks run in that order, and the **first** failure is what the alert names — so an alert points at the real fault instead of a downstream symptom.
 
 Then:
 
@@ -202,8 +205,9 @@ Each step is useful on its own.
 
 ## 11. Prerequisites
 
-- Payfast merchant account is **live** (confirmed — Resu uses it). Needed for `santi-pay`: merchant id, merchant key, and whether a **passphrase** is set on the account. Resu's own note records that signing without a passphrase when the account has one set is the cause of `Generated signature does not match submitted signature`.
-- Decide whether Santi deposits use the **same merchant account** as Resu or a separate one. Same account means Resu's and Santi's ITNs arrive with the same credentials, so `m_payment_id`/`custom_str1` namespacing must be unambiguous and each handler must reject payments that are not its own — worth deciding before step 3.
+- Payfast merchant account is **live** and a **passphrase is set** on it (confirmed 2026-09-27). Signing without it produces `Generated signature does not match submitted signature`, per Resu's own config note.
+- **The merchant account is shared with Resu** (decided 2026-09-27). Consequence, and it is the sharpest edge in this design: **a valid Resu ITN body carries a valid signature at Santi's endpoint too, because the passphrase is the same.** A correct signature therefore does not prove a payment is ours — see check 4 in §6. Resu's handler already rejects anything whose slug it cannot resolve, so traffic crossing the other way also fails safely, with an alert.
+- Rotating the passphrase on the Payfast account means updating **both** Workers' secrets, or one of the two systems stops validating. That coupling is the price of one merchant account.
 - Cloudflare Access service token for `svc-n8n`.
 - Reply-to mailbox for quote emails (W4).
 
