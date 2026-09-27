@@ -132,6 +132,12 @@ HEADERS = {
     'CF-Access-Client-Id': CFG['CF_ACCESS_CLIENT_ID'],
     'CF-Access-Client-Secret': CFG['CF_ACCESS_CLIENT_SECRET'],
     'Accept': 'application/json',
+    # Required, discovered 2026-09-27: Cloudflare's WAF rejects Python's default
+    # 'Python-urllib/x.y' User-Agent with error 1010 browser_signature_banned,
+    # before CF Access or Frappe ever see the request. Nothing to do with the API
+    # key or the CF headers above. Do not remove this when tidying.
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 '
+                  '(KHTML, like Gecko) Chrome/120.0 Safari/537.36',
 }
 
 
@@ -317,18 +323,22 @@ from n8n_api import get_workflow, list_workflows
 WRITE = '--write' in sys.argv
 OUT = Path(__file__).resolve().parent.parent / 'n8n' / 'workflows'
 
-
-def slug(name):
-    return re.sub(r'[^a-z0-9]+', '-', name.lower()).strip('-')
+# An explicit allowlist, never "everything that is not Resu". This n8n holds 87
+# workflows belonging to other projects and clients (Invite, Openclaw, KQV,
+# client chatbots); exporting them would drag unrelated configuration — and
+# possibly their secrets — into this repo. Add an id here only when this project
+# owns that workflow.
+WORKFLOWS = {
+    'NRwlZnnatI84E1gN': 'santi-leads.json',       # Santi Leads (contact + newsletter)
+    'drZg4ZalmAN1rknV': 'santi-aeo-tool.json',    # Santi AEO Tool
+}
 
 
 OUT.mkdir(parents=True, exist_ok=True)
-for summary in list_workflows():
-    if summary['name'].startswith('Resu'):
-        continue
-    workflow = get_workflow(summary['id'])
+for workflow_id, filename in WORKFLOWS.items():
+    workflow = get_workflow(workflow_id)
     workflow.pop('staticData', None)
-    target = OUT / f"{slug(workflow['name'])}.json"
+    target = OUT / filename
     text = json.dumps(workflow, indent=2, sort_keys=True, ensure_ascii=False) + '\n'
     if not WRITE:
         state = 'unchanged' if target.exists() and target.read_text() == text else 'WOULD CHANGE'
