@@ -59,7 +59,7 @@ window.SANTI_CASE_STUDIES = [
     "href": "project-awethu.html",
     "images": [
       {
-        "src": "assets/imgs/projects/awethu/signage-concept.png",
+        "src": "assets/imgs/projects/awethu/signage-concept.jpg",
         "alt": "Awethu Forestry concept: branded entrance sign at the edge of a pine forest"
       },
       {
@@ -87,20 +87,74 @@ window.SANTI_CASE_STUDIES = [
         "alt": "Awethu apparel concept: white branded cap and polo shirt"
       },
       {
-        "src": "assets/imgs/projects/awethu/vehicle-concept.png",
+        "src": "assets/imgs/projects/awethu/vehicle-concept.jpg",
         "alt": "Awethu Forestry concept: white pickup with forest-green and lime vehicle graphics"
       },
       {
-        "src": "assets/imgs/projects/awethu/workwear-concept.png",
+        "src": "assets/imgs/projects/awethu/workwear-concept.jpg",
         "alt": "Awethu Forestry concept: branded green work jacket and white hard hat"
       },
       {
-        "src": "assets/imgs/projects/awethu/fieldkit-concept.png",
+        "src": "assets/imgs/projects/awethu/fieldkit-concept.jpg",
         "alt": "Awethu Forestry concept: ivory canvas tote and green reusable bottle"
       },
       {
-        "src": "assets/imgs/projects/awethu/website-home.png",
+        "src": "assets/imgs/projects/awethu/website-home.jpg",
         "alt": "Live Awethu Forestry homepage with forest imagery, green brand accents and the headline Bridging Opportunity and Empowerment"
+      }
+    ]
+  },
+  {
+    "title": "Consolidated Holdings",
+    "href": "project-consolidated-holdings.html",
+    "images": [
+      {
+        "src": "assets/imgs/projects/consolidated-holdings/reception-mockup.jpg",
+        "alt": "Consolidated Holdings logo and wordmark on a reception wall"
+      },
+      {
+        "src": "assets/imgs/projects/consolidated-holdings/primary-logo.jpg",
+        "alt": "Consolidated Holdings primary teal and slate-blue emblem with charcoal wordmark"
+      },
+      {
+        "src": "assets/imgs/projects/consolidated-holdings/symbol-breakdown.jpg",
+        "alt": "Consolidated Holdings symbol breakdown showing C, H, rotation, fist and compression references"
+      },
+      {
+        "src": "assets/imgs/projects/consolidated-holdings/logo-variations.jpg",
+        "alt": "Consolidated Holdings stacked and horizontal logo variations in black and white"
+      },
+      {
+        "src": "assets/imgs/projects/consolidated-holdings/colour-direction.jpg",
+        "alt": "Comparison of earlier and proposed Consolidated Holdings colour palettes"
+      },
+      {
+        "src": "assets/imgs/projects/consolidated-holdings/campaign-artwork.jpg",
+        "alt": "Consolidated Holdings supplied campaign layouts with unity and triumph messaging"
+      },
+      {
+        "src": "assets/imgs/projects/consolidated-holdings/stationery-mockup.jpg",
+        "alt": "Consolidated Holdings coordinated letterhead, envelope, folder, notebook and cards"
+      },
+      {
+        "src": "assets/imgs/projects/consolidated-holdings/cards-mockup.jpg",
+        "alt": "Consolidated Holdings white and slate-blue business cards on grey plinths"
+      },
+      {
+        "src": "assets/imgs/projects/consolidated-holdings/profile-mockup.jpg",
+        "alt": "Consolidated Holdings company-profile booklet cover concepts"
+      },
+      {
+        "src": "assets/imgs/projects/consolidated-holdings/workwear-mockup.jpg",
+        "alt": "Consolidated Holdings branded polo shirt and cap"
+      },
+      {
+        "src": "assets/imgs/projects/consolidated-holdings/billboard-artwork.jpg",
+        "alt": "Supplied Consolidated Holdings billboard artwork listing four businesses with a contact strip"
+      },
+      {
+        "src": "assets/imgs/projects/consolidated-holdings/billboard-mockup.jpg",
+        "alt": "Consolidated Holdings wide billboard displayed on a commercial facade"
       }
     ]
   },
@@ -109,7 +163,7 @@ window.SANTI_CASE_STUDIES = [
     "href": "project-crowsnest.html",
     "images": [
       {
-        "src": "assets/imgs/projects/crowsnest/welcome-mockup.png",
+        "src": "assets/imgs/projects/crowsnest/welcome-mockup.jpg",
         "alt": "Crow’s Nest concept welcome stationery with navy folder, cards and notebook"
       },
       {
@@ -141,27 +195,27 @@ window.SANTI_CASE_STUDIES = [
         "alt": "Crow’s Nest units and amenities company profile layout"
       },
       {
-        "src": "assets/imgs/projects/crowsnest/website-home.png",
+        "src": "assets/imgs/projects/crowsnest/website-home.jpg",
         "alt": "Actual Crow’s Nest homepage with accommodation photography and Escape to the West Coast headline"
       },
       {
-        "src": "assets/imgs/projects/crowsnest/keys-mockup.png",
+        "src": "assets/imgs/projects/crowsnest/keys-mockup.jpg",
         "alt": "Crow’s Nest concept mockup: room key tags"
       },
       {
-        "src": "assets/imgs/projects/crowsnest/sign-mockup.png",
+        "src": "assets/imgs/projects/crowsnest/sign-mockup.jpg",
         "alt": "Crow’s Nest concept mockup: entrance signage"
       },
       {
-        "src": "assets/imgs/projects/crowsnest/tote-mockup.png",
+        "src": "assets/imgs/projects/crowsnest/tote-mockup.jpg",
         "alt": "Crow’s Nest concept mockup: tote and cap"
       },
       {
-        "src": "assets/imgs/projects/crowsnest/booklet-mockup.png",
+        "src": "assets/imgs/projects/crowsnest/booklet-mockup.jpg",
         "alt": "Crow’s Nest concept mockup: company-profile booklet"
       },
       {
-        "src": "assets/imgs/projects/crowsnest/laptop-mockup.png",
+        "src": "assets/imgs/projects/crowsnest/laptop-mockup.jpg",
         "alt": "Crow’s Nest concept mockup: website on laptop"
       }
     ]
@@ -171,7 +225,7 @@ window.SANTI_CASE_STUDIES = [
     "href": "project-glni.html",
     "images": [
       {
-        "src": "assets/imgs/projects/glni/studio-hero-v2.png",
+        "src": "assets/imgs/projects/glni/studio-hero-v2.jpg",
         "alt": "GLNI homepage displayed on a silver laptop and black phone in a blue architectural studio"
       },
       {
@@ -201,7 +255,7 @@ window.SANTI_CASE_STUDIES = [
     "href": "project-guildco.html",
     "images": [
       {
-        "src": "assets/imgs/projects/guildco/vehicle-mockup.png",
+        "src": "assets/imgs/projects/guildco/vehicle-mockup.jpg",
         "alt": "Guildco concept mockup: work vehicle"
       },
       {
@@ -237,27 +291,27 @@ window.SANTI_CASE_STUDIES = [
         "alt": "Guildco teal company profile layout presenting core services and project footprint"
       },
       {
-        "src": "assets/imgs/projects/guildco/website-home.png",
+        "src": "assets/imgs/projects/guildco/website-home.jpg",
         "alt": "Guildco live homepage with construction photography, white wordmark and green call to action"
       },
       {
-        "src": "assets/imgs/projects/guildco/cards-mockup.png",
+        "src": "assets/imgs/projects/guildco/cards-mockup.jpg",
         "alt": "Guildco concept mockup: business cards"
       },
       {
-        "src": "assets/imgs/projects/guildco/booklet-mockup.png",
+        "src": "assets/imgs/projects/guildco/booklet-mockup.jpg",
         "alt": "Guildco concept mockup: company-profile booklet"
       },
       {
-        "src": "assets/imgs/projects/guildco/signage-mockup.png",
+        "src": "assets/imgs/projects/guildco/signage-mockup.jpg",
         "alt": "Guildco concept mockup: site signage"
       },
       {
-        "src": "assets/imgs/projects/guildco/workwear-mockup.png",
+        "src": "assets/imgs/projects/guildco/workwear-mockup.jpg",
         "alt": "Guildco concept mockup: workwear"
       },
       {
-        "src": "assets/imgs/projects/guildco/laptop-mockup.png",
+        "src": "assets/imgs/projects/guildco/laptop-mockup.jpg",
         "alt": "Guildco concept mockup: website on laptop"
       }
     ]
@@ -267,7 +321,7 @@ window.SANTI_CASE_STUDIES = [
     "href": "project-isiphethu.html",
     "images": [
       {
-        "src": "assets/imgs/projects/isiphethu/reception.png",
+        "src": "assets/imgs/projects/isiphethu/reception.jpg",
         "alt": "Isiphethu logo presented on an office reception wall"
       },
       {
@@ -283,23 +337,23 @@ window.SANTI_CASE_STUDIES = [
         "alt": "Ubuntu and Montserrat typography specifications in the brand guide"
       },
       {
-        "src": "assets/imgs/projects/isiphethu/stationery.png",
+        "src": "assets/imgs/projects/isiphethu/stationery.jpg",
         "alt": "Isiphethu stationery concept with letterhead, folder, cards and pen"
       },
       {
-        "src": "assets/imgs/projects/isiphethu/report.png",
+        "src": "assets/imgs/projects/isiphethu/report.jpg",
         "alt": "Isiphethu company profile booklet concept"
       },
       {
-        "src": "assets/imgs/projects/isiphethu/vehicle.png",
+        "src": "assets/imgs/projects/isiphethu/vehicle.jpg",
         "alt": "Isiphethu service pickup vehicle branding concept"
       },
       {
-        "src": "assets/imgs/projects/isiphethu/workwear.png",
+        "src": "assets/imgs/projects/isiphethu/workwear.jpg",
         "alt": "Isiphethu jacket and hard hat branding concept"
       },
       {
-        "src": "assets/imgs/projects/isiphethu/mug.png",
+        "src": "assets/imgs/projects/isiphethu/mug.jpg",
         "alt": "Isiphethu branded ceramic mug concepts"
       },
       {
@@ -375,11 +429,61 @@ window.SANTI_CASE_STUDIES = [
     ]
   },
   {
+    "title": "Moo & Mulch Farm",
+    "href": "project-moo-mulch.html",
+    "images": [
+      {
+        "src": "assets/imgs/projects/moo-mulch/stationery-mockup.jpg",
+        "alt": "Moo & Mulch Farm stationery with letterhead, envelopes, folder, notebook and business cards"
+      },
+      {
+        "src": "assets/imgs/projects/moo-mulch/primary-logo.jpg",
+        "alt": "Moo & Mulch Farm primary logo in three greens with stacked black wordmark"
+      },
+      {
+        "src": "assets/imgs/projects/moo-mulch/symbol-breakdown.jpg",
+        "alt": "Moo & Mulch Farm emblem breakdown showing M, F, livestock, plants and lucerne"
+      },
+      {
+        "src": "assets/imgs/projects/moo-mulch/livestock-artwork.jpg",
+        "alt": "White Moo & Mulch Farm identity over livestock imagery"
+      },
+      {
+        "src": "assets/imgs/projects/moo-mulch/vegetable-artwork.jpg",
+        "alt": "Green emblem detail over cabbage leaves"
+      },
+      {
+        "src": "assets/imgs/projects/moo-mulch/cards-mockup.jpg",
+        "alt": "Moo & Mulch Farm white and forest-green business cards on stone display blocks"
+      },
+      {
+        "src": "assets/imgs/projects/moo-mulch/signage-mockup.jpg",
+        "alt": "Moo & Mulch Farm entrance sign on timber posts beside a farm gate"
+      },
+      {
+        "src": "assets/imgs/projects/moo-mulch/vehicle-mockup.jpg",
+        "alt": "Moo & Mulch Farm white pickup with green farm branding on the door"
+      },
+      {
+        "src": "assets/imgs/projects/moo-mulch/workwear-mockup.jpg",
+        "alt": "Moo & Mulch Farm green work shirt and cap with embroidered branding"
+      },
+      {
+        "src": "assets/imgs/projects/moo-mulch/produce-mockup.jpg",
+        "alt": "Moo & Mulch Farm branded produce crate, kraft bag and paper tags"
+      },
+      {
+        "src": "assets/imgs/projects/moo-mulch/farm-artwork.jpg",
+        "alt": "Moo & Mulch Farm green brand artwork with tractor and field imagery"
+      }
+    ]
+  },
+  {
     "title": "S.H.E Foundation",
     "href": "project-she.html",
     "images": [
       {
-        "src": "assets/imgs/projects/she/hero-v2.png",
+        "src": "assets/imgs/projects/she/hero-v2.jpg",
         "alt": "SHE Foundation branding concept: canvas tote, white-logo pink notebook, mug and patterned stationery on pastel display plinths"
       },
       {
@@ -407,28 +511,78 @@ window.SANTI_CASE_STUDIES = [
         "alt": "Strength Hope Empowerment Foundation logo lockups on light and dark backgrounds"
       },
       {
-        "src": "assets/imgs/projects/she/tote-mockup.png",
+        "src": "assets/imgs/projects/she/tote-mockup.jpg",
         "alt": "SHE Foundation concept mockup: canvas tote bag"
       },
       {
-        "src": "assets/imgs/projects/she/shirt-mockup.png",
+        "src": "assets/imgs/projects/she/shirt-mockup.jpg",
         "alt": "SHE Foundation concept mockup: branded t-shirt"
       },
       {
-        "src": "assets/imgs/projects/she/notebook-white-v2.png",
+        "src": "assets/imgs/projects/she/notebook-white-v2.jpg",
         "alt": "SHE Foundation concept mockup: pink notebook with a white logo printed directly on its cover"
       },
       {
-        "src": "assets/imgs/projects/she/mug-mockup.png",
+        "src": "assets/imgs/projects/she/mug-mockup.jpg",
         "alt": "SHE Foundation concept mockup: ceramic mug"
       },
       {
-        "src": "assets/imgs/projects/she/banner-mockup.png",
+        "src": "assets/imgs/projects/she/banner-mockup.jpg",
         "alt": "SHE Foundation concept mockup: event banner"
       },
       {
-        "src": "assets/imgs/projects/she/stationery-mockup.png",
+        "src": "assets/imgs/projects/she/stationery-mockup.jpg",
         "alt": "SHE Foundation concept mockup: stationery set"
+      }
+    ]
+  },
+  {
+    "title": "Slice Republic",
+    "href": "project-slice-republic.html",
+    "images": [
+      {
+        "src": "assets/imgs/projects/slice-republic/pizza-box-mockup.jpg",
+        "alt": "Slice Republic pizza packaging concept with branded boxes, a navy cup and a cream napkin"
+      },
+      {
+        "src": "assets/imgs/projects/slice-republic/brand-marks.jpg",
+        "alt": "Slice Republic horizontal logo, circular badge and supporting monogram from the identity guide"
+      },
+      {
+        "src": "assets/imgs/projects/slice-republic/curved-wordmark.jpg",
+        "alt": "Slice Republic crowned pizza emblem and curved wordmark"
+      },
+      {
+        "src": "assets/imgs/projects/slice-republic/sharp-wordmark.jpg",
+        "alt": "Slice Republic crowned pizza emblem and sharper wordmark"
+      },
+      {
+        "src": "assets/imgs/projects/slice-republic/logo-lockups.jpg",
+        "alt": "Slice Republic horizontal and stacked logos on light and dark backgrounds"
+      },
+      {
+        "src": "assets/imgs/projects/slice-republic/typography.jpg",
+        "alt": "Arpona and Zeitung Pro typeface specimens from the Slice Republic identity guide"
+      },
+      {
+        "src": "assets/imgs/projects/slice-republic/interior-concept.jpg",
+        "alt": "Slice Republic proposed pizzeria interior with navy walls and gold logo signage"
+      },
+      {
+        "src": "assets/imgs/projects/slice-republic/packaging-concept.jpg",
+        "alt": "Slice Republic pizza box, cups, paper bag and branded apparel"
+      },
+      {
+        "src": "assets/imgs/projects/slice-republic/storefront-mockup.jpg",
+        "alt": "Slice Republic concept mockup: storefront signage"
+      },
+      {
+        "src": "assets/imgs/projects/slice-republic/apron-mockup.jpg",
+        "alt": "Slice Republic concept mockup: staff apparel"
+      },
+      {
+        "src": "assets/imgs/projects/slice-republic/delivery-mockup.jpg",
+        "alt": "Slice Republic concept mockup: delivery scooter"
       }
     ]
   }

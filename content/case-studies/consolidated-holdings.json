@@ -1,0 +1,246 @@
+{
+  "slug": "consolidated-holdings",
+  "order": 11,
+  "title": "Consolidated Holdings",
+  "org": "Consolidated Holdings",
+  "schemaName": "Consolidated Holdings — Brand Identity and Applications",
+  "metaTitle": "Consolidated Holdings Brand Identity — Case Study | Santi Universe",
+  "description": "Consolidated Holdings brand identity: a geometric emblem, slate-blue and teal colour direction, supplied billboard artwork, and stationery, signage and workwear concepts.",
+  "genre": [
+    "Brand Identity",
+    "Logo Design"
+  ],
+  "category": "Brand identity & applications",
+  "tags": [
+    "branding"
+  ],
+  "pills": [
+    "Brand identity"
+  ],
+  "cardSub": "Corporate group · Brand identity",
+  "tagline": [
+    "Together we stand.",
+    "United we triumph."
+  ],
+  "intro": "An identity built around unity and resilience, extended into a consistent family of print, workplace and signage concepts.",
+  "tint": "#334F63",
+  "cover": "reception-mockup.jpg",
+  "reel": [
+    "stationery-mockup.jpg",
+    "cards-mockup.jpg",
+    "profile-mockup.jpg",
+    "billboard-mockup.jpg",
+    "workwear-mockup.jpg",
+    "reception-mockup.jpg"
+  ],
+  "hero": {
+    "src": "reception-mockup.jpg",
+    "alt": "Consolidated Holdings logo and wordmark on a reception wall",
+    "caption": "Reception signage · Concept mockup"
+  },
+  "meta": [
+    [
+      "Identity",
+      "Logo · Colour · Brand language"
+    ],
+    [
+      "Supplied artwork",
+      "Brand presentation · Billboard"
+    ],
+    [
+      "Applications",
+      "Stationery · Profile · Signage · Workwear concepts"
+    ]
+  ],
+  "chapters": [
+    {
+      "label": "The direction",
+      "heading": [
+        "Bringing complexity",
+        "into unity."
+      ],
+      "text": [
+        "The Consolidated Holdings presentation introduces a new identity built around simplicity, strength and resilience. Its central idea is consolidation itself: separate parts coming together to form a clear, unified whole.",
+        "The proposed mark replaces the linked shapes of the earlier identity with a more structured geometric symbol. A bold wordmark and the line “Together we stand - United we triumph” carry that idea into the wider visual language."
+      ],
+      "board": {
+        "layout": "one",
+        "images": [
+          {
+            "src": "primary-logo.jpg",
+            "alt": "Consolidated Holdings primary teal and slate-blue emblem with charcoal wordmark",
+            "caption": "Primary identity · supplied presentation"
+          }
+        ]
+      }
+    },
+    {
+      "label": "The emblem",
+      "heading": [
+        "Two initials.",
+        "A single statement."
+      ],
+      "text": [
+        "The supplied rationale describes rotating the initials C and H through 90 degrees to create a fist-like form: a symbol of triumph and resilience. The progressive reduction of the elements also draws on the motion of a compression machine.",
+        "The arch, central bar and lower rectangle create a compact silhouette. Their clear separation allows the mark to retain its structure in full colour, monochrome and reversed applications."
+      ],
+      "board": {
+        "layout": "two",
+        "images": [
+          {
+            "src": "symbol-breakdown.jpg",
+            "alt": "Consolidated Holdings symbol breakdown showing C, H, rotation, fist and compression references",
+            "caption": "Symbol construction · supplied presentation"
+          },
+          {
+            "src": "logo-variations.jpg",
+            "alt": "Consolidated Holdings stacked and horizontal logo variations in black and white",
+            "caption": "Logo variations · supplied presentation"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Colour and voice",
+      "heading": [
+        "Quiet confidence.",
+        "A clear message."
+      ],
+      "text": [
+        "The presentation moves from the earlier gold-and-grey palette to slate blue, muted teal and neutrals. The cooler tones give the proposed identity a restrained, industrial character.",
+        "The campaign layouts use short statements, strong typography and human imagery to express standing together and shared triumph. Those supplied layouts establish the voice used alongside the new mark."
+      ],
+      "board": {
+        "layout": "two",
+        "images": [
+          {
+            "src": "colour-direction.jpg",
+            "alt": "Comparison of earlier and proposed Consolidated Holdings colour palettes",
+            "caption": "Colour direction · supplied presentation"
+          },
+          {
+            "src": "campaign-artwork.jpg",
+            "alt": "Consolidated Holdings supplied campaign layouts with unity and triumph messaging",
+            "caption": "Campaign layouts · supplied presentation"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Stationery",
+      "heading": [
+        "Consistency starts",
+        "with the details."
+      ],
+      "text": [
+        "The stationery concept brings the identity into everyday business communication: letterhead, envelope, folder, notebook and matching cards. White space keeps the pages useful, while slate-blue and teal pieces give the collection a recognisable rhythm.",
+        "Small emblem details and a restrained approach to colour connect the formats. This extends the supplied visual language into a proposed print system."
+      ],
+      "note": "The new application images in this case study are AI-generated visualisations of possible uses of the identity. They show design concepts, not completed installations or manufactured items.",
+      "board": {
+        "layout": "one",
+        "images": [
+          {
+            "src": "stationery-mockup.jpg",
+            "alt": "Consolidated Holdings coordinated letterhead, envelope, folder, notebook and cards",
+            "caption": "Stationery suite · Concept mockup"
+          }
+        ]
+      }
+    },
+    {
+      "label": "In print",
+      "heading": [
+        "An introduction",
+        "with substance."
+      ],
+      "text": [
+        "The business-card concept pairs a crisp light face with a darker reverse, keeping the emblem and company name at the centre of the design. The colour contrast makes the same identity work at a smaller scale.",
+        "The company-profile cover concept uses a larger format and more open space. Its purpose is to explore a consistent document style; it does not imply that a finished profile or corporate report was part of the supplied work."
+      ],
+      "board": {
+        "layout": "two",
+        "images": [
+          {
+            "src": "cards-mockup.jpg",
+            "alt": "Consolidated Holdings white and slate-blue business cards on grey plinths",
+            "caption": "Business cards · Concept mockup"
+          },
+          {
+            "src": "profile-mockup.jpg",
+            "alt": "Consolidated Holdings company-profile booklet cover concepts",
+            "caption": "Company-profile covers · Concept mockup"
+          }
+        ]
+      }
+    },
+    {
+      "label": "The workplace",
+      "heading": [
+        "A recognisable",
+        "place to arrive."
+      ],
+      "text": [
+        "The reception concept translates the flat emblem into a dimensional sign. Teal and slate-blue elements sit beside dark lettering on a pale wall, keeping the identity readable within an architectural setting.",
+        "A polo shirt and cap explore a smaller, stitched application. These concepts show how the same mark could connect the workplace with the people representing the group."
+      ],
+      "board": {
+        "layout": "two",
+        "images": [
+          {
+            "src": "reception-mockup.jpg",
+            "alt": "Consolidated Holdings dimensional identity behind a reception desk",
+            "caption": "Reception signage · Concept mockup"
+          },
+          {
+            "src": "workwear-mockup.jpg",
+            "alt": "Consolidated Holdings branded polo shirt and cap",
+            "caption": "Workwear · Concept mockup"
+          }
+        ]
+      }
+    },
+    {
+      "label": "The billboard",
+      "heading": [
+        "One group.",
+        "A wider presence."
+      ],
+      "text": [
+        "The supplied billboard artwork places Consolidated Holdings alongside Pax Africana Construction, Dikela Consulting Engineers, Prime Edge Furniture and Ola Super Stores. The design gives the group name a prominent position, then organises the supporting names and contact information into distinct areas.",
+        "Its line “Capital today. Prosperity tomorrow.” introduces a different message for the large-format setting. The artwork shown below comes directly from the supplied Illustrator file."
+      ],
+      "board": {
+        "layout": "one",
+        "images": [
+          {
+            "src": "billboard-artwork.jpg",
+            "alt": "Supplied Consolidated Holdings billboard artwork listing four businesses with a contact strip",
+            "caption": "Billboard · supplied artwork"
+          }
+        ]
+      }
+    },
+    {
+      "label": "At scale",
+      "heading": [
+        "From artwork",
+        "to its setting."
+      ],
+      "text": [
+        "The installation concept places the billboard across a commercial facade to explore its scale and visibility. The long format gives the main identity, business names and contact strip room to work together.",
+        "Across the expanded collection, the emblem remains the anchor. Colour, type and proportion adapt to each surface while preserving a consistent visual identity."
+      ],
+      "board": {
+        "layout": "one",
+        "images": [
+          {
+            "src": "billboard-mockup.jpg",
+            "alt": "Consolidated Holdings wide billboard displayed on a commercial facade",
+            "caption": "Billboard installation · Concept mockup"
+          }
+        ]
+      }
+    }
+  ]
+}

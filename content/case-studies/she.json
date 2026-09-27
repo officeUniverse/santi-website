@@ -3,78 +3,195 @@
   "order": 7,
   "title": "S.H.E Foundation",
   "org": "S.H.E Foundation",
+  "collab": [
+    {
+      "name": "Stae Creative",
+      "logo": "assets/imgs/partners/stae-creative-web.png",
+      "url": "https://staecreative.com/",
+      "logoTheme": "dark"
+    }
+  ],
   "schemaName": "S.H.E Foundation — Visual Identity",
   "metaTitle": "SHE Foundation Brand Identity — Case Study | Santi Universe",
   "description": "S.H.E Foundation visual identity: Strength, Hope and Empowerment expressed through a profile-and-petal emblem, a colourful palette and a flexible logo family.",
   "genre": "Brand Identity",
   "category": "Visual identity",
-  "tags": ["branding"],
-  "pills": ["Brand identity"],
+  "tags": [
+    "branding"
+  ],
+  "pills": [
+    "Brand identity"
+  ],
   "cardSub": "Strength, Hope & Empowerment",
-  "tagline": ["Strength. Hope.", "Empowerment."],
+  "tagline": [
+    "Strength. Hope.",
+    "Empowerment."
+  ],
   "intro": "An identity with people at its heart.",
   "tint": "#e8c3c1",
-  "cover": "hero-v2.png",
-  "reel": ["tote-mockup.png", "notebook-white-v2.png", "mug-mockup.png", "shirt-mockup.png", "banner-mockup.png", "stationery-mockup.png"],
-  "hero": { "src": "hero-v2.png", "alt": "SHE Foundation branding concept: canvas tote, white-logo pink notebook, mug and patterned stationery on pastel display plinths", "caption": "Brand applications · concept mockup" },
-  "meta": [["Services", "Visual identity · Logo system · Colour & pattern"], ["Client", "S.H.E Foundation"]],
+  "cover": "hero-v2.jpg",
+  "reel": [
+    "tote-mockup.jpg",
+    "notebook-white-v2.jpg",
+    "mug-mockup.jpg",
+    "shirt-mockup.jpg",
+    "banner-mockup.jpg",
+    "stationery-mockup.jpg"
+  ],
+  "hero": {
+    "src": "hero-v2.jpg",
+    "alt": "SHE Foundation branding concept: canvas tote, white-logo pink notebook, mug and patterned stationery on pastel display plinths",
+    "caption": "Brand applications · concept mockup"
+  },
+  "meta": [
+    [
+      "Services",
+      "Visual identity · Logo system · Colour & pattern"
+    ],
+    [
+      "Client",
+      "S.H.E Foundation"
+    ]
+  ],
   "chapters": [
     {
       "label": "The identity",
-      "heading": ["Three words.", "One expressive mark."],
+      "heading": [
+        "Three words.",
+        "One expressive mark."
+      ],
       "text": [
         "The identity brings the foundation’s name to life through three words: Strength, Hope and Empowerment. A woman’s profile sits at the centre of a colourful, petal-shaped emblem.",
         "The final-logo presentation develops that idea into a flexible family of marks, combining the full name with compact S.H.E Foundation versions."
       ],
-      "board": { "layout": "one", "images": [
-        { "src": "identity.jpg", "alt": "Original SHE Foundation identity presentation with coloured initials and profile-and-petal emblem", "caption": "Identity presentation" }
-      ] }
+      "board": {
+        "layout": "one",
+        "images": [
+          {
+            "src": "identity.jpg",
+            "alt": "Original SHE Foundation identity presentation with coloured initials and profile-and-petal emblem",
+            "caption": "Identity presentation"
+          }
+        ]
+      }
     },
     {
       "label": "Colour & character",
-      "heading": ["A palette full", "of possibility."],
-      "text": ["Blue, pink, yellow, coral and orange give the identity a varied, expressive voice. White and dark backgrounds offer different ways to bring the colourful mark into focus."],
-      "board": { "layout": "one", "images": [
-        { "src": "palette.jpg", "alt": "SHE Foundation colour palette options from the logo presentation", "caption": "Palette options" }
-      ] }
+      "heading": [
+        "A palette full",
+        "of possibility."
+      ],
+      "text": [
+        "Blue, pink, yellow, coral and orange give the identity a varied, expressive voice. White and dark backgrounds offer different ways to bring the colourful mark into focus."
+      ],
+      "board": {
+        "layout": "one",
+        "images": [
+          {
+            "src": "palette.jpg",
+            "alt": "SHE Foundation colour palette options from the logo presentation",
+            "caption": "Palette options"
+          }
+        ]
+      }
     },
     {
       "label": "A flexible family",
-      "heading": ["Room to adapt.", "Always recognisable."],
+      "heading": [
+        "Room to adapt.",
+        "Always recognisable."
+      ],
       "text": [
         "Vertical and horizontal arrangements give the identity different proportions for different spaces. The abbreviated name provides a compact option, while the full wording makes the foundation’s name explicit.",
         "Full-colour, white and black variations are shown together in the presentation, with the profile and petals providing a consistent visual connection."
       ],
-      "board": { "layout": "two", "images": [
-        { "src": "vertical.jpg", "alt": "Vertical SHE Foundation logo in colour, white and black", "caption": "Vertical lock-ups" },
-        { "src": "horizontal.jpg", "alt": "Horizontal SHE Foundation logo arrangements and geometric pattern", "caption": "Horizontal lock-ups" }
-      ] }
+      "board": {
+        "layout": "two",
+        "images": [
+          {
+            "src": "vertical.jpg",
+            "alt": "Vertical SHE Foundation logo in colour, white and black",
+            "caption": "Vertical lock-ups"
+          },
+          {
+            "src": "horizontal.jpg",
+            "alt": "Horizontal SHE Foundation logo arrangements and geometric pattern",
+            "caption": "Horizontal lock-ups"
+          }
+        ]
+      }
     },
     {
       "label": "Pattern & expression",
-      "heading": ["Beyond", "the logo."],
+      "heading": [
+        "Beyond",
+        "the logo."
+      ],
       "text": [
         "Diamonds, circles, lines and repeated shapes extend the identity into a decorative graphic language. The presentation explores colourful and monochrome pattern directions alongside the core mark.",
         "Together, the logo family, palette and patterns create a foundation for consistent future communications."
       ],
-      "board": { "layout": "two", "images": [
-        { "src": "patterns.jpg", "alt": "SHE geometric pattern studies in colour and black and white", "caption": "Pattern studies" },
-        { "src": "wordmark.jpg", "alt": "Strength Hope Empowerment Foundation logo lockups on light and dark backgrounds", "caption": "Lock-ups on light and dark" }
-      ] }
+      "board": {
+        "layout": "two",
+        "images": [
+          {
+            "src": "patterns.jpg",
+            "alt": "SHE geometric pattern studies in colour and black and white",
+            "caption": "Pattern studies"
+          },
+          {
+            "src": "wordmark.jpg",
+            "alt": "Strength Hope Empowerment Foundation logo lockups on light and dark backgrounds",
+            "caption": "Lock-ups on light and dark"
+          }
+        ]
+      }
     },
     {
       "label": "The identity in use",
-      "heading": ["Made to be part", "of everyday life."],
-      "text": ["Six concept applications explore how the logo, colour palette and geometric details can extend across merchandise, stationery and an event setting."],
+      "heading": [
+        "Made to be part",
+        "of everyday life."
+      ],
+      "text": [
+        "Six concept applications explore how the logo, colour palette and geometric details can extend across merchandise, stationery and an event setting."
+      ],
       "note": "These AI-generated mockups illustrate possible brand applications, rather than items or events already produced by the foundation.",
-      "board": { "layout": "grid", "images": [
-        { "src": "tote-mockup.png", "alt": "SHE Foundation concept mockup: canvas tote bag", "caption": "Canvas tote · concept mockup" },
-        { "src": "shirt-mockup.png", "alt": "SHE Foundation concept mockup: branded t-shirt", "caption": "T-shirt · concept mockup" },
-        { "src": "notebook-white-v2.png", "alt": "SHE Foundation concept mockup: pink notebook with a white logo printed directly on its cover", "caption": "Notebook · concept mockup" },
-        { "src": "mug-mockup.png", "alt": "SHE Foundation concept mockup: ceramic mug", "caption": "Ceramic mug · concept mockup" },
-        { "src": "banner-mockup.png", "alt": "SHE Foundation concept mockup: event banner", "caption": "Event banner · concept mockup" },
-        { "src": "stationery-mockup.png", "alt": "SHE Foundation concept mockup: stationery set", "caption": "Stationery set · concept mockup" }
-      ] }
+      "board": {
+        "layout": "grid",
+        "images": [
+          {
+            "src": "tote-mockup.jpg",
+            "alt": "SHE Foundation concept mockup: canvas tote bag",
+            "caption": "Canvas tote · concept mockup"
+          },
+          {
+            "src": "shirt-mockup.jpg",
+            "alt": "SHE Foundation concept mockup: branded t-shirt",
+            "caption": "T-shirt · concept mockup"
+          },
+          {
+            "src": "notebook-white-v2.jpg",
+            "alt": "SHE Foundation concept mockup: pink notebook with a white logo printed directly on its cover",
+            "caption": "Notebook · concept mockup"
+          },
+          {
+            "src": "mug-mockup.jpg",
+            "alt": "SHE Foundation concept mockup: ceramic mug",
+            "caption": "Ceramic mug · concept mockup"
+          },
+          {
+            "src": "banner-mockup.jpg",
+            "alt": "SHE Foundation concept mockup: event banner",
+            "caption": "Event banner · concept mockup"
+          },
+          {
+            "src": "stationery-mockup.jpg",
+            "alt": "SHE Foundation concept mockup: stationery set",
+            "caption": "Stationery set · concept mockup"
+          }
+        ]
+      }
     }
   ]
 }

@@ -1,0 +1,218 @@
+{
+  "slug": "slice-republic",
+  "order": 9,
+  "title": "Slice Republic",
+  "org": "Slice Republic",
+  "collab": [
+    {
+      "name": "Stae Creative",
+      "logo": "assets/imgs/partners/stae-creative-web.png",
+      "url": "https://staecreative.com/",
+      "logoTheme": "dark"
+    }
+  ],
+  "schemaName": "Slice Republic — Brand Identity Concept",
+  "metaTitle": "Slice Republic Brand Identity Concept — Case Study | Santi Universe",
+  "description": "Slice Republic branding concept: a crowned pizza-slice emblem, navy and gold palette, two wordmark directions and proposed packaging and interior applications.",
+  "genre": [
+    "Brand Identity",
+    "Logo Design"
+  ],
+  "category": "Brand identity concept",
+  "tags": [
+    "branding"
+  ],
+  "pills": [
+    "Brand concept"
+  ],
+  "cardSub": "Pizzeria · Identity exploration",
+  "tagline": [
+    "A slice of character.",
+    "A touch of royalty."
+  ],
+  "tint": "#153067",
+  "cover": "pizza-box-mockup.jpg",
+  "reel": [
+    "pizza-box-mockup.jpg",
+    "storefront-mockup.jpg",
+    "apron-mockup.jpg",
+    "delivery-mockup.jpg",
+    "interior-concept.jpg",
+    "packaging-concept.jpg"
+  ],
+  "intro": "A pizzeria identity exploration, from a crowned slice to the details of a takeaway experience.",
+  "hero": {
+    "src": "pizza-box-mockup.jpg",
+    "alt": "Slice Republic pizza packaging concept with branded boxes, a navy cup and a cream napkin",
+    "caption": "Pizza packaging · concept mockup"
+  },
+  "meta": [
+    [
+      "Scope",
+      "Logo · Colour · Typography · Brand applications"
+    ],
+    [
+      "Sector",
+      "Pizzeria"
+    ],
+    [
+      "Stage",
+      "Identity concept · Second-draft exploration"
+    ]
+  ],
+  "chapters": [
+    {
+      "label": "The idea",
+      "heading": [
+        "Handcrafted flavour.",
+        "A distinctive mark."
+      ],
+      "text": [
+        "The Slice Republic identity pairs an expressive pizza-slice emblem with a crown. The supplied guide connects the flowing forms to handcrafted pizza and the crown to a premium, welcoming experience.",
+        "Navy, gold and warm cream carry that idea across the wordmark, supporting marks and proposed brand applications."
+      ],
+      "board": {
+        "layout": "one",
+        "images": [
+          {
+            "src": "brand-marks.jpg",
+            "alt": "Slice Republic horizontal logo, circular badge and supporting monogram from the identity guide",
+            "caption": "Logo family · identity guide"
+          }
+        ]
+      }
+    },
+    {
+      "label": "The exploration",
+      "heading": [
+        "Two directions.",
+        "One personality."
+      ],
+      "text": [
+        "The second-draft presentation explores two wordmark treatments, labelled “Curves” and “Sharp Sharp”. Both retain the crowned slice, with differences in the letterforms giving each direction its own character.",
+        "Presented here as design development; the supplied documents do not establish which direction received final approval."
+      ],
+      "board": {
+        "layout": "two",
+        "images": [
+          {
+            "src": "curved-wordmark.jpg",
+            "alt": "Slice Republic crowned pizza emblem and curved wordmark",
+            "caption": "Curves · second-draft direction"
+          },
+          {
+            "src": "sharp-wordmark.jpg",
+            "alt": "Slice Republic crowned pizza emblem and sharper wordmark",
+            "caption": "Sharp Sharp · second-draft direction"
+          }
+        ]
+      }
+    },
+    {
+      "label": "The system",
+      "heading": [
+        "Deep blues.",
+        "Warm accents."
+      ],
+      "text": [
+        "The guide specifies deep navy and royal blue alongside gold and cream. Light and dark logo treatments keep the identity recognisable across different backgrounds.",
+        "Arpona and Zeitung Pro are the typefaces named in the supplied identity guide."
+      ],
+      "swatches": [
+        [
+          "Deep navy",
+          "#153067"
+        ],
+        [
+          "Royal blue",
+          "#003B8B"
+        ],
+        [
+          "Gold",
+          "#B49255"
+        ],
+        [
+          "Cream",
+          "#E5CCAA"
+        ]
+      ],
+      "board": {
+        "layout": "two",
+        "images": [
+          {
+            "src": "logo-lockups.jpg",
+            "alt": "Slice Republic horizontal and stacked logos on light and dark backgrounds",
+            "caption": "Logo lockups · light and dark"
+          },
+          {
+            "src": "typography.jpg",
+            "alt": "Arpona and Zeitung Pro typeface specimens from the Slice Republic identity guide",
+            "caption": "Typography · identity guide"
+          }
+        ]
+      }
+    },
+    {
+      "label": "In context",
+      "heading": [
+        "From the counter",
+        "to the takeaway."
+      ],
+      "text": [
+        "The supplied mockups explore how the identity could appear in a pizzeria interior and on pizza boxes, drinks, bags and apparel. Repeated colours and the crowned-slice mark connect the different touchpoints."
+      ],
+      "note": "These supplied concept visualisations illustrate proposed applications, not completed installations or production photography.",
+      "board": {
+        "layout": "one",
+        "images": [
+          {
+            "src": "interior-concept.jpg",
+            "alt": "Slice Republic proposed pizzeria interior with navy walls and gold logo signage",
+            "caption": "Pizzeria interior · supplied concept mockup"
+          },
+          {
+            "src": "packaging-concept.jpg",
+            "alt": "Slice Republic pizza box, cups, paper bag and branded apparel",
+            "caption": "Packaging and apparel · supplied concept mockup"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Further applications",
+      "heading": [
+        "More ways",
+        "to make an impression."
+      ],
+      "text": [
+        "Four concept scenes extend the identity into pizza packaging, storefront signage, staff apparel and delivery. Navy, cream and gold connect each application to the crowned-slice mark."
+      ],
+      "note": "These four AI-generated visualisations explore possible applications of the brand. They are concept mockups, not photographs of completed work.",
+      "board": {
+        "layout": "two",
+        "images": [
+          {
+            "src": "pizza-box-mockup.jpg",
+            "alt": "Slice Republic concept mockup: pizza packaging",
+            "caption": "Pizza packaging · concept mockup"
+          },
+          {
+            "src": "storefront-mockup.jpg",
+            "alt": "Slice Republic concept mockup: storefront signage",
+            "caption": "Storefront signage · concept mockup"
+          },
+          {
+            "src": "apron-mockup.jpg",
+            "alt": "Slice Republic concept mockup: staff apparel",
+            "caption": "Staff apparel · concept mockup"
+          },
+          {
+            "src": "delivery-mockup.jpg",
+            "alt": "Slice Republic concept mockup: delivery scooter",
+            "caption": "Delivery scooter · concept mockup"
+          }
+        ]
+      }
+    }
+  ]
+}

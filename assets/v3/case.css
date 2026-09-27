@@ -24,6 +24,19 @@
 .case-title__sub { display: block; margin-top: 14px; font-size: clamp(18px, 1.8vw, 26px); letter-spacing: -0.02em; color: var(--muted); }
 .case-tagline { margin-top: 26px; font-size: clamp(22px, 2.6vw, 38px); line-height: 1.08; letter-spacing: -0.035em; color: var(--ink); }
 .case-intro { margin-top: 16px; max-width: 52ch; color: var(--muted); }
+.collab { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-top: 24px; }
+.collab__label { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.collab__partner {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 8px 16px; border-radius: 999px;
+  background: #fff; border: 1px solid var(--line); font-weight: 500; color: var(--ink);
+}
+a.collab__partner { transition: border-color .2s var(--ease); }
+a.collab__partner:hover { border-color: var(--brand); }
+.collab__partner img { height: 26px; width: auto; }
+.collab__partner--dark { background: #111; border-color: #111; border-radius: 12px; padding: 12px 20px; }
+.collab__partner--dark img { height: 48px; max-width: 160px; object-fit: contain; }
+a.collab__partner:focus-visible { outline: 3px solid var(--brand); outline-offset: 4px; }
+.card__info .card__collab { display: block; margin-top: 4px; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--teal-ink); }
 .case-meta {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px 28px;
   margin: 44px 0 28px; padding-top: 20px; border-top: 1px solid var(--line);

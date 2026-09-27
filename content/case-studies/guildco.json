@@ -13,9 +13,9 @@
   "cardSub": "Construction & mining",
   "tagline": ["Built on trust.", "Designed to connect."],
   "tint": "#416d3c",
-  "cover": "vehicle-mockup.png",
-  "reel": ["signage-mockup.png", "laptop-mockup.png", "cards-mockup.png", "booklet-mockup.png", "workwear-mockup.png", "website-home.png"],
-  "hero": { "src": "vehicle-mockup.png", "alt": "Guildco concept mockup: work vehicle", "caption": "Work vehicle · concept mockup" },
+  "cover": "vehicle-mockup.jpg",
+  "reel": ["signage-mockup.jpg", "laptop-mockup.jpg", "cards-mockup.jpg", "booklet-mockup.jpg", "workwear-mockup.jpg", "website-home.jpg"],
+  "hero": { "src": "vehicle-mockup.jpg", "alt": "Guildco concept mockup: work vehicle", "caption": "Work vehicle · concept mockup" },
   "meta": [["Services", "Brand identity & website"], ["Sector", "Construction · Property · Mining"], ["Website", "guildco.co.za", "https://guildco.co.za/"]],
   "chapters": [
     {
@@ -73,7 +73,7 @@
       ],
       "links": [["Visit Guildco", "https://guildco.co.za/"]],
       "board": { "layout": "browser", "url": "guildco.co.za", "images": [
-        { "src": "website-home.png", "alt": "Guildco live homepage with construction photography, white wordmark and green call to action", "caption": "Live website · homepage · September 2026" }
+        { "src": "website-home.jpg", "alt": "Guildco live homepage with construction photography, white wordmark and green call to action", "caption": "Live website · homepage · September 2026" }
       ] }
     },
     {
@@ -82,12 +82,12 @@
       "text": ["Six concept mockups bring Guildco’s identity into print, the workplace and a digital setting."],
       "note": "These AI-generated visualisations explore possible applications of the brand.",
       "board": { "layout": "grid", "images": [
-        { "src": "cards-mockup.png", "alt": "Guildco concept mockup: business cards", "caption": "Business cards · concept mockup" },
-        { "src": "booklet-mockup.png", "alt": "Guildco concept mockup: company-profile booklet", "caption": "Profile booklet · concept mockup" },
-        { "src": "signage-mockup.png", "alt": "Guildco concept mockup: site signage", "caption": "Site signage · concept mockup" },
-        { "src": "vehicle-mockup.png", "alt": "Guildco concept mockup: work vehicle", "caption": "Work vehicle · concept mockup" },
-        { "src": "workwear-mockup.png", "alt": "Guildco concept mockup: workwear", "caption": "Workwear · concept mockup" },
-        { "src": "laptop-mockup.png", "alt": "Guildco concept mockup: website on laptop", "caption": "Website on laptop · concept mockup" }
+        { "src": "cards-mockup.jpg", "alt": "Guildco concept mockup: business cards", "caption": "Business cards · concept mockup" },
+        { "src": "booklet-mockup.jpg", "alt": "Guildco concept mockup: company-profile booklet", "caption": "Profile booklet · concept mockup" },
+        { "src": "signage-mockup.jpg", "alt": "Guildco concept mockup: site signage", "caption": "Site signage · concept mockup" },
+        { "src": "vehicle-mockup.jpg", "alt": "Guildco concept mockup: work vehicle", "caption": "Work vehicle · concept mockup" },
+        { "src": "workwear-mockup.jpg", "alt": "Guildco concept mockup: workwear", "caption": "Workwear · concept mockup" },
+        { "src": "laptop-mockup.jpg", "alt": "Guildco concept mockup: website on laptop", "caption": "Website on laptop · concept mockup" }
       ] }
     }
   ]

@@ -29,7 +29,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CONTENT = ROOT / "content" / "case-studies"
 PAGES = ROOT / "content" / "pages"
 SITE = "https://santi.co.za/"
-V = "v=17"  # cache stamp for v3.css / case.css / pages.css / site.js
+V = "v=26"  # cache stamp for v3.css / case.css / pages.css / site.js
 
 
 def t(s):  # text node
@@ -190,12 +190,34 @@ def reel_attr(p):
     return "|".join(img_path(p["slug"], f) for f in p.get("reel", []))
 
 
+STUDIO = {"@type": "Organization", "name": "Santi Universe", "url": "https://santi.co.za"}
+
+
+def partners(p):  # "collab": [{"name", "url"?, "logo"?}] -> agencies we did the work with
+    return p.get("collab", [])
+
+
+def collab_html(p):
+    if not partners(p):
+        return ""
+    items = []
+    for c in partners(p):
+        logo = c.get("logo")
+        partner_class = "collab__partner" + (" collab__partner--dark" if c.get("logoTheme") == "dark" else "")
+        inner = (f'<img src="{a(logo)}" alt="{a(c["name"])}"{dims(logo)}>' if logo and (ROOT / logo).is_file()
+                 else f'<span>{t(c["name"])}</span>')
+        items.append(f'<a class="{partner_class}" href="{a(c["url"])}" target="_blank" rel="noopener">{inner}</a>'
+                     if c.get("url") else f'<span class="{partner_class}">{inner}</span>')
+    return f'<p class="collab"><span class="collab__label">In collaboration with</span>{"".join(items)}</p>'
+
+
 def render_project(p, nxt):
     slug, url = p["slug"], f"{SITE}project-{p['slug']}.html"
     hero_src = img_path(slug, p["hero"]["src"])
     work = {"@context": "https://schema.org", "@type": "CreativeWork", "name": p["schemaName"], "url": url,
             "image": SITE + hero_src, "description": p["description"], "genre": p["genre"],
-            "creator": {"@type": "Organization", "name": "Santi Universe", "url": "https://santi.co.za"},
+            "creator": [STUDIO] + [{"@type": "Organization", "name": c["name"], **({"url": c["url"]} if c.get("url") else {})} for c in partners(p)]
+                       if partners(p) else STUDIO,
             "about": {"@type": "Organization", "name": p["org"], **({"url": p["orgUrl"]} if p.get("orgUrl") else {})}}
     if p.get("dateCreated"):
         work["dateCreated"] = p["dateCreated"]
@@ -227,6 +249,7 @@ def render_project(p, nxt):
           <h1 class="case-title">{t(p["title"])}{sub}</h1>
           <p class="case-tagline">{"<br>".join(t(x) for x in p["tagline"])}</p>
           {intro}
+{("          " + collab_html(p)) if partners(p) else ""}
         </div>
         <dl class="case-meta">{meta}</dl>
         <figure class="case-hero__media">
@@ -259,10 +282,12 @@ def cards_html(projects):
     for p in projects:
         cover = img_path(p["slug"], p["cover"])
         pills = "".join(f'<span class="pill">{t(x)}</span>' for x in p["pills"])
+        collab_line = (f'<span class="card__collab">with {t(" & ".join(c["name"] for c in partners(p)))}</span>'
+                       if partners(p) else "")
         cards += f"""
         <a class="card" href="project-{p['slug']}.html" data-project="project-{p['slug']}.html" data-tags="{a(' '.join(p['tags']))}" data-keep-scroll data-reel="{a(reel_attr(p))}">
           <div class="tile__media"><img src="{a(cover)}" alt="{a(p['hero']['alt'] if p['hero']['src'] == p['cover'] else p['title'] + ' — ' + p['category'])}"{dims(cover)} loading="lazy" decoding="async"></div>
-          <div class="card__info"><div><strong>{t(p['title'])}</strong><span>{t(p['cardSub'])}</span></div><div class="pills">{pills}</div></div>
+          <div class="card__info"><div><strong>{t(p['title'])}</strong><span>{t(p['cardSub'])}</span>{collab_line}</div><div class="pills">{pills}</div></div>
         </a>"""
     return cards
 

@@ -13,9 +13,9 @@
   "cardSub": "Saldanha Bay accommodation",
   "tagline": ["A place to land.", "A feeling of home."],
   "tint": "#001f3f",
-  "cover": "welcome-mockup.png",
-  "reel": ["laptop-mockup.png", "sign-mockup.png", "keys-mockup.png", "tote-mockup.png", "booklet-mockup.png", "profile-cover.jpg"],
-  "hero": { "src": "welcome-mockup.png", "alt": "Crow’s Nest concept welcome stationery with navy folder, cards and notebook", "caption": "Welcome stationery · concept mockup" },
+  "cover": "welcome-mockup.jpg",
+  "reel": ["laptop-mockup.jpg", "sign-mockup.jpg", "keys-mockup.jpg", "tote-mockup.jpg", "booklet-mockup.jpg", "profile-cover.jpg"],
+  "hero": { "src": "welcome-mockup.jpg", "alt": "Crow’s Nest concept welcome stationery with navy folder, cards and notebook", "caption": "Welcome stationery · concept mockup" },
   "meta": [["Services", "Brand identity & website"], ["Sector", "Saldanha Bay · Hospitality"], ["Website", "crowsnestsaldanha.co.za", "https://crowsnestsaldanha.co.za/"]],
   "chapters": [
     {
@@ -72,21 +72,21 @@
       ],
       "links": [["Visit Crow’s Nest", "https://crowsnestsaldanha.co.za/"]],
       "board": { "layout": "browser", "url": "crowsnestsaldanha.co.za", "images": [
-        { "src": "website-home.png", "alt": "Actual Crow’s Nest homepage with accommodation photography and Escape to the West Coast headline", "caption": "Live website · September 2026" }
+        { "src": "website-home.jpg", "alt": "Actual Crow’s Nest homepage with accommodation photography and Escape to the West Coast headline", "caption": "Live website · September 2026" }
       ] }
     },
     {
       "label": "The brand in context",
       "heading": ["Thoughtful details.", "A familiar welcome."],
       "text": ["Six concept mockups explore the identity across welcome stationery, room keys, signage, merchandise, a company-profile booklet and a laptop website presentation."],
-      "note": "These are AI-generated concept mockups that illustrate possible applications of the identity.",
+      "note": "These are concept mockups that illustrate possible applications of the identity.",
       "board": { "layout": "grid", "images": [
-        { "src": "welcome-mockup.png", "alt": "Crow’s Nest concept mockup: welcome stationery", "caption": "Welcome stationery · concept mockup" },
-        { "src": "keys-mockup.png", "alt": "Crow’s Nest concept mockup: room key tags", "caption": "Room key tags · concept mockup" },
-        { "src": "sign-mockup.png", "alt": "Crow’s Nest concept mockup: entrance signage", "caption": "Entrance signage · concept mockup" },
-        { "src": "tote-mockup.png", "alt": "Crow’s Nest concept mockup: tote and cap", "caption": "Tote and cap · concept mockup" },
-        { "src": "booklet-mockup.png", "alt": "Crow’s Nest concept mockup: company-profile booklet", "caption": "Profile booklet · concept mockup" },
-        { "src": "laptop-mockup.png", "alt": "Crow’s Nest concept mockup: website on laptop", "caption": "Website on laptop · concept mockup" }
+        { "src": "welcome-mockup.jpg", "alt": "Crow’s Nest concept mockup: welcome stationery", "caption": "Welcome stationery · concept mockup" },
+        { "src": "keys-mockup.jpg", "alt": "Crow’s Nest concept mockup: room key tags", "caption": "Room key tags · concept mockup" },
+        { "src": "sign-mockup.jpg", "alt": "Crow’s Nest concept mockup: entrance signage", "caption": "Entrance signage · concept mockup" },
+        { "src": "tote-mockup.jpg", "alt": "Crow’s Nest concept mockup: tote and cap", "caption": "Tote and cap · concept mockup" },
+        { "src": "booklet-mockup.jpg", "alt": "Crow’s Nest concept mockup: company-profile booklet", "caption": "Profile booklet · concept mockup" },
+        { "src": "laptop-mockup.jpg", "alt": "Crow’s Nest concept mockup: website on laptop", "caption": "Website on laptop · concept mockup" }
       ] }
     }
   ]

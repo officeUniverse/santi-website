@@ -4,6 +4,14 @@
   "title": "GLNI",
   "titleSub": "Global Leadership Network International",
   "org": "Global Leadership Network International",
+  "collab": [
+    {
+      "name": "Stae Creative",
+      "logo": "assets/imgs/partners/stae-creative-web.png",
+      "url": "https://staecreative.com/",
+      "logoTheme": "dark"
+    }
+  ],
   "orgUrl": "https://glni.org/",
   "schemaName": "GLNI — Website Strategy, Design & Ongoing Care",
   "metaTitle": "GLNI Website Design & Ongoing Care — Case Study | Santi Universe",
@@ -23,17 +31,17 @@
     "A place to connect."
   ],
   "tint": "#1c1b22",
-  "cover": "studio-hero-v2.png",
+  "cover": "studio-hero-v2.jpg",
   "reel": [
     "desktop-workspace-mockup.jpg",
     "about-laptop-mockup.jpg",
     "mobile-studio-mockup.jpg",
     "network-tablet-mockup.jpg",
     "meeting-display-mockup.jpg",
-    "studio-hero-v2.png"
+    "studio-hero-v2.jpg"
   ],
   "hero": {
-    "src": "studio-hero-v2.png",
+    "src": "studio-hero-v2.jpg",
     "alt": "GLNI homepage displayed on a silver laptop and black phone in a blue architectural studio",
     "caption": "Desktop & mobile · Concept mockup"
   },

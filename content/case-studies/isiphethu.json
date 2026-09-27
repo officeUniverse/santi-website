@@ -10,75 +10,200 @@
   "description": "Isiphethu Group Holdings brand identity and guidelines, with a blue visual system and six concept mockups for corporate and field applications.",
   "genre": "Brand Identity",
   "category": "Visual identity & brand guidelines",
-  "tags": ["branding"],
-  "pills": ["Brand identity"],
+  "tags": [
+    "branding"
+  ],
+  "pills": [
+    "Brand identity"
+  ],
   "cardSub": "Engineering & water services",
-  "tagline": ["A consistent identity.", "A confident presence."],
+  "tagline": [
+    "A consistent identity.",
+    "A confident presence."
+  ],
   "tint": "#152d4b",
-  "cover": "reception.png",
-  "reel": ["vehicle.png", "stationery.png", "report.png", "workwear.png", "mug.png"],
-  "hero": { "src": "reception.png", "alt": "Isiphethu logo presented on an office reception wall", "caption": "Reception · concept mockup" },
-  "meta": [["Services", "Visual identity & brand guidelines"], ["Sector", "Construction · Engineering · Water services"], ["Website", "isiphethu.com", "https://www.isiphethu.com/"]],
+  "cover": "reception.jpg",
+  "reel": [
+    "vehicle.jpg",
+    "stationery.jpg",
+    "report.jpg",
+    "workwear.jpg",
+    "mug.jpg"
+  ],
+  "hero": {
+    "src": "reception.jpg",
+    "alt": "Isiphethu logo presented on an office reception wall",
+    "caption": "Reception · concept mockup"
+  },
+  "meta": [
+    [
+      "Services",
+      "Visual identity & brand guidelines"
+    ],
+    [
+      "Sector",
+      "Construction · Engineering · Water services"
+    ],
+    [
+      "Website",
+      "isiphethu.com",
+      "https://www.isiphethu.com/"
+    ]
+  ],
   "chapters": [
     {
       "label": "Context",
-      "heading": ["One group.", "A connected identity."],
+      "heading": [
+        "One group.",
+        "A connected identity."
+      ],
       "text": [
         "Isiphethu operates across construction, engineering and water services. Its identity needs to remain recognisable across corporate communications and practical, everyday applications.",
         "The brand guide brings the core elements together: logo construction, clear space, colour, typography and usage rules. The aim is a consistent presentation wherever the brand appears."
       ],
-      "links": [["Explore Isiphethu", "https://www.isiphethu.com/"]],
-      "board": { "layout": "one", "images": [
-        { "src": "identity.jpg", "alt": "Isiphethu master logo with sweeping blue symbol and italic wordmark", "caption": "Master identity · from the brand guide" }
-      ] }
+      "links": [
+        [
+          "Explore Isiphethu",
+          "https://www.isiphethu.com/"
+        ]
+      ],
+      "board": {
+        "layout": "one",
+        "images": [
+          {
+            "src": "identity.jpg",
+            "alt": "Isiphethu master logo with sweeping blue symbol and italic wordmark",
+            "caption": "Master identity · from the brand guide"
+          }
+        ]
+      }
     },
     {
       "label": "The system",
-      "heading": ["Precision in", "every detail."],
+      "heading": [
+        "Precision in",
+        "every detail."
+      ],
       "text": [
         "A flowing blue symbol sits beside a distinctive italic wordmark. The guide defines how that relationship is protected through consistent proportions, clear space and minimum sizes.",
         "Navy provides depth, mid-blue carries the primary colour, and pale blue creates contrast. Ubuntu and Montserrat are named as supporting typefaces in the guide."
       ],
-      "swatches": [["Navy", "#152D4B"], ["Blue", "#3E87BD"], ["Pale blue", "#8CCFF3"], ["Neutral", "#F1F2F2"]],
-      "board": { "layout": "two", "images": [
-        { "src": "construction.jpg", "alt": "Isiphethu logo construction drawing from the brand guide", "caption": "Logo construction" },
-        { "src": "typography.jpg", "alt": "Ubuntu and Montserrat typography specifications in the brand guide", "caption": "Typography" }
-      ] }
+      "swatches": [
+        [
+          "Navy",
+          "#152D4B"
+        ],
+        [
+          "Blue",
+          "#3E87BD"
+        ],
+        [
+          "Pale blue",
+          "#8CCFF3"
+        ],
+        [
+          "Neutral",
+          "#F1F2F2"
+        ]
+      ],
+      "board": {
+        "layout": "two",
+        "images": [
+          {
+            "src": "construction.jpg",
+            "alt": "Isiphethu logo construction drawing from the brand guide",
+            "caption": "Logo construction"
+          },
+          {
+            "src": "typography.jpg",
+            "alt": "Ubuntu and Montserrat typography specifications in the brand guide",
+            "caption": "Typography"
+          }
+        ]
+      }
     },
     {
       "label": "Corporate communication",
-      "heading": ["Clear. Considered.", "Recognisably Isiphethu."],
+      "heading": [
+        "Clear. Considered.",
+        "Recognisably Isiphethu."
+      ],
       "text": [
         "The guide sets out a direct, clear voice, supported by values including teamwork, integrity, knowledge, reliability and innovation.",
         "The stationery and company-profile concepts explore that identity in print, giving the logo room to stand out against clean surfaces and restrained blue details."
       ],
-      "board": { "layout": "two", "images": [
-        { "src": "stationery.png", "alt": "Isiphethu stationery concept with letterhead, folder, cards and pen", "caption": "Stationery · concept mockup" },
-        { "src": "report.png", "alt": "Isiphethu company profile booklet concept", "caption": "Company profile · concept mockup" }
-      ] }
+      "board": {
+        "layout": "two",
+        "images": [
+          {
+            "src": "stationery.jpg",
+            "alt": "Isiphethu stationery concept with letterhead, folder, cards and pen",
+            "caption": "Stationery · concept mockup"
+          },
+          {
+            "src": "report.jpg",
+            "alt": "Isiphethu company profile booklet concept",
+            "caption": "Company profile · concept mockup"
+          }
+        ]
+      }
     },
     {
       "label": "Beyond the office",
-      "heading": ["An identity", "that travels."],
-      "text": ["A vehicle, workwear and a ceramic mug extend the visual system into everyday contexts. Each application keeps the logo legible and the palette consistent."],
-      "note": "The six application images on this page are AI-generated concept mockups. They illustrate potential uses of the identity, rather than documenting a completed rollout.",
-      "board": { "layout": "three", "images": [
-        { "src": "vehicle.png", "alt": "Isiphethu service pickup vehicle branding concept", "caption": "Service vehicle · concept mockup" },
-        { "src": "workwear.png", "alt": "Isiphethu jacket and hard hat branding concept", "caption": "Workwear · concept mockup" },
-        { "src": "mug.png", "alt": "Isiphethu branded ceramic mug concepts", "caption": "Ceramic mugs · concept mockup" }
-      ] }
+      "heading": [
+        "An identity",
+        "that travels."
+      ],
+      "text": [
+        "A vehicle, workwear and a ceramic mug extend the visual system into everyday contexts. Each application keeps the logo legible and the palette consistent."
+      ],
+      "note": "The six application images on this page are concept mockups. They illustrate potential uses of the identity, rather than documenting a completed rollout.",
+      "board": {
+        "layout": "three",
+        "images": [
+          {
+            "src": "vehicle.jpg",
+            "alt": "Isiphethu service pickup vehicle branding concept",
+            "caption": "Service vehicle · concept mockup"
+          },
+          {
+            "src": "workwear.jpg",
+            "alt": "Isiphethu jacket and hard hat branding concept",
+            "caption": "Workwear · concept mockup"
+          },
+          {
+            "src": "mug.jpg",
+            "alt": "Isiphethu branded ceramic mug concepts",
+            "caption": "Ceramic mugs · concept mockup"
+          }
+        ]
+      }
     },
     {
       "label": "A brand family",
-      "heading": ["Related services.", "A shared foundation."],
+      "heading": [
+        "Related services.",
+        "A shared foundation."
+      ],
       "text": [
         "The guide also documents logo reconstruction studies for Engineering and Water Service. These explore how service-specific symbols can sit alongside the Isiphethu name.",
         "They are presented here as development work from the guide, with the master identity providing the common foundation."
       ],
-      "board": { "layout": "two", "images": [
-        { "src": "engineering.jpg", "alt": "Isiphethu Engineering logo reconstruction study", "caption": "Engineering · guide study" },
-        { "src": "water-services.jpg", "alt": "Isiphethu Water Service logo reconstruction study", "caption": "Water Service · guide study" }
-      ] }
+      "board": {
+        "layout": "two",
+        "images": [
+          {
+            "src": "engineering.jpg",
+            "alt": "Isiphethu Engineering logo reconstruction study",
+            "caption": "Engineering · guide study"
+          },
+          {
+            "src": "water-services.jpg",
+            "alt": "Isiphethu Water Service logo reconstruction study",
+            "caption": "Water Service · guide study"
+          }
+        ]
+      }
     }
   ]
 }

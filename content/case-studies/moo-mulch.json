@@ -1,0 +1,245 @@
+{
+  "slug": "moo-mulch",
+  "order": 10,
+  "title": "Moo & Mulch Farm",
+  "org": "Moo & Mulch Farm",
+  "schemaName": "Moo & Mulch Farm — Brand Identity and Applications",
+  "metaTitle": "Moo & Mulch Farm Brand Identity — Case Study | Santi Universe",
+  "description": "Moo & Mulch Farm identity exploration: a green agricultural emblem developed into stationery, business cards, farm signage, workwear, produce packaging and vehicle concepts.",
+  "genre": [
+    "Brand Identity",
+    "Logo Design"
+  ],
+  "category": "Brand identity & applications",
+  "tags": [
+    "branding"
+  ],
+  "pills": [
+    "Brand identity"
+  ],
+  "cardSub": "Agriculture · Northern Cape",
+  "tagline": [
+    "Rooted in the land.",
+    "Ready for the everyday."
+  ],
+  "intro": "An agricultural identity that brings livestock, lucerne and vegetables together, with a practical family of brand applications.",
+  "tint": "#125C32",
+  "cover": "stationery-mockup.jpg",
+  "reel": [
+    "cards-mockup.jpg",
+    "signage-mockup.jpg",
+    "workwear-mockup.jpg",
+    "produce-mockup.jpg",
+    "vehicle-mockup.jpg",
+    "stationery-mockup.jpg"
+  ],
+  "hero": {
+    "src": "stationery-mockup.jpg",
+    "alt": "Moo & Mulch Farm stationery with letterhead, envelopes, folder, notebook and business cards",
+    "caption": "Stationery suite · Concept mockup"
+  },
+  "meta": [
+    [
+      "Sector",
+      "Mixed farming"
+    ],
+    [
+      "Region",
+      "Northern Cape"
+    ],
+    [
+      "Identity",
+      "Logo · Visual language"
+    ],
+    [
+      "Applications",
+      "Stationery · Signage · Packaging · Workwear · Vehicle concepts"
+    ]
+  ],
+  "chapters": [
+    {
+      "label": "The brief",
+      "heading": [
+        "Many products.",
+        "One farm identity."
+      ],
+      "text": [
+        "Moo & Mulch Farm’s brief centres on sustainable mixed farming in the Northern Cape, supplying livestock and crops across the Northern Cape and North West. Reliability, affordability and consistency are the qualities the presentation asks the identity to communicate.",
+        "The product range in the brief spans cattle, goats and sheep, lucerne, seasonal cabbage, summer watermelon and pumpkins. The design challenge is to give that varied offering one recognisable name and mark."
+      ],
+      "board": {
+        "layout": "one",
+        "images": [
+          {
+            "src": "primary-logo.jpg",
+            "alt": "Moo & Mulch Farm primary logo in three greens with stacked black wordmark",
+            "caption": "Primary identity · supplied presentation"
+          }
+        ]
+      }
+    },
+    {
+      "label": "The mark",
+      "heading": [
+        "Letters, leaves",
+        "and the land."
+      ],
+      "text": [
+        "The supplied symbol breakdown links the letters M and F with livestock, plants and lucerne. Layered curves gather those references into a compact, symmetrical emblem.",
+        "The mark can sit beside the full farm name or work on its own at smaller scales. Its open shapes also offer a starting point for larger graphic crops and quiet background details."
+      ],
+      "board": {
+        "layout": "one",
+        "images": [
+          {
+            "src": "symbol-breakdown.jpg",
+            "alt": "Moo & Mulch Farm emblem breakdown showing M, F, livestock, plants and lucerne",
+            "caption": "Symbol construction · supplied presentation"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Visual language",
+      "heading": [
+        "Green with purpose.",
+        "Clear at a glance."
+      ],
+      "text": [
+        "The original presentation pairs three shades of green with black lettering and generous light space. The darker tone gives the system weight, while the brighter greens suggest fresh growth.",
+        "Bold, uncomplicated type keeps the farm name easy to read. For the new applications, white paper, kraft stock, cotton and timber give that visual language a practical setting; these materials are a proposed extension of the identity."
+      ],
+      "board": {
+        "layout": "two",
+        "images": [
+          {
+            "src": "livestock-artwork.jpg",
+            "alt": "White Moo & Mulch Farm identity over livestock imagery",
+            "caption": "Livestock · supplied brand artwork"
+          },
+          {
+            "src": "vegetable-artwork.jpg",
+            "alt": "Green emblem detail over cabbage leaves",
+            "caption": "Vegetables · supplied brand artwork"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Stationery",
+      "heading": [
+        "A considered",
+        "first impression."
+      ],
+      "text": [
+        "A coordinated stationery set extends the identity to everyday correspondence and introductions. The concept pairs a restrained letterhead and envelope with a forest-green folder, notebook and matching cards.",
+        "Small logo placements leave useful writing space. Green accents and consistent alignment connect the pieces without overwhelming the information they would carry."
+      ],
+      "note": "The new application images in this case study are AI-generated visualisations of possible uses of the identity. They show design concepts, not completed installations or manufactured items.",
+      "board": {
+        "layout": "one",
+        "images": [
+          {
+            "src": "stationery-mockup.jpg",
+            "alt": "Moo & Mulch Farm coordinated letterhead, envelope, folder and notebook",
+            "caption": "Stationery suite · Concept mockup"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Business cards",
+      "heading": [
+        "Small format.",
+        "Strong recognition."
+      ],
+      "text": [
+        "The card concept uses a light front for the full-colour identity and a dark green reverse for a simple, high-contrast mark. It explores how the brand can remain recognisable in a compact format.",
+        "The balance of open space and bold colour carries the same visual character as the larger stationery pieces."
+      ],
+      "board": {
+        "layout": "one",
+        "images": [
+          {
+            "src": "cards-mockup.jpg",
+            "alt": "Moo & Mulch Farm white and forest-green business cards on stone display blocks",
+            "caption": "Business cards · Concept mockup"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Farm presence",
+      "heading": [
+        "Easy to spot.",
+        "Easy to remember."
+      ],
+      "text": [
+        "The entrance-sign concept gives the name and emblem priority, with the three product categories as a secondary line. A light sign face and green base connect the signage to the printed materials.",
+        "The vehicle treatment takes the same approach: a clear door graphic and a restrained green accent make the identity visible in a working farm setting. These scenes explore placement and scale."
+      ],
+      "board": {
+        "layout": "two",
+        "images": [
+          {
+            "src": "signage-mockup.jpg",
+            "alt": "Moo & Mulch Farm entrance sign on timber posts beside a farm gate",
+            "caption": "Farm entrance · Concept mockup"
+          },
+          {
+            "src": "vehicle-mockup.jpg",
+            "alt": "Moo & Mulch Farm white pickup with green farm branding on the door",
+            "caption": "Farm vehicle · Concept mockup"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Working materials",
+      "heading": [
+        "Made for",
+        "the daily routine."
+      ],
+      "text": [
+        "The workwear concept translates the emblem into a simple light-coloured embroidery treatment on green fabric. The shirt and cap share a consistent mark placement and a practical palette.",
+        "Produce crates, kraft bags and paper tags explore another use of the identity: carrying the farm name with the products. The layouts focus on recognition and leave room for product-specific information when developed for production."
+      ],
+      "board": {
+        "layout": "two",
+        "images": [
+          {
+            "src": "workwear-mockup.jpg",
+            "alt": "Moo & Mulch Farm green work shirt and cap with embroidered branding",
+            "caption": "Workwear · Concept mockup"
+          },
+          {
+            "src": "produce-mockup.jpg",
+            "alt": "Moo & Mulch Farm branded produce crate, kraft bag and paper tags",
+            "caption": "Produce packaging · Concept mockup"
+          }
+        ]
+      }
+    },
+    {
+      "label": "A connected identity",
+      "heading": [
+        "One visual language.",
+        "Room to grow."
+      ],
+      "text": [
+        "Together, the supplied identity and the new application concepts show how a single agricultural mark can connect correspondence, people, premises and products. Each surface asks something different of the design, while colour and the emblem keep the family recognisable.",
+        "The original farm artwork brings the story back to its source: livestock, lucerne and vegetables. The expanded concepts explore how that story could continue beyond the presentation."
+      ],
+      "board": {
+        "layout": "one",
+        "images": [
+          {
+            "src": "farm-artwork.jpg",
+            "alt": "Moo & Mulch Farm green brand artwork with tractor and field imagery",
+            "caption": "Farm story · supplied brand artwork"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -15,3 +15,5 @@ When adding or changing a client project/case study (v3):
 Brand (v3): royal `#173B9A`, turquoise `#08BECC`, golden yellow `#FFD147`, soft white `#F4F7F8`. Gold and turquoise are not readable as text on soft white — use gold only as a button fill there, and teal-ink `#03707A` for small turquoise text.
 
 See STUDIO-REFERENCES.md for the user's creative direction and gallery maintenance workflow. The AI art panel is procedural artwork. The homepage has no live chat interface.
+
+Wording preference: Never use the phrase "AI-generated concept mockup" in website copy, captions, alt text or responses. Use "Concept mockup" for captions instead; keep any required provenance explanation in the separate note field.

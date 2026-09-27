@@ -159,6 +159,44 @@
     });
   }
 
+  /* ---------- featured work: 7 of the pool per visit, least-recently-shown first ---------- */
+  var work = $(".work");
+  if (work) {
+    var pool = $$(".tile", work), byHref = {};
+    pool.forEach(function (tl) { byHref[tl.getAttribute("href")] = tl; });
+    var LAYOUT = [["l", "s"], ["s", "l"], ["third", "third", "third"]], SHOW = 7;
+    var SEEN = "santi-featured-seen", LAST = "santi-featured-last", pick = null;
+    var navEntry = window.performance && performance.getEntriesByType && performance.getEntriesByType("navigation")[0];
+    try { // Back from a project: keep the set the visitor just saw
+      if (navEntry && navEntry.type === "back_forward") pick = JSON.parse(sessionStorage.getItem(LAST));
+    } catch (e) {}
+    if (!pick || !pick.every(function (h) { return byHref[h]; })) {
+      var seen = {};
+      try { seen = JSON.parse(localStorage.getItem(SEEN)) || {}; } catch (e) {}
+      pick = pool.map(function (tl) { var h = tl.getAttribute("href"); return { h: h, s: seen[h] || 0, r: Math.random() }; })
+        .sort(function (x, y) { return x.s - y.s || x.r - y.r; })
+        .slice(0, SHOW).map(function (x) { return x.h; });
+      for (var i = pick.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), tmp = pick[i]; pick[i] = pick[j]; pick[j] = tmp; }
+      var stamp = Date.now();
+      pick.forEach(function (h) { seen[h] = stamp; });
+      try { localStorage.setItem(SEEN, JSON.stringify(seen)); sessionStorage.setItem(LAST, JSON.stringify(pick)); } catch (e) {}
+    }
+    if (pick.length === SHOW) {
+      work.textContent = "";
+      var k = 0;
+      LAYOUT.forEach(function (sizes) {
+        var row = document.createElement("div");
+        row.className = "work-row" + (sizes.length === 3 ? " work-row--3" : "");
+        sizes.forEach(function (sz) {
+          var tl = byHref[pick[k++]];
+          tl.className = tl.className.replace(/tile--\w+/, "tile--" + sz);
+          row.appendChild(tl);
+        });
+        work.appendChild(row);
+      });
+    }
+  }
+
   /* ---------- work tiles: cycle a project's images on hover ---------- */
   var registry = {};
   (window.SANTI_CASE_STUDIES || []).forEach(function (p) { registry[p.href] = p.images.map(function (im) { return im.src; }); });

@@ -3,6 +3,14 @@
   "order": 0,
   "title": "Latroforce",
   "org": "Latroforce",
+  "collab": [
+    {
+      "name": "LiteCharms",
+      "logo": "assets/imgs/partners/lite-charms-web.png",
+      "url": "https://litecharms.co.za/",
+      "logoTheme": "dark"
+    }
+  ],
   "schemaName": "Latroforce — Proposed Rebrand",
   "metaTitle": "Latroforce Rebrand Proposal — Case Study | Santi Universe",
   "description": "A proposed Latroforce rebrand for its management services, with identity studies and concept mockups for cleaning teams, equipment, waste management and access points.",

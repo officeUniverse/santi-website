@@ -3,6 +3,14 @@
   "order": 2,
   "title": "Awethu Forestry",
   "org": "Awethu Forestry",
+  "collab": [
+    {
+      "name": "LiteCharms",
+      "logo": "assets/imgs/partners/lite-charms-web.png",
+      "url": "https://litecharms.co.za/",
+      "logoTheme": "dark"
+    }
+  ],
   "schemaName": "Awethu Forestry — Brand Identity and Website",
   "metaTitle": "Awethu Forestry Brand Identity & Website — Case Study | Santi Universe",
   "description": "Awethu Forestry brand identity and website: a tree-and-handshake logo, a nature-inspired colour system, brand applications and a live digital presence.",
@@ -13,9 +21,9 @@
   "cardSub": "Forestry",
   "tagline": ["Rooted in nature.", "Built on connection."],
   "tint": "#123b2e",
-  "cover": "signage-concept.png",
-  "reel": ["vehicle-concept.png", "workwear-concept.png", "fieldkit-concept.png", "stationery.jpg", "apparel.jpg", "website-home.png"],
-  "hero": { "src": "signage-concept.png", "alt": "Awethu Forestry concept: branded entrance sign at the edge of a pine forest", "caption": "Entrance sign · concept mockup" },
+  "cover": "signage-concept.jpg",
+  "reel": ["vehicle-concept.jpg", "workwear-concept.jpg", "fieldkit-concept.jpg", "stationery.jpg", "apparel.jpg", "website-home.jpg"],
+  "hero": { "src": "signage-concept.jpg", "alt": "Awethu Forestry concept: branded entrance sign at the edge of a pine forest", "caption": "Entrance sign · concept mockup" },
   "meta": [["Services", "Brand identity & website"], ["Sector", "Forestry"], ["Scope", "Logo · Colour · Applications · Website"], ["Website", "awethuforestry.co.za", "https://awethuforestry.co.za/"]],
   "chapters": [
     {
@@ -68,10 +76,10 @@
       "text": ["Further concepts explore the identity in the field: entrance signage, a forestry vehicle, workwear and a portable field kit."],
       "note": "These AI-generated mockups explore possible applications of the identity, rather than documenting produced items or a completed rollout.",
       "board": { "layout": "grid", "images": [
-        { "src": "signage-concept.png", "alt": "Awethu Forestry concept: branded entrance sign at the edge of a pine forest", "caption": "Entrance sign · concept mockup" },
-        { "src": "vehicle-concept.png", "alt": "Awethu Forestry concept: white pickup with forest-green and lime vehicle graphics", "caption": "Work vehicle · concept mockup" },
-        { "src": "workwear-concept.png", "alt": "Awethu Forestry concept: branded green work jacket and white hard hat", "caption": "Workwear · concept mockup" },
-        { "src": "fieldkit-concept.png", "alt": "Awethu Forestry concept: ivory canvas tote and green reusable bottle", "caption": "Field kit · concept mockup" }
+        { "src": "signage-concept.jpg", "alt": "Awethu Forestry concept: branded entrance sign at the edge of a pine forest", "caption": "Entrance sign · concept mockup" },
+        { "src": "vehicle-concept.jpg", "alt": "Awethu Forestry concept: white pickup with forest-green and lime vehicle graphics", "caption": "Work vehicle · concept mockup" },
+        { "src": "workwear-concept.jpg", "alt": "Awethu Forestry concept: branded green work jacket and white hard hat", "caption": "Workwear · concept mockup" },
+        { "src": "fieldkit-concept.jpg", "alt": "Awethu Forestry concept: ivory canvas tote and green reusable bottle", "caption": "Field kit · concept mockup" }
       ] }
     },
     {
@@ -83,7 +91,7 @@
       ],
       "links": [["Visit Awethu Forestry", "https://awethuforestry.co.za/"]],
       "board": { "layout": "browser", "url": "awethuforestry.co.za", "images": [
-        { "src": "website-home.png", "alt": "Live Awethu Forestry homepage with forest imagery, green brand accents and the headline Bridging Opportunity and Empowerment", "caption": "Live website · homepage · September 2026" }
+        { "src": "website-home.jpg", "alt": "Live Awethu Forestry homepage with forest imagery, green brand accents and the headline Bridging Opportunity and Empowerment", "caption": "Live website · homepage · September 2026" }
       ] }
     }
   ],
