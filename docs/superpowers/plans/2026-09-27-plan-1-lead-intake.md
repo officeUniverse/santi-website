@@ -505,11 +505,11 @@ git commit -m "Lead payload builder with dedupe rules"
 
 **Interfaces:**
 - Consumes: `src/core/lead.js` (inlined), `tools/n8n_api.py`, the workflow id from Task 2 Step 2.
-- Produces: a node named **`Build Lead`** whose `jsCode` returns `[{ json: { lead, note, filters } }]`; ERPNext HTTP nodes named `ERP — Find Existing Lead`, `ERP — Create Lead`, `ERP — Comment On Lead`; a Telegram node `Alert — Lead`.
+- Produces: a node named **`Build Lead`** whose `jsCode` returns `[{ json: { lead, note, filters } }]`; ERPNext HTTP nodes named `ERP — Find Existing Lead`, `ERP — Create Lead`, `ERP — Comment On Lead`; a Telegram node `Alert — ERPNext Write Failed`.
 
 Prerequisites inside ERPNext and n8n, done once by hand before the script runs:
 
-1. **Lead Sources.** `python3 -c "import sys;sys.path.insert(0,'erpnext');import lib;[lib.create('Lead Source',{'source_name':s}) for s in ('Website','AEO Tool')]"` — ignore a duplicate-name error, it means it already exists.
+1. **Lead Sources — do not try to create these, and do not try to check for them.** Verified 2026-09-27: all three `ai-*` users get **403 on reading `Lead Source`**, and querying the `Lead.source` field at all returns **417 `DataError: Field not permitted in query: source`**. So an existence check fails misleadingly and a create attempt returns a confusing server error — while **creating a Lead with `source: 'Website'` succeeds**, which means the records already exist. Verify the only way that works: create a Lead and see whether it is accepted. Never request `source` in a `fields` list — any node that does will 417.
 2. **An n8n credential for ERPNext — one `HTTP Custom Auth` credential, not three.** ERPNext behind Cloudflare Access needs three headers (`Authorization`, `CF-Access-Client-Id`, `CF-Access-Client-Secret`), and an n8n HTTP node accepts only one generic-auth credential. `HTTP Custom Auth` takes a JSON body, so all three live in one credential:
 
    ```json
@@ -695,10 +695,17 @@ Expected: the new Lead with `source: Website`, and one comment containing the me
 
 Expected: Lead count unchanged; a **second comment** on the same Lead. This is the dedupe path.
 
-- [ ] **Step 5: Delete the test Lead and commit the run record**
+- [ ] **Step 5: Mark the test Lead (you cannot delete it) and commit the run record**
+
+**Deletion is not available to these credentials.** Verified 2026-09-27: `ai-projects`, `ai-accounts` and `ai-briefing` all return **403 on `DELETE /api/resource/Lead/<name>`**. Do not retry it and do not go looking for another credential. Mark the record instead, so it cannot be mistaken for a real enquiry, and leave a note for a human to delete it in the ERPNext UI:
 
 ```bash
-cd erpnext && python3 -c "import lib; lib._request('DELETE', '/api/resource/Lead/<NAME>')"
+cd erpnext && python3 -c "import lib; lib.update('Lead','<NAME>',{'status':'Do Not Contact'})"
+```
+
+Then record it as an outstanding manual cleanup in the run record below. A Lead named as a test and set to *Do Not Contact* is inert: it will not be worked, and it cannot enter a quote.
+
+```bash
 cd .. && cat >> docs-verified.md <<'EOF'
 ## 2026-09-27 — Plan 1 verified live
 Contact form on santi.co.za creates an ERPNext Lead with the message as a
