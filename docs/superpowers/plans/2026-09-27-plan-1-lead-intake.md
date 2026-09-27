@@ -406,6 +406,16 @@ test('a nameless submission still produces a valid Lead', () => {
   assert.equal(lead.lead_name, 'someone@example.com');
 });
 
+test('a phone-only submission still produces a valid Lead', () => {
+  // ERPNext rejects a blank lead_name. With no name and no email, the phone
+  // number is the only thing left to name the Lead by. Without this case, an
+  // implementation ending at `clean(body.name) || email` passes the suite.
+  const { lead } = buildLead({ type: 'contact', phone: '0821234567' });
+  assert.equal(lead.lead_name, '0821234567');
+  assert.equal(lead.mobile_no, '0821234567');
+  assert.equal(lead.email_id, undefined);
+});
+
 test('an AEO submission is marked as such and keeps the analysed URL', () => {
   const { lead, note } = buildLead({
     type: 'aeo', email: 'ops@clinic.co.za', url: 'https://clinic.co.za', phone: '0311234567'
@@ -476,7 +486,7 @@ export function dedupeFilters(body = {}) {
 - [ ] **Step 4: Run the tests**
 
 Run: `npm test`
-Expected: 5 passing.
+Expected: 6 passing.
 
 - [ ] **Step 5: Commit**
 
@@ -500,8 +510,14 @@ git commit -m "Lead payload builder with dedupe rules"
 Prerequisites inside ERPNext and n8n, done once by hand before the script runs:
 
 1. **Lead Sources.** `python3 -c "import sys;sys.path.insert(0,'erpnext');import lib;[lib.create('Lead Source',{'source_name':s}) for s in ('Website','AEO Tool')]"` — ignore a duplicate-name error, it means it already exists.
-2. **An n8n credential for ERPNext.** In the n8n UI create a *Header Auth*… no — ERPNext needs three headers, so create a **Generic Credential → Header Auth** for `Authorization` and set the two Cloudflare headers as node parameters, or (preferred) create one n8n credential of type *HTTP Header Auth* per header. Record the credential id; the script references it by id and never by value.
-3. **Telegram credential** — reuse the one the Resu workflows already use; read its id from an exported Resu workflow's `credentials` block (ids are not secrets).
+2. **An n8n credential for ERPNext — one `HTTP Custom Auth` credential, not three.** ERPNext behind Cloudflare Access needs three headers (`Authorization`, `CF-Access-Client-Id`, `CF-Access-Client-Secret`), and an n8n HTTP node accepts only one generic-auth credential. `HTTP Custom Auth` takes a JSON body, so all three live in one credential:
+
+   ```json
+   {"headers": {"Authorization": "token <key>:<secret>", "CF-Access-Client-Id": "<id>", "CF-Access-Client-Secret": "<secret>", "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36"}}
+   ```
+
+   Include the `User-Agent` — Cloudflare's WAF rejects unrecognised agents with error 1010 before Access or Frappe see the request, which is the same trap `erpnext/lib.py` documents. Record the credential **id**; the workflow references it by id, and the secret values never appear in an export.
+3. **A failure alert channel.** The existing `Send an Email` node already notifies on every lead, so a second per-lead alert is noise. What is genuinely missing is a signal when the **ERPNext write fails** — the email fires whether ERPNext succeeded or not, so without this a silent failure goes unnoticed. Reuse the Telegram credential an existing workflow already holds (read its id from any Telegram-using workflow via the API; ids are not secrets). If no Telegram credential is reachable, use the SMTP credential the leads workflow already uses and email the failure instead.
 
 - [ ] **Step 1: Write `tools/patch-leads-workflow.py`**
 
@@ -574,9 +590,13 @@ put_workflow(WORKFLOW_ID, workflow)
 print('applied')
 ```
 
-**The remaining nodes (`ERP — Create Lead`, `ERP — Comment On Lead`, `Alert — Lead`, the IF that chooses create-vs-comment, and the `connections` wiring) are built in the n8n UI for this first workflow, then captured by re-export.** Reason: the connection graph of an existing workflow is easier to extend correctly by hand once than to express blind in a patch script, and Task 5 proves the result. Later workflows are script-built from scratch, where the graph is ours.
+**All nodes and the `connections` wiring are built through the n8n API by this script — not by hand in the UI.** The graph is then captured by re-export and Task 5 proves the result end to end. Building it in code means the whole workflow is reproducible from this repo, and a hand edit that drifts from `src/core/lead.js` shows up as a failing test in Task 4 Step 4.
 
-Wiring, explicitly: `Webhook → Build Lead → ERP — Find Existing Lead → IF (data[0] exists?) → true: ERP — Comment On Lead → false: ERP — Create Lead → ERP — Comment On Lead → Alert — Lead → Respond 200`.
+**The existing path must not be touched.** `Leads Webhook → Append row in sheet`, `→ Send an Email` and `→ Respond OK` stay exactly as they are — the project owner decided the Google Sheet and the notification email both stay, with ERPNext added alongside. So the ERPNext work hangs off the webhook as an **additional branch**, never in series with the Sheet append: an ERPNext failure must not be able to stop a lead reaching the Sheet, and must not delay the 200.
+
+Wiring of the new branch, explicitly:
+
+`Leads Webhook → Build Lead → ERP — Find Existing Lead → IF — Lead Exists? → true: ERP — Comment On Lead; false: ERP — Create Lead → ERP — Comment On Lead`, and the error output of the two ERP write nodes → `Alert — ERPNext Write Failed`.
 
 - `ERP — Create Lead`: `POST {ERP_URL}/api/resource/Lead`, JSON body `={{ JSON.stringify($('Build Lead').first().json.lead) }}`.
 - `ERP — Comment On Lead`: `POST {ERP_URL}/api/method/frappe.desk.form.utils.add_comment` with `reference_doctype=Lead`, `reference_name` the created or found name, `content` the `note`, `comment_email` `svc-n8n@santiu.co.za`, `comment_by` `Website`.
