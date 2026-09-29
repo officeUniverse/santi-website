@@ -102,6 +102,8 @@
 
   function render(data) {
     view = data;
+    // A Project without a customer (an internal one) would otherwise render a bare "Hi".
+    document.querySelector(".start__hello").hidden = !data.customer;
     text("start-customer", data.customer);
     text("start-title", data.project || "Your project");
     renderTasks(data.tasks || []);
