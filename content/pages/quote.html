@@ -10,48 +10,56 @@
 }
 -->
     <style>
-      .quote{max-width:46rem;margin:0 auto;padding:3rem 0 4rem}
-      .quote-hello{color:#03707A;font-weight:600;margin:0 0 .25rem}
-      .quote-lines{width:100%;border-collapse:collapse;margin:1.5rem 0}
-      .quote-lines td{padding:.65rem 0;border-bottom:1px solid rgba(13,27,42,.12);vertical-align:top}
-      .quote-lines td:nth-child(2){width:4rem;text-align:right;color:#4a5568}
-      .quote-lines td:nth-child(3){width:8rem;text-align:right;white-space:nowrap}
-      .quote-sum{display:flex;justify-content:space-between;padding:.4rem 0}
-      .quote-sum--deposit{font-size:1.15rem;font-weight:700;color:#173B9A;border-top:2px solid #173B9A;margin-top:.5rem;padding-top:.75rem}
-      .quote-pay{display:block;text-align:center;background:#FFD147;color:#0d1b2a;font-weight:700;
-                 padding:1rem 1.25rem;border-radius:10px;text-decoration:none;margin:1.75rem 0 .75rem}
-      .quote-pay:hover{filter:brightness(.95)}
-      .quote-fine{font-size:.85rem;color:#4a5568}
-      .quote-ask{margin-top:3rem;border-top:1px solid rgba(13,27,42,.12);padding-top:1.75rem}
-      .quote-ask textarea{width:100%;padding:.75rem;border:1px solid rgba(13,27,42,.25);border-radius:8px;font:inherit}
-      .quote-ask button{background:#173B9A;color:#fff;border:0;padding:.75rem 1.5rem;border-radius:8px;font:inherit;font-weight:600;cursor:pointer;margin-top:.75rem}
-      .quote-note{color:#03707A;min-height:1.25rem}
+      /* Only layout here. Colour, buttons and type come from v3.css so this page cannot
+         drift from the brand - the first version invented its own palette and rendered
+         dark-on-dark. */
+      .quote { padding: clamp(40px, 6vw, 72px) var(--pad) clamp(48px, 7vw, 88px); max-width: 52rem; }
+      .quote__hello { color: var(--gold); font-weight: 600; margin: 0 0 .35rem; }
+      .quote__title { margin: 0 0 2rem; }
+      .quote__lines { width: 100%; border-collapse: collapse; margin: 0 0 1.75rem; }
+      .quote__lines td { padding: .8rem 0; border-bottom: 1px solid var(--night-line); vertical-align: top; }
+      .quote__lines td:nth-child(2) { width: 4rem; text-align: right; color: var(--night-muted); }
+      .quote__lines td:nth-child(3) { width: 9rem; text-align: right; white-space: nowrap; }
+      .quote__sum { display: flex; justify-content: space-between; gap: 1rem; padding: .45rem 0; }
+      .quote__sum--total { color: var(--night-muted); }
+      .quote__sum--deposit { font-size: clamp(1.1rem, 2.4vw, 1.4rem); font-weight: 700; color: var(--gold);
+                             border-top: 1px solid var(--night-line); margin-top: .5rem; padding-top: 1rem; }
+      .quote__pay { display: block; text-align: center; margin: 1.75rem 0 1rem; }
+      .quote__fine { color: var(--night-muted); font-size: .9rem; max-width: 40rem; }
+      .quote__ask { margin-top: 3rem; border-top: 1px solid var(--night-line); padding-top: 2rem; }
+      .quote__ask textarea { width: 100%; padding: .8rem; border-radius: 10px; font: inherit;
+                             border: 1px solid var(--night-line); background: #fff; color: var(--ink); }
+      .quote__note { color: var(--gold); min-height: 1.4rem; margin: .75rem 0 0; }
+      @media (max-width: 560px) { .quote__lines td:nth-child(2) { display: none; } }
     </style>
-    <section class="frame quote">
-      <p id="quote-status">Loading your quote…</p>
+    <section class="frame frame--dark on-dark quote">
+      <p id="quote-status" class="quote__fine">Loading your quote…</p>
 
       <div id="quote-body" hidden>
-        <p class="quote-hello">Hi <span id="quote-customer"></span></p>
-        <h1 id="quote-title"></h1>
+        <p class="quote__hello">Hi <span id="quote-customer"></span></p>
+        <h1 class="quote__title" id="quote-title"></h1>
 
-        <table class="quote-lines"><tbody id="quote-lines"></tbody></table>
+        <table class="quote__lines"><tbody id="quote-lines"></tbody></table>
 
-        <div class="quote-sum"><span>Total</span><strong id="quote-total"></strong></div>
-        <div class="quote-sum quote-sum--deposit"><span>To start — 50% deposit</span><strong id="quote-deposit"></strong></div>
+        <div class="quote__sum quote__sum--total"><span>Total</span><span id="quote-total"></span></div>
+        <div class="quote__sum quote__sum--deposit">
+          <span>To start — 50% deposit</span><span id="quote-deposit"></span>
+        </div>
 
-        <a id="quote-pay" class="quote-pay" href="#" rel="noreferrer">Pay the deposit</a>
-        <p class="quote-fine">
+        <a id="quote-pay" class="btn btn--accent quote__pay" href="#" rel="noreferrer">Pay the deposit</a>
+
+        <p class="quote__fine">
           Paid securely through Payfast. The balance is invoiced at handover.
           This link expires on <span id="quote-expires"></span> — if the scope changes we will send a
-          new quote and this link stops working.
+          new quote and this one stops working.
         </p>
 
-        <form id="quote-ask-form" class="quote-ask">
+        <form id="quote-ask-form" class="quote__ask">
           <label for="quote-question"><strong>Any questions before you pay?</strong></label>
-          <p class="quote-fine">Ask here and it goes straight onto your quote — Santi replies by email.</p>
+          <p class="quote__fine">Ask here and it goes straight onto your quote — Santi replies by email.</p>
           <textarea id="quote-question" rows="4" required></textarea>
-          <button type="submit">Send question</button>
-          <p id="quote-ask-status" class="quote-note" aria-live="polite"></p>
+          <button type="submit" class="btn btn--ghost" style="margin-top:.9rem">Send question</button>
+          <p id="quote-ask-status" class="quote__note" aria-live="polite"></p>
         </form>
       </div>
     </section>

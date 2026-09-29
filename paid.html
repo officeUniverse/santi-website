@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your quote | Santi Universe</title>
-  <meta name="description" content="Your quote from Santi Universe.">
+  <title>Payment received | Santi Universe</title>
+  <meta name="description" content="Your deposit has been received.">
   <meta name="robots" content="noindex, nofollow">
   <meta name="referrer" content="no-referrer">
-  <link rel="canonical" href="https://santi.co.za/quote.html">
+  <link rel="canonical" href="https://santi.co.za/paid.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Santi Universe">
-  <meta property="og:title" content="Your quote | Santi Universe">
-  <meta property="og:description" content="Your quote from Santi Universe.">
-  <meta property="og:url" content="https://santi.co.za/quote.html">
+  <meta property="og:title" content="Payment received | Santi Universe">
+  <meta property="og:description" content="Your deposit has been received.">
+  <meta property="og:url" content="https://santi.co.za/paid.html">
   <meta property="og:image" content="https://santi.co.za/assets/imgs/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Your quote | Santi Universe">
-  <meta name="twitter:description" content="Your quote from Santi Universe.">
+  <meta name="twitter:title" content="Payment received | Santi Universe">
+  <meta name="twitter:description" content="Your deposit has been received.">
   <meta name="twitter:image" content="https://santi.co.za/assets/imgs/og-image.png">
   <meta name="theme-color" content="#0d2466">
   <link rel="icon" href="favicon.ico" sizes="48x48">
@@ -166,8 +166,8 @@
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "Your quote",
-      "item": "https://santi.co.za/quote.html"
+      "name": "Payment received",
+      "item": "https://santi.co.za/paid.html"
     }
   ]
 }
@@ -209,58 +209,22 @@
 
   <main id="main">
 <style>
-      /* Only layout here. Colour, buttons and type come from v3.css so this page cannot
-         drift from the brand - the first version invented its own palette and rendered
-         dark-on-dark. */
-      .quote { padding: clamp(40px, 6vw, 72px) var(--pad) clamp(48px, 7vw, 88px); max-width: 52rem; }
-      .quote__hello { color: var(--gold); font-weight: 600; margin: 0 0 .35rem; }
-      .quote__title { margin: 0 0 2rem; }
-      .quote__lines { width: 100%; border-collapse: collapse; margin: 0 0 1.75rem; }
-      .quote__lines td { padding: .8rem 0; border-bottom: 1px solid var(--night-line); vertical-align: top; }
-      .quote__lines td:nth-child(2) { width: 4rem; text-align: right; color: var(--night-muted); }
-      .quote__lines td:nth-child(3) { width: 9rem; text-align: right; white-space: nowrap; }
-      .quote__sum { display: flex; justify-content: space-between; gap: 1rem; padding: .45rem 0; }
-      .quote__sum--total { color: var(--night-muted); }
-      .quote__sum--deposit { font-size: clamp(1.1rem, 2.4vw, 1.4rem); font-weight: 700; color: var(--gold);
-                             border-top: 1px solid var(--night-line); margin-top: .5rem; padding-top: 1rem; }
-      .quote__pay { display: block; text-align: center; margin: 1.75rem 0 1rem; }
-      .quote__fine { color: var(--night-muted); font-size: .9rem; max-width: 40rem; }
-      .quote__ask { margin-top: 3rem; border-top: 1px solid var(--night-line); padding-top: 2rem; }
-      .quote__ask textarea { width: 100%; padding: .8rem; border-radius: 10px; font: inherit;
-                             border: 1px solid var(--night-line); background: #fff; color: var(--ink); }
-      .quote__note { color: var(--gold); min-height: 1.4rem; margin: .75rem 0 0; }
-      @media (max-width: 560px) { .quote__lines td:nth-child(2) { display: none; } }
+      .paid { padding: clamp(56px, 9vw, 110px) var(--pad); max-width: 44rem; }
+      .paid p { color: var(--night-muted); max-width: 38rem; }
+      .paid .star { color: var(--gold); }
     </style>
-    <section class="frame frame--dark on-dark quote">
-      <p id="quote-status" class="quote__fine">Loading your quote…</p>
-
-      <div id="quote-body" hidden>
-        <p class="quote__hello">Hi <span id="quote-customer"></span></p>
-        <h1 class="quote__title" id="quote-title"></h1>
-
-        <table class="quote__lines"><tbody id="quote-lines"></tbody></table>
-
-        <div class="quote__sum quote__sum--total"><span>Total</span><span id="quote-total"></span></div>
-        <div class="quote__sum quote__sum--deposit">
-          <span>To start — 50% deposit</span><span id="quote-deposit"></span>
-        </div>
-
-        <a id="quote-pay" class="btn btn--accent quote__pay" href="#" rel="noreferrer">Pay the deposit</a>
-
-        <p class="quote__fine">
-          Paid securely through Payfast. The balance is invoiced at handover.
-          This link expires on <span id="quote-expires"></span> — if the scope changes we will send a
-          new quote and this one stops working.
-        </p>
-
-        <form id="quote-ask-form" class="quote__ask">
-          <label for="quote-question"><strong>Any questions before you pay?</strong></label>
-          <p class="quote__fine">Ask here and it goes straight onto your quote — Santi replies by email.</p>
-          <textarea id="quote-question" rows="4" required></textarea>
-          <button type="submit" class="btn btn--ghost" style="margin-top:.9rem">Send question</button>
-          <p id="quote-ask-status" class="quote__note" aria-live="polite"></p>
-        </form>
-      </div>
+    <section class="frame frame--dark on-dark paid">
+      <span class="eyebrow">Payfast</span>
+      <h1>Payment<br>received<span class="star" aria-hidden="true">°</span></h1>
+      <p>
+        Thank you — your deposit is in and your project is set up. A receipt is on its way
+        by email, along with what happens next.
+      </p>
+      <p>
+        If nothing arrives within ten minutes, reply to your quote email and we will sort it
+        out straight away.
+      </p>
+      <p><a class="btn btn--accent" href="/">Back to santi.co.za</a></p>
     </section>
   </main>
 
@@ -380,6 +344,5 @@
 
   <script src="assets/v3/universe.js?v=4"></script>
   <script src="assets/v3/site.js?v=31"></script>
-  <script src="assets/js/quote.js?v=1"></script>
 </body>
 </html>

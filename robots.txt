@@ -3,6 +3,7 @@ User-agent: *
 Allow: /
 # Private, tokenised client pages - never index these
 Disallow: /quote
+Disallow: /paid
 Disallow: /start
 
 User-agent: GPTBot
