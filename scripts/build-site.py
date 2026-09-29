@@ -29,7 +29,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CONTENT = ROOT / "content" / "case-studies"
 PAGES = ROOT / "content" / "pages"
 SITE = "https://santi.co.za/"
-V = "v=30"  # cache stamp for v3.css / case.css / pages.css / site.js
+V = "v=31"  # cache stamp for v3.css / case.css / pages.css / site.js
 
 
 def t(s):  # text node
@@ -236,8 +236,20 @@ def render_project(p, nxt):
         outcomes = '\n      <section class="outcomes" aria-label="Outcomes">' + "".join(
             f'<div class="outcome"><strong>{t(big)}</strong><span>{t(lbl)}</span></div>' for big, lbl in p["outcomes"]) + "</section>"
     next_src = img_path(nxt["slug"], nxt["cover"])
+    faq, schemas = "", [work, trail]
+    if p.get("faq"):  # niche project Q&As, shown and as FAQPage data AI search can quote
+        faq = f"""
+      <section class="faq case-faq" aria-labelledby="faq-title">
+        <div class="section-head"><div><span class="eyebrow">FAQ</span><h2 class="h2" id="faq-title">{t(p.get("faqTitle", "Questions from businesses like this"))}</h2></div></div>
+        <div class="faq__list">""" + "".join(
+            f'\n          <details class="faq__item"><summary>{t(q)}</summary><div class="faq__a"><p>{t(ans)}</p></div></details>'
+            for q, ans in p["faq"]) + """
+        </div>
+      </section>"""
+        schemas.append({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": ans}} for q, ans in p["faq"]]})
 
-    return head(p["metaTitle"], p["description"], url, SITE + hero_src, "article", [work, trail],
+    return head(p["metaTitle"], p["description"], url, SITE + hero_src, "article", schemas,
                 robots="noindex, follow" if p.get("hidden") else None) + f"""<body class="page-case">
   <a class="skip-link" href="#main">Skip to content</a>
 
@@ -258,7 +270,7 @@ def render_project(p, nxt):
           <figcaption class="cap">{t(p["hero"].get("caption", ""))}</figcaption>
         </figure>
       </header>
-{chapters}{outcomes}
+{chapters}{outcomes}{faq}
 
       <a class="next-project" href="project-{nxt['slug']}.html">
         <div><span class="eyebrow">Next project</span><strong>{t(nxt["title"])}</strong><span class="next-project__sub">{t(nxt["cardSub"])}</span></div>

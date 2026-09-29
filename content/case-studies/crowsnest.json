@@ -88,5 +88,24 @@
         { "src": "laptop-mockup.jpg", "alt": "Crow’s Nest concept mockup: website on laptop", "caption": "Website on laptop · concept mockup" }
       ] }
     }
+  ],
+  "faqTitle": "For guesthouses & self-catering accommodation",
+  "faq": [
+    [
+      "Can Santi Universe design a brand and website for my guesthouse?",
+      "Yes. For Crow’s Nest, self-catering accommodation in Saldanha Bay, we created the identity and a website where guests explore room types, browse the gallery and follow booking links."
+    ],
+    [
+      "Can my website take bookings?",
+      "We design websites that make booking easy to find. For direct bookings on a WordPress site, we offer custom WordPress development, including booking functionality."
+    ],
+    [
+      "Do you design printed material for accommodation businesses?",
+      "Yes — company profiles, welcome stationery, signage and merchandise, all consistent with your brand. We can show items like room keys and signs as concept mockups first."
+    ],
+    [
+      "Can you host and look after my accommodation website?",
+      "Yes. We offer managed hosting with SSL, automated backups, speed optimisation, uptime monitoring and ongoing maintenance."
+    ]
   ]
 }

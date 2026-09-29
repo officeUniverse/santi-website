@@ -197,5 +197,24 @@
       "Ongoing care",
       "Updates, backups & security"
     ]
+  ],
+  "faqTitle": "For nonprofits & international organisations",
+  "faq": [
+    [
+      "Can you build a website for a nonprofit or international network?",
+      "Yes. For Global Leadership Network International we handled strategy and website design for a dedicated international site, separate from its Summit site, with clear routes into its story, programmes and network."
+    ],
+    [
+      "Can my website be in more than one language?",
+      "Yes. The GLNI site runs in English, French and Spanish: the organisation supplies translations, and we maintain the experience across every language."
+    ],
+    [
+      "Can you build interactive features, like a map of our network?",
+      "Yes. GLNI’s centrepiece is an interactive globe where visitors explore countries and find local leaders, with a country directory as a second route."
+    ],
+    [
+      "Do you offer ongoing website support?",
+      "Yes — updates, backups, security maintenance, fixes and website changes as your needs develop. GLNI is a multi-year partnership, delivered in collaboration with Stae Creative."
+    ]
   ]
 }

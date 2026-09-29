@@ -3,6 +3,7 @@
 When adding or changing a client project/case study (v3):
 - Edit or add `content/case-studies/<slug>.json` — the single source for that case study. Put its images in `assets/imgs/projects/<slug>/`.
 - Run `python3 scripts/build-site.py` (regenerates every `project-*.html`, `portfolio.html` and the content pages; the nav, footer, quote pop-up and organisation JSON-LD are lifted from `index.html`), then `python3 scripts/sync-case-studies.py` (regenerates the gallery registry `assets/js/case-studies.js`).
+- Optional case-study fields: `"faqTitle"` + `"faq": [[question, answer], ...]` (written for other businesses in the same sector — what Santi Universe can do for them, with this project as the example; shown on the page + FAQPage data; only real services and confirmed facts), `"collab": [{name, url, logo, logoTheme}]` for partner agencies, `"hidden": true` to keep a page but drop it from every listing.
 - Do not hand-edit generated pages (`project-*.html`, `portfolio.html`, `services.html`, `about.html`, `contact.html`, `aeo.html`, `terms.html`, `privacy.html`, `cookies.html`) — the next build overwrites them. Change `content/case-studies/*.json`, `content/pages/*.html` (JSON meta comment + page body) or the generator instead.
 - Menu/footer changes go in `index.html`; rebuild so every page picks them up. Each page gets `aria-current` on its own menu link automatically.
 - Bump the cache stamp (`V` in `scripts/build-site.py`, plus the `?v=` links in `index.html`) after any CSS/JS change.
