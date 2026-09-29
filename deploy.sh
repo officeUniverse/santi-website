@@ -28,4 +28,4 @@ cp -a ~/_santi_deploy/.htaccess ~/public_html/ 2>/dev/null \
 
 DEPLOYED=$(git -C ~/_santi_deploy rev-parse --short HEAD)
 rm -rf ~/_santi_deploy
-echo "\u2713 santi.co.za updated to $DEPLOYED $(date)"
+echo "✓ santi.co.za updated to $DEPLOYED $(date)"
