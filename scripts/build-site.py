@@ -13,7 +13,7 @@ tags, which is what scripts/sync-case-studies.py reads.
 A page fragment starts with a JSON meta comment, then the <main> content:
     <!--meta {"file": "about.html", "title": "...", "description": "...", "crumb": "About"} -->
 Optional meta: "current" (menu href to highlight, default = file), "scripts" (extra JS),
-"robots". The marker <!-- cards:N --> inserts the first N case-study cards.
+"robots", "referrer". The marker <!-- cards:N --> inserts the first N case-study cards.
 """
 from html import escape
 from pathlib import Path
@@ -91,9 +91,10 @@ def crumbs(*trail):
         {"@type": "ListItem", "position": i + 1, "name": name, "item": url} for i, (name, url) in enumerate((("Home", SITE),) + trail)]}
 
 
-def head(title, description, canonical, image, og_type, schemas, css=("case.css",), robots=None):
+def head(title, description, canonical, image, og_type, schemas, css=("case.css",), robots=None, referrer=None):
     styles = "\n".join(f'  <link rel="stylesheet" href="assets/v3/{c}?{V}">' for c in css)
     robots = f'\n  <meta name="robots" content="{a(robots)}">' if robots else ""
+    robots += f'\n  <meta name="referrer" content="{a(referrer)}">' if referrer else ""
     ld = "\n".join(f'  <script type="application/ld+json">\n{json.dumps(s, ensure_ascii=False, indent=2)}\n  </script>' for s in schemas)
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -356,7 +357,8 @@ def render_page(src, projects):
             {"@type": "Question", "name": plain(q), "acceptedAnswer": {"@type": "Answer", "text": plain(a)}} for q, a in qa]})
     here = meta.get("current", f)
     return head(meta["title"], meta["description"], url, SITE + "assets/imgs/og-image.png", "website", schemas,
-                css=("case.css", "pages.css"), robots=meta.get("robots")) + f"""<body class="page-sub">
+                css=("case.css", "pages.css"), robots=meta.get("robots"),
+                referrer=meta.get("referrer")) + f"""<body class="page-sub">
   <a class="skip-link" href="#main">Skip to content</a>
 
 {current(NAV, here)}  <main id="main">
