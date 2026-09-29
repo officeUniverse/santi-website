@@ -1,0 +1,86 @@
+<!--meta
+{
+  "file": "start.html",
+  "title": "Start your project | Santi Universe",
+  "description": "Your onboarding page.",
+  "crumb": "Start",
+  "robots": "noindex, nofollow",
+  "referrer": "no-referrer",
+  "scripts": ["assets/js/start.js?v=1"]
+}
+-->
+    <style>
+      /* Layout only. Colour, buttons and type come from v3.css, the same way quote.html
+         does, so this page cannot drift from the brand. */
+      .start { padding: clamp(40px, 6vw, 72px) var(--pad) clamp(48px, 7vw, 88px); max-width: 54rem; }
+      .start__hello { color: var(--gold); font-weight: 600; margin: 0 0 .35rem; }
+      .start__title { margin: 0 0 2.25rem; }
+      .start__fine { color: var(--night-muted); font-size: .9rem; max-width: 42rem; }
+      .start__block { margin-top: 3rem; border-top: 1px solid var(--night-line); padding-top: 2rem; }
+      .start__block h2 { font-size: clamp(1.15rem, 2.6vw, 1.5rem); margin: 0 0 .75rem; }
+      .start__video { aspect-ratio: 16 / 9; border: 1px solid var(--night-line); border-radius: 12px;
+                      display: grid; place-items: center; text-align: center; padding: 1.5rem;
+                      color: var(--night-muted); }
+      .start__tasks { list-style: none; margin: 0; padding: 0; }
+      .start__tasks li { display: flex; justify-content: space-between; gap: 1rem;
+                         padding: .8rem 0; border-bottom: 1px solid var(--night-line); }
+      .start__tasks .due { color: var(--night-muted); white-space: nowrap; font-size: .9rem; }
+      .start__q { margin: 0 0 1.5rem; }
+      .start__q label { display: block; font-weight: 600; margin: 0 0 .5rem; }
+      .start__q textarea { width: 100%; padding: .8rem; border-radius: 10px; font: inherit;
+                           border: 1px solid var(--night-line); background: #fff; color: var(--ink); }
+      .start__files { list-style: none; margin: 0 0 1.25rem; padding: 0; }
+      .start__files li { display: flex; justify-content: space-between; gap: 1rem;
+                         padding: .7rem 0; border-bottom: 1px solid var(--night-line); }
+      .start__files .meta { color: var(--night-muted); white-space: nowrap; font-size: .9rem; }
+      .start__note { color: var(--gold); min-height: 1.4rem; margin: .75rem 0 0; }
+      .start__done { color: var(--gold); font-weight: 600; }
+    </style>
+    <section class="frame frame--dark on-dark start">
+      <p id="start-status" class="start__fine">Loading your project…</p>
+
+      <div id="start-body" hidden>
+        <p class="start__hello">Hi <span id="start-customer"></span></p>
+        <h1 class="start__title" id="start-title"></h1>
+
+        <div class="start__block" style="border-top:0;padding-top:0">
+          <h2>Welcome</h2>
+          <div class="start__video">A short welcome from Santi lands here shortly. Nothing is waiting
+            on it — everything below is live.</div>
+        </div>
+
+        <div class="start__block">
+          <h2>What happens next</h2>
+          <p class="start__fine">Straight off your project board — this is what is actually open right
+            now, not a generic checklist.</p>
+          <ul class="start__tasks" id="start-tasks"></ul>
+        </div>
+
+        <div class="start__block">
+          <h2>Your brief</h2>
+          <p class="start__fine" id="start-brief-intro">The more you tell us here, the less we have to
+            guess. It goes straight onto your project.</p>
+          <form id="start-brief-form">
+            <div id="start-questions"></div>
+            <button type="submit" class="btn btn--accent">Send the brief</button>
+            <p id="start-brief-note" class="start__note" aria-live="polite"></p>
+          </form>
+          <p id="start-brief-done" class="start__done" hidden>Your brief is in — thank you. Anything to
+            add, email santi@santi.co.za and it goes onto the same project.</p>
+        </div>
+
+        <div class="start__block">
+          <h2>Documents</h2>
+          <p class="start__fine">Logo files, brand guides, photos, copy, access notes — up to 8 MB per
+            file. Everything you send is filed on your project, and this list is that project, not a
+            copy of it.</p>
+          <ul class="start__files" id="start-files"></ul>
+          <p id="start-files-empty" class="start__fine">Nothing received yet.</p>
+          <label for="start-upload" class="btn btn--ghost" style="display:inline-block;cursor:pointer">
+            Choose files
+          </label>
+          <input id="start-upload" type="file" multiple style="position:absolute;left:-9999px">
+          <p id="start-upload-note" class="start__note" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>

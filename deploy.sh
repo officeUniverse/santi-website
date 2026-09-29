@@ -17,7 +17,7 @@ cp -a \
   ~/_santi_deploy/project-moo-mulch.html \
   ~/_santi_deploy/project-slice-republic.html \
   ~/_santi_deploy/terms.html ~/_santi_deploy/privacy.html \
-  ~/_santi_deploy/quote.html ~/_santi_deploy/paid.html ~/_santi_deploy/cookies.html ~/_santi_deploy/assets ~/_santi_deploy/api \
+  ~/_santi_deploy/quote.html ~/_santi_deploy/paid.html ~/_santi_deploy/start.html ~/_santi_deploy/cookies.html ~/_santi_deploy/assets ~/_santi_deploy/api \
   ~/_santi_deploy/favicon.ico ~/_santi_deploy/site.webmanifest ~/_santi_deploy/llms.txt ~/_santi_deploy/robots.txt ~/_santi_deploy/sitemap.xml \
   ~/public_html/
 # .htaccess last and non-fatal: on some accounts it is root-owned or immutable, and a
