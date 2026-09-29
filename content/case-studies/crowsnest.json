@@ -79,7 +79,6 @@
       "label": "The brand in context",
       "heading": ["Thoughtful details.", "A familiar welcome."],
       "text": ["Six concept mockups explore the identity across welcome stationery, room keys, signage, merchandise, a company-profile booklet and a laptop website presentation."],
-      "note": "These are concept mockups that illustrate possible applications of the identity.",
       "board": { "layout": "grid", "images": [
         { "src": "welcome-mockup.jpg", "alt": "Crow’s Nest concept mockup: welcome stationery", "caption": "Welcome stationery · concept mockup" },
         { "src": "keys-mockup.jpg", "alt": "Crow’s Nest concept mockup: room key tags", "caption": "Room key tags · concept mockup" },

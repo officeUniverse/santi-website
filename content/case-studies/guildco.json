@@ -80,7 +80,6 @@
       "label": "The brand in context",
       "heading": ["Built for", "the real world."],
       "text": ["Six concept mockups bring Guildco’s identity into print, the workplace and a digital setting."],
-      "note": "These AI-generated visualisations explore possible applications of the brand.",
       "board": { "layout": "grid", "images": [
         { "src": "cards-mockup.jpg", "alt": "Guildco concept mockup: business cards", "caption": "Business cards · concept mockup" },
         { "src": "booklet-mockup.jpg", "alt": "Guildco concept mockup: company-profile booklet", "caption": "Profile booklet · concept mockup" },

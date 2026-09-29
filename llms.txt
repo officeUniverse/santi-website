@@ -1,6 +1,6 @@
 # Santi Universe (Santi U)
 
-> Santi Universe is a web design, graphic design and AI engineering studio based in Roodepoort, South Africa, with a footprint in Kenya and clients worldwide. We build fast, high-performance websites, brand identities, AI solutions and AEO (Answer Engine Optimization) that turn visitors into customers.
+> Santi Universe is a web design, graphic design and AI engineering studio based in Roodepoort, Johannesburg (Gauteng), South Africa, with a footprint in Kenya and clients worldwide. We build fast, high-performance websites, brand identities, AI solutions and AEO (Answer Engine Optimization) that turn visitors into customers.
 
 ## Services
 - [Web Design & Development](https://santi.co.za/services.html#web): business sites, eCommerce, custom web apps, landing pages.
@@ -16,6 +16,8 @@
 - [Work / portfolio](https://santi.co.za/portfolio.html): all case studies.
 - [Free AEO Tool](https://santi.co.za/aeo.html): a free checker that scores how AI-ready any website is.
 - [About](https://santi.co.za/about.html)
+- [Web & graphic design in Johannesburg](https://santi.co.za/web-design-johannesburg.html): our Johannesburg studio and what we do for local businesses.
+- [Services FAQ](https://santi.co.za/services.html#faq-title): pricing, timelines, payment, revisions, hosting and AEO questions answered.
 - [Contact](https://santi.co.za/contact.html)
 
 ## Case studies
@@ -25,9 +27,7 @@
 - [GLNI](https://santi.co.za/project-glni.html): Website & ongoing care — International leadership network.
 - [Guildco](https://santi.co.za/project-guildco.html): Brand identity & website — Construction & mining.
 - [Isiphethu](https://santi.co.za/project-isiphethu.html): Visual identity & brand guidelines — Engineering & water services.
-- [S.H.E Foundation](https://santi.co.za/project-she.html): Visual identity — Strength, Hope & Empowerment.
 - [Latroforce](https://santi.co.za/project-latroforce.html): Rebrand proposal — Management services.
-- [Slice Republic](https://santi.co.za/project-slice-republic.html): Brand identity concept — Pizzeria · Identity exploration.
 - [Moo & Mulch Farm](https://santi.co.za/project-moo-mulch.html): Brand identity & applications — Agriculture · Northern Cape.
 - [Consolidated Holdings](https://santi.co.za/project-consolidated-holdings.html): Brand identity & applications — Corporate group · Brand identity.
 

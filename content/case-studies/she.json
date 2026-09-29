@@ -1,6 +1,7 @@
 {
   "slug": "she",
   "order": 7,
+  "hidden": true,
   "title": "S.H.E Foundation",
   "org": "S.H.E Foundation",
   "collab": [
@@ -156,7 +157,6 @@
       "text": [
         "Six concept applications explore how the logo, colour palette and geometric details can extend across merchandise, stationery and an event setting."
       ],
-      "note": "These AI-generated mockups illustrate possible brand applications, rather than items or events already produced by the foundation.",
       "board": {
         "layout": "grid",
         "images": [

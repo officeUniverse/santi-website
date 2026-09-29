@@ -12,6 +12,57 @@
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
+  /* ---------- case-study image viewer ---------- */
+  var caseImages = $$(".case-hero__media img, .case .board img");
+  if (caseImages.length) {
+    var viewer = document.createElement("dialog");
+    viewer.className = "case-viewer";
+    viewer.setAttribute("aria-label", "Project image viewer");
+    viewer.innerHTML = '<button type="button" class="case-viewer__close" aria-label="Close image">Close ×</button><button type="button" class="case-viewer__prev" aria-label="Previous image">←</button><figure><img alt=""><figcaption aria-live="polite"></figcaption></figure><button type="button" class="case-viewer__next" aria-label="Next image">→</button>';
+    document.body.appendChild(viewer);
+    var activeImage = 0, imageTrigger, previousOverflow;
+    function showCaseImage(index) {
+      activeImage = (index + caseImages.length) % caseImages.length;
+      var source = caseImages[activeImage];
+      var captionContainer = source.closest("figure") || source.closest(".board");
+      var caption = captionContainer ? captionContainer.querySelector("figcaption, .cap") : null;
+      $("img", viewer).src = source.currentSrc || source.src;
+      $("img", viewer).alt = source.alt;
+      $("figcaption", viewer).textContent = (caption ? caption.textContent : source.alt) + " · " + (activeImage + 1) + " / " + caseImages.length;
+    }
+    caseImages.forEach(function (img, index) {
+      var trigger = document.createElement("button");
+      trigger.type = "button";
+      trigger.className = "case-image-open";
+      trigger.setAttribute("aria-label", "Enlarge image: " + img.alt);
+      trigger.setAttribute("aria-haspopup", "dialog");
+      img.parentNode.insertBefore(trigger, img);
+      trigger.appendChild(img);
+      trigger.addEventListener("click", function () {
+        imageTrigger = trigger;
+        showCaseImage(index);
+        previousOverflow = document.body.style.overflow;
+        document.body.style.overflow = "hidden";
+        viewer.showModal();
+        $(".case-viewer__close", viewer).focus();
+      });
+    });
+    $(".case-viewer__close", viewer).addEventListener("click", function () { viewer.close(); });
+    $(".case-viewer__prev", viewer).addEventListener("click", function () { showCaseImage(activeImage - 1); });
+    $(".case-viewer__next", viewer).addEventListener("click", function () { showCaseImage(activeImage + 1); });
+    viewer.addEventListener("click", function (event) { if (event.target === viewer) viewer.close(); });
+    viewer.addEventListener("keydown", function (event) {
+      if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+        event.preventDefault();
+        showCaseImage(activeImage + (event.key === "ArrowLeft" ? -1 : 1));
+      }
+    });
+    viewer.addEventListener("close", function () {
+      document.body.style.overflow = previousOverflow;
+      if (imageTrigger) imageTrigger.focus({ preventScroll: true });
+    });
+  }
+
   /* ---------- leads webhook (shared with aeo.js) ---------- */
   var WEBHOOK = window.SANTI_LEAD_WEBHOOK || "https://n8n.santi.co.za/webhook/santi-leads";
   window.SANTI_LEAD_WEBHOOK = WEBHOOK;

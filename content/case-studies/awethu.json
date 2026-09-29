@@ -64,7 +64,6 @@
       "label": "In application",
       "heading": ["From the mark", "to the everyday."],
       "text": ["The presentation explores how the identity could extend across stationery and clothing. A notebook, cards and pens bring the system into printed materials; a cap and polo show the mark at a smaller, wearable scale."],
-      "note": "These presentation mockups show the proposed identity in context.",
       "board": { "layout": "two", "images": [
         { "src": "stationery.jpg", "alt": "Awethu stationery concept: branded notebook, business cards and pens", "caption": "Stationery · presentation mockup" },
         { "src": "apparel.jpg", "alt": "Awethu apparel concept: white branded cap and polo shirt", "caption": "Apparel · presentation mockup" }
@@ -74,7 +73,6 @@
       "label": "Out in the world",
       "heading": ["A presence", "in the landscape."],
       "text": ["Further concepts explore the identity in the field: entrance signage, a forestry vehicle, workwear and a portable field kit."],
-      "note": "These AI-generated mockups explore possible applications of the identity, rather than documenting produced items or a completed rollout.",
       "board": { "layout": "grid", "images": [
         { "src": "signage-concept.jpg", "alt": "Awethu Forestry concept: branded entrance sign at the edge of a pine forest", "caption": "Entrance sign · concept mockup" },
         { "src": "vehicle-concept.jpg", "alt": "Awethu Forestry concept: white pickup with forest-green and lime vehicle graphics", "caption": "Work vehicle · concept mockup" },

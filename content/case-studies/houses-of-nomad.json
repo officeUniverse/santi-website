@@ -1,0 +1,219 @@
+{
+  "slug": "houses-of-nomad",
+  "order": 12,
+  "hidden": true,
+  "title": "Houses of Nomad",
+  "org": "Houses of Nomad",
+  "orgUrl": "https://housesofnomad.com/",
+  "schemaName": "Houses of Nomad — Website & Custom WordPress Booking Plugin",
+  "metaTitle": "Houses of Nomad Website & WordPress Booking Plugin | Santi Universe",
+  "description": "Houses of Nomad website development, custom WordPress booking plugin and Hostaway integration. Explore the booking workflow through examples using fictional data.",
+  "genre": [
+    "Web Design",
+    "WordPress Plugin Development"
+  ],
+  "category": "Website · WordPress plugin",
+  "tags": [
+    "web",
+    "wordpress"
+  ],
+  "pills": [
+    "Website",
+    "WordPress plugin"
+  ],
+  "cardSub": "Hospitality · Cape Town & Yzerfontein",
+  "tagline": [
+    "A place to discover.",
+    "A connected way to book."
+  ],
+  "intro": "A hospitality website supported by a custom booking plugin and a Hostaway connection.",
+  "tint": "#68582E",
+  "cover": "website-laptop.png",
+  "reel": [
+    "website-laptop.png",
+    "demo-dashboard.png",
+    "demo-bookings.png",
+    "demo-calendar.png",
+    "demo-sync-flow.png"
+  ],
+  "hero": {
+    "src": "website-laptop.png",
+    "alt": "Houses of Nomad public homepage displayed on a laptop in a coastal interior concept",
+    "caption": "Website on laptop · Concept mockup"
+  },
+  "meta": [
+    [
+      "Services",
+      "Website development · Custom WordPress plugin"
+    ],
+    [
+      "Integration",
+      "Hostaway"
+    ],
+    [
+      "Sector",
+      "Hospitality & accommodation"
+    ],
+    [
+      "Website",
+      "housesofnomad.com",
+      "https://housesofnomad.com/"
+    ]
+  ],
+  "chapters": [
+    {
+      "label": "The website",
+      "heading": [
+        "The stay begins",
+        "before arrival."
+      ],
+      "text": [
+        "Houses of Nomad presents accommodation in Cape Town and Yzerfontein through a hospitality-led website. Destination imagery, property introductions and routes to view or book a stay connect the brand experience with the practical task of finding accommodation.",
+        "Santi developed the website and its custom WordPress booking plugin. The work brings the guest-facing website and the operational booking tools into the same project."
+      ],
+      "links": [
+        [
+          "Visit Houses of Nomad",
+          "https://housesofnomad.com/"
+        ]
+      ]
+    },
+    {
+      "label": "The custom plugin",
+      "heading": [
+        "More than",
+        "a booking button."
+      ],
+      "text": [
+        "The custom WordPress plugin gives the site a dedicated booking workspace. Rooms, reservations, guest accounts and calendar views sit together, with payment configuration and notifications supporting the booking process.",
+        "For visitors, the purpose is straightforward: move from discovering a property into booking a stay. For the team, the plugin brings the information and controls needed to manage that stay into WordPress."
+      ],
+      "board": {
+        "layout": "one",
+        "images": [
+          {
+            "src": "demo-sync-flow.png",
+            "alt": "Simplified website, WordPress plugin and Hostaway workflow; illustrative interface with entirely fictional data",
+            "caption": "Connected booking workflow · Illustrative interface · Fictional data"
+          }
+        ]
+      }
+    },
+    {
+      "label": "The Hostaway connection",
+      "heading": [
+        "Connected bookings.",
+        "Aligned availability."
+      ],
+      "text": [
+        "The Hostaway connection links the website’s booking workspace with the accommodation-management system. Reservations and blocked dates are synchronised so the team can work with connected availability information.",
+        "Room-import controls help bring Hostaway listings into the plugin. Booking records show their source and sync status, with a manual sync action available for staff to review or update a record.",
+        "For example, an unavailable period for a demonstration apartment can appear as a blocked entry, distinct from a guest reservation. That distinction makes the calendar useful for both bookings and dates that should not be offered for a stay."
+      ],
+      "board": {
+        "layout": "one",
+        "images": [
+          {
+            "src": "demo-calendar.png",
+            "alt": "Simplified booking calendar showing fictional confirmed, pending, external and blocked entries; illustrative interface with entirely fictional data",
+            "caption": "Availability and calendar · Illustrative interface · Fictional data"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Reservations",
+      "heading": [
+        "The details,",
+        "in one working view."
+      ],
+      "text": [
+        "The booking list brings together the room, guest, stay dates, price, source and status. Filters for room, status and date, alongside search, help staff find the relevant record without scanning the entire schedule.",
+        "The administration includes controls to edit booking records, import calendar data through iCal and sync booking information to Google Sheets. These tools support the working process around reservations, alongside the Hostaway connection.",
+        "In the fictional example, a confirmed stay, a pending reservation, an unavailable period and a cancelled booking appear as distinct records."
+      ],
+      "board": {
+        "layout": "one",
+        "images": [
+          {
+            "src": "demo-bookings.png",
+            "alt": "Booking list with invented reservation references, guests, prices and sync statuses; illustrative interface with entirely fictional data",
+            "caption": "Booking management · Illustrative interface · Fictional data"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Rooms and guests",
+      "heading": [
+        "A clear structure",
+        "behind every stay."
+      ],
+      "text": [
+        "The room-management area keeps each accommodation record alongside its pricing type and capacity. Rooms can be added, imported from Hostaway, previewed and edited. Booking shortcodes connect those records to the relevant pages on the website.",
+        "Guest accounts give the team a separate view of account information and booking history, with an option to create a booking for a guest. The plugin also includes administration areas for add-ons and coupons.",
+        "The illustration uses generic apartment labels and a reserved example email address. No production account information is included."
+      ],
+      "board": {
+        "layout": "one",
+        "images": [
+          {
+            "src": "demo-rooms-accounts.png",
+            "alt": "Invented rooms, example rates and a fictional guest account; illustrative interface with entirely fictional data",
+            "caption": "Rooms and guest accounts · Illustrative interface · Fictional data"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Payments and communication",
+      "heading": [
+        "A booking process",
+        "with follow-through."
+      ],
+      "text": [
+        "Payment settings include PayFast and configurable deposit requirements. That lets payment configuration form part of the booking workflow, alongside the status of the reservation.",
+        "Notification controls cover new bookings, received or failed payments, cancellations and critical connection or payment errors. Guest confirmation emails and a delivery-test control support communication around the stay.",
+        "As a fictional calculation, a R3,600 booking with a 30% deposit would collect R1,080 and leave R2,520."
+      ],
+      "board": {
+        "layout": "one",
+        "images": [
+          {
+            "src": "demo-payments.png",
+            "alt": "Example payment settings and notification options using an invented deposit calculation; illustrative interface with entirely fictional data",
+            "caption": "Payments and notifications · Illustrative interface · Fictional data"
+          }
+        ]
+      }
+    },
+    {
+      "label": "An operational overview",
+      "heading": [
+        "See the activity.",
+        "Plan the next step."
+      ],
+      "text": [
+        "The dashboard groups revenue summaries, booking trends, occupancy, pending items and upcoming check-ins into an overview for the team. Monthly performance information adds another way to review the activity represented in the booking system."
+      ],
+      "board": {
+        "layout": "one",
+        "images": [
+          {
+            "src": "demo-dashboard.png",
+            "alt": "Fictional dashboard showing sample revenue, reservations, occupancy and arrivals; illustrative interface with entirely fictional data",
+            "caption": "Dashboard overview · Illustrative interface · Fictional data"
+          }
+        ]
+      }
+    }
+  ],
+  "collab": [
+    {
+      "name": "Stae Creative",
+      "logo": "assets/imgs/partners/stae-creative-web.png",
+      "url": "https://staecreative.com/",
+      "logoTheme": "dark"
+    }
+  ]
+}

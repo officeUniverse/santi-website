@@ -12,6 +12,7 @@ class Images(HTMLParser):
 projects=[]
 for path in sorted(root.glob('project-*.html')):
  text=path.read_text();work=None
+ if 'name="robots" content="noindex' in text:continue  # hidden project
  for raw in re.findall(r'<script type="application/ld\+json">(.*?)</script>',text,re.S):
   data=json.loads(raw)
   if data.get('@type')=='CreativeWork':work=data

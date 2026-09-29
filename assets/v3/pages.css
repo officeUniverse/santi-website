@@ -189,6 +189,26 @@
 .legal th { font-family: var(--mono); font-size: 11px; font-weight: 400; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); background: var(--paper-2); }
 .legal-contact { margin-top: 36px !important; padding-top: 20px; border-top: 1px solid var(--line); }
 
+/* ---------- FAQ (services) ---------- */
+.faq { padding-bottom: clamp(24px, 4vw, 48px); }
+.faq__list { padding: 0 var(--pad); max-width: 1040px; }
+.faq__item { border-top: 1px solid var(--line); }
+.faq__item:last-child { border-bottom: 1px solid var(--line); }
+.faq__item summary {
+  position: relative; list-style: none; cursor: pointer; padding: 22px 48px 22px 0;
+  font-size: clamp(19px, 1.6vw, 24px); line-height: 1.25; letter-spacing: -0.02em; font-weight: 500; color: var(--brand);
+}
+.faq__item summary::-webkit-details-marker { display: none; }
+.faq__item summary::after {
+  content: "+"; position: absolute; right: 4px; top: 50%; transform: translateY(-50%);
+  font-family: var(--mono); font-size: 22px; color: var(--teal-ink); transition: transform .25s var(--ease);
+}
+.faq__item[open] summary::after { transform: translateY(-50%) rotate(45deg); }
+.faq__a p { padding: 0 0 24px; max-width: 70ch; color: var(--ink-2); }
+.faq__a a, .why__grid p a, .case-cta .foot a { color: var(--brand); border-bottom: 1px solid var(--line); }
+.why__grid h3 a { transition: color .2s var(--ease); }
+.why__grid h3 a:hover { color: var(--teal-ink); }
+
 /* ---------- responsive ---------- */
 @media (max-width: 1100px) {
   .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }

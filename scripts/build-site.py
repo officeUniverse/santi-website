@@ -29,7 +29,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CONTENT = ROOT / "content" / "case-studies"
 PAGES = ROOT / "content" / "pages"
 SITE = "https://santi.co.za/"
-V = "v=26"  # cache stamp for v3.css / case.css / pages.css / site.js
+V = "v=30"  # cache stamp for v3.css / case.css / pages.css / site.js
 
 
 def t(s):  # text node
@@ -237,7 +237,8 @@ def render_project(p, nxt):
             f'<div class="outcome"><strong>{t(big)}</strong><span>{t(lbl)}</span></div>' for big, lbl in p["outcomes"]) + "</section>"
     next_src = img_path(nxt["slug"], nxt["cover"])
 
-    return head(p["metaTitle"], p["description"], url, SITE + hero_src, "article", [work, trail]) + f"""<body class="page-case">
+    return head(p["metaTitle"], p["description"], url, SITE + hero_src, "article", [work, trail],
+                robots="noindex, follow" if p.get("hidden") else None) + f"""<body class="page-case">
   <a class="skip-link" href="#main">Skip to content</a>
 
 {current(NAV, "portfolio.html")}  <main id="main">
@@ -309,6 +310,7 @@ def render_index(projects):
         <button type="button" data-filter="all" aria-pressed="true">All</button>
         <button type="button" data-filter="branding" aria-pressed="false">Brand identity</button>
         <button type="button" data-filter="web" aria-pressed="false">Websites</button>
+        <button type="button" data-filter="wordpress" aria-pressed="false">WordPress plugins</button>
       </div>
     </header>
     <div class="cards">{cards}
@@ -335,6 +337,11 @@ def render_page(src, projects):
     f = meta["file"]
     url = SITE + f
     schemas = [ORG] + ([crumbs((meta["crumb"], url))] if meta.get("crumb") else [])
+    if meta.get("faq"):  # visible <details class="faq__item"> Q&As -> FAQPage data AI search can quote
+        qa = re.findall(r'<details class="faq__item[^"]*">\s*<summary>(.*?)</summary>\s*<div class="faq__a">(.*?)</div>', body, re.S)
+        plain = lambda h: re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", h)).strip().replace("&amp;", "&")
+        schemas.append({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": plain(q), "acceptedAnswer": {"@type": "Answer", "text": plain(a)}} for q, a in qa]})
     here = meta.get("current", f)
     return head(meta["title"], meta["description"], url, SITE + "assets/imgs/og-image.png", "website", schemas,
                 css=("case.css", "pages.css"), robots=meta.get("robots")) + f"""<body class="page-sub">
@@ -351,16 +358,20 @@ def main():
     projects = sorted((json.loads(f.read_text(encoding="utf-8")) for f in CONTENT.glob("*.json")), key=lambda p: p["order"])
     if not projects:
         raise SystemExit("No case studies in content/case-studies/")
-    for i, p in enumerate(projects):
-        out = ROOT / f"project-{p['slug']}.html"
-        out.write_text(render_project(p, projects[(i + 1) % len(projects)]), encoding="utf-8")
-    (ROOT / "portfolio.html").write_text(render_index(projects), encoding="utf-8")
+    # "hidden": true keeps a project's page (noindex) but drops it from All work, cards,
+    # "Next project" links and the gallery registry. Delete the flag to bring it back.
+    shown = [p for p in projects if not p.get("hidden")]
+    for p in projects:
+        chain = shown if p in shown else [p] + shown
+        nxt = chain[(chain.index(p) + 1) % len(chain)]
+        (ROOT / f"project-{p['slug']}.html").write_text(render_project(p, nxt), encoding="utf-8")
+    (ROOT / "portfolio.html").write_text(render_index(shown), encoding="utf-8")
     pages = sorted(PAGES.glob("*.html"))
     for src in pages:
-        html = render_page(src, projects)
+        html = render_page(src, shown)
         name = re.search(r'"file"\s*:\s*"([^"]+)"', src.read_text(encoding="utf-8")).group(1)
         (ROOT / name).write_text(html, encoding="utf-8")
-    print(f"Built {len(projects)} case studies + portfolio.html + {len(pages)} pages")
+    print(f"Built {len(projects)} case studies ({len(projects) - len(shown)} hidden) + portfolio.html + {len(pages)} pages")
 
 
 if __name__ == "__main__":

@@ -1,6 +1,7 @@
 {
   "slug": "slice-republic",
   "order": 9,
+  "hidden": true,
   "title": "Slice Republic",
   "org": "Slice Republic",
   "collab": [
@@ -161,7 +162,6 @@
       "text": [
         "The supplied mockups explore how the identity could appear in a pizzeria interior and on pizza boxes, drinks, bags and apparel. Repeated colours and the crowned-slice mark connect the different touchpoints."
       ],
-      "note": "These supplied concept visualisations illustrate proposed applications, not completed installations or production photography.",
       "board": {
         "layout": "one",
         "images": [
@@ -187,7 +187,6 @@
       "text": [
         "Four concept scenes extend the identity into pizza packaging, storefront signage, staff apparel and delivery. Navy, cream and gold connect each application to the crowned-slice mark."
       ],
-      "note": "These four AI-generated visualisations explore possible applications of the brand. They are concept mockups, not photographs of completed work.",
       "board": {
         "layout": "two",
         "images": [
