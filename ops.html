@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Start your project | Santi Universe</title>
-  <meta name="description" content="Your onboarding page.">
+  <title>Ops | Santi Universe</title>
+  <meta name="description" content="How Santi Universe runs every client project. For the team.">
   <meta name="robots" content="noindex, nofollow">
   <meta name="referrer" content="no-referrer">
-  <link rel="canonical" href="https://santi.co.za/start.html">
+  <link rel="canonical" href="https://santi.co.za/ops.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Santi Universe">
-  <meta property="og:title" content="Start your project | Santi Universe">
-  <meta property="og:description" content="Your onboarding page.">
-  <meta property="og:url" content="https://santi.co.za/start.html">
+  <meta property="og:title" content="Ops | Santi Universe">
+  <meta property="og:description" content="How Santi Universe runs every client project. For the team.">
+  <meta property="og:url" content="https://santi.co.za/ops.html">
   <meta property="og:image" content="https://santi.co.za/assets/imgs/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Start your project | Santi Universe">
-  <meta name="twitter:description" content="Your onboarding page.">
+  <meta name="twitter:title" content="Ops | Santi Universe">
+  <meta name="twitter:description" content="How Santi Universe runs every client project. For the team.">
   <meta name="twitter:image" content="https://santi.co.za/assets/imgs/og-image.png">
   <meta name="theme-color" content="#0d2466">
   <link rel="icon" href="favicon.ico" sizes="48x48">
@@ -152,26 +152,6 @@
   ]
 }
   </script>
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Home",
-      "item": "https://santi.co.za/"
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "Start",
-      "item": "https://santi.co.za/start.html"
-    }
-  ]
-}
-  </script>
 </head>
 <body class="page-sub">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -211,80 +191,99 @@
 
   <main id="main">
 <style>
-      /* Layout only. Colour, buttons and type come from v3.css, the same way quote.html
-         does, so this page cannot drift from the brand. */
-      .start { padding: clamp(110px, 11vw, 140px) var(--pad) clamp(48px, 7vw, 88px);
-               padding-right: max(var(--pad), calc(100% - 54rem - 2 * var(--gutter) + var(--pad))); }
-      .start__hello { color: var(--gold); font-weight: 600; margin: 0 0 .35rem; }
-      .start__title { margin: 0 0 2.25rem; }
-      .start__fine { color: var(--night-muted); font-size: .9rem; max-width: 42rem; }
-      .start__block { margin-top: 3rem; border-top: 1px solid var(--night-line); padding-top: 2rem; }
-      .start__block h2 { font-size: clamp(1.15rem, 2.6vw, 1.5rem); margin: 0 0 .75rem; }
-      .start__video { display: block; width: 100%; aspect-ratio: 16 / 9; border: 1px solid var(--night-line);
-                      border-radius: 12px; background: #0d2466; }
-      .start__tasks { list-style: none; margin: 0; padding: 0; }
-      .start__tasks li { display: flex; justify-content: space-between; gap: 1rem;
-                         padding: .8rem 0; border-bottom: 1px solid var(--night-line); }
-      .start__tasks .due { color: var(--night-muted); white-space: nowrap; font-size: .9rem; }
-      .start__q { margin: 0 0 1.5rem; }
-      .start__q label { display: block; font-weight: 600; margin: 0 0 .5rem; }
-      .start__q textarea { width: 100%; padding: .8rem; border-radius: 10px; font: inherit;
-                           border: 1px solid var(--night-line); background: #fff; color: var(--ink); }
-      .start__files { list-style: none; margin: 0 0 1.25rem; padding: 0; }
-      .start__files li { display: flex; justify-content: space-between; gap: 1rem;
-                         padding: .7rem 0; border-bottom: 1px solid var(--night-line); }
-      .start__files .meta { color: var(--night-muted); white-space: nowrap; font-size: .9rem; }
-      .start__note { color: var(--gold); min-height: 1.4rem; margin: .75rem 0 0; }
-      .start__done { color: var(--gold); font-weight: 600; }
+      /* Internal: kept out of search, the sitemap and the menu. Same frame as the client pages. */
+      .ops { padding: clamp(110px, 11vw, 140px) calc(max(0px, (100% - 60rem) / 2 - var(--gutter)) + var(--pad))
+              clamp(48px, 7vw, 88px); }
+      .ops h1 { margin: .6rem 0 1rem; font-size: clamp(2.2rem, 5vw, 3.6rem); letter-spacing: -0.04em; }
+      .ops__lead { color: var(--night-muted); max-width: 44rem; margin: 0 0 2rem; }
+      .ops__video { display: block; width: 100%; aspect-ratio: 16 / 9; border: 1px solid var(--night-line);
+                    border-radius: 16px; background: #0d2466; }
+      .ops__block { margin-top: 3rem; border-top: 1px solid var(--night-line); padding-top: 2rem; }
+      .ops__block h2 { font-size: clamp(1.25rem, 2.6vw, 1.6rem); margin: 0 0 1.25rem; }
+      .ops__rules { margin: 0; padding: 0; list-style: none; display: grid; gap: .6rem; }
+      .ops__rules li { padding: .85rem 1.1rem; border: 1px solid var(--night-line); border-radius: 12px;
+                       background: rgba(255,255,255,.04); }
+      .ops__stages { margin: 0; padding: 0; list-style: none; display: grid; gap: .8rem; }
+      .ops__stage { display: grid; grid-template-columns: 2.6rem 1fr; gap: 1rem; padding: 1.1rem 1.2rem;
+                    border: 1px solid var(--night-line); border-radius: 14px; background: rgba(255,255,255,.04); }
+      .ops__n { font-family: var(--mono); color: var(--gold); font-size: .95rem; padding-top: .15rem; }
+      .ops__stage h3 { margin: 0 0 .5rem; font-size: 1.15rem; }
+      .ops__stage ul { margin: 0; padding-left: 1.1rem; color: var(--night-muted); display: grid; gap: .3rem; }
+      .ops__fine { color: var(--night-muted); font-size: .9rem; margin-top: 2.5rem; }
     </style>
-    <section class="frame frame--dark frame--hero on-dark start">
-      <p id="start-status" class="start__fine">Loading your project…</p>
+    <section class="frame frame--dark frame--hero on-dark ops">
+      <span class="eyebrow">Santi Universe · Ops</span>
+      <h1>How we run every project</h1>
+      <p class="ops__lead">For everyone who works on a client project. Watch this first. The same nine stages are
+        written out below, for when you're in ERPNext.</p>
+      <video class="ops__video" controls playsinline preload="metadata"
+             poster="assets/video/ops-team-poster.jpg" src="assets/video/ops-team.mp4"
+             aria-label="How we run every project, for the team"></video>
 
-      <div id="start-body" hidden>
-        <p class="start__hello">Hi <span id="start-customer"></span></p>
-        <h1 class="start__title" id="start-title"></h1>
-
-        <div class="start__block" style="border-top:0;padding-top:0">
-          <h2>Welcome</h2>
-          <video class="start__video" controls playsinline preload="metadata"
-                 poster="assets/video/welcome-poster.jpg" src="assets/video/welcome.mp4"
-                 aria-label="Welcome to Santi Universe: how we work together"></video>
-        </div>
-
-        <div class="start__block">
-          <h2>What happens next</h2>
-          <p class="start__fine">The milestones still open on your project board — the real one, not a generic
-            checklist.</p>
-          <ul class="start__tasks" id="start-tasks"></ul>
-        </div>
-
-        <div class="start__block">
-          <h2>Your brief</h2>
-          <p class="start__fine" id="start-brief-intro">The more you tell us here, the less we have to
-            guess. It goes straight onto your project.</p>
-          <form id="start-brief-form">
-            <div id="start-questions"></div>
-            <button type="submit" class="btn btn--accent">Send the brief</button>
-            <p id="start-brief-note" class="start__note" aria-live="polite"></p>
-          </form>
-          <p id="start-brief-done" class="start__done" hidden>Your brief is in — thank you. Anything to
-            add, email santi@santi.co.za and it goes onto the same project.</p>
-        </div>
-
-        <div class="start__block">
-          <h2>Documents</h2>
-          <p class="start__fine">Logo files, brand guides, photos, copy, access notes — up to 8 MB per
-            file. Everything you send is filed on your project, and this list is that project, not a
-            copy of it.</p>
-          <ul class="start__files" id="start-files"></ul>
-          <p id="start-files-empty" class="start__fine">Nothing received yet.</p>
-          <label for="start-upload" class="btn btn--ghost" style="display:inline-block;cursor:pointer">
-            Choose files
-          </label>
-          <input id="start-upload" type="file" multiple style="position:absolute;left:-9999px">
-          <p id="start-upload-note" class="start__note" aria-live="polite"></p>
-        </div>
+      <div class="ops__block">
+        <h2>How we talk</h2>
+        <ul class="ops__rules">
+          <li>A person replies within one working day</li>
+          <li>The project page is the record</li>
+          <li>Calls on Tuesday and Thursday afternoons</li>
+          <li>The price comes before the work</li>
+          <li>Always say who we&#x27;re waiting on</li>
+        </ul>
       </div>
+
+      <div class="ops__block">
+        <h2>What we do in ERPNext, stage by stage</h2>
+        <ol class="ops__stages">
+        <li class="ops__stage">
+          <span class="ops__n">01</span>
+          <div><h3>The enquiry</h3>
+            <ul><li>Reply personally within one working day</li><li>Convert the Lead to a Customer</li><li>Put their email on the Contact</li></ul></div>
+        </li>
+        <li class="ops__stage">
+          <span class="ops__n">02</span>
+          <div><h3>The quote</h3>
+            <ul><li>Create a Quotation for the Customer</li><li>Pick the right service items</li><li>Submit it</li><li>Scope changed? Amend it</li></ul></div>
+        </li>
+        <li class="ops__stage">
+          <span class="ops__n">03</span>
+          <div><h3>The deposit</h3>
+            <ul><li>Nothing, unless an alert says a step failed</li><li>If one did, fix that first</li></ul></div>
+        </li>
+        <li class="ops__stage">
+          <span class="ops__n">04</span>
+          <div><h3>Onboarding</h3>
+            <ul><li>Read the brief the day it lands</li><li>Rush fee or discount agreed? Add it to the project invoice</li><li>Nothing in three working days? Chase gently</li></ul></div>
+        </li>
+        <li class="ops__stage">
+          <span class="ops__n">05</span>
+          <div><h3>The kickoff call</h3>
+            <ul><li>Mark Kickoff booked as Completed</li><li>Put what you agreed on the project, the same day</li></ul></div>
+        </li>
+        <li class="ops__stage">
+          <span class="ops__n">06</span>
+          <div><h3>The work</h3>
+            <ul><li>Mark each milestone Completed the day it&#x27;s done</li><li>Answer every request within a day</li><li>New work: price, their yes, the invoice line, then Open</li></ul></div>
+        </li>
+        <li class="ops__stage">
+          <span class="ops__n">07</span>
+          <div><h3>Review</h3>
+            <ul><li>Confirm the list arrived, and when it&#x27;ll be done</li><li>New work in the list? Price it first</li></ul></div>
+        </li>
+        <li class="ops__stage">
+          <span class="ops__n">08</span>
+          <div><h3>Handover</h3>
+            <ul><li>Check every agreed extra is on the project invoice</li><li>Set the Project status to Completed</li><li>Once, on handover day</li></ul></div>
+        </li>
+        <li class="ops__stage">
+          <span class="ops__n">09</span>
+          <div><h3>Paid and closed</h3>
+            <ul><li>Record a Payment Entry against the project invoice</li><li>Say thank you</li><li>Ask for a review or a referral</li></ul></div>
+        </li>
+        </ol>
+      </div>
+
+      <p class="ops__fine">Internal. Not linked from the site and not indexed by search engines, but anyone with
+        this address can open it.</p>
     </section>
   </main>
 
@@ -404,6 +403,5 @@
 
   <script src="assets/v3/universe.js?v=4"></script>
   <script src="assets/v3/site.js?v=33"></script>
-  <script src="assets/js/start.js?v=1"></script>
 </body>
 </html>
