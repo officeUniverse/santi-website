@@ -543,6 +543,38 @@
     });
   }
 
+  // Files come through the Worker with the session attached, so they cannot be plain
+  // links. The PDF arrives as bytes, is handed to the browser as a real download, and the
+  // temporary address for it is thrown away straight after.
+  function download(kind, name, button) {
+    var original = button.textContent;
+    button.disabled = true;
+    button.textContent = "Preparing…";
+    fetch(API + "/account/document", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: "Bearer " + state.token },
+      body: JSON.stringify({ project: state.current.id, kind: kind, name: name || "" })
+    }).then(function (response) {
+      var type = response.headers.get("content-type") || "";
+      if (!response.ok || type.indexOf("pdf") < 0) throw new Error("unavailable");
+      var disposition = response.headers.get("content-disposition") || "";
+      var match = /filename="([^"]+)"/.exec(disposition);
+      return response.blob().then(function (blob) {
+        var url = URL.createObjectURL(blob);
+        var link = make("a");
+        link.href = url;
+        link.download = match ? match[1] : kind + ".pdf";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+        button.textContent = original;
+      });
+    }).catch(function () {
+      button.textContent = "Not available — email santi@santi.co.za";
+    }).then(function () { button.disabled = false; });
+  }
+
   function renderBilling(bill) {
     var box = el("acc-billing");
     box.innerHTML = "";
@@ -574,6 +606,19 @@
     var note = make("p", "acc-muted", bill.message);
     note.style.marginTop = ".8rem";
     box.appendChild(note);
+
+    var downloads = make("div", "acc-actions");
+    var quote = make("button", "btn btn--ghost", "Download your quotation");
+    quote.type = "button";
+    quote.addEventListener("click", function () { download("quotation", "", quote); });
+    downloads.appendChild(quote);
+    bill.invoices.forEach(function (invoice) {
+      var button = make("button", "btn btn--ghost", "Download invoice " + invoice.number);
+      button.type = "button";
+      button.addEventListener("click", function () { download("invoice", invoice.number, button); });
+      downloads.appendChild(button);
+    });
+    box.appendChild(downloads);
 
     function ledger(title, headings, rows, empty) {
       var section = make("section", "acc-ledger");
