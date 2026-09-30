@@ -110,7 +110,7 @@
   function say(el, text, cls) { if (!el) return; el.textContent = text; el.className = "form-msg" + (cls ? " " + cls : ""); }
 
   /* ---------- nav: solid state + mobile sheet ---------- */
-  var nav = $(".nav"), hero = $(".hero, .page-hero");
+  var nav = $(".nav"), hero = $(".hero, .page-hero, [data-hero]");
   if (nav) {
     var onScroll = function () {
       // Light pages (no dark hero) get the solid nav straight away.
