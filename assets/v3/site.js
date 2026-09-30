@@ -205,7 +205,7 @@
         form.hidden = true; navRow.hidden = true; prog.hidden = true; done.hidden = false;
         $("h3", done).focus();
       }).catch(function () {
-        say(msg, "That didn't send. Please email santi@santi.co.za or WhatsApp +27 63 559 4183.", "err");
+        say(msg, "That didn't send. Please email santi@santi.co.za.", "err");
       }).finally(function () { next.disabled = false; });
     });
   }
