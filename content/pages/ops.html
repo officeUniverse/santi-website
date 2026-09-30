@@ -17,86 +17,297 @@
                     border-radius: 16px; background: #0d2466; }
       .ops__block { margin-top: 3rem; border-top: 1px solid var(--night-line); padding-top: 2rem; }
       .ops__block h2 { font-size: clamp(1.25rem, 2.6vw, 1.6rem); margin: 0 0 1.25rem; }
-      .ops__rules { margin: 0; padding: 0; list-style: none; display: grid; gap: .6rem; }
-      .ops__rules li { padding: .85rem 1.1rem; border: 1px solid var(--night-line); border-radius: 12px;
-                       background: rgba(255,255,255,.04); }
-      .ops__stages { margin: 0; padding: 0; list-style: none; display: grid; gap: .8rem; }
-      .ops__stage { display: grid; grid-template-columns: 2.6rem 1fr; gap: 1rem; padding: 1.1rem 1.2rem;
-                    border: 1px solid var(--night-line); border-radius: 14px; background: rgba(255,255,255,.04); }
-      .ops__n { font-family: var(--mono); color: var(--gold); font-size: .95rem; padding-top: .15rem; }
-      .ops__stage h3 { margin: 0 0 .5rem; font-size: 1.15rem; }
-      .ops__stage ul { margin: 0; padding-left: 1.1rem; color: var(--night-muted); display: grid; gap: .3rem; }
+      /* The playbook: the same content as the Santi Client Journey page, on the dark frame. */
+      .ops__play section { display: grid; gap: 1.1rem; }
+      .ops__play h2 { margin: 0; }
+      .ops__play h3 { margin: 0; font-size: 1.08rem; }
+      .ops__play p { margin: 0; }
+      .ops__play .lead { color: var(--night-muted); max-width: 44rem; }
+      .ops__play .label { font-family: var(--mono); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+                          color: var(--night-muted); }
+      .ops__play .rules { list-style: none; margin: 0; padding: 0; display: grid; gap: .8rem;
+                          grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); }
+      .ops__play .rules li { display: grid; gap: .5rem; align-content: start; padding: 1.1rem 1.2rem; min-width: 0;
+                             border: 1px solid var(--night-line); border-radius: 14px; background: rgba(255,255,255,.04); }
+      .ops__play .rules p { color: var(--night-muted); font-size: .95rem; }
+      .ops__play .say { color: var(--paper); background: rgba(255,255,255,.06); border-radius: 10px; padding: .6rem .8rem; }
+      .ops__play .say b { display: block; font-family: var(--mono); font-size: .66rem; letter-spacing: .1em;
+                          text-transform: uppercase; color: var(--gold); font-weight: 400; }
+      .ops__play .key { display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: center; font-size: .88rem; color: var(--night-muted); }
+      .ops__play .chip { display: inline-block; font-family: var(--mono); font-size: .66rem; letter-spacing: .08em;
+                         text-transform: uppercase; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+      .ops__play .chip.you { background: var(--gold); color: var(--ink); }
+      .ops__play .chip.us { background: #3b63d6; color: #fff; }
+      .ops__play .chip.both { background: #08becc; color: #06243a; }
+      .ops__play .chip.auto { background: rgba(255,255,255,.14); color: var(--paper); }
+      .ops__play .stages { list-style: none; margin: 0; padding: 0; display: grid; gap: .9rem; }
+      .ops__play .stage { display: grid; gap: 1rem; padding: 1.2rem; border: 1px solid var(--night-line);
+                          border-radius: 16px; background: rgba(255,255,255,.04); }
+      .ops__play .stage header { display: flex; flex-wrap: wrap; align-items: baseline; gap: .4rem .9rem; }
+      .ops__play .stage header .n { font-family: var(--mono); color: var(--gold); }
+      .ops__play .stage header h3 { font-size: 1.2rem; }
+      .ops__play .stage header .chips { display: flex; gap: .4rem; flex-wrap: wrap; margin-left: auto; }
+      .ops__play .lanes { display: grid; gap: 1rem; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .ops__play .lane { display: grid; gap: .45rem; align-content: start; min-width: 0; }
+      .ops__play .lane ul { margin: 0; padding-left: 1.1em; display: grid; gap: .35rem; font-size: .94rem; color: var(--night-muted); }
+      .ops__play .lane b, .ops__play .mono { color: var(--paper); }
+      .ops__play .mono { font-family: var(--mono); font-size: .86em; }
+      .ops__play .promise { border-top: 1px solid var(--night-line); padding-top: .8rem; display: flex; gap: .6rem;
+                            flex-wrap: wrap; align-items: baseline; font-size: .95rem; }
+      @media (max-width: 820px) { .ops__play .lanes { grid-template-columns: minmax(0, 1fr); }
+                                   .ops__play .stage header .chips { margin-left: 0; } }
       .ops__fine { color: var(--night-muted); font-size: .9rem; margin-top: 2.5rem; }
     </style>
     <section class="frame frame--dark frame--hero on-dark ops">
       <span class="eyebrow">Santi Universe · Ops</span>
       <h1>How we run every project</h1>
-      <p class="ops__lead">For everyone who works on a client project. Watch this first. The same nine stages are
-        written out below, for when you're in ERPNext.</p>
+      <p class="ops__lead">For everyone who works on a client project. Watch this first. Everything in it is written out below: how we talk to
+        clients, and each of the nine stages, with what to do in ERPNext.</p>
       <video class="ops__video" controls playsinline preload="metadata"
              poster="assets/video/ops-team-poster.jpg" src="assets/video/ops-team.mp4"
              aria-label="How we run every project, for the team"></video>
 
-      <div class="ops__block">
-        <h2>How we talk</h2>
-        <ul class="ops__rules">
-          <li>A person replies within one working day</li>
-          <li>The project page is the record</li>
-          <li>Calls on Tuesday and Thursday afternoons</li>
-          <li>The price comes before the work</li>
-          <li>Always say who we&#x27;re waiting on</li>
-        </ul>
+      <div class="ops__block ops__play">
+        <section aria-labelledby="talk">
+    
+    <h2 id="talk">How we talk</h2>
+    <p class="lead">These are promises to the client, and the system is built to keep them. Anyone who writes to a
+      client on behalf of Santi Universe writes this way.</p>
+    <ul class="rules">
+      <li>
+        <h3>A person answers, within one working day</h3>
+        <p>Every email and every request on the project page is read by a person. Working days are Monday to
+          Friday, not South African public holidays.</p>
+        <p class="say"><b>Say</b>Thanks, got it. I'll come back to you by tomorrow afternoon with a proper answer.</p>
+      </li>
+      <li>
+        <h3>The project page is the record</h3>
+        <p>Dates, files, the brief, requests and money all live on the client's project page. Email is for
+          conversation, and it is the only channel: no WhatsApp for client work. If something is agreed on a
+          call, it goes onto the page the same day.</p>
+        <p class="say"><b>Say</b>I've added that to your project page, so it's there when you need it.</p>
+      </li>
+      <li>
+        <h3>Mornings are for work, calls are Tuesday and Thursday afternoons</h3>
+        <p>Calls are 45 minutes at 13:00 or 15:00, booked at least a day ahead. At most two a day. Clients book
+          them themselves from their project page.</p>
+        <p class="say"><b>Say</b>Book any Tuesday or Thursday slot on your project page and it's confirmed.</p>
+      </li>
+      <li>
+        <h3>Name the number before the work</h3>
+        <p>New work is R850 an hour, or R500 an hour on a retainer. The client hears the price before any
+          work or charge starts. Nobody finds out at invoice time.</p>
+        <p class="say"><b>Say</b>That's new work: about 3 hours, so R2,550. Shall I add it to your invoice and schedule it?</p>
+      </li>
+      <li>
+        <h3>Say who we are waiting on</h3>
+        <p>Every milestone is waiting on us, the client, or both. When it's us, we hold the dates. When it's
+          the client, the dates move with them. Say it early and plainly, never as a complaint.</p>
+        <p class="say"><b>Say</b>We're ready for your brand files. The dates after this move with them, so the sooner, the sooner.</p>
+      </li>
+      <li>
+        <h3>Plain words, specific answers</h3>
+        <p>No jargon, no "circle back". A date, not "soon". A price, not "it depends". If we don't know yet, say
+          when we will.</p>
+        <p class="say"><b>Say</b>I don't know yet. I'll know after Thursday's review and tell you then.</p>
+      </li>
+      <li>
+        <h3>One round of changes, gathered together</h3>
+        <p>At review the client sends one consolidated list, not a stream of messages. It keeps changes
+          complete and dates honest.</p>
+        <p class="say"><b>Say</b>Collect everything in one list and send it when you're done. We'll work through it in one go.</p>
+      </li>
+      <li>
+        <h3>Good news gets said too</h3>
+        <p>A finished milestone is marked done the day it's done. The client's page celebrates it, and a short
+          note from us makes it land.</p>
+        <p class="say"><b>Say</b>The design direction is signed off. That was the big one. On to the build.</p>
+      </li>
+    </ul>
+  </section>
       </div>
 
-      <div class="ops__block">
-        <h2>What we do in ERPNext, stage by stage</h2>
-        <ol class="ops__stages">
-        <li class="ops__stage">
-          <span class="ops__n">01</span>
-          <div><h3>The enquiry</h3>
-            <ul><li>Reply personally within one working day</li><li>Convert the Lead to a Customer</li><li>Put their email on the Contact</li></ul></div>
-        </li>
-        <li class="ops__stage">
-          <span class="ops__n">02</span>
-          <div><h3>The quote</h3>
-            <ul><li>Create a Quotation for the Customer</li><li>Pick the right service items</li><li>Submit it</li><li>Scope changed? Amend it</li></ul></div>
-        </li>
-        <li class="ops__stage">
-          <span class="ops__n">03</span>
-          <div><h3>The deposit</h3>
-            <ul><li>Nothing, unless an alert says a step failed</li><li>If one did, fix that first</li></ul></div>
-        </li>
-        <li class="ops__stage">
-          <span class="ops__n">04</span>
-          <div><h3>Onboarding</h3>
-            <ul><li>Read the brief the day it lands</li><li>Rush fee or discount agreed? Add it to the project invoice</li><li>Nothing in three working days? Chase gently</li></ul></div>
-        </li>
-        <li class="ops__stage">
-          <span class="ops__n">05</span>
-          <div><h3>The kickoff call</h3>
-            <ul><li>Mark Kickoff booked as Completed</li><li>Put what you agreed on the project, the same day</li></ul></div>
-        </li>
-        <li class="ops__stage">
-          <span class="ops__n">06</span>
-          <div><h3>The work</h3>
-            <ul><li>Mark each milestone Completed the day it&#x27;s done</li><li>Answer every request within a day</li><li>New work: price, their yes, the invoice line, then Open</li></ul></div>
-        </li>
-        <li class="ops__stage">
-          <span class="ops__n">07</span>
-          <div><h3>Review</h3>
-            <ul><li>Confirm the list arrived, and when it&#x27;ll be done</li><li>New work in the list? Price it first</li></ul></div>
-        </li>
-        <li class="ops__stage">
-          <span class="ops__n">08</span>
-          <div><h3>Handover</h3>
-            <ul><li>Check every agreed extra is on the project invoice</li><li>Set the Project status to Completed</li><li>Once, on handover day</li></ul></div>
-        </li>
-        <li class="ops__stage">
-          <span class="ops__n">09</span>
-          <div><h3>Paid and closed</h3>
-            <ul><li>Record a Payment Entry against the project invoice</li><li>Say thank you</li><li>Ask for a review or a referral</li></ul></div>
-        </li>
-        </ol>
+      <div class="ops__block ops__play">
+        <section aria-labelledby="journey">
+    
+    <h2 id="journey">The journey, stage by stage</h2>
+    <div class="key">
+      <span>Who acts:</span>
+      <span><span class="chip you">Client</span></span>
+      <span><span class="chip us">Us</span></span>
+      <span><span class="chip both">Both</span></span>
+      <span><span class="chip auto">Automatic</span></span>
+    </div>
+
+    <ol class="stages">
+      <li class="stage" id="s1">
+        <header><span class="n">01</span><h3>Enquiry</h3>
+          <span class="chips"><span class="chip you">Client</span><span class="chip us">Us</span></span></header>
+        <div class="lanes">
+          <div class="lane"><span class="label">The client</span>
+            <ul><li>Fills in the contact form on santi.co.za.</li>
+                <li>Gets an automatic note straight away: a person will reply within one working day.</li></ul></div>
+          <div class="lane"><span class="label">By itself</span>
+            <ul><li>A Lead is created in ERPNext. A repeat enquiry from the same email adds nothing new.</li>
+                <li>The acknowledgement goes out once per address, and repeats nothing they typed.</li>
+                <li>You get a "New lead" email.</li></ul></div>
+          <div class="lane"><span class="label">In ERPNext</span>
+            <ul><li>Reply personally. Ask what you need to quote, or offer a Tuesday or Thursday call.</li>
+                <li>When they are going ahead: convert the Lead to a Customer, with a Contact that has their email.
+                  That email is how they sign in and where invoices go.</li></ul></div>
+        </div>
+        <p class="promise"><span class="label">Promise</span>A personal reply within one working day.</p>
+      </li>
+
+      <li class="stage" id="s2">
+        <header><span class="n">02</span><h3>Quote</h3>
+          <span class="chips"><span class="chip us">Us</span><span class="chip auto">Automatic</span></span></header>
+        <div class="lanes">
+          <div class="lane"><span class="label">The client</span>
+            <ul><li>Gets "Your quote from Santi Universe" with a link to their quote page.</li>
+                <li>Sees every line, the total and the 50% deposit. The link works for 30 days.</li></ul></div>
+          <div class="lane"><span class="label">By itself</span>
+            <ul><li>Submitting the Quotation sends the email and creates the private pay link.</li></ul></div>
+          <div class="lane"><span class="label">In ERPNext</span>
+            <ul><li>Create a Quotation for the Customer and submit it.</li>
+                <li>Use the right service items. They decide the client's board: a website item gets the
+                  website milestones, a brand item gets the brand milestones.</li>
+                <li>Scope changed? Amend the Quotation. The client gets a fresh link.</li></ul></div>
+        </div>
+        <p class="promise"><span class="label">Promise</span>The quote says exactly what they are buying, and nothing is added later without asking.</p>
+      </li>
+
+      <li class="stage" id="s3">
+        <header><span class="n">03</span><h3>Deposit</h3>
+          <span class="chips"><span class="chip you">Client</span><span class="chip auto">Automatic</span></span></header>
+        <div class="lanes">
+          <div class="lane"><span class="label">The client</span>
+            <ul><li>Pays the 50% deposit through Payfast from the quote page.</li>
+                <li>Lands on the Payment received page, then gets a receipt email with a
+                  <b>Start your project</b> button.</li></ul></div>
+          <div class="lane"><span class="label">By itself</span>
+            <ul><li>The payment is checked with Payfast before anything is written.</li>
+                <li>ERPNext gets the Sales Order, the payment, the Project with its milestones, a
+                  <b>deposit invoice marked Paid</b> and a <b>project invoice</b> for the rest.</li>
+                <li>Telegram: <span class="mono">PAID</span>, then <span class="mono">INVOICES OPENED</span>.</li></ul></div>
+          <div class="lane"><span class="label">In ERPNext</span>
+            <ul><li>Nothing, unless Telegram says something failed. Then follow the alert. The client has paid, so
+                that comes first that day.</li></ul></div>
+        </div>
+        <p class="promise"><span class="label">Promise</span>The moment they pay, they have a real project and a paid invoice.</p>
+      </li>
+
+      <li class="stage" id="s4">
+        <header><span class="n">04</span><h3>Onboarding</h3>
+          <span class="chips"><span class="chip you">Client</span><span class="chip us">Us</span></span></header>
+        <div class="lanes">
+          <div class="lane"><span class="label">The client</span>
+            <ul><li>Signs in to their project page with an email link. The link lasts 15 minutes, and they stay
+                signed in for 30 days.</li>
+                <li>Watches the welcome video, fills in the 7-question brief, sends files (up to 8 MB each) and books the
+                  kickoff call.</li>
+                <li>If they give a deadline, the page tells them straight away how it compares with our plan.</li></ul></div>
+          <div class="lane"><span class="label">By itself</span>
+            <ul><li>The brief is saved on the Project and "Brief received" is marked done.</li>
+                <li>The plan counts working days only, three of our tasks a day, two on call days.</li>
+                <li>A deadline tighter than the plan is offered a 20% rush fee. Ten or more spare working days
+                  earns 10% off.</li></ul></div>
+          <div class="lane"><span class="label">In ERPNext</span>
+            <ul><li>Read the brief the day it arrives.</li>
+                <li>If a rush fee or discount applies and the client agrees, add it as a line on the
+                  project invoice.</li>
+                <li>Chase gently if nothing arrives within three working days.</li></ul></div>
+        </div>
+        <p class="promise"><span class="label">Promise</span>Nothing is designed against a guess. The brief comes first.</p>
+      </li>
+
+      <li class="stage" id="s5">
+        <header><span class="n">05</span><h3>Kickoff call</h3>
+          <span class="chips"><span class="chip both">Both</span></span></header>
+        <div class="lanes">
+          <div class="lane"><span class="label">The client</span>
+            <ul><li>Picks a Tuesday or Thursday slot and gets a confirmation email with what they wrote.</li>
+                <li>On the call we agree scope, priorities and dates.</li></ul></div>
+          <div class="lane"><span class="label">By itself</span>
+            <ul><li>The call is added to ERPNext's calendar.</li></ul></div>
+          <div class="lane"><span class="label">In ERPNext</span>
+            <ul><li>Mark "Kickoff booked" done after the call.</li>
+                <li>Put anything agreed on the Project the same day: changed dates, extra lines on the project
+                  invoice, notes.</li></ul></div>
+        </div>
+        <p class="promise"><span class="label">Promise</span>Whatever we agree on the call is written down where they can see it.</p>
+      </li>
+
+      <li class="stage" id="s6">
+        <header><span class="n">06</span><h3>The work</h3>
+          <span class="chips"><span class="chip us">Us</span><span class="chip you">Client</span></span></header>
+        <div class="lanes">
+          <div class="lane"><span class="label">The client</span>
+            <ul><li>Follows along on the project page: one tab per milestone, plus Timeline, Board and Billing.</li>
+                <li>Can move the date of a milestone that is waiting on them; everything after it moves too.</li>
+                <li>Can ask for something new. The page shows the rate before they send.</li></ul></div>
+          <div class="lane"><span class="label">By itself</span>
+            <ul><li>A request lands as a Task marked Pending Review. It is not on the plan until you accept it.</li>
+                <li>Anything added to the project invoice shows on their Billing tab the same day.</li></ul></div>
+          <div class="lane"><span class="label">In ERPNext</span>
+            <ul><li>Mark each milestone Completed the day it's done. Their page celebrates it.</li>
+                <li>Answer every request within one working day. Already agreed: set it Open. New work: tell them the
+                  price, and once they say yes, add the line to the project invoice and set it Open. Not now:
+                  Cancelled, with a note why.</li></ul></div>
+        </div>
+        <p class="promise"><span class="label">Promise</span>They always know what we're on, what's waiting on them, and what it costs.</p>
+      </li>
+
+      <li class="stage" id="s7">
+        <header><span class="n">07</span><h3>Review</h3>
+          <span class="chips"><span class="chip you">Client</span></span></header>
+        <div class="lanes">
+          <div class="lane"><span class="label">The client</span>
+            <ul><li>Goes through the working site or the identity and sends one consolidated list of changes.</li></ul></div>
+          <div class="lane"><span class="label">By itself</span>
+            <ul><li>The dates after Review wait for their list, and the Timeline shows it.</li></ul></div>
+          <div class="lane"><span class="label">In ERPNext</span>
+            <ul><li>Confirm the list arrived and when the changes will be done.</li>
+                <li>Anything in the list that is new work follows the stage 6 rule: price first.</li></ul></div>
+        </div>
+        <p class="promise"><span class="label">Promise</span>One complete round of changes, done properly.</p>
+      </li>
+
+      <li class="stage" id="s8">
+        <header><span class="n">08</span><h3>Launch and handover</h3>
+          <span class="chips"><span class="chip both">Both</span><span class="chip auto">Automatic</span></span></header>
+        <div class="lanes">
+          <div class="lane"><span class="label">The client</span>
+            <ul><li>Gets the files, the access and a walkthrough.</li>
+                <li>Gets the final invoice by email: the whole job, the deposit already taken off, the balance
+                  due in 7 days, the banking details in the email.</li></ul></div>
+          <div class="lane"><span class="label">By itself</span>
+            <ul><li>Setting the Project to Completed locks the project invoice, dates it today and emails it.</li>
+                <li>Telegram: <span class="mono">INVOICED</span>.</li></ul></div>
+          <div class="lane"><span class="label">In ERPNext</span>
+            <ul><li>Before you mark it Completed, check the project invoice has every agreed extra on it.</li>
+                <li>Then set the Project status to <b>Completed</b>. Do it once, on the day of handover.</li></ul></div>
+        </div>
+        <p class="promise"><span class="label">Promise</span>The invoice matches what was agreed, line for line.</p>
+      </li>
+
+      <li class="stage" id="s9">
+        <header><span class="n">09</span><h3>Paid and closed</h3>
+          <span class="chips"><span class="chip you">Client</span><span class="chip us">Us</span></span></header>
+        <div class="lanes">
+          <div class="lane"><span class="label">The client</span>
+            <ul><li>Pays by EFT with the invoice number as the reference.</li>
+                <li>Sees "Paid in full" on their Billing tab.</li></ul></div>
+          <div class="lane"><span class="label">By itself</span>
+            <ul><li>Billing updates as soon as the payment is recorded against the invoice.</li></ul></div>
+          <div class="lane"><span class="label">In ERPNext</span>
+            <ul><li>When the money arrives, record a Payment Entry against the project invoice.</li>
+                <li>Send a short thank-you. Ask for a review or a referral while it's fresh.</li></ul></div>
+        </div>
+        <p class="promise"><span class="label">Promise</span>A clean finish: paid, thanked, and welcome back any time.</p>
+      </li>
+    </ol>
+  </section>
       </div>
 
       <p class="ops__fine">Internal. Not linked from the site and not indexed by search engines, but anyone with
