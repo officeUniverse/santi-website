@@ -84,6 +84,10 @@
         .acct__gantt .when { padding-left: 7.9rem; }
       }
 
+      .acct__verdict { border-left: 3px solid var(--gold); padding: .6rem 0 .6rem .9rem;
+                       margin: -1rem 0 2rem; font-size: .92rem; color: var(--night-muted); }
+      .acct__verdict strong { color: #fff; display: block; margin-bottom: .15rem; }
+
       .acct__q { margin: 0 0 1.25rem; }
       .acct__q label { display: block; font-weight: 600; margin: 0 0 .45rem; }
       .acct__q textarea { width: 100%; padding: .8rem; border-radius: 10px; font: inherit;
@@ -128,6 +132,7 @@
         <h1 class="acct__title" id="acct-project-name"></h1>
         <p class="acct__fine" id="acct-progress"></p>
         <div class="acct__bar"><i id="acct-bar" style="width:0"></i></div>
+        <p class="acct__verdict" id="acct-verdict" hidden></p>
 
         <div class="acct__block" style="border-top:0;padding-top:0">
           <h2>Where things stand</h2>

@@ -90,10 +90,13 @@
       var label = document.createElement("label");
       label.setAttribute("for", "q-" + question.key);
       label.textContent = question.label;
-      var field = document.createElement("textarea");
+      // The deadline question is a real date, because the planner reads it and answers
+      // it with a rush fee or a discount. Native picker, no library.
+      var field = document.createElement(question.type === "date" ? "input" : "textarea");
+      if (question.type === "date") field.type = "date";
       field.id = "q-" + question.key;
       field.name = question.key;
-      field.rows = 3;
+      if (field.tagName === "TEXTAREA") field.rows = 3;
       wrap.appendChild(label);
       wrap.appendChild(field);
       holder.appendChild(wrap);

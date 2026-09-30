@@ -198,6 +198,25 @@
     if (timeline && state.current) renderTimeline(state.current);
   }
 
+  // What the plan makes of the date they asked for. Quoted, never charged: the fee and
+  // the discount are a conversation, and this page is where that conversation starts.
+  function renderVerdict(data) {
+    var box = el("acct-verdict");
+    var verdict = data.verdict || {};
+    if (!data.target || !verdict.message) { box.hidden = true; return; }
+    box.innerHTML = "";
+    var head = document.createElement("strong");
+    head.textContent = verdict.status === "rush" ? "Your date is tighter than our plan"
+      : verdict.status === "relaxed" ? "You have given us room — and that earns a discount"
+      : "Your date and our plan agree";
+    var body = document.createElement("span");
+    body.textContent = verdict.message + " You asked for " + pretty(data.target)
+      + "; the plan currently finishes " + pretty(data.plannedEnd) + ".";
+    box.appendChild(head);
+    box.appendChild(body);
+    box.hidden = false;
+  }
+
   function renderSteps(tasks) {
     var list = el("acct-steps");
     list.innerHTML = "";
@@ -268,9 +287,12 @@
       var label = document.createElement("label");
       label.setAttribute("for", "aq-" + question.key);
       label.textContent = question.label;
-      var field = document.createElement("textarea");
+      // The deadline question is a real date, because the planner reads it and answers
+      // it with a rush fee or a discount. Native picker, no library.
+      var field = document.createElement(question.type === "date" ? "input" : "textarea");
+      if (question.type === "date") field.type = "date";
       field.id = "aq-" + question.key;
-      field.rows = 3;
+      if (field.tagName === "TEXTAREA") field.rows = 3;
       wrap.appendChild(label);
       wrap.appendChild(field);
       holder.appendChild(wrap);
@@ -301,6 +323,7 @@
       el("acct-project-name").textContent = data.project;
       el("acct-progress").textContent = data.done + " of " + data.total + " steps done";
       el("acct-bar").style.width = data.total ? Math.round((data.done / data.total) * 100) + "%" : "0";
+      renderVerdict(data);
       renderSteps(data.tasks || []);
       renderTimeline(data);
       renderBrief(data);
