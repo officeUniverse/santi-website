@@ -189,6 +189,51 @@
     });
   }
 
+  // Slots come from the server every time the project is opened: the calendar changes
+  // under you, and a stale list means offering a time that is already gone.
+  function loadSlots() {
+    var holder = el("acct-slots");
+    holder.innerHTML = "";
+    return post("/account/slots", { project: state.current.id }, true).then(function (answer) {
+      var slots = (answer && answer.slots) || [];
+      if (!slots.length) {
+        holder.textContent = "Nothing open in the next three weeks — email santi@santi.co.za and "
+          + "we will make room.";
+        return;
+      }
+      slots.slice(0, 8).forEach(function (slot) {
+        var button = document.createElement("button");
+        button.type = "button";
+        button.textContent = weekday(slot.date) + " " + pretty(slot.date) + ", " + slot.time;
+        button.addEventListener("click", function () { book(slot, button); });
+        holder.appendChild(button);
+      });
+    });
+  }
+
+  var DAYS = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  function weekday(iso) { return DAYS[new Date(iso + "T00:00:00Z").getUTCDay()]; }
+
+  function book(slot, button) {
+    var note = el("acct-book-note");
+    note.textContent = "Booking " + slot.start + "…";
+    post("/account/book", {
+      project: state.current.id,
+      slot: slot.start,
+      email: state.email || "",
+      note: (el("acct-note").value || "").trim()
+    }, true).then(function (answer) {
+      if (!answer || answer.ok !== true) {
+        note.textContent = (answer && answer.error) || "That did not book. Email santi@santi.co.za.";
+        loadSlots();
+        return;
+      }
+      button.className = "booked";
+      note.textContent = "Booked for " + slot.start + ". A confirmation is on its way by email.";
+      loadSlots();
+    });
+  }
+
   function setView(name) {
     var timeline = name === "timeline";
     el("acct-steps").hidden = timeline;
@@ -328,6 +373,7 @@
       renderTimeline(data);
       renderBrief(data);
       renderFiles(data.files || []);
+      loadSlots();
       show("project");
       window.scrollTo(0, 0);
     });
@@ -423,11 +469,14 @@
         return;
       }
       store(answer.token);
-      el("acct-who").textContent = answer.email || "";
+      state.email = answer.email || "";
+      try { localStorage.setItem("santi.account.email", state.email); } catch (e) {}
+      el("acct-who").textContent = state.email;
       loadProjects();
     }).catch(signedOut);
   } else if (stored()) {
     state.token = stored();
+    try { state.email = localStorage.getItem("santi.account.email") || ""; } catch (e) {}
     loadProjects().catch(signedOut);
   } else {
     signedOut();
