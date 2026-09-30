@@ -10,9 +10,11 @@
 }
 -->
     <style>
-      .acct { padding: clamp(96px, 11vw, 140px) var(--pad) clamp(48px, 7vw, 88px); max-width: 54rem; }
-      /* The site header is fixed and sits over the top of the frame; without that first
-         padding value the signed-in email hides behind the logo. */
+      /* The first padding value clears the fixed site header, which otherwise sits over
+         the signed-in email. Wide and centred: the rail and its pane want the room, and
+         the prose inside stays capped by .acct__fine so lines never run long. */
+      .acct { padding: clamp(96px, 11vw, 140px) var(--pad) clamp(48px, 7vw, 88px);
+              max-width: 93rem; margin: 0 auto 40px; }
       .acct__intro { max-width: 40rem; color: var(--night-muted); margin: 0 0 1.75rem; }
       .acct__hello { color: var(--gold); font-weight: 600; margin: 0 0 .35rem; }
       .acct__title { margin: 0 0 1.5rem; }
@@ -100,8 +102,11 @@
                        margin: -1rem 0 2rem; font-size: .92rem; color: var(--night-muted); }
       .acct__verdict strong { color: #fff; display: block; margin-bottom: .15rem; }
 
-      .acct__wizard { display: grid; grid-template-columns: 15rem 1fr; gap: 2.25rem;
-                      align-items: start; }
+      /* The pane is capped rather than filling the full width: on a wide screen a line of
+         text running 70rem is unreadable, while the board and the timeline below genuinely
+         want the room. */
+      .acct__wizard { display: grid; grid-template-columns: 17rem minmax(0, 52rem);
+                      gap: 2.5rem; align-items: start; }
       .acct__rail { list-style: none; margin: 0; padding: 0 0 0 .25rem; position: relative; }
       .acct__rail::before { content: ""; position: absolute; left: 1.05rem; top: .9rem; bottom: .9rem;
                             width: 1px; background: var(--night-line); }
