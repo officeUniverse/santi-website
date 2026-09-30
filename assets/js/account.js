@@ -229,6 +229,29 @@
     return Number(parts[2]) + " " + MONTHS[Number(parts[1]) - 1];
   }
 
+  // The figures a client wants without reading anything: where the work is, what is next
+  // and who holds it, when it finishes, and whether we are waiting on their brief.
+  function renderStats(data) {
+    var open = (data.tasks || []).filter(function (t) { return !t.done; });
+    var next = open[0];
+    // The customer, not the signed-in email: an address wraps badly and tells them
+    // something they already know.
+    el("acct-stat-client").textContent = data.customer || state.email || "Your project";
+    el("acct-stat-progress").textContent = data.done + " of " + data.total + " milestones";
+    el("acct-bar").style.width = data.total
+      ? Math.round((data.done / data.total) * 100) + "%" : "0";
+    el("acct-stat-next").textContent = next ? next.subject : "All done";
+    el("acct-stat-nextwho").textContent = !next ? ""
+      : next.waitingOn === "you" ? "Over to you"
+      : next.waitingOn === "us" ? "With us" : "Together";
+    el("acct-stat-end").textContent = data.plannedEnd ? pretty(data.plannedEnd) : "Being planned";
+    el("acct-stat-target").textContent = data.target ? "You asked for " + pretty(data.target) : "";
+    el("acct-stat-brief").textContent = data.briefStatus === "Awaiting" ? "Still needed" : "Received";
+    var asked = (data.requests || []).length;
+    el("acct-stat-requests").textContent = asked
+      ? asked + (asked === 1 ? " request with Santi" : " requests with Santi") : "";
+  }
+
   // The server decides whether there is a video and what may be framed; the page only
   // draws it. An unrecognised URL arrives here as null, and null means the placeholder.
   function renderVideo(video) {
@@ -308,6 +331,87 @@
   // A plain bar per step across the project's own span. Weekends are not drawn as gaps -
   // the dates already skip them, and pretending to render a calendar grid on a phone is
   // how this becomes unreadable.
+  var MONTH_NAMES = ["January","February","March","April","May","June","July","August",
+                     "September","October","November","December"];
+
+  // Milestones grouped into the month they happen in, each month a column of cards. It
+  // reads like a plan rather than a chart: a client can see "October is mine, November is
+  // theirs" at a glance, which a bar chart never quite says.
+  function renderMonths(data) {
+    var holder = el("acct-months");
+    var scrub = el("acct-scrub");
+    holder.innerHTML = "";
+    scrub.innerHTML = "";
+
+    var months = [];
+    var byMonth = {};
+    (data.tasks || []).forEach(function (task, index) {
+      if (!task.start) return;
+      var key = task.start.slice(0, 7);
+      if (!byMonth[key]) { byMonth[key] = []; months.push(key); }
+      byMonth[key].push({ task: task, index: index });
+    });
+    if (!months.length) return;
+
+    months.forEach(function (key, position) {
+      var column = document.createElement("div");
+      column.className = "acct__month";
+      column.id = "acct-month-" + key;
+
+      var heading = document.createElement("h4");
+      heading.textContent = MONTH_NAMES[Number(key.slice(5, 7)) - 1] + " " + key.slice(0, 4);
+      var count = document.createElement("span");
+      count.className = "count";
+      var mine = byMonth[key].filter(function (e) { return e.task.waitingOn === "you"; }).length;
+      count.textContent = byMonth[key].length + (byMonth[key].length === 1 ? " milestone" : " milestones")
+        + (mine ? " · " + mine + " on you" : "");
+      var line = document.createElement("div");
+      line.className = "line";
+      line.appendChild(document.createElement("i"));
+
+      column.appendChild(heading);
+      column.appendChild(count);
+      column.appendChild(line);
+
+      byMonth[key].forEach(function (entry) {
+        var card = document.createElement("div");
+        card.className = "acct__mcard"
+          + (entry.task.done ? " acct__mcard--done"
+            : entry.task.waitingOn === "you" ? " acct__mcard--you" : "");
+        var name = document.createElement("strong");
+        name.textContent = entry.task.subject;
+        var when = document.createElement("span");
+        when.className = "when";
+        when.textContent = entry.task.start === entry.task.end ? pretty(entry.task.start)
+          : pretty(entry.task.start) + " – " + pretty(entry.task.end);
+        var who = document.createElement("span");
+        who.className = "who";
+        who.textContent = entry.task.done ? "Done"
+          : entry.task.waitingOn === "you" ? "Over to you"
+          : entry.task.waitingOn === "us" ? "With us" : "Together";
+        card.appendChild(name);
+        card.appendChild(when);
+        card.appendChild(who);
+        card.addEventListener("click", function () { setView("list"); openStep(entry.index); });
+        column.appendChild(card);
+      });
+
+      holder.appendChild(column);
+
+      var jump = document.createElement("button");
+      jump.type = "button";
+      jump.textContent = MONTH_NAMES[Number(key.slice(5, 7)) - 1].slice(0, 3) + " " + key.slice(2, 4);
+      jump.setAttribute("aria-current", String(position === 0));
+      jump.addEventListener("click", function () {
+        column.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
+        Array.prototype.forEach.call(scrub.children, function (other) {
+          other.setAttribute("aria-current", String(other === jump));
+        });
+      });
+      scrub.appendChild(jump);
+    });
+  }
+
   function renderTimeline(data) {
     var tasks = (data.tasks || []).filter(function (t) { return t.start && t.end; });
     var list = el("acct-gantt");
@@ -578,7 +682,7 @@
     el("acct-view-list").setAttribute("aria-pressed", String(name === "list"));
     el("acct-view-time").setAttribute("aria-pressed", String(name === "timeline"));
     el("acct-view-board").setAttribute("aria-pressed", String(name === "board"));
-    if (name === "timeline" && state.current) renderTimeline(state.current);
+    if (name === "timeline" && state.current) { renderMonths(state.current); renderTimeline(state.current); }
     if (name === "board" && state.current) renderBoard(state.current);
   }
 
@@ -748,8 +852,6 @@
       if (!data || data.ok !== true) { loadProjects(); return; }
       state.current = data;
       el("acct-project-name").textContent = data.project;
-      el("acct-progress").textContent = data.done + " of " + data.total + " milestones done";
-      el("acct-bar").style.width = data.total ? Math.round((data.done / data.total) * 100) + "%" : "0";
       var fresh = newlyDone(data);
       var cheer = el("acct-cheer");
       if (fresh.length) {
@@ -762,6 +864,8 @@
         cheer.hidden = true;
       }
 
+      renderStats(data);
+      renderMonths(data);
       renderVideo(data.video);
       renderVerdict(data);
       el("acct-rates").textContent = (data.rates && data.rates.message) || "";

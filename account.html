@@ -306,6 +306,9 @@
          want the room. */
       .acct__wizard { display: grid; grid-template-columns: 17rem minmax(0, 52rem);
                       gap: 2.5rem; align-items: start; }
+      /* A class that sets display beats the browser's own [hidden] rule, so switching to
+         the Timeline left the rail sitting underneath it. */
+      .acct__wizard[hidden] { display: none; }
       .acct__rail { list-style: none; margin: 0; padding: 0 0 0 .25rem; position: relative; }
       .acct__rail::before { content: ""; position: absolute; left: 1.05rem; top: .9rem; bottom: .9rem;
                             width: 1px; background: var(--night-line); }
@@ -334,6 +337,76 @@
       .acct__stepactions { margin: 1.25rem 0 .5rem; display: flex; flex-wrap: wrap; gap: .6rem; }
       .acct__stepnav { display: flex; gap: .6rem; margin-top: 1.5rem;
                        border-top: 1px solid var(--night-line); padding-top: 1.25rem; }
+
+      /* --- the console header -------------------------------------------------------
+         Borrowed shapes, not borrowed colours: a pill nav, a strip of figures you can
+         read without reading, and rounded panels on the brand's own navy. */
+      .acct__console { border: 1px solid var(--night-line); border-radius: 18px;
+                       padding: 1.4rem 1.5rem 1.5rem; margin: 0 0 2rem;
+                       background: rgba(255,255,255,.03); }
+      .acct__consoletop { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+                          margin-bottom: 1.4rem; }
+      .acct__consoletop .acct__title { margin: 0; font-size: clamp(1.4rem, 3.2vw, 2.1rem);
+                                       flex: 1 1 14rem; }
+      .acct__close { width: 2.4rem; height: 2.4rem; border-radius: 50%; flex: none;
+                     border: 1px solid var(--night-line); background: transparent;
+                     color: inherit; font: inherit; cursor: pointer; }
+      .acct__close:hover { border-color: var(--gold); color: var(--gold); }
+      .acct__pills { display: flex; gap: .4rem; flex-wrap: wrap; }
+      .acct__pills a { border: 1px solid var(--night-line); border-radius: 99px;
+                       padding: .42rem .95rem; font-size: .82rem; text-decoration: none;
+                       color: inherit; white-space: nowrap; }
+      .acct__pills a:hover { border-color: var(--gold); color: var(--gold); }
+
+      .acct__stats { display: grid; gap: .75rem;
+                     grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); }
+      .acct__stat { border: 1px solid var(--night-line); border-radius: 14px; padding: .9rem 1rem;
+                    background: rgba(4,12,28,.35); }
+      .acct__stat .label { display: block; font-size: .7rem; letter-spacing: .1em;
+                           text-transform: uppercase; color: var(--night-muted); }
+      .acct__stat strong { display: block; margin-top: .3rem; font-size: 1.12rem; line-height: 1.25;
+                           overflow-wrap: anywhere; }
+      .acct__stat .sub { display: block; margin-top: .25rem; font-size: .78rem;
+                         color: var(--night-muted); }
+      .acct__stat .acct__bar { margin: .6rem 0 0; }
+
+      /* --- the timeline as cards strung along the months --------------------------- */
+      .acct__months { display: flex; gap: 1rem; overflow-x: auto; padding: .5rem .2rem 1rem;
+                      scroll-snap-type: x proximity; }
+      .acct__month { flex: 0 0 17rem; scroll-snap-align: start; }
+      .acct__month > h4 { margin: 0 0 .1rem; font-size: 1rem; }
+      .acct__month > .count { font-size: .74rem; letter-spacing: .08em; text-transform: uppercase;
+                              color: var(--night-muted); display: block; margin-bottom: .7rem; }
+      .acct__month .line { height: 1px; background: var(--night-line); margin: 0 0 .9rem;
+                           position: relative; }
+      .acct__month .line i { position: absolute; left: 0; top: -4px; width: 9px; height: 9px;
+                             border-radius: 50%; background: var(--gold); }
+      .acct__mcard { border: 1px solid var(--night-line); border-radius: 14px; padding: .85rem .95rem;
+                     margin-bottom: .6rem; cursor: pointer; background: rgba(4,12,28,.35); }
+      .acct__mcard:hover { border-color: var(--gold); }
+      .acct__mcard--you { border-left: 3px solid var(--gold); }
+      .acct__mcard--done { opacity: .5; }
+      .acct__mcard strong { display: block; font-size: .92rem; }
+      .acct__mcard .when { display: block; margin-top: .3rem; font-size: .76rem;
+                           color: var(--night-muted); }
+      .acct__mcard .who { display: inline-block; margin-top: .5rem; font-size: .68rem;
+                          letter-spacing: .08em; text-transform: uppercase; padding: .2rem .5rem;
+                          border-radius: 99px; border: 1px solid var(--night-line);
+                          color: var(--night-muted); }
+      .acct__mcard--you .who { background: var(--gold); color: var(--ink); border-color: var(--gold);
+                               font-weight: 700; }
+
+      .acct__scrub { display: flex; gap: .4rem; overflow-x: auto; padding: .6rem .5rem;
+                     border: 1px solid var(--night-line); border-radius: 99px; margin: 0 0 1.5rem;
+                     background: rgba(4,12,28,.5); }
+      .acct__scrub button { flex: none; border: 0; background: transparent; color: var(--night-muted);
+                            font: inherit; font-size: .76rem; letter-spacing: .06em;
+                            text-transform: uppercase; padding: .3rem .7rem; border-radius: 99px;
+                            cursor: pointer; }
+      .acct__scrub button[aria-current="true"] { background: var(--gold); color: var(--ink);
+                                                 font-weight: 700; }
+      .acct__scrub button:hover { color: var(--gold); }
+      .acct__scrub button[aria-current="true"]:hover { color: var(--ink); }
 
       .acct__video { position: relative; aspect-ratio: 16 / 9; border-radius: 12px;
                      overflow: hidden; border: 1px solid var(--night-line);
@@ -439,10 +512,50 @@
 
       <!-- one project -->
       <div id="acct-project" hidden>
-        <button type="button" class="acct__back" id="acct-back">&larr; All projects</button>
-        <h1 class="acct__title" id="acct-project-name"></h1>
-        <p class="acct__fine acct__progress" id="acct-progress"></p>
-        <div class="acct__bar"><i id="acct-bar" style="width:0"></i></div>
+        <!-- console header: who and what, then where to go -->
+        <div class="acct__console">
+          <div class="acct__consoletop">
+            <button type="button" class="acct__close" id="acct-back" title="All projects">&larr;</button>
+            <h1 class="acct__title" id="acct-project-name"></h1>
+            <nav class="acct__pills" id="acct-jump">
+              <a href="#acct-video-block">Welcome</a>
+              <a href="#acct-board-block">Progress</a>
+              <a href="#acct-brief-block">Brief</a>
+              <a href="#acct-docs-block">Documents</a>
+              <a href="#acct-ask-block">Ask</a>
+              <a href="#acct-meet-block">Book a call</a>
+            </nav>
+          </div>
+
+          <!-- the numbers a client wants without reading anything -->
+          <div class="acct__stats">
+            <div class="acct__stat acct__stat--wide">
+              <span class="label">Client</span>
+              <strong id="acct-stat-client"></strong>
+            </div>
+            <div class="acct__stat">
+              <span class="label">Progress</span>
+              <strong id="acct-stat-progress"></strong>
+              <div class="acct__bar"><i id="acct-bar" style="width:0"></i></div>
+            </div>
+            <div class="acct__stat">
+              <span class="label">Next up</span>
+              <strong id="acct-stat-next"></strong>
+              <span class="sub" id="acct-stat-nextwho"></span>
+            </div>
+            <div class="acct__stat">
+              <span class="label">Finishes</span>
+              <strong id="acct-stat-end"></strong>
+              <span class="sub" id="acct-stat-target"></span>
+            </div>
+            <div class="acct__stat">
+              <span class="label">Brief</span>
+              <strong id="acct-stat-brief"></strong>
+              <span class="sub" id="acct-stat-requests"></span>
+            </div>
+          </div>
+        </div>
+
         <p class="acct__cheer" id="acct-cheer" hidden></p>
         <p class="acct__verdict" id="acct-verdict" hidden></p>
 
@@ -451,7 +564,7 @@
           <div class="acct__video" id="acct-video"></div>
         </div>
 
-        <div class="acct__block">
+        <div class="acct__block" id="acct-board-block">
           <h2>Where things stand</h2>
           <p class="acct__fine">Your real board. Ticked milestones are done, each one says who it is
             waiting on, and the dates are the plan — we do not work weekends or public holidays.</p>
@@ -482,6 +595,8 @@
 
           <div id="acct-timeline" hidden>
             <p class="acct__fine" id="acct-span"></p>
+            <div class="acct__months" id="acct-months"></div>
+            <div class="acct__scrub" id="acct-scrub"></div>
             <ul class="acct__gantt" id="acct-gantt"></ul>
             <p class="acct__fine" style="margin-top:1rem">Gold is waiting on you. Move one of your
               own dates and everything behind it moves with it — that is how the end date really
@@ -489,7 +604,7 @@
           </div>
         </div>
 
-        <div class="acct__block">
+        <div class="acct__block" id="acct-brief-block">
           <h2>Your brief</h2>
           <p class="acct__fine" id="acct-brief-intro">The more you tell us, the less we guess.</p>
           <form id="acct-brief-form">
@@ -502,7 +617,7 @@
           </p>
         </div>
 
-        <div class="acct__block">
+        <div class="acct__block" id="acct-docs-block">
           <h2>Documents</h2>
           <p class="acct__fine">Logo files, brand guides, photos, copy, access notes — up to 8 MB per
             file. Everything lands straight on this project.</p>
@@ -515,7 +630,7 @@
           <p id="acct-upload-note" class="acct__note" aria-live="polite"></p>
         </div>
 
-        <div class="acct__block">
+        <div class="acct__block" id="acct-ask-block">
           <h2>Ask for something</h2>
           <p class="acct__fine" id="acct-rates"></p>
           <form id="acct-request-form" style="margin-top:1rem;max-width:34rem">
@@ -536,7 +651,7 @@
           </form>
         </div>
 
-        <div class="acct__block">
+        <div class="acct__block" id="acct-meet-block">
           <h2>Talk to a person</h2>
           <p class="acct__fine">A 45-minute call with Santi. Everything on this page goes with the
             booking, so you are not starting from the beginning. We meet on Tuesday and Thursday
