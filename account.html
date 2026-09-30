@@ -318,6 +318,21 @@
       .acct__dialog .acct__fine { color: rgba(255,255,255,.66); }
       .acct__dialogbuttons { display: flex; align-items: center; gap: 1rem; margin-top: 1.25rem; }
 
+      .acct__kanban { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+                      gap: .75rem; }
+      .acct__col h3 { font-size: .78rem; letter-spacing: .09em; text-transform: uppercase;
+                      color: var(--night-muted); margin: 0 0 .6rem; }
+      .acct__col--you h3 { color: var(--gold); }
+      .acct__card { border: 1px solid var(--night-line); border-radius: 10px; padding: .7rem .8rem;
+                    margin-bottom: .55rem; font-size: .88rem; cursor: pointer; }
+      .acct__card:hover { border-color: var(--gold); }
+      .acct__card--you { border-left: 3px solid var(--gold); }
+      .acct__card--done { opacity: .55; }
+      .acct__card .date { display: block; color: var(--night-muted); font-size: .78rem;
+                          margin-top: .25rem; }
+      .acct__col--empty { color: var(--night-muted); font-size: .82rem; }
+      @media (max-width: 760px) { .acct__kanban { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+
       .acct__q { margin: 0 0 1.25rem; }
       .acct__q label { display: block; font-weight: 600; margin: 0 0 .45rem; }
       .acct__q textarea { width: 100%; padding: .8rem; border-radius: 10px; font: inherit;
@@ -390,6 +405,7 @@
           <div class="acct__views">
             <button type="button" id="acct-view-list" aria-pressed="true">Milestones</button>
             <button type="button" id="acct-view-time" aria-pressed="false">Timeline</button>
+            <button type="button" id="acct-view-board" aria-pressed="false">Board</button>
           </div>
           <ul class="acct__steps" id="acct-steps"></ul>
 
@@ -405,6 +421,10 @@
               <button type="button" class="btn btn--ghost" id="acct-step-next">Next &rarr;</button>
             </div>
           </div>
+          <div id="acct-board" hidden>
+            <div class="acct__kanban" id="acct-kanban"></div>
+          </div>
+
           <div id="acct-timeline" hidden>
             <p class="acct__fine" id="acct-span"></p>
             <ul class="acct__gantt" id="acct-gantt"></ul>
@@ -438,6 +458,27 @@
           </label>
           <input id="acct-upload" type="file" multiple style="position:absolute;left:-9999px">
           <p id="acct-upload-note" class="acct__note" aria-live="polite"></p>
+        </div>
+
+        <div class="acct__block">
+          <h2>Ask for something</h2>
+          <p class="acct__fine" id="acct-rates"></p>
+          <form id="acct-request-form" style="margin-top:1rem;max-width:34rem">
+            <label class="acct__q" style="display:block">
+              <span style="font-weight:600;display:block;margin-bottom:.45rem">What do you need?</span>
+              <input id="acct-request-subject" type="text" maxlength="140"
+                placeholder="Add a blog section"
+                style="width:100%;padding:.8rem;border-radius:10px;font:inherit;
+                       border:1px solid var(--night-line);background:#fff;color:var(--ink)">
+            </label>
+            <label class="acct__q" style="display:block">
+              <span style="font-weight:600;display:block;margin-bottom:.45rem">Any detail
+                (optional)</span>
+              <textarea id="acct-request-detail" rows="3"></textarea>
+            </label>
+            <button type="submit" class="btn btn--ghost">Send it to Santi</button>
+            <p id="acct-request-note" class="acct__note" aria-live="polite"></p>
+          </form>
         </div>
 
         <div class="acct__block">

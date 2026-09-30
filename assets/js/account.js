@@ -58,7 +58,7 @@
     var email = el("acct-email").value.trim();
     if (!email) return;
     note.textContent = "Sending…";
-    post("/account/request", { email: email }).then(function (answer) {
+    post("/account/ask", { email: email }).then(function (answer) {
       // The same answer whether or not we know the address — on purpose.
       note.textContent = (answer && answer.message) ||
         "If that address is on one of our projects, a sign-in link is on its way.";
@@ -354,14 +354,82 @@
   el("acct-step-prev").addEventListener("click", function () { openStep(state.step - 1); });
   el("acct-step-next").addEventListener("click", function () { openStep(state.step + 1); });
 
+  // Four columns, in the order a client cares about: what is on them, what is on us,
+  // what is done, and what they have asked for that nobody has agreed to yet. The last
+  // one is deliberately its own column - putting requests among the milestones would
+  // imply someone had accepted them.
+  function renderBoard(data) {
+    var columns = [
+      { key: "you", title: "Over to you", cards: [] },
+      { key: "us", title: "With us", cards: [] },
+      { key: "done", title: "Done", cards: [] },
+      { key: "asked", title: "You asked for", cards: [] }
+    ];
+    (data.tasks || []).forEach(function (task, index) {
+      var column = task.done ? columns[2] : (task.waitingOn === "you" ? columns[0] : columns[1]);
+      column.cards.push({ task: task, index: index });
+    });
+    (data.requests || []).forEach(function (request) {
+      columns[3].cards.push({ request: request });
+    });
+
+    var holder = el("acct-kanban");
+    holder.innerHTML = "";
+    columns.forEach(function (column) {
+      var wrap = document.createElement("div");
+      wrap.className = "acct__col" + (column.key === "you" ? " acct__col--you" : "");
+      var title = document.createElement("h3");
+      title.textContent = column.title + " (" + column.cards.length + ")";
+      wrap.appendChild(title);
+
+      if (!column.cards.length) {
+        var empty = document.createElement("p");
+        empty.className = "acct__col--empty";
+        empty.textContent = column.key === "asked" ? "Nothing asked for yet."
+          : column.key === "you" ? "Nothing needed from you right now." : "Nothing here.";
+        wrap.appendChild(empty);
+      }
+
+      column.cards.forEach(function (entry) {
+        var card = document.createElement("div");
+        card.className = "acct__card"
+          + (entry.request ? "" : entry.task.done ? " acct__card--done"
+            : entry.task.waitingOn === "you" ? " acct__card--you" : "");
+        var name = document.createElement("strong");
+        name.textContent = entry.request ? entry.request.subject : entry.task.subject;
+        card.appendChild(name);
+
+        var meta = document.createElement("span");
+        meta.className = "date";
+        if (entry.request) {
+          meta.textContent = "With Santi — he will come back to you";
+        } else if (entry.task.start) {
+          meta.textContent = entry.task.start === entry.task.end ? pretty(entry.task.start)
+            : pretty(entry.task.start) + " – " + pretty(entry.task.end);
+        } else {
+          meta.textContent = entry.task.done ? "Done" : "Not scheduled yet";
+        }
+        card.appendChild(meta);
+
+        if (!entry.request) {
+          card.addEventListener("click", function () { setView("list"); openStep(entry.index); });
+        }
+        wrap.appendChild(card);
+      });
+      holder.appendChild(wrap);
+    });
+  }
+
   function setView(name) {
-    var timeline = name === "timeline";
     el("acct-step").hidden = true;
-    el("acct-steps").hidden = timeline;
-    el("acct-timeline").hidden = !timeline;
-    el("acct-view-list").setAttribute("aria-pressed", String(!timeline));
-    el("acct-view-time").setAttribute("aria-pressed", String(timeline));
-    if (timeline && state.current) renderTimeline(state.current);
+    el("acct-steps").hidden = name !== "list";
+    el("acct-timeline").hidden = name !== "timeline";
+    el("acct-board").hidden = name !== "board";
+    el("acct-view-list").setAttribute("aria-pressed", String(name === "list"));
+    el("acct-view-time").setAttribute("aria-pressed", String(name === "timeline"));
+    el("acct-view-board").setAttribute("aria-pressed", String(name === "board"));
+    if (name === "timeline" && state.current) renderTimeline(state.current);
+    if (name === "board" && state.current) renderBoard(state.current);
   }
 
   // What the plan makes of the date they asked for. Quoted, never charged: the fee and
@@ -495,6 +563,8 @@
       el("acct-progress").textContent = data.done + " of " + data.total + " milestones done";
       el("acct-bar").style.width = data.total ? Math.round((data.done / data.total) * 100) + "%" : "0";
       renderVerdict(data);
+      el("acct-rates").textContent = (data.rates && data.rates.message) || "";
+      renderBoard(data);
       renderSteps(data.tasks || []);
       renderTimeline(data);
       renderBrief(data);
@@ -507,6 +577,7 @@
 
   el("acct-view-list").addEventListener("click", function () { setView("list"); });
   el("acct-view-time").addEventListener("click", function () { setView("timeline"); });
+  el("acct-view-board").addEventListener("click", function () { setView("board"); });
   el("acct-back").addEventListener("click", function () { loadProjects(); });
 
   el("acct-brief-form").addEventListener("submit", function (event) {
@@ -569,6 +640,28 @@
 
     return next();
   }
+
+  el("acct-request-form").addEventListener("submit", function (event) {
+    event.preventDefault();
+    var note = el("acct-request-note");
+    var subject = (el("acct-request-subject").value || "").trim();
+    if (!subject) { note.textContent = "Say what you need, even roughly."; return; }
+    note.textContent = "Sending…";
+    post("/account/ask", {
+      project: state.current.id,
+      subject: subject,
+      detail: (el("acct-request-detail").value || "").trim()
+    }, true).then(function (answer) {
+      if (!answer || answer.ok !== true) {
+        note.textContent = (answer && answer.error) || "That did not send. Email santi@santi.co.za.";
+        return;
+      }
+      el("acct-request-subject").value = "";
+      el("acct-request-detail").value = "";
+      note.textContent = "Sent. Santi has it, and will come back to you before anything starts.";
+      openProject(state.current.id);
+    });
+  });
 
   var picker = el("acct-upload");
   picker.addEventListener("change", function () {
