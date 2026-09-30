@@ -229,6 +229,38 @@
     return Number(parts[2]) + " " + MONTHS[Number(parts[1]) - 1];
   }
 
+  // The server decides whether there is a video and what may be framed; the page only
+  // draws it. An unrecognised URL arrives here as null, and null means the placeholder.
+  function renderVideo(video) {
+    var holder = el("acct-video");
+    holder.innerHTML = "";
+    if (!video || !video.src) {
+      var note = document.createElement("p");
+      note.textContent = "A short welcome from Santi lands here soon. Nothing is waiting on it "
+        + "— everything below is live already.";
+      holder.appendChild(note);
+      return;
+    }
+    if (video.kind === "file") {
+      var player = document.createElement("video");
+      player.src = video.src;
+      player.controls = true;
+      player.preload = "metadata";
+      if (video.poster) player.poster = video.poster;
+      holder.appendChild(player);
+      return;
+    }
+    var frame = document.createElement("iframe");
+    frame.src = video.src;
+    frame.title = video.title || "Welcome video";
+    frame.loading = "lazy";
+    frame.allow = "accelerometer; clipboard-write; encrypted-media; picture-in-picture; fullscreen";
+    frame.setAttribute("allowfullscreen", "allowfullscreen");
+    // The frame is given nothing about this page: it holds a client's project.
+    frame.setAttribute("referrerpolicy", "no-referrer");
+    holder.appendChild(frame);
+  }
+
   // The date lives in a real dialog rather than an inline field: moving a date is a
   // decision with consequences for everything behind it, and that deserves a moment's
   // pause and a sentence of explanation, not a picker that fires on change.
@@ -730,6 +762,7 @@
         cheer.hidden = true;
       }
 
+      renderVideo(data.video);
       renderVerdict(data);
       el("acct-rates").textContent = (data.rates && data.rates.message) || "";
       renderBoard(data);
