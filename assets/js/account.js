@@ -949,13 +949,19 @@
   /* ---------------------------------------------------------- booking tool */
   // Slots are fetched fresh whenever the tool is shown: the calendar moves, and a stale
   // list offers a time that is already gone.
+  // Opening a milestone can ask for slots twice in quick succession. Each answer used to
+  // be appended to a list cleared before either arrived, so every time showed up twice;
+  // now only the latest request fills the list, and it clears the list when it lands.
+  var slotRequest = 0;
   function loadSlots() {
     if (!state.current) return;
     var box = el("acc-slots");
-    box.innerHTML = "";
+    var mine = ++slotRequest;
     el("acc-booking").hidden = true;
     state.slot = null;
     post("/account/slots", { project: state.current.id }, true).then(function (answer) {
+      if (mine !== slotRequest) return;
+      box.innerHTML = "";
       var slots = (answer && answer.slots) || [];
       if (!slots.length) {
         box.appendChild(make("p", "acc-muted", "Nothing open in the next three weeks — email santi@santi.co.za and we will make room."));
