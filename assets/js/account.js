@@ -586,8 +586,8 @@
     var tiles = make("div", "acc-money");
     [["Project total", rands(bill.total), bill.lines.length + (bill.lines.length === 1 ? " item" : " items")],
      ["Paid so far", rands(bill.paid), bill.percentPaid + "% of the total"],
-     [bill.stage === "deposit-paid" ? "Still to come" : "Balance due", rands(bill.outstanding),
-      bill.stage === "deposit-paid" ? "Invoiced at handover"
+     [bill.stage === "deposit-paid" ? "Due at handover" : "Balance due", rands(bill.outstanding),
+      bill.stage === "deposit-paid" ? "On your project invoice"
         : bill.nextDue ? "Due " + pretty(bill.nextDue) : "Nothing outstanding"]]
       .forEach(function (tile, position) {
         var div = make("div", position === 2 && bill.outstanding > 0 && bill.stage === "invoiced" ? "acc-due-tile" : "");
@@ -613,7 +613,7 @@
     quote.addEventListener("click", function () { download("quotation", "", quote); });
     downloads.appendChild(quote);
     bill.invoices.forEach(function (invoice) {
-      var button = make("button", "btn btn--ghost", "Download invoice " + invoice.number);
+      var button = make("button", "btn btn--ghost", "Download " + invoice.label.toLowerCase());
       button.type = "button";
       button.addEventListener("click", function () { download("invoice", invoice.number, button); });
       downloads.appendChild(button);
@@ -646,9 +646,31 @@
     box.appendChild(ledger("Payments received", ["Date", "Reference", "Amount"],
       bill.payments.map(function (p) { return [pretty(p.date), p.reference, rands(p.amount)]; }),
       "No payments yet."));
-    box.appendChild(ledger("Invoices", ["Invoice", "Date", "Due", "Status", "Outstanding"],
-      bill.invoices.map(function (i) { return [i.number, pretty(i.date), pretty(i.due), i.status, rands(i.outstanding)]; }),
-      "No invoice yet — the balance is invoiced at handover, with your deposit already taken off."));
+    box.appendChild(ledger("Invoices", ["Invoice", "Number", "Due", "Status", "Amount"],
+      bill.invoices.map(function (i) {
+        return [i.label, i.number, i.due ? pretty(i.due) : i.draft ? "On handover" : "", i.status, rands(i.total)];
+      }),
+      "No invoices yet."));
+
+    // Only once the balance is actually due. The details come from the office, for this
+    // signed-in client - they are not written into this public script.
+    if (bill.bank) {
+      var pay = make("section", "acc-ledger");
+      pay.appendChild(make("h3", "", "How to pay"));
+      var due = bill.invoices.filter(function (i) { return i.outstanding > 0; })[0];
+      pay.appendChild(make("p", "acc-muted", "By EFT" + (due ? ", using " + due.number + " as your reference." : ".")));
+      var table = make("table");
+      [["Bank", bill.bank.bank], ["Account name", bill.bank.accountName],
+       ["Account number", bill.bank.accountNumber], ["Account type", bill.bank.accountType],
+       ["Branch code", bill.bank.branch], ["Swift code", bill.bank.swift]].forEach(function (pair) {
+        var tr = make("tr");
+        tr.appendChild(make("td", "", pair[0]));
+        tr.appendChild(make("td", "num", pair[1]));
+        table.appendChild(tr);
+      });
+      pay.appendChild(table);
+      box.appendChild(pay);
+    }
   }
 
   /* ------------------------------------------------------------------- extras */
