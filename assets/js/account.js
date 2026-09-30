@@ -194,7 +194,6 @@
 
   /* ------------------------------------------------------------- the tab strip */
   function renderTabs(tasks) {
-    var strip = el("acc-mtabs");
     strip.innerHTML = "";
     tasks.forEach(function (task, index) {
       var tab = make("button", "acc-mtab" + (task.done ? " acc-mtab--done" : task.waitingOn === "you" ? " acc-mtab--you" : ""));
@@ -202,7 +201,12 @@
       tab.setAttribute("role", "tab");
       tab.appendChild(make("span", "acc-num", task.done ? "✓" : String(index + 1)));
       tab.appendChild(make("strong", "", task.subject));
-      tab.appendChild(make("small", "", holder(task) + (!task.done && task.start ? " · " + pretty(task.start) : "")));
+      var status_ = make("small", "", holder(task));
+      if (!task.done && task.start) {
+        status_.appendChild(make("br"));
+        status_.appendChild(document.createTextNode(pretty(task.start)));
+      }
+      tab.appendChild(status_);
       tab.addEventListener("click", function () { selectTab(index); });
       strip.appendChild(tab);
     });
@@ -215,7 +219,22 @@
     help.appendChild(make("small", "", asked ? asked + " request" + (asked === 1 ? "" : "s") + " open" : "Ask or book a call"));
     help.addEventListener("click", function () { selectTab(HELP); });
     strip.appendChild(help);
+    updateArrows();
   }
+
+  var strip = el("acc-mtabs");
+  function updateArrows() {
+    el("acc-left").disabled = strip.scrollLeft <= 4;
+    el("acc-right").disabled = strip.scrollLeft + strip.clientWidth >= strip.scrollWidth - 4;
+  }
+  el("acc-left").addEventListener("click", function () {
+    strip.scrollBy({ left: -strip.clientWidth * 0.8, behavior: "smooth" });
+  });
+  el("acc-right").addEventListener("click", function () {
+    strip.scrollBy({ left: strip.clientWidth * 0.8, behavior: "smooth" });
+  });
+  strip.addEventListener("scroll", updateArrows, { passive: true });
+  window.addEventListener("resize", updateArrows);
 
   /* --------------------------------------------------- what each milestone needs */
   // Boards name milestones differently, so a milestone's tool is chosen by what it is
@@ -254,7 +273,6 @@
     // Bring the open tab into view within the strip itself. scrollIntoView also moves the
     // page, and on a phone the active milestone was left sitting off to the right.
     if (tabs[index]) {
-      var strip = el("acc-mtabs");
       var offset = tabs[index].getBoundingClientRect().left - strip.getBoundingClientRect().left;
       strip.scrollTo({ left: strip.scrollLeft + offset - 12, behavior: "smooth" });
     }
