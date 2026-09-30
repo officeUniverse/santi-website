@@ -18,6 +18,34 @@
   var views = { signin: el("acct-signin"), list: el("acct-list"), project: el("acct-project") };
   var state = { token: null, projects: [], current: null };
 
+  // Each view has an address. A milestone is a page in every sense that matters to a
+  // person: it can be linked, bookmarked, and the back button does what they expect
+  // rather than dumping them out of the account. The hash carries it because the site is
+  // static - there is no server to route paths - and a hash is never sent to anyone.
+  function writeRoute(route, replace) {
+    var url = location.pathname + (route || "");
+    if (replace) history.replaceState(null, "", url);
+    else if (location.pathname + location.hash !== url) history.pushState(null, "", url);
+  }
+
+  function readRoute() {
+    var match = /^#\/p\/([^/]+)(?:\/m\/(\d+))?$/.exec(location.hash || "");
+    if (!match) return null;
+    return { project: decodeURIComponent(match[1]), milestone: match[2] ? Number(match[2]) : null };
+  }
+
+  function route() {
+    var here = readRoute();
+    if (!here) return loadProjects({ push: false });
+    return openProject(here.project, { push: false }).then(function () {
+      if (!state.current) return;
+      if (here.milestone) openStep(here.milestone - 1, { push: false });
+      else closeStep({ push: false });
+    });
+  }
+
+  window.addEventListener("popstate", function () { route(); });
+
   function show(name) {
     Object.keys(views).forEach(function (key) { views[key].hidden = key !== name; });
     status.textContent = "";
@@ -51,6 +79,75 @@
     return n + " bytes";
   }
 
+  /* ------------------------------------------------------------- celebration */
+  // Hand-rolled, about forty lines, because a confetti library is 15KB to do this and
+  // this page already loads enough. It respects prefers-reduced-motion: a client who has
+  // asked their computer to stop moving things has asked us too.
+  function celebrate() {
+    var canvas = el("acct-confetti");
+    if (!canvas || !canvas.getContext) return;
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    var context = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    canvas.style.display = "block";
+
+    var colours = ["#FFD147", "#ffffff", "#7f9cf5", "#03707A"];
+    var pieces = [];
+    for (var i = 0; i < 120; i += 1) {
+      pieces.push({
+        x: Math.random() * canvas.width,
+        y: canvas.height + Math.random() * 120,          // rises from the bottom
+        vx: (Math.random() - 0.5) * 3,
+        vy: -(8 + Math.random() * 7),
+        size: 5 + Math.random() * 7,
+        tilt: Math.random() * Math.PI,
+        spin: (Math.random() - 0.5) * 0.3,
+        colour: colours[Math.floor(Math.random() * colours.length)]
+      });
+    }
+
+    var started = Date.now();
+    (function frame() {
+      var elapsed = Date.now() - started;
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      pieces.forEach(function (piece) {
+        piece.vy += 0.13;                                 // gravity takes them back down
+        piece.x += piece.vx;
+        piece.y += piece.vy;
+        piece.tilt += piece.spin;
+        context.save();
+        context.translate(piece.x, piece.y);
+        context.rotate(piece.tilt);
+        context.fillStyle = piece.colour;
+        context.globalAlpha = Math.max(0, 1 - elapsed / 3200);
+        context.fillRect(-piece.size / 2, -piece.size / 2, piece.size, piece.size * 0.6);
+        context.restore();
+      });
+      if (elapsed < 3200) {
+        requestAnimationFrame(frame);
+      } else {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        canvas.style.display = "none";
+      }
+    })();
+  }
+
+  // What was done last time this client looked. Kept per project in their own browser:
+  // it decides whether something is NEWS, and news is the only thing worth celebrating.
+  function seenKey(id) { return "santi.account.done." + id; }
+
+  function newlyDone(data) {
+    var done = (data.tasks || []).filter(function (t) { return t.done; })
+      .map(function (t) { return t.subject; });
+    var before = null;
+    try { before = JSON.parse(localStorage.getItem(seenKey(data.id)) || "null"); } catch (e) {}
+    try { localStorage.setItem(seenKey(data.id), JSON.stringify(done)); } catch (e) {}
+    if (!before) return [];                               // first visit is not an achievement
+    return done.filter(function (subject) { return before.indexOf(subject) < 0; });
+  }
+
   /* ---------------------------------------------------------------- sign in */
   el("acct-signin-form").addEventListener("submit", function (event) {
     event.preventDefault();
@@ -68,9 +165,24 @@
   });
 
   /* ---------------------------------------------------------------- projects */
-  function loadProjects() {
+  function loadProjects(options) {
+    if (!options || options.push !== false) writeRoute("");
     return post("/account/projects", {}, true).then(function (answer) {
-      if (!answer || answer.ok !== true) { signedOut(); return; }
+      // Only a Worker that says "signedOut" signs anyone out. A 502 from a wobbling
+      // n8n used to throw the client back to the sign-in form and wipe their session,
+      // which turns a ten-second blip into "please check your email again".
+      if (answer && answer.signedOut) { signedOut(); return; }
+      if (!answer || answer.ok !== true) {
+        show("list");
+        status.textContent = "";
+        el("acct-projects").innerHTML = "";
+        var problem = document.createElement("li");
+        problem.className = "acct__fine";
+        problem.textContent = "Could not load your projects just now. Refresh in a moment, "
+          + "or email santi@santi.co.za if it keeps happening.";
+        el("acct-projects").appendChild(problem);
+        return;
+      }
       state.projects = answer.projects || [];
       // Also on a returning visit, not only straight after clicking the sign-in link:
       // a page that cannot say who you are looks like a page you are not signed in to.
@@ -302,11 +414,15 @@
     "Review": { label: "Book a call to review", target: "acct-slots" }
   };
 
-  function openStep(index) {
+  function openStep(index, options) {
     var tasks = (state.current || {}).tasks || [];
     var task = tasks[index];
     if (!task) return;
     state.step = index;
+    if (!options || options.push !== false) {
+      writeRoute("#/p/" + encodeURIComponent(state.current.id) + "/m/" + (index + 1));
+    }
+    document.title = task.subject + " | Santi Universe";
 
     el("acct-steps").hidden = true;
     el("acct-timeline").hidden = true;
@@ -345,9 +461,13 @@
     el("acct-step").scrollIntoView({ behavior: "smooth", block: "center" });
   }
 
-  function closeStep() {
+  function closeStep(options) {
     el("acct-step").hidden = true;
     el("acct-steps").hidden = false;
+    document.title = "Your projects | Santi Universe";
+    if (state.current && (!options || options.push !== false)) {
+      writeRoute("#/p/" + encodeURIComponent(state.current.id));
+    }
   }
 
   el("acct-step-close").addEventListener("click", closeStep);
@@ -620,13 +740,26 @@
     });
   }
 
-  function openProject(id) {
+  function openProject(id, options) {
+    if (!options || options.push !== false) writeRoute("#/p/" + encodeURIComponent(id));
     return post("/account/project", { project: id }, true).then(function (data) {
       if (!data || data.ok !== true) { loadProjects(); return; }
       state.current = data;
       el("acct-project-name").textContent = data.project;
       el("acct-progress").textContent = data.done + " of " + data.total + " milestones done";
       el("acct-bar").style.width = data.total ? Math.round((data.done / data.total) * 100) + "%" : "0";
+      var fresh = newlyDone(data);
+      var cheer = el("acct-cheer");
+      if (fresh.length) {
+        cheer.textContent = fresh.length === 1
+          ? fresh[0] + " — done. " + (data.total - data.done) + " to go."
+          : fresh.length + " milestones done since you were last here.";
+        cheer.hidden = false;
+        celebrate();
+      } else {
+        cheer.hidden = true;
+      }
+
       renderVerdict(data);
       el("acct-rates").textContent = (data.rates && data.rates.message) || "";
       renderBoard(data);
@@ -745,7 +878,9 @@
     // Arrived from the sign-in email. Spend the key, keep the session, clean the URL so
     // the link cannot be re-shared out of a browser history or a screenshot.
     post("/account/session", { key: key }).then(function (answer) {
-      history.replaceState(null, "", location.pathname);
+      // Keep the hash: a client who followed a link to one milestone, signed in, and
+      // landed on a bare project list would reasonably think the link was broken.
+      history.replaceState(null, "", location.pathname + location.hash);
       if (!answer || answer.ok !== true) {
         signedOut();
         el("acct-signin-note").textContent =
@@ -756,12 +891,12 @@
       state.email = answer.email || "";
       try { localStorage.setItem("santi.account.email", state.email); } catch (e) {}
       el("acct-who").textContent = state.email;
-      loadProjects();
+      route();
     }).catch(signedOut);
   } else if (stored()) {
     state.token = stored();
     try { state.email = localStorage.getItem("santi.account.email") || ""; } catch (e) {}
-    loadProjects().catch(signedOut);
+    route().catch(signedOut);
   } else {
     signedOut();
   }
