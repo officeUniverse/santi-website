@@ -252,6 +252,37 @@
       .acct__who--you { background: var(--gold); color: var(--ink); font-weight: 700; }
       .acct__who--us { border: 1px solid var(--night-line); color: var(--night-muted); }
 
+      .acct__dates { color: var(--night-muted); font-size: .82rem; display: block; margin-top: .3rem; }
+      .acct__move { background: none; border: 0; color: var(--gold); font: inherit; font-size: .82rem;
+                    text-decoration: underline; cursor: pointer; padding: 0; margin-top: .35rem; }
+      .acct__move input { margin-left: .5rem; font: inherit; font-size: .82rem; border-radius: 6px;
+                          border: 1px solid var(--night-line); padding: .2rem .4rem; }
+
+      .acct__views { display: flex; gap: .5rem; margin: 0 0 1.25rem; }
+      .acct__views button { background: none; border: 1px solid var(--night-line); color: inherit;
+                            border-radius: 99px; padding: .35rem .95rem; font: inherit;
+                            font-size: .85rem; cursor: pointer; }
+      .acct__views button[aria-pressed="true"] { background: var(--gold); color: var(--ink);
+                                                 border-color: var(--gold); font-weight: 600; }
+
+      .acct__gantt { margin: 0; padding: 0; list-style: none; }
+      .acct__gantt li { padding: .55rem 0; border-bottom: 1px solid var(--night-line); }
+      .acct__gantt .row { display: grid; grid-template-columns: 11rem 1fr; gap: .9rem;
+                          align-items: center; }
+      .acct__gantt .label { font-size: .85rem; overflow: hidden; text-overflow: ellipsis;
+                            white-space: nowrap; }
+      .acct__gantt .track { position: relative; height: 1.4rem; border-radius: 99px;
+                            background: rgba(255,255,255,.07); }
+      .acct__gantt .bar { position: absolute; top: 0; bottom: 0; border-radius: 99px;
+                          background: var(--night-line); min-width: 3px; }
+      .acct__gantt .bar--you { background: var(--gold); }
+      .acct__gantt .bar--done { background: rgba(255,255,255,.22); }
+      .acct__gantt .when { font-size: .75rem; color: var(--night-muted); padding-left: 11.9rem; }
+      @media (max-width: 620px) {
+        .acct__gantt .row { grid-template-columns: 7rem 1fr; }
+        .acct__gantt .when { padding-left: 7.9rem; }
+      }
+
       .acct__q { margin: 0 0 1.25rem; }
       .acct__q label { display: block; font-weight: 600; margin: 0 0 .45rem; }
       .acct__q textarea { width: 100%; padding: .8rem; border-radius: 10px; font: inherit;
@@ -299,9 +330,20 @@
 
         <div class="acct__block" style="border-top:0;padding-top:0">
           <h2>Where things stand</h2>
-          <p class="acct__fine">Your real board. Ticked steps are done, and each one says who it is
-            waiting on.</p>
+          <p class="acct__fine">Your real board. Ticked steps are done, each one says who it is
+            waiting on, and the dates are the plan — we do not work weekends or public holidays.</p>
+          <div class="acct__views">
+            <button type="button" id="acct-view-list" aria-pressed="true">Steps</button>
+            <button type="button" id="acct-view-time" aria-pressed="false">Timeline</button>
+          </div>
           <ul class="acct__steps" id="acct-steps"></ul>
+          <div id="acct-timeline" hidden>
+            <p class="acct__fine" id="acct-span"></p>
+            <ul class="acct__gantt" id="acct-gantt"></ul>
+            <p class="acct__fine" style="margin-top:1rem">Gold is waiting on you. Move one of your
+              own dates and everything behind it moves with it — that is how the end date really
+              works.</p>
+          </div>
         </div>
 
         <div class="acct__block">

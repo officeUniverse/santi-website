@@ -100,6 +100,104 @@
   }
 
   /* ---------------------------------------------------------------- one project */
+
+  var MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  function pretty(iso) {
+    if (!iso) return "";
+    var parts = String(iso).split("-");
+    return Number(parts[2]) + " " + MONTHS[Number(parts[1]) - 1];
+  }
+
+  function moveControl(task) {
+    var wrap = document.createElement("div");
+    var button = document.createElement("button");
+    button.type = "button";
+    button.className = "acct__move";
+    button.textContent = "Need a different date?";
+    var field = document.createElement("input");
+    field.type = "date";           // the browser already has a date picker; no library
+    field.hidden = true;
+    field.value = task.start || "";
+    button.addEventListener("click", function () {
+      field.hidden = false;
+      field.focus();
+      if (field.showPicker) { try { field.showPicker(); } catch (e) {} }
+    });
+    field.addEventListener("change", function () {
+      if (!field.value) return;
+      button.textContent = "Moving…";
+      post("/account/move", { project: state.current.id, step: task.subject, date: field.value }, true)
+        .then(function (answer) {
+          if (!answer || answer.ok !== true) {
+            button.textContent = (answer && answer.error) || "That date did not work";
+            return;
+          }
+          openProject(state.current.id);
+        });
+    });
+    wrap.appendChild(button);
+    wrap.appendChild(field);
+    return wrap;
+  }
+
+  // A plain bar per step across the project's own span. Weekends are not drawn as gaps -
+  // the dates already skip them, and pretending to render a calendar grid on a phone is
+  // how this becomes unreadable.
+  function renderTimeline(data) {
+    var tasks = (data.tasks || []).filter(function (t) { return t.start && t.end; });
+    var list = el("acct-gantt");
+    list.innerHTML = "";
+    if (!tasks.length) {
+      el("acct-span").textContent = "The plan is drawn up overnight — check back tomorrow.";
+      return;
+    }
+    var first = tasks.reduce(function (a, t) { return t.start < a ? t.start : a; }, tasks[0].start);
+    var last = tasks.reduce(function (a, t) { return t.end > a ? t.end : a; }, tasks[0].end);
+    var day = 86400000;
+    var from = Date.parse(first + "T00:00:00Z");
+    var span = Math.max(day, Date.parse(last + "T00:00:00Z") - from + day);
+    el("acct-span").textContent = pretty(first) + " to " + pretty(last) + " — as it stands today.";
+
+    tasks.forEach(function (task) {
+      var li = document.createElement("li");
+      var row = document.createElement("div");
+      row.className = "row";
+
+      var label = document.createElement("span");
+      label.className = "label";
+      label.textContent = task.subject;
+
+      var track = document.createElement("span");
+      track.className = "track";
+      var bar = document.createElement("span");
+      bar.className = "bar" + (task.done ? " bar--done" : task.waitingOn === "you" ? " bar--you" : "");
+      var startAt = Date.parse(task.start + "T00:00:00Z") - from;
+      var length = Date.parse(task.end + "T00:00:00Z") - Date.parse(task.start + "T00:00:00Z") + day;
+      bar.style.left = (startAt / span) * 100 + "%";
+      bar.style.width = (length / span) * 100 + "%";
+      bar.title = pretty(task.start) + " – " + pretty(task.end);
+      track.appendChild(bar);
+
+      row.appendChild(label);
+      row.appendChild(track);
+      var when = document.createElement("div");
+      when.className = "when";
+      when.textContent = pretty(task.start) + " – " + pretty(task.end);
+      li.appendChild(row);
+      li.appendChild(when);
+      list.appendChild(li);
+    });
+  }
+
+  function setView(name) {
+    var timeline = name === "timeline";
+    el("acct-steps").hidden = timeline;
+    el("acct-timeline").hidden = !timeline;
+    el("acct-view-list").setAttribute("aria-pressed", String(!timeline));
+    el("acct-view-time").setAttribute("aria-pressed", String(timeline));
+    if (timeline && state.current) renderTimeline(state.current);
+  }
+
   function renderSteps(tasks) {
     var list = el("acct-steps");
     list.innerHTML = "";
@@ -120,6 +218,20 @@
         detail.className = "detail";
         detail.textContent = task.detail;
         body.appendChild(detail);
+      }
+
+      if (task.start && task.end) {
+        var when = document.createElement("span");
+        when.className = "acct__dates";
+        when.textContent = task.start === task.end ? pretty(task.start)
+          : pretty(task.start) + " – " + pretty(task.end);
+        body.appendChild(when);
+      }
+
+      // Only their own steps, and only while they are still open. Ours are not theirs to
+      // move, and the endpoint refuses it anyway - this just does not offer it.
+      if (!task.done && task.waitingOn === "you") {
+        body.appendChild(moveControl(task));
       }
 
       var who = document.createElement("span");
@@ -190,6 +302,7 @@
       el("acct-progress").textContent = data.done + " of " + data.total + " steps done";
       el("acct-bar").style.width = data.total ? Math.round((data.done / data.total) * 100) + "%" : "0";
       renderSteps(data.tasks || []);
+      renderTimeline(data);
       renderBrief(data);
       renderFiles(data.files || []);
       show("project");
@@ -197,6 +310,8 @@
     });
   }
 
+  el("acct-view-list").addEventListener("click", function () { setView("list"); });
+  el("acct-view-time").addEventListener("click", function () { setView("timeline"); });
   el("acct-back").addEventListener("click", function () { loadProjects(); });
 
   el("acct-brief-form").addEventListener("submit", function (event) {
