@@ -1,0 +1,136 @@
+<!--meta
+{
+  "file": "account.html",
+  "title": "Your projects | Santi Universe",
+  "description": "Sign in to your projects.",
+  "crumb": "Your projects",
+  "robots": "noindex, nofollow",
+  "referrer": "no-referrer",
+  "scripts": ["assets/js/account.js?v=1"]
+}
+-->
+    <style>
+      .acct { padding: clamp(40px, 6vw, 72px) var(--pad) clamp(48px, 7vw, 88px); max-width: 54rem; }
+      .acct__hello { color: var(--gold); font-weight: 600; margin: 0 0 .35rem; }
+      .acct__title { margin: 0 0 1.5rem; }
+      .acct__fine { color: var(--night-muted); font-size: .92rem; max-width: 42rem; }
+      .acct__note { color: var(--gold); min-height: 1.4rem; margin: .9rem 0 0; }
+
+      .acct__signin { max-width: 26rem; }
+      .acct__signin input { width: 100%; padding: .85rem; border-radius: 10px; font: inherit;
+                            border: 1px solid var(--night-line); background: #fff; color: var(--ink);
+                            margin: .75rem 0 1rem; }
+
+      .acct__cards { list-style: none; margin: 1.5rem 0 0; padding: 0; display: grid; gap: .75rem; }
+      .acct__cards button { width: 100%; text-align: left; background: transparent; color: inherit;
+                            border: 1px solid var(--night-line); border-radius: 12px;
+                            padding: 1.1rem 1.25rem; font: inherit; cursor: pointer; }
+      .acct__cards button:hover { border-color: var(--gold); }
+      .acct__cards strong { display: block; font-size: 1.05rem; }
+      .acct__cards span { color: var(--night-muted); font-size: .88rem; }
+
+      .acct__back { background: none; border: 0; color: var(--gold); font: inherit; cursor: pointer;
+                    padding: 0; margin-bottom: 1.25rem; }
+      .acct__bar { height: 6px; border-radius: 99px; background: rgba(255,255,255,.12);
+                   overflow: hidden; margin: .6rem 0 2rem; }
+      .acct__bar i { display: block; height: 100%; background: var(--gold); }
+
+      .acct__block { margin-top: 2.5rem; border-top: 1px solid var(--night-line); padding-top: 1.75rem; }
+      .acct__block h2 { font-size: clamp(1.1rem, 2.4vw, 1.4rem); margin: 0 0 .6rem; }
+
+      .acct__steps { list-style: none; margin: 0; padding: 0; }
+      .acct__steps li { display: grid; grid-template-columns: 1.6rem 1fr auto; gap: .85rem;
+                        padding: .95rem 0; border-bottom: 1px solid var(--night-line); }
+      .acct__steps .tick { width: 1.4rem; height: 1.4rem; border-radius: 50%; margin-top: .15rem;
+                           border: 1px solid var(--night-line); display: grid; place-items: center;
+                           font-size: .8rem; }
+      .acct__steps .tick--done { background: var(--gold); color: var(--ink); border-color: var(--gold); }
+      .acct__steps .detail { color: var(--night-muted); font-size: .88rem; display: block;
+                             margin-top: .2rem; }
+      .acct__steps li.done strong { text-decoration: line-through; opacity: .65; }
+      .acct__who { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase;
+                   white-space: nowrap; align-self: start; padding: .25rem .55rem; border-radius: 99px; }
+      .acct__who--you { background: var(--gold); color: var(--ink); font-weight: 700; }
+      .acct__who--us { border: 1px solid var(--night-line); color: var(--night-muted); }
+
+      .acct__q { margin: 0 0 1.25rem; }
+      .acct__q label { display: block; font-weight: 600; margin: 0 0 .45rem; }
+      .acct__q textarea { width: 100%; padding: .8rem; border-radius: 10px; font: inherit;
+                          border: 1px solid var(--night-line); background: #fff; color: var(--ink); }
+
+      .acct__files { list-style: none; margin: 0 0 1.1rem; padding: 0; }
+      .acct__files li { display: flex; justify-content: space-between; gap: 1rem; padding: .7rem 0;
+                        border-bottom: 1px solid var(--night-line); }
+      .acct__files .meta { color: var(--night-muted); font-size: .88rem; white-space: nowrap; }
+
+      .acct__out { background: none; border: 0; color: var(--night-muted); font: inherit;
+                   text-decoration: underline; cursor: pointer; padding: 0; margin-top: 3rem; }
+    </style>
+    <section class="frame frame--dark on-dark acct">
+      <p id="acct-status" class="acct__fine">Checking…</p>
+
+      <!-- signed out -->
+      <div id="acct-signin" hidden>
+        <h1 class="acct__title">Your projects</h1>
+        <form class="acct__signin" id="acct-signin-form">
+          <label for="acct-email"><strong>Sign in with your email</strong></label>
+          <p class="acct__fine">No password. We send a link that signs you in for 30 days — use the
+            address we already have for your project.</p>
+          <input id="acct-email" type="email" autocomplete="email" required
+                 placeholder="you@yourcompany.co.za">
+          <button type="submit" class="btn btn--accent">Send my sign-in link</button>
+          <p id="acct-signin-note" class="acct__note" aria-live="polite"></p>
+        </form>
+      </div>
+
+      <!-- project list -->
+      <div id="acct-list" hidden>
+        <p class="acct__hello" id="acct-who"></p>
+        <h1 class="acct__title">Your projects</h1>
+        <ul class="acct__cards" id="acct-projects"></ul>
+        <button type="button" class="acct__out" id="acct-signout">Sign out</button>
+      </div>
+
+      <!-- one project -->
+      <div id="acct-project" hidden>
+        <button type="button" class="acct__back" id="acct-back">&larr; All projects</button>
+        <h1 class="acct__title" id="acct-project-name"></h1>
+        <p class="acct__fine" id="acct-progress"></p>
+        <div class="acct__bar"><i id="acct-bar" style="width:0"></i></div>
+
+        <div class="acct__block" style="border-top:0;padding-top:0">
+          <h2>Where things stand</h2>
+          <p class="acct__fine">Your real board. Ticked steps are done, and each one says who it is
+            waiting on.</p>
+          <ul class="acct__steps" id="acct-steps"></ul>
+        </div>
+
+        <div class="acct__block">
+          <h2>Your brief</h2>
+          <p class="acct__fine" id="acct-brief-intro">The more you tell us, the less we guess.</p>
+          <form id="acct-brief-form">
+            <div id="acct-questions"></div>
+            <button type="submit" class="btn btn--accent">Send the brief</button>
+            <p id="acct-brief-note" class="acct__note" aria-live="polite"></p>
+          </form>
+          <p id="acct-brief-done" class="acct__fine" hidden style="color:var(--gold)">
+            Your brief is in. Anything to add, email santi@santi.co.za and it goes onto this project.
+          </p>
+        </div>
+
+        <div class="acct__block">
+          <h2>Documents</h2>
+          <p class="acct__fine">Logo files, brand guides, photos, copy, access notes — up to 8 MB per
+            file. Everything lands straight on this project.</p>
+          <ul class="acct__files" id="acct-files"></ul>
+          <p id="acct-files-empty" class="acct__fine">Nothing received yet.</p>
+          <label for="acct-upload" class="btn btn--ghost" style="display:inline-block;cursor:pointer">
+            Choose files
+          </label>
+          <input id="acct-upload" type="file" multiple style="position:absolute;left:-9999px">
+          <p id="acct-upload-note" class="acct__note" aria-live="polite"></p>
+        </div>
+
+        <button type="button" class="acct__out" id="acct-signout-2">Sign out</button>
+      </div>
+    </section>
