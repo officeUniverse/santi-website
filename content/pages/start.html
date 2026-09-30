@@ -12,7 +12,8 @@
     <style>
       /* Layout only. Colour, buttons and type come from v3.css, the same way quote.html
          does, so this page cannot drift from the brand. */
-      .start { padding: clamp(40px, 6vw, 72px) var(--pad) clamp(48px, 7vw, 88px); max-width: 54rem; }
+      .start { padding: clamp(110px, 11vw, 140px) var(--pad) clamp(48px, 7vw, 88px);
+               padding-right: max(var(--pad), calc(100% - 54rem - 2 * var(--gutter) + var(--pad))); }
       .start__hello { color: var(--gold); font-weight: 600; margin: 0 0 .35rem; }
       .start__title { margin: 0 0 2.25rem; }
       .start__fine { color: var(--night-muted); font-size: .9rem; max-width: 42rem; }
@@ -36,7 +37,7 @@
       .start__note { color: var(--gold); min-height: 1.4rem; margin: .75rem 0 0; }
       .start__done { color: var(--gold); font-weight: 600; }
     </style>
-    <section class="frame frame--dark on-dark start">
+    <section class="frame frame--dark frame--hero on-dark start">
       <p id="start-status" class="start__fine">Loading your project…</p>
 
       <div id="start-body" hidden>

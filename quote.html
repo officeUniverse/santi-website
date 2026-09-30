@@ -26,9 +26,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Space+Mono:wght@400;700&display=swap">
-  <link rel="stylesheet" href="assets/v3/v3.css?v=32">
-  <link rel="stylesheet" href="assets/v3/case.css?v=32">
-  <link rel="stylesheet" href="assets/v3/pages.css?v=32">
+  <link rel="stylesheet" href="assets/v3/v3.css?v=33">
+  <link rel="stylesheet" href="assets/v3/case.css?v=33">
+  <link rel="stylesheet" href="assets/v3/pages.css?v=33">
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -214,7 +214,8 @@
       /* Only layout here. Colour, buttons and type come from v3.css so this page cannot
          drift from the brand - the first version invented its own palette and rendered
          dark-on-dark. */
-      .quote { padding: clamp(40px, 6vw, 72px) var(--pad) clamp(48px, 7vw, 88px); max-width: 52rem; }
+      .quote { padding: clamp(110px, 11vw, 140px) var(--pad) clamp(48px, 7vw, 88px);
+               padding-right: max(var(--pad), calc(100% - 52rem - 2 * var(--gutter) + var(--pad))); }
       .quote__hello { color: var(--gold); font-weight: 600; margin: 0 0 .35rem; }
       .quote__title { margin: 0 0 2rem; }
       .quote__lines { width: 100%; border-collapse: collapse; margin: 0 0 1.75rem; }
@@ -233,7 +234,7 @@
       .quote__note { color: var(--gold); min-height: 1.4rem; margin: .75rem 0 0; }
       @media (max-width: 560px) { .quote__lines td:nth-child(2) { display: none; } }
     </style>
-    <section class="frame frame--dark on-dark quote">
+    <section class="frame frame--dark frame--hero on-dark quote">
       <p id="quote-status" class="quote__fine">Loading your quote…</p>
 
       <div id="quote-body" hidden>
@@ -381,7 +382,7 @@
   <div class="pblur" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 
   <script src="assets/v3/universe.js?v=4"></script>
-  <script src="assets/v3/site.js?v=32"></script>
+  <script src="assets/v3/site.js?v=33"></script>
   <script src="assets/js/quote.js?v=1"></script>
 </body>
 </html>

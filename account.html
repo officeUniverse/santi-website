@@ -26,9 +26,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Space+Mono:wght@400;700&display=swap">
-  <link rel="stylesheet" href="assets/v3/v3.css?v=32">
-  <link rel="stylesheet" href="assets/v3/case.css?v=32">
-  <link rel="stylesheet" href="assets/v3/pages.css?v=32">
+  <link rel="stylesheet" href="assets/v3/v3.css?v=33">
+  <link rel="stylesheet" href="assets/v3/case.css?v=33">
+  <link rel="stylesheet" href="assets/v3/pages.css?v=33">
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -216,15 +216,10 @@
          upload lives in Brand assets, the booking lives in Kickoff. Nothing is somewhere
          else to go and find. */
 
-      /* The homepage hero's blue, full width, so the nav sits in it as glass with the white
-         logo. The gradient covers the first screen and settles into plain night below it;
-         the side padding keeps the content itself to 93rem. */
+      /* Full width in the homepage blue (.frame--hero); the side padding keeps the content
+         itself to 93rem, centred. */
       .acc { padding: clamp(110px, 11vw, 140px) calc(max(0px, (100% - 93rem) / 2 - var(--gutter)) + var(--pad))
-                      clamp(48px, 7vw, 88px);
-             background:
-               radial-gradient(70% 80% at 74% 42%, rgba(8, 190, 204, .2), transparent 60%) top / 100% 100svh no-repeat,
-               radial-gradient(90% 90% at 70% 40%, #173b9a 0%, var(--night) 72%) top / 100% 100svh no-repeat,
-               var(--night); }
+                      clamp(48px, 7vw, 88px); }
       .acc [hidden] { display: none !important; }
       .acc p { margin: 0; }
       .acc-muted { color: var(--night-muted); }
@@ -484,7 +479,7 @@
     <canvas id="acc-confetti" class="acc-confetti" aria-hidden="true"></canvas>
     <input id="acc-upload" type="file" multiple hidden>
 
-    <section class="frame frame--dark on-dark acc" data-hero>
+    <section class="frame frame--dark frame--hero on-dark acc">
       <p id="acc-status" class="acc-muted">Checking…</p>
 
       <!-- ======================================================= signed out -->
@@ -768,7 +763,7 @@
   <div class="pblur" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 
   <script src="assets/v3/universe.js?v=4"></script>
-  <script src="assets/v3/site.js?v=32"></script>
+  <script src="assets/v3/site.js?v=33"></script>
   <script src="assets/js/account.js?v=7"></script>
 </body>
 </html>

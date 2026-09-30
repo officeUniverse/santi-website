@@ -13,7 +13,8 @@
       /* Only layout here. Colour, buttons and type come from v3.css so this page cannot
          drift from the brand - the first version invented its own palette and rendered
          dark-on-dark. */
-      .quote { padding: clamp(40px, 6vw, 72px) var(--pad) clamp(48px, 7vw, 88px); max-width: 52rem; }
+      .quote { padding: clamp(110px, 11vw, 140px) var(--pad) clamp(48px, 7vw, 88px);
+               padding-right: max(var(--pad), calc(100% - 52rem - 2 * var(--gutter) + var(--pad))); }
       .quote__hello { color: var(--gold); font-weight: 600; margin: 0 0 .35rem; }
       .quote__title { margin: 0 0 2rem; }
       .quote__lines { width: 100%; border-collapse: collapse; margin: 0 0 1.75rem; }
@@ -32,7 +33,7 @@
       .quote__note { color: var(--gold); min-height: 1.4rem; margin: .75rem 0 0; }
       @media (max-width: 560px) { .quote__lines td:nth-child(2) { display: none; } }
     </style>
-    <section class="frame frame--dark on-dark quote">
+    <section class="frame frame--dark frame--hero on-dark quote">
       <p id="quote-status" class="quote__fine">Loading your quote…</p>
 
       <div id="quote-body" hidden>

@@ -4,6 +4,17 @@
    Every page opens on a dark royal frame (nav starts as glass over it).
    ============================================================ */
 
+/* ---------- client pages (account, start, quote, paid) ----------
+   The homepage hero's blue at full width, so the nav sits in it as glass with the white
+   logo (site.js treats .frame--hero as the dark top of the page). The gradient covers the
+   first screen and settles into plain night below it, however long the page runs. */
+.frame--hero {
+  background:
+    radial-gradient(70% 80% at 74% 42%, rgba(8, 190, 204, .2), transparent 60%) top / 100% 100svh no-repeat,
+    radial-gradient(90% 90% at 70% 40%, #173b9a 0%, var(--night) 72%) top / 100% 100svh no-repeat,
+    var(--night);
+}
+
 /* ---------- page hero ---------- */
 .page-hero {
   min-height: clamp(520px, 70svh, 780px);

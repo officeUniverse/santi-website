@@ -12,7 +12,8 @@
       /* Centred on purpose. This is the moment someone has just sent money to a company
          they may never have met, and a page hugging the left edge reads like a receipt
          printer. Narrow column, numbered steps, and a human named at the bottom. */
-      .paid { padding: clamp(56px, 9vw, 104px) var(--pad); max-width: 46rem; margin: 0 auto;
+      .paid { padding: clamp(110px, 11vw, 140px) calc(max(0px, (100% - 46rem) / 2 - var(--gutter)) + var(--pad))
+              clamp(56px, 9vw, 104px);
               text-align: center; }
       .paid h1 { margin: 0 0 1.25rem; }
       .paid .star { color: var(--gold); }
@@ -34,7 +35,7 @@
                      margin: 2rem auto 0; }
       .paid__human a { color: var(--gold); }
     </style>
-    <section class="frame frame--dark on-dark paid">
+    <section class="frame frame--dark frame--hero on-dark paid">
       <span class="eyebrow">Payfast</span>
       <h1>Payment<br>received<span class="star" aria-hidden="true">°</span></h1>
 
