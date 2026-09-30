@@ -82,9 +82,9 @@
   }
   function projectRoute(suffix) { return "#/p/" + encodeURIComponent(state.current.id) + (suffix || ""); }
   function readRoute() {
-    var match = /^#\/p\/([^/]+)(?:\/(help)|\/m\/(\d+))?$/.exec(location.hash || "");
+    var match = /^#\/p\/([^/]+)(?:\/(help|timeline|board|billing)|\/m\/(\d+))?$/.exec(location.hash || "");
     if (!match) return null;
-    return { project: decodeURIComponent(match[1]), help: !!match[2],
+    return { project: decodeURIComponent(match[1]), section: match[2] || null,
              milestone: match[3] ? Number(match[3]) : null };
   }
   function route() {
@@ -92,7 +92,8 @@
     if (!here) return loadProjects({ push: false });
     return openProject(here.project, { push: false }).then(function () {
       if (!state.current) return;
-      if (here.help) selectTab(HELP, { push: false });
+      if (here.section === "help") selectTab(HELP, { push: false });
+      else if (here.section) setView(here.section, { push: false });
       else if (here.milestone) selectTab(here.milestone - 1, { push: false });
     });
   }
@@ -187,6 +188,9 @@
     renderVerdict(data);
     renderVideo(data.video);
     renderTabs(data.tasks || []);
+    renderTimeline(data.tasks || []);
+    renderBoard(data);
+    state.billing = null;          // money is fetched when someone asks for it, not before
     renderBrief(data);
     renderFiles(data.files || []);
     renderAsk(data);
@@ -261,6 +265,7 @@
   }
 
   function selectTab(which, options) {
+    showView("milestones");
     var tasks = (state.current && state.current.tasks) || [];
     var tabs = all("#acc-mtabs .acc-mtab");
     var isHelp = which === HELP;
@@ -329,6 +334,277 @@
     var tasks = (state.current && state.current.tasks) || [];
     selectTab(state.step + 1 >= tasks.length ? HELP : state.step + 1);
   });
+
+  /* --------------------------------------------------------------------- views */
+  // Four ways to look at one project, one at a time. Milestones is where work gets done;
+  // the other three are for seeing the whole thing at once.
+  function showView(name) {
+    all("[data-view]").forEach(function (button) {
+      button.setAttribute("aria-selected", String(button.getAttribute("data-view") === name));
+    });
+    all("[data-viewpanel]").forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-viewpanel") !== name;
+    });
+  }
+  function setView(name, options) {
+    if (name === "milestones") {
+      var tasks = (state.current && state.current.tasks) || [];
+      var first = tasks.findIndex(function (t) { return !t.done; });
+      return selectTab(first < 0 ? Math.max(0, tasks.length - 1) : first, options);
+    }
+    showView(name);
+    document.title = name.charAt(0).toUpperCase() + name.slice(1) + " | Santi Universe";
+    if (name === "billing") loadBilling();
+    if (state.current && (!options || options.push !== false)) writeRoute(projectRoute("/" + name));
+  }
+  all("[data-view]").forEach(function (button) {
+    button.addEventListener("click", function () { setView(button.getAttribute("data-view")); });
+  });
+
+  function openMilestone(index) {
+    selectTab(index);
+    el("acc-panel").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  /* ------------------------------------------------------------------ timeline */
+  // A real timeline: bars placed on a date axis, month marks along the top, and a line
+  // for today. Positions are proportional to calendar days, so a weekend gap between two
+  // milestones shows as a gap - which is the truth about when work happens.
+  function dayNumber(iso) { return Date.parse(iso + "T00:00:00Z") / 86400000; }
+
+  function renderTimeline(tasks) {
+    var box = el("acc-tl");
+    box.innerHTML = "";
+    var dated = tasks.map(function (t, i) { return { task: t, index: i }; })
+      .filter(function (e) { return e.task.start && e.task.end; });
+    if (!dated.length) {
+      box.appendChild(make("p", "acc-muted", "The plan is drawn up overnight — check back tomorrow."));
+      return;
+    }
+    var first = Math.min.apply(null, dated.map(function (e) { return dayNumber(e.task.start); }));
+    var last = Math.max.apply(null, dated.map(function (e) { return dayNumber(e.task.end); }));
+    // Pull today into view when it is not long before the first milestone: "your next
+    // thing is three weeks away" is exactly what a timeline is for.
+    var todayNumber = Math.floor(Date.now() / 86400000);
+    if (todayNumber < first && first - todayNumber <= 60) first = todayNumber;
+    first -= 2; last += 3;
+    var spanDays = Math.max(1, last - first);
+    var at = function (day) { return ((day - first) / spanDays) * 100 + "%"; };
+
+    var inner = make("div", "acc-tl-inner");
+
+    // month marks
+    var axisRow = make("div", "acc-tl-row");
+    axisRow.appendChild(make("span", "acc-muted", ""));
+    var axis = make("div", "acc-tl-axis");
+    var cursor = new Date(first * 86400000);
+    cursor = new Date(Date.UTC(cursor.getUTCFullYear(), cursor.getUTCMonth(), 1));
+    while (cursor.getTime() / 86400000 <= last) {
+      var d = cursor.getTime() / 86400000;
+      // The month the range opens in is labelled at the left edge, not skipped.
+      if (d < first) d = first;
+      {
+        var mark = make("span", "acc-tl-month", MONTHS[cursor.getUTCMonth()] + " " + cursor.getUTCFullYear());
+        mark.style.left = at(d);
+        axis.appendChild(mark);
+      }
+      cursor = new Date(Date.UTC(cursor.getUTCFullYear(), cursor.getUTCMonth() + 1, 1));
+    }
+    axisRow.appendChild(axis);
+    inner.appendChild(axisRow);
+
+    var grid = make("div", "acc-tl-grid");
+    var todayDay = Math.floor(Date.now() / 86400000);
+    dated.forEach(function (entry) {
+      var task = entry.task;
+      var row = make("div", "acc-tl-row");
+      var label = make("button", "acc-tl-label", task.subject);
+      label.type = "button";
+      label.appendChild(make("small", "", holder(task) + " · " + span(task)));
+      label.addEventListener("click", function () { openMilestone(entry.index); });
+      var track = make("div", "acc-tl-track");
+      var bar = make("span", "acc-tl-bar" + (task.done ? " acc-tl-bar--done"
+        : task.waitingOn === "you" ? " acc-tl-bar--you" : task.waitingOn === "both" ? " acc-tl-bar--both" : ""));
+      bar.style.left = at(dayNumber(task.start));
+      bar.style.width = "calc(" + ((dayNumber(task.end) - dayNumber(task.start) + 1) / spanDays * 100) + "% )";
+      bar.title = task.subject + " — " + span(task);
+      bar.addEventListener("click", function () { openMilestone(entry.index); });
+      track.appendChild(bar);
+      row.appendChild(label);
+      row.appendChild(track);
+      grid.appendChild(row);
+    });
+    inner.appendChild(grid);
+
+    if (todayDay >= first && todayDay <= last) {
+      // Today's line runs down the tracks only, not through the labels.
+      var overlay = make("div", "acc-tl-row");
+      overlay.style.position = "absolute";
+      overlay.style.inset = "0";
+      overlay.style.pointerEvents = "none";
+      overlay.style.alignItems = "stretch";   // the lane must be as tall as the rows
+      overlay.appendChild(make("span"));
+      var lane = make("div");
+      lane.style.position = "relative";
+      lane.style.height = "100%";
+      var line = make("div", "acc-tl-today");
+      line.style.left = at(todayDay);
+      line.appendChild(make("span", "", "TODAY"));
+      lane.appendChild(line);
+      overlay.appendChild(lane);
+      grid.style.position = "relative";
+      grid.appendChild(overlay);
+    }
+
+    box.appendChild(inner);
+    var legend = make("div", "acc-legend");
+    [["Waiting on you", "var(--gold)"], ["With us", "rgba(127,156,245,.55)"],
+     ["Together", "transparent;border:2px solid rgba(255,255,255,.55)"], ["Done", "rgba(255,255,255,.18)"]]
+      .forEach(function (pair) {
+        var item = make("span");
+        var swatch = make("i");
+        swatch.setAttribute("style", "background:" + pair[1]);
+        item.appendChild(swatch);
+        item.appendChild(document.createTextNode(pair[0]));
+        legend.appendChild(item);
+      });
+    box.appendChild(legend);
+  }
+
+  /* --------------------------------------------------------------------- board */
+  function renderBoard(data) {
+    var box = el("acc-kanban");
+    box.innerHTML = "";
+    var columns = [
+      { key: "you", title: "Over to you", items: [] },
+      { key: "us", title: "With us", items: [] },
+      { key: "done", title: "Done", items: [] },
+      { key: "asked", title: "You asked for", items: [] }
+    ];
+    (data.tasks || []).forEach(function (task, index) {
+      var column = task.done ? columns[2] : task.waitingOn === "you" ? columns[0] : columns[1];
+      column.items.push({ task: task, index: index });
+    });
+    (data.requests || []).forEach(function (request) { columns[3].items.push({ request: request }); });
+
+    columns.forEach(function (column) {
+      var col = make("section", "acc-col" + (column.key === "you" ? " acc-col--you" : ""));
+      var head = make("h3");
+      head.appendChild(make("span", "", column.title));
+      head.appendChild(make("span", "", String(column.items.length)));
+      col.appendChild(head);
+      if (!column.items.length) {
+        col.appendChild(make("small", "acc-muted", column.key === "you" ? "Nothing needed from you right now."
+          : column.key === "asked" ? "Nothing asked for — use Something else? to ask." : "Nothing here."));
+      }
+      column.items.forEach(function (item) {
+        if (item.request) {
+          var ask = make("div", "acc-kcard acc-kcard--ask");
+          ask.appendChild(make("strong", "", item.request.subject));
+          ask.appendChild(make("small", "", item.request.status === "With Santi"
+            ? "With Santi — he will come back to you" : item.request.status));
+          col.appendChild(ask);
+          return;
+        }
+        var task = item.task;
+        var card = make("button", "acc-kcard" + (task.done ? " acc-kcard--done"
+          : task.waitingOn === "you" ? " acc-kcard--you" : ""));
+        card.type = "button";
+        card.appendChild(make("strong", "", task.subject));
+        card.appendChild(make("small", "", task.done ? "Done" : (span(task) || "Not scheduled yet")));
+        card.addEventListener("click", function () { openMilestone(item.index); });
+        col.appendChild(card);
+      });
+      box.appendChild(col);
+    });
+  }
+
+  /* ------------------------------------------------------------------- billing */
+  // Fetched only when the Billing view is opened: money has no business loading on
+  // every visit, and it is the one view that reads the books.
+  function rands(value) {
+    return Number(value || 0).toLocaleString("en-ZA", { style: "currency", currency: "ZAR" });
+  }
+
+  function loadBilling() {
+    if (!state.current) return;
+    var box = el("acc-billing");
+    if (state.billing) return renderBilling(state.billing);
+    box.innerHTML = "";
+    box.appendChild(make("p", "acc-muted", "Loading your billing…"));
+    post("/account/billing", { project: state.current.id }, true).then(function (answer) {
+      if (!answer || answer.ok !== true) {
+        box.innerHTML = "";
+        box.appendChild(make("p", "acc-muted", "Could not load billing just now. Try again in a moment, or email santi@santi.co.za."));
+        return;
+      }
+      state.billing = answer;
+      renderBilling(answer);
+    });
+  }
+
+  function renderBilling(bill) {
+    var box = el("acc-billing");
+    box.innerHTML = "";
+    if (!bill.ready) {
+      box.appendChild(make("p", "acc-muted", bill.message));
+      return;
+    }
+
+    var tiles = make("div", "acc-money");
+    [["Project total", rands(bill.total), bill.lines.length + (bill.lines.length === 1 ? " item" : " items")],
+     ["Paid so far", rands(bill.paid), bill.percentPaid + "% of the total"],
+     [bill.stage === "deposit-paid" ? "Still to come" : "Balance due", rands(bill.outstanding),
+      bill.stage === "deposit-paid" ? "Invoiced at handover"
+        : bill.nextDue ? "Due " + pretty(bill.nextDue) : "Nothing outstanding"]]
+      .forEach(function (tile, position) {
+        var div = make("div", position === 2 && bill.outstanding > 0 && bill.stage === "invoiced" ? "acc-due-tile" : "");
+        div.appendChild(make("span", "", tile[0]));
+        div.appendChild(make("strong", "", tile[1]));
+        div.appendChild(make("small", "", tile[2]));
+        tiles.appendChild(div);
+      });
+    box.appendChild(tiles);
+
+    var bar = make("div", "acc-bar");
+    var fill = make("i");
+    fill.style.width = bill.percentPaid + "%";
+    bar.appendChild(fill);
+    box.appendChild(bar);
+    var note = make("p", "acc-muted", bill.message);
+    note.style.marginTop = ".8rem";
+    box.appendChild(note);
+
+    function ledger(title, headings, rows, empty) {
+      var section = make("section", "acc-ledger");
+      section.appendChild(make("h3", "", title));
+      if (!rows.length) {
+        section.appendChild(make("p", "acc-muted", empty));
+        return section;
+      }
+      var table = make("table");
+      var head = make("tr");
+      headings.forEach(function (h, i) { head.appendChild(make("th", i >= headings.length - 1 || h.num ? "num" : "", h.label || h)); });
+      table.appendChild(head);
+      rows.forEach(function (cells) {
+        var tr = make("tr");
+        cells.forEach(function (cell, i) { tr.appendChild(make("td", i === cells.length - 1 ? "num" : "", cell)); });
+        table.appendChild(tr);
+      });
+      section.appendChild(table);
+      return section;
+    }
+
+    box.appendChild(ledger("What you bought", ["Item", "Qty", "Amount"],
+      bill.lines.map(function (l) { return [l.description, String(l.qty), rands(l.amount)]; }),
+      "No items on the order."));
+    box.appendChild(ledger("Payments received", ["Date", "Reference", "Amount"],
+      bill.payments.map(function (p) { return [pretty(p.date), p.reference, rands(p.amount)]; }),
+      "No payments yet."));
+    box.appendChild(ledger("Invoices", ["Invoice", "Date", "Due", "Status", "Outstanding"],
+      bill.invoices.map(function (i) { return [i.number, pretty(i.date), pretty(i.due), i.status, rands(i.outstanding)]; }),
+      "No invoice yet — the balance is invoiced at handover, with your deposit already taken off."));
+  }
 
   /* ------------------------------------------------------------------- extras */
   // Only news is celebrated: what the client saw last time is kept in their browser and
