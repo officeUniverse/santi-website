@@ -1,56 +1,50 @@
 /* The client account.
 
-   Organised around one question: what does the client need to do next? That answer is a
-   card at the top with its button. Everything else lives in four tabs - Plan, Brief,
-   Files, Help - so nothing is a long scroll, and every milestone appears once.
+   The milestones are the navigation. One tab per milestone, and each tab holds the thing
+   you actually do at that step: the brief form lives in the Brief tab, the upload lives in
+   the assets tab, the booking lives in the call tabs. A final tab covers anything else -
+   asking for extra work, or a call about something that is not on the plan.
+
+   The tools (brief, files, booking, asking) exist once in the page and are MOVED into
+   whichever tab needs them, so their state and listeners survive switching tabs.
 
    Sign-in is a link emailed to an address ERPNext already holds; there is no password
-   here. The session is a signed token the Worker verifies, and the Worker takes the
-   customer from that token rather than from anything this page sends - so nothing in
-   this file is a security control. It is all presentation. */
+   here. The Worker takes the customer from a signed token, never from this page, so
+   nothing in this file is a security control. It is all presentation. */
 (function () {
   "use strict";
   var API = "https://santi-account.zukosanti.workers.dev";
   var KEY = "santi.account.session";
   var EMAIL_KEY = "santi.account.email";
+  var HELP = "help";
 
   var el = function (id) { return document.getElementById(id); };
   var all = function (selector) { return Array.prototype.slice.call(document.querySelectorAll(selector)); };
   var views = { signin: el("acc-signin"), list: el("acc-list"), project: el("acc-project") };
-  var state = { token: null, email: "", current: null, step: 0, tab: "plan", slot: null, moving: null };
+  var state = { token: null, email: "", current: null, step: 0, slot: null, moving: null };
 
   /* ------------------------------------------------------------------ plumbing */
   function show(name) {
     Object.keys(views).forEach(function (key) { views[key].hidden = key !== name; });
     el("acc-status").hidden = true;
   }
-
   function store(token) {
     state.token = token;
     try { token ? localStorage.setItem(KEY, token) : localStorage.removeItem(KEY); } catch (e) {}
   }
-
   function stored() {
     try { return localStorage.getItem(KEY) || null; } catch (e) { return null; }
   }
-
   function post(path, payload, auth) {
     var headers = { "Content-Type": "application/json" };
     if (auth && state.token) headers.Authorization = "Bearer " + state.token;
     return fetch(API + path, { method: "POST", headers: headers, body: JSON.stringify(payload || {}) })
       .then(function (r) { return r.json().catch(function () { return {}; }); });
   }
-
-  function signedOut() {
-    store(null);
-    show("signin");
-  }
+  function signedOut() { store(null); show("signin"); }
 
   var MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-  var MONTH_NAMES = ["January","February","March","April","May","June","July","August",
-                     "September","October","November","December"];
   var DAYS = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-
   function pretty(iso) {
     if (!iso) return "";
     var parts = String(iso).split("-");
@@ -79,20 +73,18 @@
   }
 
   /* ------------------------------------------------------------------- routing */
-  // #/p/PROJ-0003            the project, Plan tab
-  // #/p/PROJ-0003/brief      a tab
-  // #/p/PROJ-0003/m/4        a milestone, so it can be linked and the back button works
+  // #/p/PROJ-0003         the project, opened on whatever is next
+  // #/p/PROJ-0003/m/4     a milestone - linkable, and the back button behaves
+  // #/p/PROJ-0003/help    the "something else" tab
   function writeRoute(route) {
     var url = location.pathname + (route || "");
     if (location.pathname + location.hash !== url) history.pushState(null, "", url);
   }
-  function projectRoute(suffix) {
-    return "#/p/" + encodeURIComponent(state.current.id) + (suffix || "");
-  }
+  function projectRoute(suffix) { return "#/p/" + encodeURIComponent(state.current.id) + (suffix || ""); }
   function readRoute() {
-    var match = /^#\/p\/([^/]+)(?:\/(plan|brief|files|help)|\/m\/(\d+))?$/.exec(location.hash || "");
+    var match = /^#\/p\/([^/]+)(?:\/(help)|\/m\/(\d+))?$/.exec(location.hash || "");
     if (!match) return null;
-    return { project: decodeURIComponent(match[1]), tab: match[2] || (match[3] ? "plan" : null),
+    return { project: decodeURIComponent(match[1]), help: !!match[2],
              milestone: match[3] ? Number(match[3]) : null };
   }
   function route() {
@@ -100,8 +92,8 @@
     if (!here) return loadProjects({ push: false });
     return openProject(here.project, { push: false }).then(function () {
       if (!state.current) return;
-      setTab(here.tab || "plan", { push: false });
-      if (here.milestone) selectStep(here.milestone - 1, { push: false });
+      if (here.help) selectTab(HELP, { push: false });
+      else if (here.milestone) selectTab(here.milestone - 1, { push: false });
     });
   }
   window.addEventListener("popstate", function () { route(); });
@@ -121,7 +113,6 @@
       note.textContent = "That did not send. Email santi@santi.co.za and we will sort it out.";
     });
   });
-
   all("[data-signout]").forEach(function (button) {
     button.addEventListener("click", function () { signedOut(); writeRoute(""); });
   });
@@ -130,16 +121,14 @@
   function loadProjects(options) {
     if (!options || options.push !== false) writeRoute("");
     return post("/account/projects", {}, true).then(function (answer) {
-      // Only the Worker saying so signs anyone out. A wobble in n8n used to wipe the
-      // session and send the client back to their inbox.
+      // Only the Worker saying so signs anyone out; an n8n wobble must not.
       if (answer && answer.signedOut) { signedOut(); return; }
       var list = el("acc-projects");
       list.innerHTML = "";
       el("acc-who").textContent = state.email;
       show("list");
       if (!answer || answer.ok !== true) {
-        list.appendChild(make("li", "acc-muted",
-          "Could not load your projects just now. Refresh in a moment, or email santi@santi.co.za."));
+        list.appendChild(make("li", "acc-muted", "Could not load your projects just now. Refresh in a moment, or email santi@santi.co.za."));
         return;
       }
       var projects = answer.projects || [];
@@ -147,10 +136,8 @@
         list.appendChild(make("li", "acc-muted", "Nothing here yet — a project appears once its deposit is paid."));
         return;
       }
-      // One project needs no list: take them straight to it.
-      if (projects.length === 1 && (!options || options.auto !== false)) {
-        return openProject(projects[0].id);
-      }
+      // One project needs no list: go straight to it.
+      if (projects.length === 1 && (!options || options.auto !== false)) return openProject(projects[0].id);
       projects.forEach(function (project) {
         var li = make("li");
         var button = make("button");
@@ -171,7 +158,6 @@
       });
     });
   }
-
   el("acc-back").addEventListener("click", function () { loadProjects({ auto: false }); });
 
   /* --------------------------------------------------------------- one project */
@@ -180,142 +166,168 @@
       if (data && data.signedOut) { signedOut(); return; }
       if (!data || data.ok !== true) { loadProjects({ auto: false }); return; }
       state.current = data;
-      if (!options || options.push !== false) writeRoute(projectRoute());
       render(data);
       show("project");
+      // Open on what is actually next, unless the caller is about to choose.
+      var keep = options && options.keep != null ? options.keep : null;
+      var tasks = data.tasks || [];
+      var first = tasks.findIndex(function (t) { return !t.done; });
+      selectTab(keep != null ? keep : (first < 0 ? tasks.length - 1 : first),
+                { push: !options || options.push !== false });
     });
   }
 
   function render(data) {
     el("acc-name").textContent = data.project;
     el("acc-signedin").textContent = state.email;
-    document.title = data.project + " | Santi Universe";
     el("acc-bar").style.width = data.total ? Math.round(data.done / data.total * 100) + "%" : "0";
     el("acc-progress-text").textContent = data.done + " of " + data.total + " done"
       + (data.plannedEnd ? " · finishes " + pretty(data.plannedEnd) : "");
-
-    renderHero(data);
-    renderVideo(data.video);
+    cheer(data);
     renderVerdict(data);
-    renderRail(data.tasks || []);
-    renderMonths(data.tasks || []);
+    renderVideo(data.video);
+    renderTabs(data.tasks || []);
     renderBrief(data);
     renderFiles(data.files || []);
-    renderHelp(data);
-
-    // Open the plan on whatever is actually next, not at the top of the list.
-    var tasks = data.tasks || [];
-    var first = tasks.findIndex(function (t) { return !t.done; });
-    selectStep(first < 0 ? tasks.length - 1 : first, { push: false });
-
-    var briefTab = document.querySelector('[data-tab="brief"]');
-    briefTab.innerHTML = "Brief";
-    if (data.briefStatus === "Awaiting") briefTab.appendChild(make("span", "acc-badge", "1"));
+    renderAsk(data);
   }
 
-  /* --------------------------------------------------- what to do about a step */
-  // Every board names its milestones differently, so actions are matched on what a
-  // milestone is about rather than its exact title.
-  function actionFor(task) {
-    if (!task || task.done || task.waitingOn === "us") return null;
-    var subject = task.subject.toLowerCase();
-    if (/brief/.test(subject)) return { label: "Fill in your brief", tab: "brief" };
-    if (/asset|reference|file|source|data|credential|access/.test(subject)) {
-      return { label: "Upload files", tab: "files", pick: true };
-    }
-    return { label: "Book a call", tab: "help", focus: "acc-meet" };
-  }
-
-  function actionButton(action, primary) {
-    var button = make("button", primary ? "btn btn--accent" : "btn btn--ghost", action.label);
-    button.type = "button";
-    button.addEventListener("click", function () {
-      setTab(action.tab);
-      if (action.pick) el("acc-upload").click();
-      if (action.focus) el(action.focus).scrollIntoView({ behavior: "smooth", block: "start" });
+  /* ------------------------------------------------------------- the tab strip */
+  function renderTabs(tasks) {
+    var strip = el("acc-mtabs");
+    strip.innerHTML = "";
+    tasks.forEach(function (task, index) {
+      var tab = make("button", "acc-mtab" + (task.done ? " acc-mtab--done" : task.waitingOn === "you" ? " acc-mtab--you" : ""));
+      tab.type = "button";
+      tab.setAttribute("role", "tab");
+      tab.appendChild(make("span", "acc-num", task.done ? "✓" : String(index + 1)));
+      tab.appendChild(make("strong", "", task.subject));
+      tab.appendChild(make("small", "", holder(task) + (!task.done && task.start ? " · " + pretty(task.start) : "")));
+      tab.addEventListener("click", function () { selectTab(index); });
+      strip.appendChild(tab);
     });
-    return button;
+    var help = make("button", "acc-mtab acc-mtab--help");
+    help.type = "button";
+    help.setAttribute("role", "tab");
+    help.appendChild(make("span", "acc-num", "+"));
+    help.appendChild(make("strong", "", "Something else?"));
+    var asked = ((state.current && state.current.requests) || []).length;
+    help.appendChild(make("small", "", asked ? asked + " request" + (asked === 1 ? "" : "s") + " open" : "Ask or book a call"));
+    help.addEventListener("click", function () { selectTab(HELP); });
+    strip.appendChild(help);
   }
 
-  function moreTime(task) {
-    var button = make("button", "acc-link", "Need more time?");
-    button.type = "button";
-    button.addEventListener("click", function () { askForDate(task); });
-    return button;
+  /* --------------------------------------------------- what each milestone needs */
+  // Boards name milestones differently, so a milestone's tool is chosen by what it is
+  // about rather than its exact title.
+  function toolsFor(task) {
+    var subject = task.subject.toLowerCase();
+    if (/brief/.test(subject)) return ["brief"];
+    if (/asset|reference|file|source|data|credential|access/.test(subject)) return ["files"];
+    if (task.waitingOn === "us" || task.done) return [];
+    return ["meet"];
   }
 
-  /* ---------------------------------------------------------------------- hero */
-  function renderHero(data) {
-    var tasks = data.tasks || [];
-    var hero = el("acc-hero");
-    var actions = el("acc-hero-actions");
-    var after = el("acc-hero-after");
-    actions.innerHTML = "";
-    after.hidden = true;
-    after.innerHTML = "";
+  function place(tools) {
+    var slot = el("acc-slot");
+    var parking = el("acc-parking");
+    // Put back whatever the last tab borrowed, then lend out what this one needs.
+    all("#acc-slot .acc-tool").forEach(function (tool) { parking.appendChild(tool); });
+    slot.innerHTML = "";
+    if (!tools.length) return;
+    var holder_ = tools.length > 1 ? make("div", "acc-split") : slot;
+    if (holder_ !== slot) slot.appendChild(holder_);
+    tools.forEach(function (name) { holder_.appendChild(el("tool-" + name)); });
+    if (tools.indexOf("meet") >= 0) loadSlots();
+  }
 
-    var fresh = newlyDone(data);
-    el("acc-cheer").hidden = !fresh.length;
-    if (fresh.length) {
-      el("acc-cheer").textContent = fresh.length === 1
-        ? "✓ " + fresh[0] + " — done."
-        : "✓ " + fresh.length + " milestones done since you were last here.";
-      celebrate();
+  function selectTab(which, options) {
+    var tasks = (state.current && state.current.tasks) || [];
+    var tabs = all("#acc-mtabs .acc-mtab");
+    var isHelp = which === HELP;
+    var index = isHelp ? tasks.length : which;
+    var task = isHelp ? null : tasks[which];
+    if (!isHelp && !task) return;
+    state.step = index;
+
+    tabs.forEach(function (tab, position) { tab.setAttribute("aria-selected", String(position === index)); });
+    // Bring the open tab into view within the strip itself. scrollIntoView also moves the
+    // page, and on a phone the active milestone was left sitting off to the right.
+    if (tabs[index]) {
+      var strip = el("acc-mtabs");
+      var offset = tabs[index].getBoundingClientRect().left - strip.getBoundingClientRect().left;
+      strip.scrollTo({ left: strip.scrollLeft + offset - 12, behavior: "smooth" });
     }
 
-    var open = tasks.filter(function (t) { return !t.done; });
-    var firstIndex = tasks.indexOf(open[0]);
-    var mineIndex = tasks.findIndex(function (t) { return !t.done && t.waitingOn !== "us"; });
-    var first = open[0];
+    var panel = el("acc-panel");
+    var tag = el("acc-tag");
+    var when = el("acc-when");
+    when.innerHTML = "";
 
-    if (!first) {
-      hero.className = "acc-hero acc-hero--calm";
-      el("acc-hero-kicker").textContent = "All milestones done";
-      el("acc-hero-title").textContent = "Your project is complete";
-      el("acc-hero-detail").textContent = "Thank you. The balance invoice comes with the handover.";
-      el("acc-hero-due").textContent = "";
-      return;
-    }
-
-    if (first.waitingOn === "us") {
-      // Nothing is waiting on them - say so plainly, then show what is coming their way.
-      hero.className = "acc-hero acc-hero--calm";
-      el("acc-hero-kicker").textContent = "Nothing needed from you right now";
-      el("acc-hero-title").textContent = "We are working on: " + first.subject;
-      el("acc-hero-detail").textContent = first.detail || "";
-      el("acc-hero-due").textContent = first.end ? "Until " + pretty(first.end) : "";
-      var mine = tasks[mineIndex];
-      if (mine) {
-        after.hidden = false;
-        after.appendChild(document.createTextNode("After that it is over to you: "));
-        after.appendChild(make("strong", "", mine.subject));
-        if (mine.start) after.appendChild(document.createTextNode(", from " + pretty(mine.start) + "."));
+    if (isHelp) {
+      panel.className = "acc-panel";
+      tag.className = "acc-tag";
+      tag.textContent = "Anything else";
+      el("acc-title").textContent = "Something not on the plan?";
+      el("acc-detail").textContent = "Ask for extra work, or book a call about anything at all. "
+        + "Santi reads everything and comes back to you before anything starts.";
+      place(["ask", "meet"]);
+      document.title = "Something else | Santi Universe";
+    } else {
+      var yours = !task.done && task.waitingOn === "you";
+      panel.className = "acc-panel" + (yours ? " acc-panel--you" : "");
+      tag.className = "acc-tag" + (task.done ? " acc-tag--done" : yours ? " acc-tag--you" : "");
+      tag.textContent = holder(task);
+      el("acc-title").textContent = task.subject;
+      el("acc-detail").textContent = task.waitingOn === "us" && !task.done
+        ? (task.detail || "") + " Nothing is needed from you — you will see it ticked here when it is done."
+        : (task.detail || "");
+      if (task.done) when.appendChild(make("span", "", "Done ✓"));
+      else if (task.start) when.appendChild(make("span", "", (yours ? "By " + pretty(task.end) : span(task))));
+      if (yours) {
+        var more = make("button", "acc-link", "Need more time?");
+        more.type = "button";
+        more.addEventListener("click", function () { askForDate(task); });
+        when.appendChild(more);
       }
-      return;
+      place(toolsFor(task));
+      document.title = task.subject + " | Santi Universe";
     }
 
-    hero.className = "acc-hero";
-    el("acc-hero-kicker").textContent = "Your next step · Milestone " + (firstIndex + 1) + " of " + tasks.length;
-    el("acc-hero-title").textContent = first.subject;
-    el("acc-hero-detail").textContent = first.detail || "";
-    el("acc-hero-due").textContent = first.end ? "By " + pretty(first.end) : "";
-    var action = actionFor(first);
-    if (action) actions.appendChild(actionButton(action, true));
-    if (first.waitingOn === "you") actions.appendChild(moreTime(first));
+    el("acc-count").textContent = isHelp ? "" : "Milestone " + (index + 1) + " of " + tasks.length;
+    el("acc-prev").disabled = index === 0;
+    el("acc-next").disabled = isHelp;
+    el("acc-next").textContent = index === tasks.length - 1 ? "Something else? →" : "Next →";
+
+    if (!options || options.push !== false) {
+      writeRoute(projectRoute(isHelp ? "/" + HELP : "/m/" + (index + 1)));
+    }
   }
 
-  /* --------------------------------------------------------------- celebration */
+  el("acc-prev").addEventListener("click", function () {
+    selectTab(state.step - 1);
+  });
+  el("acc-next").addEventListener("click", function () {
+    var tasks = (state.current && state.current.tasks) || [];
+    selectTab(state.step + 1 >= tasks.length ? HELP : state.step + 1);
+  });
+
+  /* ------------------------------------------------------------------- extras */
   // Only news is celebrated: what the client saw last time is kept in their browser and
-  // compared, so a milestone gets confetti once and a first visit never pretends five
-  // things just happened. Nothing moves for anyone who asked for reduced motion.
-  function newlyDone(data) {
+  // compared, so a milestone gets confetti once, and never for anyone who asked their
+  // system for reduced motion.
+  function cheer(data) {
     var key = "santi.account.done." + data.id;
     var done = (data.tasks || []).filter(function (t) { return t.done; }).map(function (t) { return t.subject; });
     var before = null;
     try { before = JSON.parse(localStorage.getItem(key) || "null"); } catch (e) {}
     try { localStorage.setItem(key, JSON.stringify(done)); } catch (e) {}
-    if (!before) return [];
-    return done.filter(function (subject) { return before.indexOf(subject) < 0; });
+    var fresh = before ? done.filter(function (s) { return before.indexOf(s) < 0; }) : [];
+    el("acc-cheer").hidden = !fresh.length;
+    if (!fresh.length) return;
+    el("acc-cheer").textContent = fresh.length === 1 ? "✓ " + fresh[0] + " — done."
+      : "✓ " + fresh.length + " milestones done since you were last here.";
+    celebrate();
   }
 
   function celebrate() {
@@ -353,52 +365,6 @@
     })();
   }
 
-  /* --------------------------------------------------------------------- video */
-  // Hidden entirely until there is something filmed; an empty box above the fold was
-  // noise. What may be framed is decided by the server, not here.
-  function renderVideo(video) {
-    var holder = el("acc-video");
-    holder.innerHTML = "";
-    holder.hidden = !(video && video.src);
-    if (holder.hidden) return;
-    if (video.kind === "file") {
-      var player = make("video");
-      player.src = video.src;
-      player.controls = true;
-      player.preload = "metadata";
-      if (video.poster) player.poster = video.poster;
-      holder.appendChild(player);
-      return;
-    }
-    var frame = make("iframe");
-    frame.src = video.src;
-    frame.title = video.title || "Welcome video";
-    frame.loading = "lazy";
-    frame.allow = "encrypted-media; picture-in-picture; fullscreen";
-    frame.setAttribute("allowfullscreen", "allowfullscreen");
-    frame.setAttribute("referrerpolicy", "no-referrer");
-    holder.appendChild(frame);
-  }
-
-  /* ---------------------------------------------------------------------- tabs */
-  function setTab(name, options) {
-    state.tab = name;
-    all("[data-tab]").forEach(function (tab) {
-      tab.setAttribute("aria-selected", String(tab.getAttribute("data-tab") === name));
-    });
-    all("[data-panel]").forEach(function (panel) {
-      panel.hidden = panel.getAttribute("data-panel") !== name;
-    });
-    if (name === "help") loadSlots();
-    if (state.current && (!options || options.push !== false)) {
-      writeRoute(projectRoute(name === "plan" ? "" : "/" + name));
-    }
-  }
-  all("[data-tab]").forEach(function (tab) {
-    tab.addEventListener("click", function () { setTab(tab.getAttribute("data-tab")); });
-  });
-
-  /* ---------------------------------------------------------------------- plan */
   function renderVerdict(data) {
     var box = el("acc-verdict");
     var verdict = data.verdict || {};
@@ -412,96 +378,32 @@
       + "; the plan finishes " + pretty(data.plannedEnd) + "."));
   }
 
-  function renderRail(tasks) {
-    var rail = el("acc-rail");
-    rail.innerHTML = "";
-    tasks.forEach(function (task, index) {
-      var li = make("li");
-      var dot = make("span", "acc-dot" + (task.done ? " acc-dot--done" : task.waitingOn === "you" ? " acc-dot--you" : ""),
-        task.done ? "✓" : String(index + 1));
-      var body = make("div");
-      body.appendChild(make("strong", "", task.subject));
-      body.appendChild(make("small", "", holder(task) + (!task.done && task.start ? " · " + pretty(task.start) : "")));
-      li.appendChild(dot);
-      li.appendChild(body);
-      li.addEventListener("click", function () { selectStep(index); });
-      rail.appendChild(li);
-    });
-  }
-
-  function selectStep(index, options) {
-    var tasks = (state.current && state.current.tasks) || [];
-    var task = tasks[index];
-    if (!task) return;
-    state.step = index;
-    all("#acc-rail li").forEach(function (li, position) {
-      li.setAttribute("aria-current", String(position === index));
-    });
-    var tag = el("acc-step-tag");
-    tag.textContent = holder(task);
-    tag.className = "acc-tag" + (task.done ? " acc-tag--done" : task.waitingOn === "you" ? " acc-tag--you" : "");
-    el("acc-step-title").textContent = task.subject;
-    el("acc-step-detail").textContent = task.detail || "";
-    el("acc-step-when").textContent = task.done ? "" : (task.start ? span(task) : "Not scheduled yet");
-    el("acc-step-count").textContent = (index + 1) + " of " + tasks.length;
-
-    var actions = el("acc-step-actions");
-    actions.innerHTML = "";
-    var action = actionFor(task);
-    if (action) actions.appendChild(actionButton(action, true));
-    if (!task.done && task.waitingOn === "you") actions.appendChild(moreTime(task));
-
-    el("acc-prev").disabled = index === 0;
-    el("acc-next").disabled = index === tasks.length - 1;
-    if (!options || options.push !== false) writeRoute(projectRoute("/m/" + (index + 1)));
-  }
-  el("acc-prev").addEventListener("click", function () { selectStep(state.step - 1); });
-  el("acc-next").addEventListener("click", function () { selectStep(state.step + 1); });
-
-  function renderMonths(tasks) {
-    var holder_ = el("acc-months");
+  // Hidden until something is filmed. What may be framed is the server's decision.
+  function renderVideo(video) {
+    var holder_ = el("acc-video");
     holder_.innerHTML = "";
-    var order = [];
-    var groups = {};
-    tasks.forEach(function (task, index) {
-      if (!task.start) return;
-      var key = task.start.slice(0, 7);
-      if (!groups[key]) { groups[key] = []; order.push(key); }
-      groups[key].push({ task: task, index: index });
-    });
-    order.forEach(function (key) {
-      var column = make("div", "acc-month");
-      column.appendChild(make("h4", "", MONTH_NAMES[Number(key.slice(5, 7)) - 1] + " " + key.slice(0, 4)));
-      var yours = groups[key].filter(function (e) { return e.task.waitingOn === "you"; }).length;
-      column.appendChild(make("small", "", groups[key].length + (groups[key].length === 1 ? " milestone" : " milestones")
-        + (yours ? " · " + yours + " for you" : "")));
-      groups[key].forEach(function (entry) {
-        var card = make("div", "acc-mcard" + (entry.task.done ? " acc-mcard--done"
-          : entry.task.waitingOn === "you" ? " acc-mcard--you" : ""));
-        card.appendChild(make("strong", "", entry.task.subject));
-        card.appendChild(make("small", "", span(entry.task) + " · " + holder(entry.task)));
-        card.addEventListener("click", function () { setPlanView("steps"); selectStep(entry.index); });
-        column.appendChild(card);
-      });
-      holder_.appendChild(column);
-    });
-    if (!order.length) holder_.appendChild(make("p", "acc-muted", "The plan is drawn up overnight — check back tomorrow."));
+    holder_.hidden = !(video && video.src);
+    if (holder_.hidden) return;
+    if (video.kind === "file") {
+      var player = make("video");
+      player.src = video.src;
+      player.controls = true;
+      player.preload = "metadata";
+      if (video.poster) player.poster = video.poster;
+      holder_.appendChild(player);
+      return;
+    }
+    var frame = make("iframe");
+    frame.src = video.src;
+    frame.title = video.title || "Welcome video";
+    frame.loading = "lazy";
+    frame.allow = "encrypted-media; picture-in-picture; fullscreen";
+    frame.setAttribute("allowfullscreen", "allowfullscreen");
+    frame.setAttribute("referrerpolicy", "no-referrer");
+    holder_.appendChild(frame);
   }
-
-  function setPlanView(name) {
-    all("[data-planview]").forEach(function (button) {
-      button.setAttribute("aria-pressed", String(button.getAttribute("data-planview") === name));
-    });
-    el("acc-steps").hidden = name !== "steps";
-    el("acc-months").hidden = name !== "months";
-  }
-  all("[data-planview]").forEach(function (button) {
-    button.addEventListener("click", function () { setPlanView(button.getAttribute("data-planview")); });
-  });
 
   /* --------------------------------------------------------------- move a date */
-  // A dialog, because moving a date moves everything after it - that deserves a
-  // sentence of explanation, not a picker that fires on change.
   function askForDate(task) {
     state.moving = task;
     el("acc-move-title").textContent = "Move: " + task.subject;
@@ -521,22 +423,23 @@
     var wanted = el("acc-move-date").value;
     if (!wanted) { note.textContent = "Pick a date first."; return; }
     note.textContent = "Moving…";
+    var keep = state.step;
     post("/account/move", { project: state.current.id, step: state.moving.subject, date: wanted }, true)
       .then(function (answer) {
         if (!answer || answer.ok !== true) { note.textContent = (answer && answer.error) || "That date did not work."; return; }
         closeDialog();
-        openProject(state.current.id, { push: false });
+        openProject(state.current.id, { push: false, keep: keep });
       });
   });
 
-  /* --------------------------------------------------------------------- brief */
+  /* --------------------------------------------------------------- brief tool */
   function renderBrief(data) {
     var submitted = data.briefStatus && data.briefStatus !== "Awaiting";
     el("acc-brief-open").hidden = submitted;
     el("acc-brief-done").hidden = !submitted;
     if (submitted) return;
-    var holder_ = el("acc-questions");
-    holder_.innerHTML = "";
+    var box = el("acc-questions");
+    box.innerHTML = "";
     (data.questions || []).forEach(function (question) {
       var wrap = make("div", "acc-q");
       var label = make("label", "", question.label);
@@ -547,7 +450,7 @@
       wrap.appendChild(label);
       wrap.appendChild(field);
       if (question.type !== "date") wrap.appendChild(improver(question, field));
-      holder_.appendChild(wrap);
+      box.appendChild(wrap);
     });
   }
 
@@ -615,11 +518,11 @@
         return;
       }
       note.textContent = "";
-      openProject(state.current.id, { push: false }).then(function () { setTab("brief", { push: false }); });
+      openProject(state.current.id, { push: false, keep: state.step });
     });
   });
 
-  /* --------------------------------------------------------------------- files */
+  /* --------------------------------------------------------------- files tool */
   function renderFiles(files) {
     var list = el("acc-files");
     list.innerHTML = "";
@@ -637,12 +540,13 @@
     var note = el("acc-upload-note");
     var queue = Array.prototype.slice.call(files);
     var failed = [];
+    var keep = state.step;
     function next() {
       if (!queue.length) {
         note.textContent = failed.length
           ? "Not sent: " + failed.join(", ") + ". Email them to santi@santi.co.za instead."
           : "Received — filed on your project.";
-        return openProject(state.current.id, { push: false }).then(function () { setTab("files", { push: false }); });
+        return openProject(state.current.id, { push: false, keep: keep });
       }
       var file = queue.shift();
       note.textContent = "Sending " + file.name + "…";
@@ -681,35 +585,19 @@
     if (event.dataTransfer && event.dataTransfer.files.length) upload(event.dataTransfer.files);
   });
 
-  /* ---------------------------------------------------------------------- help */
-  function renderHelp(data) {
-    el("acc-rates").textContent = (data.rates && data.rates.message) || "";
-    var list = el("acc-requests");
-    list.innerHTML = "";
-    (data.requests || []).forEach(function (request) {
-      var li = make("li");
-      li.appendChild(document.createTextNode(request.subject));
-      li.appendChild(make("small", "", request.status === "With Santi"
-        ? "With Santi — he will come back to you before anything starts"
-        : request.status));
-      list.appendChild(li);
-    });
-    var helpTab = document.querySelector('[data-tab="help"]');
-    helpTab.innerHTML = "Help";
-    if ((data.requests || []).length) helpTab.appendChild(make("span", "acc-badge", String(data.requests.length)));
-  }
-
-  // Slots are fetched fresh each time: the calendar moves, and a stale list offers a
-  // time that is already gone.
+  /* ---------------------------------------------------------- booking tool */
+  // Slots are fetched fresh whenever the tool is shown: the calendar moves, and a stale
+  // list offers a time that is already gone.
   function loadSlots() {
     if (!state.current) return;
-    var holder_ = el("acc-slots");
-    holder_.innerHTML = "";
+    var box = el("acc-slots");
+    box.innerHTML = "";
     el("acc-booking").hidden = true;
+    state.slot = null;
     post("/account/slots", { project: state.current.id }, true).then(function (answer) {
       var slots = (answer && answer.slots) || [];
       if (!slots.length) {
-        holder_.appendChild(make("p", "acc-muted", "Nothing open in the next three weeks — email santi@santi.co.za and we will make room."));
+        box.appendChild(make("p", "acc-muted", "Nothing open in the next three weeks — email santi@santi.co.za and we will make room."));
         return;
       }
       slots.slice(0, 8).forEach(function (slot) {
@@ -723,7 +611,7 @@
           el("acc-book-note").textContent = "";
           el("acc-agenda").focus();
         });
-        holder_.appendChild(button);
+        box.appendChild(button);
       });
     });
   }
@@ -736,16 +624,30 @@
     if (!state.slot) { note.textContent = "Pick a time first."; return; }
     if (!agenda) { note.textContent = "Tell us what to cover — even one line."; el("acc-agenda").focus(); return; }
     note.textContent = "Booking…";
-    post("/account/book", { project: state.current.id, slot: state.slot.start, email: state.email, note: agenda }, true)
+    var chosen = state.slot;
+    post("/account/book", { project: state.current.id, slot: chosen.start, email: state.email, note: agenda }, true)
       .then(function (answer) {
         if (!answer || answer.ok !== true) { note.textContent = (answer && answer.error) || "That did not book."; loadSlots(); return; }
-        note.textContent = "Booked for " + weekday(state.slot.date) + " " + pretty(state.slot.date) + " at "
-          + state.slot.time + ". A confirmation is on its way.";
-        state.slot = null;
         el("acc-agenda").value = "";
         loadSlots();
+        el("acc-book-note").textContent = "Booked for " + weekday(chosen.date) + " " + pretty(chosen.date)
+          + " at " + chosen.time + ". A confirmation is on its way.";
       });
   });
+
+  /* -------------------------------------------------------------- asking tool */
+  function renderAsk(data) {
+    el("acc-rates").textContent = (data.rates && data.rates.message) || "";
+    var list = el("acc-requests");
+    list.innerHTML = "";
+    (data.requests || []).forEach(function (request) {
+      var li = make("li");
+      li.appendChild(document.createTextNode(request.subject));
+      li.appendChild(make("small", "", request.status === "With Santi"
+        ? "With Santi — he will come back to you before anything starts" : request.status));
+      list.appendChild(li);
+    });
+  }
 
   el("acc-ask-form").addEventListener("submit", function (event) {
     event.preventDefault();
@@ -758,8 +660,9 @@
         if (!answer || answer.ok !== true) { note.textContent = (answer && answer.error) || "That did not send."; return; }
         el("acc-ask-subject").value = "";
         el("acc-ask-detail").value = "";
-        note.textContent = "Sent. Santi has it and will come back to you before anything starts.";
-        openProject(state.current.id, { push: false }).then(function () { setTab("help", { push: false }); });
+        openProject(state.current.id, { push: false, keep: HELP }).then(function () {
+          el("acc-ask-note").textContent = "Sent. Santi has it and will come back to you before anything starts.";
+        });
       });
   });
 

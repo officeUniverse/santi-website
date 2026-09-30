@@ -6,154 +6,108 @@
   "crumb": "Your projects",
   "robots": "noindex, nofollow",
   "referrer": "no-referrer",
-  "scripts": ["assets/js/account.js?v=3"]
+  "scripts": ["assets/js/account.js?v=4"]
 }
 -->
     <style>
-      /* One question organises this page: what does the client need to do next?
-         The answer sits at the top with its button. Everything else is a tab, not a
-         scroll, and every milestone appears once - the previous version showed the same
-         nine items five different ways and buried the one action that mattered. */
+      /* The milestones ARE the navigation. One tab per milestone, and each tab holds the
+         thing you actually do at that step: the brief form lives in the Brief tab, the
+         upload lives in Brand assets, the booking lives in Kickoff. Nothing is somewhere
+         else to go and find. */
 
       .acc { padding: clamp(96px, 11vw, 140px) var(--pad) clamp(48px, 7vw, 88px);
              max-width: 72rem; margin: 10px auto 40px; }
       .acc [hidden] { display: none !important; }
       .acc p { margin: 0; }
       .acc-muted { color: var(--night-muted); }
-      .acc-note { color: var(--gold); min-height: 1.3rem; margin-top: .8rem !important;
-                  font-size: .9rem; }
+      .acc-note { color: var(--gold); min-height: 1.3rem; margin-top: .8rem !important; font-size: .9rem; }
       .acc-link { background: none; border: 0; padding: 0; font: inherit; color: var(--gold);
                   text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
       .acc-link--quiet { color: var(--night-muted); }
+      .acc-link:disabled { opacity: .35; cursor: default; text-decoration: none; }
 
-      /* --- sign in and the project list ---------------------------------------- */
+      /* --- sign in and the project list ----------------------------------------- */
       .acc-narrow { max-width: 30rem; }
       .acc-narrow h1 { margin: 0 0 .8rem; }
-      .acc-narrow .acc-muted { margin-bottom: 1.5rem; }
+      .acc-narrow > .acc-muted { margin-bottom: 1.5rem; }
       .acc-input { width: 100%; padding: .85rem 1rem; border-radius: 12px; font: inherit;
                    border: 1px solid var(--night-line); background: #fff; color: var(--ink); }
       .acc-narrow .acc-input { margin: .5rem 0 1rem; }
-
       .acc-listhead { display: flex; justify-content: space-between; align-items: baseline;
                       gap: 1rem; flex-wrap: wrap; margin-bottom: 1.75rem; }
       .acc-listhead h1 { margin: 0; }
+      .acc-eyebrow { color: var(--gold); font-size: .85rem; font-weight: 600; }
       .acc-projects { list-style: none; margin: 0; padding: 0; display: grid; gap: .8rem; }
-      .acc-projects button { width: 100%; text-align: left; font: inherit; color: inherit;
-                             cursor: pointer; background: rgba(255,255,255,.035);
-                             border: 1px solid var(--night-line); border-radius: 16px;
-                             padding: 1.2rem 1.35rem; display: grid; gap: .35rem; }
+      .acc-projects button { width: 100%; text-align: left; font: inherit; color: inherit; cursor: pointer;
+                             background: rgba(255,255,255,.035); border: 1px solid var(--night-line);
+                             border-radius: 16px; padding: 1.2rem 1.35rem; display: grid; gap: .35rem; }
       .acc-projects button:hover { border-color: var(--gold); }
       .acc-projects strong { font-size: 1.1rem; }
-      .acc-projects .acc-mini { height: 4px; border-radius: 99px; background: rgba(255,255,255,.1);
-                                overflow: hidden; margin-top: .45rem; }
-      .acc-projects .acc-mini i { display: block; height: 100%; background: var(--gold); }
+      .acc-mini { height: 4px; border-radius: 99px; background: rgba(255,255,255,.1); overflow: hidden;
+                  margin-top: .45rem; }
+      .acc-mini i { display: block; height: 100%; background: var(--gold); }
 
-      /* --- project header ------------------------------------------------------- */
+      /* --- header and progress ---------------------------------------------------- */
       .acc-head { display: flex; align-items: flex-start; justify-content: space-between;
-                  gap: 1.25rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+                  gap: 1.25rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
       .acc-head h1 { margin: .2rem 0 0; font-size: clamp(1.5rem, 3.4vw, 2.3rem); }
-      .acc-eyebrow { color: var(--gold); font-size: .85rem; font-weight: 600; }
-      .acc-headside { display: grid; justify-items: end; gap: .4rem; text-align: right; }
-      .acc-headside .acc-muted { font-size: .85rem; }
-
-      .acc-progress { display: flex; align-items: center; gap: .9rem; margin-bottom: 1.75rem; }
-      .acc-progress .acc-bar { flex: 1; height: 6px; border-radius: 99px; overflow: hidden;
-                               background: rgba(255,255,255,.1); }
-      .acc-progress .acc-bar i { display: block; height: 100%; background: var(--gold);
-                                 transition: width .4s ease; }
+      .acc-headside { display: grid; justify-items: end; gap: .35rem; text-align: right; font-size: .85rem; }
+      .acc-progress { display: flex; align-items: center; gap: .9rem; margin-bottom: 1.5rem; }
+      .acc-bar { flex: 1; height: 6px; border-radius: 99px; overflow: hidden; background: rgba(255,255,255,.1); }
+      .acc-bar i { display: block; height: 100%; background: var(--gold); transition: width .4s ease; }
       .acc-progress span { font-size: .88rem; white-space: nowrap; }
-
-      /* --- the hero: the one thing to do -------------------------------------- */
-      .acc-hero { border-radius: 20px; padding: clamp(1.4rem, 3vw, 2.1rem);
-                  background: linear-gradient(135deg, rgba(255,209,71,.14), rgba(255,209,71,.03));
-                  border: 1px solid rgba(255,209,71,.35); margin-bottom: 2rem; }
-      .acc-hero--calm { background: rgba(255,255,255,.035); border-color: var(--night-line); }
-      .acc-kicker { font-size: .74rem; letter-spacing: .12em; text-transform: uppercase;
-                    color: var(--gold); font-weight: 700; }
-      .acc-hero--calm .acc-kicker { color: var(--night-muted); }
-      .acc-hero h2 { margin: .45rem 0 .6rem; font-size: clamp(1.35rem, 3vw, 1.9rem); }
-      .acc-hero .acc-muted { max-width: 40rem; line-height: 1.6; }
-      .acc-due { margin-top: .9rem !important; font-weight: 600; }
-      .acc-actions { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem 1.25rem;
-                     margin-top: 1.3rem; }
-      .acc-after { margin-top: 1.4rem !important; padding-top: 1.1rem;
-                   border-top: 1px solid var(--night-line); font-size: .92rem; }
-      .acc-cheer { color: var(--gold); font-weight: 600; margin-bottom: .9rem !important; }
-
-      .acc-video { position: relative; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden;
-                   border: 1px solid var(--night-line); max-width: 46rem; margin-bottom: 2rem; }
-      .acc-video iframe, .acc-video video { position: absolute; inset: 0; width: 100%; height: 100%;
-                                            border: 0; }
-
-      /* --- tabs ----------------------------------------------------------------- */
-      .acc-tabs { display: flex; gap: .35rem; overflow-x: auto; margin-bottom: 1.5rem;
-                  border-bottom: 1px solid var(--night-line); }
-      .acc-tabs button { flex: none; background: none; border: 0; font: inherit; color: var(--night-muted);
-                         padding: .8rem 1.05rem; cursor: pointer; border-bottom: 2px solid transparent;
-                         margin-bottom: -1px; font-weight: 600; }
-      .acc-tabs button[aria-selected="true"] { color: #fff; border-bottom-color: var(--gold); }
-      .acc-tabs button:hover { color: #fff; }
-      .acc-tabs .acc-badge { display: inline-grid; place-items: center; min-width: 1.25rem;
-                             height: 1.25rem; padding: 0 .35rem; margin-left: .35rem; border-radius: 99px;
-                             background: var(--gold); color: var(--ink); font-size: .7rem; }
-      .acc-panel { min-height: 16rem; }
-      .acc-panel h3 { margin: 0 0 .4rem; font-size: 1.15rem; }
-      .acc-panel > .acc-muted { margin-bottom: 1.25rem; max-width: 42rem; line-height: 1.6; }
-
-      /* --- plan: the rail and its detail ------------------------------------- */
-      .acc-switch { display: inline-flex; border: 1px solid var(--night-line); border-radius: 99px;
-                    padding: .2rem; margin-bottom: 1.25rem; }
-      .acc-switch button { background: none; border: 0; font: inherit; font-size: .85rem;
-                           color: var(--night-muted); padding: .35rem .95rem; border-radius: 99px;
-                           cursor: pointer; }
-      .acc-switch button[aria-pressed="true"] { background: var(--gold); color: var(--ink); font-weight: 700; }
-
-      .acc-plan { display: grid; grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
-                  gap: 1.75rem; align-items: start; }
-      .acc-rail { list-style: none; margin: 0; padding: 0; position: relative; }
-      .acc-rail::before { content: ""; position: absolute; left: .74rem; top: 1rem; bottom: 1rem;
-                          width: 2px; background: var(--night-line); }
-      .acc-rail li { position: relative; display: grid; grid-template-columns: 1.5rem 1fr; gap: .8rem;
-                     padding: .6rem .6rem .6rem 0; border-radius: 10px; cursor: pointer; }
-      .acc-rail li:hover strong, .acc-rail li[aria-current="true"] strong { color: var(--gold); }
-      .acc-dot { width: 1.5rem; height: 1.5rem; border-radius: 50%; z-index: 1; margin-top: .05rem;
-                 display: grid; place-items: center; font-size: .7rem; font-weight: 700;
-                 background: var(--ink, #0d1b2a); border: 2px solid var(--night-line); }
-      .acc-dot--done { background: var(--gold); border-color: var(--gold); color: var(--ink); }
-      .acc-dot--you { border-color: var(--gold); color: var(--gold); }
-      .acc-rail li[aria-current="true"] .acc-dot { box-shadow: 0 0 0 5px rgba(255,209,71,.2); }
-      .acc-rail strong { display: block; font-size: .92rem; line-height: 1.3; }
-      .acc-rail small { color: var(--night-muted); font-size: .76rem; }
-
-      .acc-detail { border: 1px solid var(--night-line); border-radius: 16px; padding: 1.5rem;
-                    background: rgba(255,255,255,.03); position: sticky; top: 7rem; }
-      .acc-tag { display: inline-block; font-size: .7rem; letter-spacing: .08em; text-transform: uppercase;
-                 padding: .25rem .6rem; border-radius: 99px; border: 1px solid var(--night-line);
-                 color: var(--night-muted); font-weight: 700; }
-      .acc-tag--you { background: var(--gold); border-color: var(--gold); color: var(--ink); }
-      .acc-tag--done { border-color: rgba(255,209,71,.5); color: var(--gold); }
-      .acc-detail h3 { margin: .7rem 0 .5rem; font-size: 1.3rem; }
-      .acc-detail .acc-muted { line-height: 1.6; }
-      .acc-when { margin-top: .8rem !important; font-size: .9rem; }
-      .acc-stepnav { display: flex; justify-content: space-between; gap: .75rem; margin-top: 1.4rem;
-                     padding-top: 1.1rem; border-top: 1px solid var(--night-line); }
-
-      .acc-months { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 1.25rem; }
-      .acc-month h4 { margin: 0; font-size: 1rem; }
-      .acc-month > small { display: block; color: var(--night-muted); font-size: .76rem; margin: .15rem 0 .8rem; }
-      .acc-mcard { border: 1px solid var(--night-line); border-radius: 12px; padding: .8rem .9rem;
-                   margin-bottom: .55rem; cursor: pointer; background: rgba(255,255,255,.03); }
-      .acc-mcard:hover { border-color: var(--gold); }
-      .acc-mcard--you { border-left: 3px solid var(--gold); }
-      .acc-mcard--done { opacity: .5; }
-      .acc-mcard strong { display: block; font-size: .9rem; }
-      .acc-mcard small { color: var(--night-muted); font-size: .76rem; }
-
+      .acc-cheer { color: var(--gold); font-weight: 600; margin-bottom: 1rem !important; }
       .acc-verdict { border-left: 3px solid var(--gold); padding: .7rem 0 .7rem 1rem; margin-bottom: 1.5rem;
                      font-size: .92rem; color: var(--night-muted); max-width: 44rem; }
       .acc-verdict strong { color: #fff; display: block; margin-bottom: .2rem; }
+      .acc-video { position: relative; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden;
+                   border: 1px solid var(--night-line); max-width: 46rem; margin-bottom: 1.75rem; }
+      .acc-video iframe, .acc-video video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
-      /* --- brief, files, help ---------------------------------------------------- */
+      /* --- the milestone tabs ----------------------------------------------------- */
+      .acc-mtabs { display: flex; gap: .5rem; overflow-x: auto; padding: .25rem .1rem 1rem;
+                   scroll-snap-type: x proximity; scrollbar-width: thin; }
+      .acc-mtab { flex: 0 0 auto; width: 10.5rem; scroll-snap-align: start; text-align: left;
+                  font: inherit; color: inherit; cursor: pointer; border-radius: 14px;
+                  border: 1px solid var(--night-line); background: rgba(255,255,255,.03);
+                  padding: .75rem .85rem; display: grid; grid-template-columns: 1.6rem 1fr;
+                  gap: .15rem .6rem; align-items: start; }
+      .acc-mtab:hover { border-color: rgba(255,209,71,.6); }
+      .acc-mtab[aria-selected="true"] { border-color: var(--gold); background: rgba(255,209,71,.1);
+                                        box-shadow: 0 0 0 1px var(--gold) inset; }
+      .acc-mtab--help { width: 9rem; border-style: dashed; }
+      .acc-num { grid-row: span 2; width: 1.6rem; height: 1.6rem; border-radius: 50%;
+                 display: grid; place-items: center; font-size: .72rem; font-weight: 700;
+                 border: 2px solid var(--night-line); }
+      .acc-mtab--done .acc-num { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+      .acc-mtab--you .acc-num { border-color: var(--gold); color: var(--gold); }
+      .acc-mtab strong { font-size: .84rem; line-height: 1.25; display: -webkit-box;
+                         -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+      .acc-mtab small { font-size: .72rem; color: var(--night-muted); }
+      .acc-mtab--you small { color: var(--gold); }
+
+      /* --- the open milestone ------------------------------------------------------ */
+      .acc-panel { border: 1px solid var(--night-line); border-radius: 20px;
+                   padding: clamp(1.3rem, 3vw, 2rem); background: rgba(255,255,255,.03); }
+      .acc-panel--you { border-color: rgba(255,209,71,.45);
+                        background: linear-gradient(160deg, rgba(255,209,71,.1), rgba(255,209,71,.02)); }
+      .acc-tag { display: inline-block; font-size: .7rem; letter-spacing: .08em; text-transform: uppercase;
+                 padding: .28rem .65rem; border-radius: 99px; border: 1px solid var(--night-line);
+                 color: var(--night-muted); font-weight: 700; }
+      .acc-tag--you { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+      .acc-tag--done { border-color: rgba(255,209,71,.5); color: var(--gold); }
+      .acc-panel h2 { margin: .75rem 0 .5rem; font-size: clamp(1.35rem, 3vw, 1.9rem); }
+      .acc-panel > .acc-muted { max-width: 42rem; line-height: 1.6; }
+      .acc-when { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.25rem;
+                  margin-top: .9rem; font-size: .92rem; font-weight: 600; }
+      .acc-tool { margin-top: 1.6rem; padding-top: 1.5rem; border-top: 1px solid var(--night-line); }
+      .acc-tool h3 { margin: 0 0 .35rem; font-size: 1.08rem; }
+      .acc-tool > .acc-muted { margin-bottom: 1.1rem !important; max-width: 42rem; line-height: 1.55; }
+      .acc-stepnav { display: flex; justify-content: space-between; align-items: center; gap: .75rem;
+                     margin-top: 1.75rem; padding-top: 1.1rem; border-top: 1px solid var(--night-line); }
+      .acc-stepnav .acc-muted { font-size: .85rem; }
+
+      /* --- tools: brief, files, booking, asking ----------------------------------- */
       .acc-q { margin: 0 0 1.35rem; max-width: 44rem; }
       .acc-q label { display: block; font-weight: 600; margin-bottom: .45rem; }
       .acc-q textarea, .acc-q input { width: 100%; padding: .8rem; border-radius: 12px; font: inherit;
@@ -161,50 +115,44 @@
       .acc-suggest { border: 1px solid var(--night-line); border-left: 3px solid var(--gold);
                      border-radius: 12px; padding: 1rem 1.1rem; margin-top: .6rem; }
       .acc-suggest p { margin: .35rem 0 .9rem !important; }
-      .acc-done { border: 1px solid rgba(255,209,71,.35); border-radius: 16px; padding: 1.3rem 1.4rem;
+      .acc-done { border: 1px solid rgba(255,209,71,.35); border-radius: 14px; padding: 1.1rem 1.25rem;
                   max-width: 40rem; }
-      .acc-done strong { color: var(--gold); display: block; margin-bottom: .3rem; }
+      .acc-done strong { color: var(--gold); display: block; margin-bottom: .25rem; }
 
-      .acc-drop { border: 2px dashed var(--night-line); border-radius: 16px; padding: 2rem 1.5rem;
+      .acc-drop { border: 2px dashed var(--night-line); border-radius: 16px; padding: 1.8rem 1.5rem;
                   text-align: center; max-width: 40rem; cursor: pointer; }
       .acc-drop:hover, .acc-drop--over { border-color: var(--gold); }
       .acc-drop strong { display: block; margin-bottom: .3rem; }
-      .acc-files { list-style: none; margin: 1.5rem 0 0; padding: 0; max-width: 40rem; }
-      .acc-files li { display: flex; justify-content: space-between; gap: 1rem; padding: .75rem 0;
-                      border-bottom: 1px solid var(--night-line); }
+      .acc-files { list-style: none; margin: 1.25rem 0 0; padding: 0; max-width: 40rem; }
+      .acc-files li { display: flex; justify-content: space-between; gap: 1rem; padding: .7rem 0;
+                      border-bottom: 1px solid var(--night-line); font-size: .92rem; }
       .acc-files small { color: var(--night-muted); white-space: nowrap; }
 
-      .acc-help { display: grid; grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); gap: 1.5rem; }
-      .acc-card { border: 1px solid var(--night-line); border-radius: 16px; padding: 1.4rem;
-                  background: rgba(255,255,255,.03); }
-      .acc-card > .acc-muted { margin: .3rem 0 1.1rem !important; line-height: 1.55; font-size: .92rem; }
       .acc-slots { display: flex; flex-wrap: wrap; gap: .45rem; }
-      .acc-slots button { background: none; border: 1px solid var(--night-line); color: inherit;
-                          font: inherit; font-size: .85rem; padding: .5rem .8rem; border-radius: 10px;
-                          cursor: pointer; }
+      .acc-slots button { background: none; border: 1px solid var(--night-line); color: inherit; font: inherit;
+                          font-size: .85rem; padding: .55rem .85rem; border-radius: 10px; cursor: pointer; }
       .acc-slots button:hover { border-color: var(--gold); }
-      .acc-slots button[aria-pressed="true"] { background: var(--gold); color: var(--ink);
-                                               border-color: var(--gold); font-weight: 700; }
-      .acc-requests { list-style: none; margin: 1.25rem 0 0; padding: 0; }
-      .acc-requests li { padding: .65rem 0; border-top: 1px solid var(--night-line); font-size: .9rem; }
+      .acc-slots button[aria-pressed="true"] { background: var(--gold); color: var(--ink); border-color: var(--gold);
+                                               font-weight: 700; }
+      .acc-requests { list-style: none; margin: 1.25rem 0 0; padding: 0; max-width: 40rem; }
+      .acc-requests li { padding: .65rem 0; border-top: 1px solid var(--night-line); font-size: .92rem; }
       .acc-requests small { display: block; color: var(--night-muted); font-size: .78rem; }
+      .acc-split { display: grid; grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); gap: 2rem; }
 
-      /* --- the date dialog and confetti ------------------------------------------ */
+      /* --- dialog and confetti --------------------------------------------------- */
       .acc-dialog { border: 0; border-radius: 18px; padding: 1.75rem; max-width: 26rem; width: 92vw;
                     background: #0d1b2a; color: #fff; }
       .acc-dialog::backdrop { background: rgba(4,12,28,.75); }
       .acc-dialog h3 { margin: 0 0 .6rem; }
       .acc-dialog .acc-muted { color: rgba(255,255,255,.66); line-height: 1.55; margin-bottom: 1rem; }
-      .acc-dialog input { width: 100%; padding: .75rem; border-radius: 10px; font: inherit; border: 0;
-                          margin-top: .4rem; }
+      .acc-dialog input { width: 100%; padding: .75rem; border-radius: 10px; font: inherit; border: 0; margin-top: .4rem; }
       .acc-dialogbar { display: flex; align-items: center; gap: 1rem; margin-top: 1.25rem; }
       .acc-confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none;
                       z-index: 60; display: none; }
 
-      @media (max-width: 760px) {
-        .acc-plan { grid-template-columns: 1fr; }
-        .acc-detail { position: static; }
+      @media (max-width: 640px) {
         .acc-headside { justify-items: start; text-align: left; }
+        .acc-mtab { width: 8.75rem; }
       }
     </style>
 
@@ -271,60 +219,36 @@
           <span id="acc-progress-text"></span>
         </div>
 
-        <!-- the one thing to do -->
-        <section class="acc-hero" id="acc-hero" aria-live="polite">
-          <p class="acc-cheer" id="acc-cheer" hidden></p>
-          <p class="acc-kicker" id="acc-hero-kicker"></p>
-          <h2 id="acc-hero-title"></h2>
-          <p class="acc-muted" id="acc-hero-detail"></p>
-          <p class="acc-due" id="acc-hero-due"></p>
-          <div class="acc-actions" id="acc-hero-actions"></div>
-          <p class="acc-muted acc-after" id="acc-hero-after" hidden></p>
-        </section>
-
+        <p class="acc-cheer" id="acc-cheer" hidden></p>
+        <div class="acc-verdict" id="acc-verdict" hidden></div>
         <div class="acc-video" id="acc-video" hidden></div>
 
-        <nav class="acc-tabs" role="tablist" aria-label="Project sections">
-          <button type="button" role="tab" data-tab="plan" aria-selected="true">Plan</button>
-          <button type="button" role="tab" data-tab="brief" aria-selected="false">Brief</button>
-          <button type="button" role="tab" data-tab="files" aria-selected="false">Files</button>
-          <button type="button" role="tab" data-tab="help" aria-selected="false">Help</button>
-        </nav>
+        <!-- one tab per milestone, and one for anything else -->
+        <nav class="acc-mtabs" id="acc-mtabs" role="tablist" aria-label="Milestones"></nav>
 
-        <!-- plan -->
-        <section class="acc-panel" data-panel="plan" role="tabpanel">
-          <div class="acc-verdict" id="acc-verdict" hidden></div>
-          <div class="acc-switch">
-            <button type="button" data-planview="steps" aria-pressed="true">Step by step</button>
-            <button type="button" data-planview="months" aria-pressed="false">By month</button>
-          </div>
-
-          <div class="acc-plan" id="acc-steps">
-            <ol class="acc-rail" id="acc-rail"></ol>
-            <article class="acc-detail">
-              <span class="acc-tag" id="acc-step-tag"></span>
-              <h3 id="acc-step-title"></h3>
-              <p class="acc-muted" id="acc-step-detail"></p>
-              <p class="acc-when" id="acc-step-when"></p>
-              <div class="acc-actions" id="acc-step-actions"></div>
-              <div class="acc-stepnav">
-                <button type="button" class="acc-link" id="acc-prev">&larr; Previous</button>
-                <span class="acc-muted" id="acc-step-count"></span>
-                <button type="button" class="acc-link" id="acc-next">Next &rarr;</button>
-              </div>
-            </article>
-          </div>
-
-          <div class="acc-months" id="acc-months" hidden></div>
+        <!-- the milestone that is open -->
+        <section class="acc-panel" id="acc-panel" role="tabpanel">
+          <span class="acc-tag" id="acc-tag"></span>
+          <h2 id="acc-title"></h2>
+          <p class="acc-muted" id="acc-detail"></p>
+          <div class="acc-when" id="acc-when"></div>
+          <div id="acc-slot"></div>
+          <nav class="acc-stepnav">
+            <button type="button" class="acc-link" id="acc-prev">&larr; Previous</button>
+            <span class="acc-muted" id="acc-count"></span>
+            <button type="button" class="acc-link" id="acc-next">Next &rarr;</button>
+          </nav>
         </section>
+      </div>
 
-        <!-- brief -->
-        <section class="acc-panel" data-panel="brief" role="tabpanel" hidden>
+      <!-- ====================== tools, parked here and moved into whichever tab needs them -->
+      <div id="acc-parking" hidden>
+
+        <div class="acc-tool" id="tool-brief">
           <div id="acc-brief-open">
             <h3>Your brief</h3>
-            <p class="acc-muted">What we need to stop guessing. Rough is fine — there is an
-              <em>Improve this</em> under each answer if you want it tidied, and nothing is added
-              that you did not say.</p>
+            <p class="acc-muted">Rough is fine. Each answer has an <em>Improve this</em> if you want
+              it tidied — nothing is added that you did not say.</p>
             <form id="acc-brief-form">
               <div id="acc-questions"></div>
               <button type="submit" class="btn btn--accent">Send the brief</button>
@@ -333,60 +257,54 @@
           </div>
           <div class="acc-done" id="acc-brief-done" hidden>
             <strong>Your brief is in — thank you.</strong>
-            <p class="acc-muted">Anything to add, send it through Help and it lands on this project.</p>
+            <p class="acc-muted">Anything to add, use the last tab and it lands on this project.</p>
           </div>
-        </section>
+        </div>
 
-        <!-- files -->
-        <section class="acc-panel" data-panel="files" role="tabpanel" hidden>
-          <h3>Files</h3>
-          <p class="acc-muted">Logos, brand guides, photos, copy, access notes — anything we will
-            need. Up to 8 MB each. Everything you send is filed straight onto this project.</p>
+        <div class="acc-tool" id="tool-files">
+          <h3>Send your files</h3>
+          <p class="acc-muted">Up to 8 MB each. Everything is filed straight onto this project.</p>
           <div class="acc-drop" id="acc-drop" role="button" tabindex="0">
             <strong>Drop files here, or click to choose</strong>
             <span class="acc-muted">PDF, images, Word, Excel, zip and design files</span>
           </div>
           <p id="acc-upload-note" class="acc-note" aria-live="polite"></p>
           <ul class="acc-files" id="acc-files"></ul>
-        </section>
+        </div>
 
-        <!-- help -->
-        <section class="acc-panel" data-panel="help" role="tabpanel" hidden>
-          <div class="acc-help">
-            <div class="acc-card" id="acc-meet">
-              <h3>Book a call with Santi</h3>
-              <p class="acc-muted">45 minutes. He will have your brief and this page in front of
-                him. Calls are Tuesday and Thursday afternoons.</p>
-              <div class="acc-slots" id="acc-slots"></div>
-              <div id="acc-booking" hidden style="margin-top:1.1rem">
-                <div class="acc-q" style="margin-bottom:.9rem">
-                  <label for="acc-agenda">What do you want to cover?</label>
-                  <textarea id="acc-agenda" rows="3"
-                    placeholder="Even a line helps — “the homepage direction” is plenty."></textarea>
-                </div>
-                <button type="button" class="btn btn--accent" id="acc-book">Book it</button>
-              </div>
-              <p id="acc-book-note" class="acc-note" aria-live="polite"></p>
+        <div class="acc-tool" id="tool-meet">
+          <h3>Book the call</h3>
+          <p class="acc-muted">45 minutes with Santi, who will have your brief and this page in front
+            of him. Tuesday and Thursday afternoons.</p>
+          <div class="acc-slots" id="acc-slots"></div>
+          <div id="acc-booking" hidden style="margin-top:1.1rem">
+            <div class="acc-q" style="margin-bottom:.9rem">
+              <label for="acc-agenda">What do you want to cover?</label>
+              <textarea id="acc-agenda" rows="3"
+                placeholder="Even a line helps — “the homepage direction” is plenty."></textarea>
             </div>
-
-            <div class="acc-card">
-              <h3>Ask for something</h3>
-              <p class="acc-muted" id="acc-rates"></p>
-              <form id="acc-ask-form">
-                <div class="acc-q" style="margin-bottom:.8rem">
-                  <label for="acc-ask-subject">What do you need?</label>
-                  <input id="acc-ask-subject" type="text" maxlength="140" placeholder="Add a blog section">
-                </div>
-                <div class="acc-q" style="margin-bottom:.9rem">
-                  <label for="acc-ask-detail">Any detail <span class="acc-muted">(optional)</span></label>
-                  <textarea id="acc-ask-detail" rows="2"></textarea>
-                </div>
-                <button type="submit" class="btn btn--ghost">Send to Santi</button>
-                <p id="acc-ask-note" class="acc-note" aria-live="polite"></p>
-              </form>
-              <ul class="acc-requests" id="acc-requests"></ul>
-            </div>
+            <button type="button" class="btn btn--accent" id="acc-book">Book it</button>
           </div>
-        </section>
+          <p id="acc-book-note" class="acc-note" aria-live="polite"></p>
+        </div>
+
+        <div class="acc-tool" id="tool-ask">
+          <h3>Ask for something</h3>
+          <p class="acc-muted" id="acc-rates"></p>
+          <form id="acc-ask-form">
+            <div class="acc-q" style="margin-bottom:.8rem">
+              <label for="acc-ask-subject">What do you need?</label>
+              <input id="acc-ask-subject" type="text" maxlength="140" placeholder="Add a blog section">
+            </div>
+            <div class="acc-q" style="margin-bottom:.9rem">
+              <label for="acc-ask-detail">Any detail <span class="acc-muted">(optional)</span></label>
+              <textarea id="acc-ask-detail" rows="2"></textarea>
+            </div>
+            <button type="submit" class="btn btn--ghost">Send to Santi</button>
+            <p id="acc-ask-note" class="acc-note" aria-live="polite"></p>
+          </form>
+          <ul class="acc-requests" id="acc-requests"></ul>
+        </div>
+
       </div>
     </section>
