@@ -209,22 +209,71 @@
 
   <main id="main">
 <style>
-      .paid { padding: clamp(56px, 9vw, 110px) var(--pad); max-width: 44rem; }
-      .paid p { color: var(--night-muted); max-width: 38rem; }
+      /* Centred on purpose. This is the moment someone has just sent money to a company
+         they may never have met, and a page hugging the left edge reads like a receipt
+         printer. Narrow column, numbered steps, and a human named at the bottom. */
+      .paid { padding: clamp(56px, 9vw, 104px) var(--pad); max-width: 46rem; margin: 0 auto;
+              text-align: center; }
+      .paid h1 { margin: 0 0 1.25rem; }
       .paid .star { color: var(--gold); }
+      .paid__lead { color: var(--night-muted); max-width: 34rem; margin: 0 auto 2.5rem; }
+      .paid__steps { list-style: none; margin: 0 auto 1rem; padding: 0; max-width: 32rem;
+                     text-align: left; counter-reset: step; }
+      .paid__steps li { position: relative; padding: 1rem 0 1rem 3rem;
+                        border-bottom: 1px solid var(--night-line); }
+      .paid__steps li:last-child { border-bottom: 0; }
+      .paid__steps li::before { counter-increment: step; content: counter(step);
+                                position: absolute; left: 0; top: 1rem;
+                                width: 2rem; height: 2rem; border-radius: 50%;
+                                display: grid; place-items: center;
+                                background: var(--gold); color: var(--ink);
+                                font-weight: 700; font-size: .9rem; }
+      .paid__steps strong { display: block; margin-bottom: .2rem; }
+      .paid__steps span { color: var(--night-muted); font-size: .92rem; }
+      .paid__human { color: var(--night-muted); font-size: .95rem; max-width: 34rem;
+                     margin: 2rem auto 0; }
+      .paid__human a { color: var(--gold); }
     </style>
     <section class="frame frame--dark on-dark paid">
       <span class="eyebrow">Payfast</span>
       <h1>Payment<br>received<span class="star" aria-hidden="true">°</span></h1>
-      <p>
-        Thank you — your deposit is in and your project is set up. A receipt is on its way
-        by email, along with what happens next.
+
+      <p class="paid__lead">
+        Your deposit is in and your project exists on our board. Nothing else is needed from
+        you to confirm it — you are booked.
       </p>
-      <p>
-        If nothing arrives within ten minutes, reply to your quote email and we will sort it
-        out straight away.
+
+      <ol class="paid__steps">
+        <li>
+          <strong>Check your email now</strong>
+          <span>Your receipt is on its way, and it carries a private link to your project
+          page. Keep that email — the link is how you get back in, for the next 90 days.</span>
+        </li>
+        <li>
+          <strong>Fill in your brief, when it suits you</strong>
+          <span>That page asks what we need to stop guessing: what the business does, who it
+          is for, what a win looks like. It is the one thing that starts the work.</span>
+        </li>
+        <li>
+          <strong>Send your logo and brand files</strong>
+          <span>Upload them on the same page. Anything you send is filed straight onto your
+          project — nothing lost in an email thread.</span>
+        </li>
+        <li>
+          <strong>Watch it move</strong>
+          <span>That page shows your real project board, so you can see what we are working
+          on while we work on it. You are never left guessing where things stand.</span>
+        </li>
+      </ol>
+
+      <p class="paid__human">
+        You have not been handed over to a robot. Santi reads every reply — email
+        <a href="mailto:santi@santi.co.za">santi@santi.co.za</a> any time. If your receipt has
+        not arrived within ten minutes, reply to your quote email and it gets sorted the same
+        day.
       </p>
-      <p><a class="btn btn--accent" href="/">Back to santi.co.za</a></p>
+
+      <p style="margin-top:2.5rem"><a class="btn btn--accent" href="/">Back to santi.co.za</a></p>
     </section>
   </main>
 
