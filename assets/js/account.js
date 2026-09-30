@@ -424,16 +424,17 @@
     }
     document.title = task.subject + " | Santi Universe";
 
-    el("acct-steps").hidden = true;
-    el("acct-timeline").hidden = true;
-    el("acct-step").hidden = false;
+    Array.prototype.forEach.call(el("acct-rail").children, function (li, position) {
+      li.setAttribute("aria-current", String(position === index));
+    });
+
     el("acct-step-count").textContent = "Milestone " + (index + 1) + " of " + tasks.length
       + (task.done ? " · done" : task.waitingOn === "you" ? " · over to you" : " · with us");
     el("acct-step-title").textContent = task.subject;
     el("acct-step-detail").textContent = task.detail || "";
     el("acct-step-when").textContent = task.start
       ? (task.start === task.end ? pretty(task.start) : pretty(task.start) + " – " + pretty(task.end))
-      : "Not scheduled yet.";
+      : task.done ? "" : "Not scheduled yet.";
 
     var actions = el("acct-step-actions");
     actions.innerHTML = "";
@@ -444,7 +445,6 @@
       go.className = "btn btn--accent";
       go.textContent = action.label;
       go.addEventListener("click", function () {
-        closeStep();
         var target = el(action.target);
         var scrollTo = target.closest(".acct__block") || target;
         scrollTo.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -452,25 +452,24 @@
       });
       actions.appendChild(go);
     }
-    if (!task.done && task.waitingOn === "you") {
-      actions.appendChild(moveControl(task));
-    }
+    if (!task.done && task.waitingOn === "you") actions.appendChild(moveControl(task));
 
     el("acct-step-prev").disabled = index === 0;
     el("acct-step-next").disabled = index === tasks.length - 1;
-    el("acct-step").scrollIntoView({ behavior: "smooth", block: "center" });
   }
 
+  // Nothing hides any more - closing a milestone means selecting the one that matters,
+  // which is the first thing still open.
   function closeStep(options) {
-    el("acct-step").hidden = true;
-    el("acct-steps").hidden = false;
     document.title = "Your projects | Santi Universe";
     if (state.current && (!options || options.push !== false)) {
       writeRoute("#/p/" + encodeURIComponent(state.current.id));
     }
+    var tasks = (state.current || {}).tasks || [];
+    var first = tasks.findIndex(function (task) { return !task.done; });
+    openStep(first < 0 ? 0 : first, { push: false });
   }
 
-  el("acct-step-close").addEventListener("click", closeStep);
   el("acct-step-prev").addEventListener("click", function () { openStep(state.step - 1); });
   el("acct-step-next").addEventListener("click", function () { openStep(state.step + 1); });
 
@@ -541,7 +540,6 @@
   }
 
   function setView(name) {
-    el("acct-step").hidden = true;
     el("acct-steps").hidden = name !== "list";
     el("acct-timeline").hidden = name !== "timeline";
     el("acct-board").hidden = name !== "board";
@@ -571,63 +569,35 @@
     box.hidden = false;
   }
 
+  // The rail IS the list: every milestone visible on the left, the selected one open on
+  // the right. One view instead of a list that hides itself to show a panel - a client
+  // should never lose sight of where they are in the whole thing to read one part of it.
   function renderSteps(tasks) {
-    var list = el("acct-steps");
-    list.innerHTML = "";
-    tasks.forEach(function (task) {
+    var rail = el("acct-rail");
+    rail.innerHTML = "";
+    tasks.forEach(function (task, index) {
       var li = document.createElement("li");
-      if (task.done) li.className = "done";
+      li.setAttribute("aria-current", String(index === state.step));
 
-      var tick = document.createElement("span");
-      tick.className = "tick" + (task.done ? " tick--done" : "");
-      tick.textContent = task.done ? "✓" : "";
+      var dot = document.createElement("span");
+      dot.className = "dot" + (task.done ? " dot--done" : task.waitingOn === "you" ? " dot--you" : "");
+      dot.textContent = task.done ? "✓" : String(index + 1);
 
       var body = document.createElement("div");
       var name = document.createElement("strong");
       name.textContent = task.subject;
+      var state_ = document.createElement("span");
+      state_.textContent = task.done ? "Done"
+        : task.waitingOn === "you" ? "Over to you"
+        : task.waitingOn === "us" ? "With us" : "Together";
+      if (!task.done && task.start) state_.textContent += " · " + pretty(task.start);
       body.appendChild(name);
-      if (task.detail) {
-        var detail = document.createElement("span");
-        detail.className = "detail";
-        detail.textContent = task.detail;
-        body.appendChild(detail);
-      }
+      body.appendChild(state_);
 
-      if (task.start && task.end) {
-        var when = document.createElement("span");
-        when.className = "acct__dates";
-        when.textContent = task.start === task.end ? pretty(task.start)
-          : pretty(task.start) + " – " + pretty(task.end);
-        body.appendChild(when);
-      }
-
-      // Only their own steps, and only while they are still open. Ours are not theirs to
-      // move, and the endpoint refuses it anyway - this just does not offer it.
-      if (!task.done && task.waitingOn === "you") {
-        body.appendChild(moveControl(task));
-      }
-
-      var who = document.createElement("span");
-      if (task.done) {
-        who.className = "acct__who acct__who--us";
-        who.textContent = "Done";
-      } else if (task.waitingOn === "you") {
-        who.className = "acct__who acct__who--you";
-        who.textContent = "Over to you";
-      } else {
-        who.className = "acct__who acct__who--us";
-        who.textContent = task.waitingOn === "us" ? "With us" : "Together";
-      }
-
-      li.appendChild(tick);
+      li.appendChild(dot);
       li.appendChild(body);
-      li.appendChild(who);
-      // The whole row opens the step. Clicking the date field inside it must not.
-      li.addEventListener("click", function (event) {
-        if (event.target.closest(".acct__move")) return;
-        openStep(tasks.indexOf(task));
-      });
-      list.appendChild(li);
+      li.addEventListener("click", function () { openStep(index); });
+      rail.appendChild(li);
     });
   }
 
@@ -764,6 +734,7 @@
       el("acct-rates").textContent = (data.rates && data.rates.message) || "";
       renderBoard(data);
       renderSteps(data.tasks || []);
+      closeStep({ push: false });   // opens whichever milestone is actually next
       renderTimeline(data);
       renderBrief(data);
       renderFiles(data.files || []);
