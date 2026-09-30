@@ -367,8 +367,11 @@
       .acct__stat strong { display: block; margin-top: .3rem; font-size: 1.12rem; line-height: 1.25;
                            overflow-wrap: anywhere; }
       .acct__stat .sub { display: block; margin-top: .25rem; font-size: .78rem;
-                         color: var(--night-muted); }
+                         color: var(--night-muted); overflow-wrap: anywhere; }
       .acct__stat .acct__bar { margin: .6rem 0 0; }
+      /* The client tile holds an email address, which wraps mid-word in a narrow column.
+         Given the room, it takes two. */
+      @media (min-width: 1000px) { .acct__stat--wide { grid-column: span 2; } }
 
       /* --- the timeline as cards strung along the months --------------------------- */
       .acct__months { display: flex; gap: 1rem; overflow-x: auto; padding: .5rem .2rem 1rem;
@@ -532,6 +535,7 @@
             <div class="acct__stat acct__stat--wide">
               <span class="label">Client</span>
               <strong id="acct-stat-client"></strong>
+              <span class="sub" id="acct-stat-email"></span>
             </div>
             <div class="acct__stat">
               <span class="label">Progress</span>

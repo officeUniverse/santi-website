@@ -234,9 +234,10 @@
   function renderStats(data) {
     var open = (data.tasks || []).filter(function (t) { return !t.done; });
     var next = open[0];
-    // The customer, not the signed-in email: an address wraps badly and tells them
-    // something they already know.
+    // The customer on top, the signed-in address underneath: the name is what they
+    // recognise, the address is how they know which account they are looking at.
     el("acct-stat-client").textContent = data.customer || state.email || "Your project";
+    el("acct-stat-email").textContent = data.customer ? (state.email || "") : "";
     el("acct-stat-progress").textContent = data.done + " of " + data.total + " milestones";
     el("acct-bar").style.width = data.total
       ? Math.round((data.done / data.total) * 100) + "%" : "0";
