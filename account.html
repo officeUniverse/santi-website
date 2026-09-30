@@ -209,7 +209,10 @@
 
   <main id="main">
 <style>
-      .acct { padding: clamp(40px, 6vw, 72px) var(--pad) clamp(48px, 7vw, 88px); max-width: 54rem; }
+      .acct { padding: clamp(96px, 11vw, 140px) var(--pad) clamp(48px, 7vw, 88px); max-width: 54rem; }
+      /* The site header is fixed and sits over the top of the frame; without that first
+         padding value the signed-in email hides behind the logo. */
+      .acct__intro { max-width: 40rem; color: var(--night-muted); margin: 0 0 1.75rem; }
       .acct__hello { color: var(--gold); font-weight: 600; margin: 0 0 .35rem; }
       .acct__title { margin: 0 0 1.5rem; }
       .acct__fine { color: var(--night-muted); font-size: .92rem; max-width: 42rem; }
@@ -295,6 +298,16 @@
                        margin: -1rem 0 2rem; font-size: .92rem; color: var(--night-muted); }
       .acct__verdict strong { color: #fff; display: block; margin-bottom: .15rem; }
 
+      .acct__steps li { cursor: pointer; }
+      .acct__steps li:hover strong { color: var(--gold); }
+      .acct__step { border: 1px solid var(--night-line); border-radius: 14px; padding: 1.5rem; }
+      .acct__step h3 { margin: .4rem 0 .6rem; font-size: clamp(1.1rem, 2.6vw, 1.45rem); }
+      .acct__stepcount { color: var(--night-muted); font-size: .8rem; letter-spacing: .08em;
+                         text-transform: uppercase; margin: 0; }
+      .acct__stepactions { margin: 1.25rem 0 .5rem; display: flex; flex-wrap: wrap; gap: .6rem; }
+      .acct__stepnav { display: flex; gap: .6rem; margin-top: 1.5rem;
+                       border-top: 1px solid var(--night-line); padding-top: 1.25rem; }
+
       .acct__q { margin: 0 0 1.25rem; }
       .acct__q label { display: block; font-weight: 600; margin: 0 0 .45rem; }
       .acct__q textarea { width: 100%; padding: .8rem; border-radius: 10px; font: inherit;
@@ -329,6 +342,9 @@
       <div id="acct-list" hidden>
         <p class="acct__hello" id="acct-who"></p>
         <h1 class="acct__title">Your projects</h1>
+        <p class="acct__intro">Everything we are building for you, with what it is waiting on and
+          when it currently finishes. Open one to send your brief, upload files, move your own
+          dates or book a call.</p>
         <ul class="acct__cards" id="acct-projects"></ul>
         <button type="button" class="acct__out" id="acct-signout">Sign out</button>
       </div>
@@ -350,6 +366,19 @@
             <button type="button" id="acct-view-time" aria-pressed="false">Timeline</button>
           </div>
           <ul class="acct__steps" id="acct-steps"></ul>
+
+          <div id="acct-step" class="acct__step" hidden>
+            <button type="button" class="acct__back" id="acct-step-close">&larr; All steps</button>
+            <p class="acct__stepcount" id="acct-step-count"></p>
+            <h3 id="acct-step-title"></h3>
+            <p class="acct__fine" id="acct-step-detail"></p>
+            <p class="acct__fine" id="acct-step-when"></p>
+            <div id="acct-step-actions" class="acct__stepactions"></div>
+            <div class="acct__stepnav">
+              <button type="button" class="btn btn--ghost" id="acct-step-prev">&larr; Previous</button>
+              <button type="button" class="btn btn--ghost" id="acct-step-next">Next &rarr;</button>
+            </div>
+          </div>
           <div id="acct-timeline" hidden>
             <p class="acct__fine" id="acct-span"></p>
             <ul class="acct__gantt" id="acct-gantt"></ul>
@@ -391,11 +420,18 @@
             booking, so you are not starting from the beginning. We meet on Tuesday and Thursday
             afternoons — mornings are build time.</p>
           <div id="acct-slots" class="acct__slots"></div>
-          <label class="acct__q" style="display:block;margin-top:1.25rem">
-            <span style="font-weight:600;display:block;margin-bottom:.45rem">What do you want to
-              cover? (optional)</span>
-            <textarea id="acct-note" rows="2"></textarea>
-          </label>
+          <div id="acct-booking" hidden style="margin-top:1.5rem">
+            <p class="acct__fine" style="color:var(--gold)">Selected: <strong id="acct-chosen"></strong></p>
+            <label class="acct__q" style="display:block">
+              <span style="font-weight:600;display:block;margin-bottom:.45rem">What do you want to
+                cover? <span style="color:var(--gold)">Required</span></span>
+              <textarea id="acct-note" rows="3" required
+                placeholder="Even a line helps — “the homepage direction” is plenty."></textarea>
+            </label>
+            <button type="button" class="btn btn--accent" id="acct-book-go">Book this time</button>
+            <button type="button" class="acct__out" id="acct-book-cancel"
+              style="margin:0 0 0 1rem">Pick another time</button>
+          </div>
           <p id="acct-book-note" class="acct__note" aria-live="polite"></p>
         </div>
 

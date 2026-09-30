@@ -72,6 +72,9 @@
     return post("/account/projects", {}, true).then(function (answer) {
       if (!answer || answer.ok !== true) { signedOut(); return; }
       state.projects = answer.projects || [];
+      // Also on a returning visit, not only straight after clicking the sign-in link:
+      // a page that cannot say who you are looks like a page you are not signed in to.
+      el("acct-who").textContent = state.email || "";
       var list = el("acct-projects");
       list.innerHTML = "";
       if (!state.projects.length) {
@@ -87,8 +90,14 @@
         var name = document.createElement("strong");
         name.textContent = project.name;
         var meta = document.createElement("span");
-        meta.textContent = project.status +
-          (project.briefStatus === "Awaiting" ? " · brief still needed" : " · brief received");
+        var bits = [];
+        if (project.total) bits.push(project.done + " of " + project.total + " steps done");
+        if (project.next) {
+          bits.push((project.nextWaitingOn === "you" ? "over to you: " : "next: ") + project.next);
+        }
+        if (project.end) bits.push("finishes " + pretty(project.end));
+        meta.textContent = bits.join(" · ") ||
+          (project.briefStatus === "Awaiting" ? "brief still needed" : "brief received");
         button.appendChild(name);
         button.appendChild(meta);
         button.addEventListener("click", function () { openProject(project.id); });
@@ -205,7 +214,7 @@
         var button = document.createElement("button");
         button.type = "button";
         button.textContent = weekday(slot.date) + " " + pretty(slot.date) + ", " + slot.time;
-        button.addEventListener("click", function () { book(slot, button); });
+        button.addEventListener("click", function () { choose(slot, button); });
         holder.appendChild(button);
       });
     });
@@ -214,7 +223,40 @@
   var DAYS = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
   function weekday(iso) { return DAYS[new Date(iso + "T00:00:00Z").getUTCDay()]; }
 
-  function book(slot, button) {
+  // Two stages on purpose: a single click used to book the call outright, which gave
+  // nobody a chance to say what it was about - and a call with no agenda is a call that
+  // starts with "so, what did you want to discuss?".
+  function choose(slot, button) {
+    state.slot = slot;
+    Array.prototype.forEach.call(document.querySelectorAll("#acct-slots button"), function (other) {
+      other.className = other === button ? "booked" : "";
+    });
+    el("acct-chosen").textContent = weekday(slot.date) + " " + pretty(slot.date) + ", " + slot.time;
+    el("acct-booking").hidden = false;
+    el("acct-book-note").textContent = "";
+    el("acct-note").focus();
+  }
+
+  el("acct-book-cancel").addEventListener("click", function () {
+    state.slot = null;
+    el("acct-booking").hidden = true;
+    Array.prototype.forEach.call(document.querySelectorAll("#acct-slots button"), function (b) {
+      b.className = "";
+    });
+  });
+
+  el("acct-book-go").addEventListener("click", function () {
+    var note = el("acct-book-note");
+    if (!state.slot) { note.textContent = "Pick a time first."; return; }
+    if (!(el("acct-note").value || "").trim()) {
+      note.textContent = "Tell us what to cover first — even one line.";
+      el("acct-note").focus();
+      return;
+    }
+    book(state.slot);
+  });
+
+  function book(slot) {
     var note = el("acct-book-note");
     note.textContent = "Booking " + slot.start + "…";
     post("/account/book", {
@@ -228,14 +270,81 @@
         loadSlots();
         return;
       }
-      button.className = "booked";
+      state.slot = null;
+      el("acct-booking").hidden = true;
+      el("acct-note").value = "";
       note.textContent = "Booked for " + slot.start + ". A confirmation is on its way by email.";
       loadSlots();
     });
   }
 
+  // What a client can actually DO about a step, and where that lives on the page. Only
+  // their own steps get an action - ours are information, and offering a button that does
+  // nothing is worse than offering none.
+  var STEP_ACTIONS = {
+    "Brief received": { label: "Fill in your brief", target: "acct-brief-form" },
+    "Brand assets received": { label: "Upload your files", target: "acct-upload" },
+    "Access and credentials received": { label: "Upload access notes", target: "acct-upload" },
+    "Kickoff booked": { label: "Book the call", target: "acct-slots" },
+    "Direction approved": { label: "Book a call to approve", target: "acct-slots" },
+    "Review": { label: "Book a call to review", target: "acct-slots" }
+  };
+
+  function openStep(index) {
+    var tasks = (state.current || {}).tasks || [];
+    var task = tasks[index];
+    if (!task) return;
+    state.step = index;
+
+    el("acct-steps").hidden = true;
+    el("acct-timeline").hidden = true;
+    el("acct-step").hidden = false;
+    el("acct-step-count").textContent = "Step " + (index + 1) + " of " + tasks.length
+      + (task.done ? " · done" : task.waitingOn === "you" ? " · over to you" : " · with us");
+    el("acct-step-title").textContent = task.subject;
+    el("acct-step-detail").textContent = task.detail || "";
+    el("acct-step-when").textContent = task.start
+      ? (task.start === task.end ? pretty(task.start) : pretty(task.start) + " – " + pretty(task.end))
+      : "Not scheduled yet.";
+
+    var actions = el("acct-step-actions");
+    actions.innerHTML = "";
+    var action = !task.done && task.waitingOn === "you" && STEP_ACTIONS[task.subject];
+    if (action) {
+      var go = document.createElement("button");
+      go.type = "button";
+      go.className = "btn btn--accent";
+      go.textContent = action.label;
+      go.addEventListener("click", function () {
+        closeStep();
+        var target = el(action.target);
+        var scrollTo = target.closest(".acct__block") || target;
+        scrollTo.scrollIntoView({ behavior: "smooth", block: "start" });
+        if (action.target === "acct-upload") setTimeout(function () { target.click(); }, 400);
+      });
+      actions.appendChild(go);
+    }
+    if (!task.done && task.waitingOn === "you") {
+      actions.appendChild(moveControl(task));
+    }
+
+    el("acct-step-prev").disabled = index === 0;
+    el("acct-step-next").disabled = index === tasks.length - 1;
+    el("acct-step").scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  function closeStep() {
+    el("acct-step").hidden = true;
+    el("acct-steps").hidden = false;
+  }
+
+  el("acct-step-close").addEventListener("click", closeStep);
+  el("acct-step-prev").addEventListener("click", function () { openStep(state.step - 1); });
+  el("acct-step-next").addEventListener("click", function () { openStep(state.step + 1); });
+
   function setView(name) {
     var timeline = name === "timeline";
+    el("acct-step").hidden = true;
     el("acct-steps").hidden = timeline;
     el("acct-timeline").hidden = !timeline;
     el("acct-view-list").setAttribute("aria-pressed", String(!timeline));
@@ -313,6 +422,11 @@
       li.appendChild(tick);
       li.appendChild(body);
       li.appendChild(who);
+      // The whole row opens the step. Clicking the date field inside it must not.
+      li.addEventListener("click", function (event) {
+        if (event.target.closest(".acct__move")) return;
+        openStep(tasks.indexOf(task));
+      });
       list.appendChild(li);
     });
   }
