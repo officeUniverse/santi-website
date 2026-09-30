@@ -534,8 +534,73 @@
       if (field.tagName === "TEXTAREA") field.rows = 3;
       wrap.appendChild(label);
       wrap.appendChild(field);
+      // Writing help, on the questions where prose is actually wanted. Never on the date.
+      if (question.type !== "date") wrap.appendChild(improveControl(question, field));
       holder.appendChild(wrap);
     });
+  }
+
+  // The suggestion is shown BESIDE their words, never dropped on top of them: it is help
+  // with the writing, and the client decides whether it is an improvement.
+  function improveControl(question, field) {
+    var wrap = document.createElement("div");
+    var button = document.createElement("button");
+    button.type = "button";
+    button.className = "acct__move";
+    button.textContent = "Improve this";
+    var note = document.createElement("p");
+    note.className = "acct__note";
+    var box = document.createElement("div");
+    box.className = "acct__suggestion";
+    box.hidden = true;
+
+    button.addEventListener("click", function () {
+      var text = (field.value || "").trim();
+      if (!text) { note.textContent = "Write something first and this will tidy it up."; return; }
+      note.textContent = "Reading it…";
+      box.hidden = true;
+      post("/account/improve", {
+        project: state.current.id, question: question.label, text: text
+      }, true).then(function (answer) {
+        if (!answer || answer.ok !== true || !answer.text) {
+          note.textContent = (answer && answer.error) || "Could not do that one.";
+          return;
+        }
+        note.textContent = "";
+        box.innerHTML = "";
+        var heading = document.createElement("p");
+        heading.className = "acct__fine";
+        heading.textContent = "A tidier version of your own words — nothing added:";
+        var suggestion = document.createElement("p");
+        suggestion.className = "acct__suggestiontext";
+        suggestion.textContent = answer.text;
+        var use = document.createElement("button");
+        use.type = "button";
+        use.className = "btn btn--ghost";
+        use.textContent = "Use this";
+        use.addEventListener("click", function () {
+          field.value = answer.text;
+          box.hidden = true;
+          note.textContent = "Swapped in. Edit it as much as you like before sending.";
+        });
+        var keep = document.createElement("button");
+        keep.type = "button";
+        keep.className = "acct__out";
+        keep.style.margin = "0 0 0 1rem";
+        keep.textContent = "Keep mine";
+        keep.addEventListener("click", function () { box.hidden = true; });
+        box.appendChild(heading);
+        box.appendChild(suggestion);
+        box.appendChild(use);
+        box.appendChild(keep);
+        box.hidden = false;
+      });
+    });
+
+    wrap.appendChild(button);
+    wrap.appendChild(note);
+    wrap.appendChild(box);
+    return wrap;
   }
 
   function renderFiles(files) {
