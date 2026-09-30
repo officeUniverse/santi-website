@@ -17,6 +17,11 @@
   var KEY = "santi.account.session";
   var EMAIL_KEY = "santi.account.email";
   var HELP = "help";
+  // The welcome video is a tab of its own, straight after the first milestone. It is not a
+  // milestone - nothing in ERPNext changes when it is watched - so whether it has been
+  // watched is remembered in this browser only.
+  var VIDEO = "welcome";
+  var WATCHED_KEY = "santi.account.welcome-watched";
 
   var el = function (id) { return document.getElementById(id); };
   var all = function (selector) { return Array.prototype.slice.call(document.querySelectorAll(selector)); };
@@ -76,13 +81,14 @@
   // #/p/PROJ-0003         the project, opened on whatever is next
   // #/p/PROJ-0003/m/4     a milestone - linkable, and the back button behaves
   // #/p/PROJ-0003/help    the "something else" tab
+  // #/p/PROJ-0003/welcome the welcome video
   function writeRoute(route) {
     var url = location.pathname + (route || "");
     if (location.pathname + location.hash !== url) history.pushState(null, "", url);
   }
   function projectRoute(suffix) { return "#/p/" + encodeURIComponent(state.current.id) + (suffix || ""); }
   function readRoute() {
-    var match = /^#\/p\/([^/]+)(?:\/(help|timeline|board|billing)|\/m\/(\d+))?$/.exec(location.hash || "");
+    var match = /^#\/p\/([^/]+)(?:\/(help|welcome|timeline|board|billing)|\/m\/(\d+))?$/.exec(location.hash || "");
     if (!match) return null;
     return { project: decodeURIComponent(match[1]), section: match[2] || null,
              milestone: match[3] ? Number(match[3]) : null };
@@ -93,6 +99,7 @@
     return openProject(here.project, { push: false }).then(function () {
       if (!state.current) return;
       if (here.section === "help") selectTab(HELP, { push: false });
+      else if (here.section === VIDEO) selectTab(VIDEO, { push: false });
       else if (here.section) setView(here.section, { push: false });
       else if (here.milestone) selectTab(here.milestone - 1, { push: false });
     });
@@ -173,8 +180,10 @@
       var keep = options && options.keep != null ? options.keep : null;
       var tasks = data.tasks || [];
       var first = tasks.findIndex(function (t) { return !t.done; });
-      selectTab(keep != null ? keep : (first < 0 ? tasks.length - 1 : first),
-                { push: !options || options.push !== false });
+      var start = first < 0 ? tasks.length - 1 : first;
+      // Someone new starts with the video; after that it is one tab among the others.
+      if (hasVideo() && !watched() && start <= 1) start = VIDEO;
+      selectTab(keep != null ? keep : start, { push: !options || options.push !== false });
     });
   }
 
@@ -197,12 +206,43 @@
   }
 
   /* ------------------------------------------------------------- the tab strip */
+  function hasVideo() {
+    var video = state.current && state.current.video;
+    return !!(video && video.src);
+  }
+  function watched() {
+    try { return localStorage.getItem(WATCHED_KEY) === "1"; } catch (e) { return false; }
+  }
+  // The order Previous and Next walk: the milestones, the video after the first one, and
+  // "Something else?" last.
+  function tabOrder() {
+    var tasks = (state.current && state.current.tasks) || [];
+    var order = tasks.map(function (task, index) { return index; });
+    if (hasVideo()) order.splice(Math.min(1, order.length), 0, VIDEO);
+    order.push(HELP);
+    return order;
+  }
+
+  function videoTab() {
+    var seen = watched();
+    var tab = make("button", "acc-mtab acc-mtab--video" + (seen ? " acc-mtab--done" : " acc-mtab--you"));
+    tab.type = "button";
+    tab.setAttribute("role", "tab");
+    tab.setAttribute("data-key", VIDEO);
+    tab.appendChild(make("span", "acc-num", seen ? "✓" : "▶"));
+    tab.appendChild(make("strong", "", "Welcome video"));
+    tab.appendChild(make("small", "", seen ? "Watched" : "Watch first"));
+    tab.addEventListener("click", function () { selectTab(VIDEO); });
+    return tab;
+  }
+
   function renderTabs(tasks) {
     strip.innerHTML = "";
     tasks.forEach(function (task, index) {
       var tab = make("button", "acc-mtab" + (task.done ? " acc-mtab--done" : task.waitingOn === "you" ? " acc-mtab--you" : ""));
       tab.type = "button";
       tab.setAttribute("role", "tab");
+      tab.setAttribute("data-key", String(index));
       tab.appendChild(make("span", "acc-num", task.done ? "✓" : String(index + 1)));
       tab.appendChild(make("strong", "", task.subject));
       var status_ = make("small", "", holder(task));
@@ -213,10 +253,13 @@
       tab.appendChild(status_);
       tab.addEventListener("click", function () { selectTab(index); });
       strip.appendChild(tab);
+      if (index === 0 && hasVideo()) strip.appendChild(videoTab());
     });
+    if (!tasks.length && hasVideo()) strip.appendChild(videoTab());
     var help = make("button", "acc-mtab acc-mtab--help");
     help.type = "button";
     help.setAttribute("role", "tab");
+    help.setAttribute("data-key", HELP);
     help.appendChild(make("span", "acc-num", "+"));
     help.appendChild(make("strong", "", "Something else?"));
     var asked = ((state.current && state.current.requests) || []).length;
@@ -269,16 +312,24 @@
     var tasks = (state.current && state.current.tasks) || [];
     var tabs = all("#acc-mtabs .acc-mtab");
     var isHelp = which === HELP;
-    var index = isHelp ? tasks.length : which;
-    var task = isHelp ? null : tasks[which];
-    if (!isHelp && !task) return;
-    state.step = index;
+    var isVideo = which === VIDEO && hasVideo();
+    var task = isHelp || isVideo ? null : tasks[which];
+    if (!isHelp && !isVideo && !task) return;
+    state.step = isHelp ? HELP : isVideo ? VIDEO : which;
+    var key = String(state.step);
+    var order = tabOrder();
+    var position = order.indexOf(state.step);
 
-    tabs.forEach(function (tab, position) { tab.setAttribute("aria-selected", String(position === index)); });
+    var open = null;
+    tabs.forEach(function (tab) {
+      var mine = tab.getAttribute("data-key") === key;
+      tab.setAttribute("aria-selected", String(mine));
+      if (mine) open = tab;
+    });
     // Bring the open tab into view within the strip itself. scrollIntoView also moves the
     // page, and on a phone the active milestone was left sitting off to the right.
-    if (tabs[index]) {
-      var offset = tabs[index].getBoundingClientRect().left - strip.getBoundingClientRect().left;
+    if (open) {
+      var offset = open.getBoundingClientRect().left - strip.getBoundingClientRect().left;
       strip.scrollTo({ left: strip.scrollLeft + offset - 12, behavior: "smooth" });
     }
 
@@ -296,6 +347,17 @@
         + "Santi reads everything and comes back to you before anything starts.";
       place(["ask", "meet"]);
       document.title = "Something else | Santi Universe";
+    } else if (isVideo) {
+      var seen = watched();
+      panel.className = "acc-panel" + (seen ? "" : " acc-panel--you");
+      tag.className = "acc-tag" + (seen ? " acc-tag--done" : " acc-tag--you");
+      tag.textContent = seen ? "Watched" : "Start here";
+      el("acc-title").textContent = "Welcome to Santi Universe";
+      el("acc-detail").textContent = "Two minutes on how we work together, from today to handover: your "
+        + "milestones, the brief, your files, calls, extras and billing. Everything in it is on this page.";
+      if (seen) when.appendChild(make("span", "", "Watched ✓"));
+      place(["video"]);
+      document.title = "Welcome video | Santi Universe";
     } else {
       var yours = !task.done && task.waitingOn === "you";
       panel.className = "acc-panel" + (yours ? " acc-panel--you" : "");
@@ -317,23 +379,24 @@
       document.title = task.subject + " | Santi Universe";
     }
 
-    el("acc-count").textContent = isHelp ? "" : "Milestone " + (index + 1) + " of " + tasks.length;
-    el("acc-prev").disabled = index === 0;
+    el("acc-count").textContent = isHelp ? "" : isVideo ? "Before you start"
+      : "Milestone " + (which + 1) + " of " + tasks.length;
+    el("acc-prev").disabled = position <= 0;
     el("acc-next").disabled = isHelp;
-    el("acc-next").textContent = index === tasks.length - 1 ? "Something else? →" : "Next →";
+    el("acc-next").textContent = order[position + 1] === HELP ? "Something else? →" : "Next →";
 
     if (!options || options.push !== false) {
-      writeRoute(projectRoute(isHelp ? "/" + HELP : "/m/" + (index + 1)));
+      writeRoute(projectRoute(isHelp ? "/" + HELP : isVideo ? "/" + VIDEO : "/m/" + (which + 1)));
     }
   }
 
-  el("acc-prev").addEventListener("click", function () {
-    selectTab(state.step - 1);
-  });
-  el("acc-next").addEventListener("click", function () {
-    var tasks = (state.current && state.current.tasks) || [];
-    selectTab(state.step + 1 >= tasks.length ? HELP : state.step + 1);
-  });
+  function stepBy(delta) {
+    var order = tabOrder();
+    var position = order.indexOf(state.step);
+    selectTab(order[Math.max(0, Math.min(order.length - 1, position + delta))]);
+  }
+  el("acc-prev").addEventListener("click", function () { stepBy(-1); });
+  el("acc-next").addEventListener("click", function () { stepBy(1); });
 
   /* --------------------------------------------------------------------- views */
   // Four ways to look at one project, one at a time. Milestones is where work gets done;
@@ -749,8 +812,12 @@
       var player = make("video");
       player.src = video.src;
       player.controls = true;
+      player.playsInline = true;
       player.preload = "metadata";
       if (video.poster) player.poster = video.poster;
+      // Played to the end: the tab gets its tick. Only a file can say so; an embedded
+      // YouTube or Vimeo player cannot tell this page.
+      player.addEventListener("ended", markWatched);
       holder_.appendChild(player);
       return;
     }
@@ -762,6 +829,22 @@
     frame.setAttribute("allowfullscreen", "allowfullscreen");
     frame.setAttribute("referrerpolicy", "no-referrer");
     holder_.appendChild(frame);
+  }
+
+  function markWatched() {
+    try { localStorage.setItem(WATCHED_KEY, "1"); } catch (e) {}
+    var tab = strip.querySelector('[data-key="' + VIDEO + '"]');
+    if (tab) tab.replaceWith(videoTab());
+    if (state.step === VIDEO) {
+      el("acc-panel").className = "acc-panel";
+      el("acc-tag").className = "acc-tag acc-tag--done";
+      el("acc-tag").textContent = "Watched";
+      var when = el("acc-when");
+      when.innerHTML = "";
+      when.appendChild(make("span", "", "Watched ✓"));
+      var shown = strip.querySelector('[data-key="' + VIDEO + '"]');
+      if (shown) shown.setAttribute("aria-selected", "true");
+    }
   }
 
   /* --------------------------------------------------------------- move a date */
