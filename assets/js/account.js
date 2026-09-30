@@ -91,7 +91,7 @@
         name.textContent = project.name;
         var meta = document.createElement("span");
         var bits = [];
-        if (project.total) bits.push(project.done + " of " + project.total + " steps done");
+        if (project.total) bits.push(project.done + " of " + project.total + " milestones done");
         if (project.next) {
           bits.push((project.nextWaitingOn === "you" ? "over to you: " : "next: ") + project.next);
         }
@@ -117,37 +117,49 @@
     return Number(parts[2]) + " " + MONTHS[Number(parts[1]) - 1];
   }
 
+  // The date lives in a real dialog rather than an inline field: moving a date is a
+  // decision with consequences for everything behind it, and that deserves a moment's
+  // pause and a sentence of explanation, not a picker that fires on change.
   function moveControl(task) {
-    var wrap = document.createElement("div");
     var button = document.createElement("button");
     button.type = "button";
     button.className = "acct__move";
     button.textContent = "Need a different date?";
-    var field = document.createElement("input");
-    field.type = "date";           // the browser already has a date picker; no library
-    field.hidden = true;
-    field.value = task.start || "";
-    button.addEventListener("click", function () {
-      field.hidden = false;
-      field.focus();
-      if (field.showPicker) { try { field.showPicker(); } catch (e) {} }
-    });
-    field.addEventListener("change", function () {
-      if (!field.value) return;
-      button.textContent = "Moving…";
-      post("/account/move", { project: state.current.id, step: task.subject, date: field.value }, true)
-        .then(function (answer) {
-          if (!answer || answer.ok !== true) {
-            button.textContent = (answer && answer.error) || "That date did not work";
-            return;
-          }
-          openProject(state.current.id);
-        });
-    });
-    wrap.appendChild(button);
-    wrap.appendChild(field);
-    return wrap;
+    button.addEventListener("click", function () { askForDate(task); });
+    return button;
   }
+
+  function askForDate(task) {
+    var dialog = el("acct-move");
+    el("acct-move-title").textContent = "Move: " + task.subject;
+    el("acct-move-date").value = task.start || "";
+    el("acct-move-note").textContent = "";
+    state.moving = task;
+    if (dialog.showModal) dialog.showModal(); else dialog.setAttribute("open", "open");
+  }
+
+  function closeDialog() {
+    var dialog = el("acct-move");
+    if (dialog.close) dialog.close(); else dialog.removeAttribute("open");
+    state.moving = null;
+  }
+
+  el("acct-move-cancel").addEventListener("click", closeDialog);
+  el("acct-move-save").addEventListener("click", function () {
+    var note = el("acct-move-note");
+    var wanted = el("acct-move-date").value;
+    if (!wanted) { note.textContent = "Pick a date first."; return; }
+    note.textContent = "Moving…";
+    post("/account/move", { project: state.current.id, step: state.moving.subject, date: wanted }, true)
+      .then(function (answer) {
+        if (!answer || answer.ok !== true) {
+          note.textContent = (answer && answer.error) || "That date did not work.";
+          return;
+        }
+        closeDialog();
+        openProject(state.current.id);
+      });
+  });
 
   // A plain bar per step across the project's own span. Weekends are not drawn as gaps -
   // the dates already skip them, and pretending to render a calendar grid on a phone is
@@ -299,7 +311,7 @@
     el("acct-steps").hidden = true;
     el("acct-timeline").hidden = true;
     el("acct-step").hidden = false;
-    el("acct-step-count").textContent = "Step " + (index + 1) + " of " + tasks.length
+    el("acct-step-count").textContent = "Milestone " + (index + 1) + " of " + tasks.length
       + (task.done ? " · done" : task.waitingOn === "you" ? " · over to you" : " · with us");
     el("acct-step-title").textContent = task.subject;
     el("acct-step-detail").textContent = task.detail || "";
@@ -480,7 +492,7 @@
       if (!data || data.ok !== true) { loadProjects(); return; }
       state.current = data;
       el("acct-project-name").textContent = data.project;
-      el("acct-progress").textContent = data.done + " of " + data.total + " steps done";
+      el("acct-progress").textContent = data.done + " of " + data.total + " milestones done";
       el("acct-bar").style.width = data.total ? Math.round((data.done / data.total) * 100) + "%" : "0";
       renderVerdict(data);
       renderSteps(data.tasks || []);

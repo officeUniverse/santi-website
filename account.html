@@ -308,6 +308,16 @@
       .acct__stepnav { display: flex; gap: .6rem; margin-top: 1.5rem;
                        border-top: 1px solid var(--night-line); padding-top: 1.25rem; }
 
+      .acct__dialog { border: 0; border-radius: 16px; padding: 1.75rem; max-width: 26rem;
+                      background: var(--ink, #0d1b2a); color: #fff; }
+      .acct__dialog::backdrop { background: rgba(4, 12, 28, .72); }
+      .acct__dialog h3 { margin: 0 0 .6rem; }
+      .acct__dialog input { width: 100%; padding: .7rem; border-radius: 10px; font: inherit;
+                            border: 1px solid var(--night-line); margin: .5rem 0 0;
+                            background: #fff; color: var(--ink); }
+      .acct__dialog .acct__fine { color: rgba(255,255,255,.66); }
+      .acct__dialogbuttons { display: flex; align-items: center; gap: 1rem; margin-top: 1.25rem; }
+
       .acct__q { margin: 0 0 1.25rem; }
       .acct__q label { display: block; font-weight: 600; margin: 0 0 .45rem; }
       .acct__q textarea { width: 100%; padding: .8rem; border-radius: 10px; font: inherit;
@@ -321,6 +331,22 @@
       .acct__out { background: none; border: 0; color: var(--night-muted); font: inherit;
                    text-decoration: underline; cursor: pointer; padding: 0; margin-top: 3rem; }
     </style>
+    <dialog id="acct-move" class="acct__dialog">
+      <form method="dialog">
+        <h3 id="acct-move-title">Move this date</h3>
+        <p class="acct__fine">Pick a date that suits you. Everything after it moves with it —
+          that is how the finish date really works, so you always see the truth rather than a
+          date we quietly missed.</p>
+        <label for="acct-move-date"><strong>New date</strong></label>
+        <input id="acct-move-date" type="date">
+        <p id="acct-move-note" class="acct__note" aria-live="polite"></p>
+        <div class="acct__dialogbuttons">
+          <button type="button" class="btn btn--accent" id="acct-move-save">Move it</button>
+          <button type="button" class="acct__out" id="acct-move-cancel" style="margin:0">Cancel</button>
+        </div>
+      </form>
+    </dialog>
+
     <section class="frame frame--dark on-dark acct">
       <p id="acct-status" class="acct__fine">Checking…</p>
 
@@ -359,16 +385,16 @@
 
         <div class="acct__block" style="border-top:0;padding-top:0">
           <h2>Where things stand</h2>
-          <p class="acct__fine">Your real board. Ticked steps are done, each one says who it is
+          <p class="acct__fine">Your real board. Ticked milestones are done, each one says who it is
             waiting on, and the dates are the plan — we do not work weekends or public holidays.</p>
           <div class="acct__views">
-            <button type="button" id="acct-view-list" aria-pressed="true">Steps</button>
+            <button type="button" id="acct-view-list" aria-pressed="true">Milestones</button>
             <button type="button" id="acct-view-time" aria-pressed="false">Timeline</button>
           </div>
           <ul class="acct__steps" id="acct-steps"></ul>
 
           <div id="acct-step" class="acct__step" hidden>
-            <button type="button" class="acct__back" id="acct-step-close">&larr; All steps</button>
+            <button type="button" class="acct__back" id="acct-step-close">&larr; All milestones</button>
             <p class="acct__stepcount" id="acct-step-count"></p>
             <h3 id="acct-step-title"></h3>
             <p class="acct__fine" id="acct-step-detail"></p>
