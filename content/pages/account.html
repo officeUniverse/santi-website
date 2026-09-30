@@ -6,477 +6,387 @@
   "crumb": "Your projects",
   "robots": "noindex, nofollow",
   "referrer": "no-referrer",
-  "scripts": ["assets/js/account.js?v=2"]
+  "scripts": ["assets/js/account.js?v=3"]
 }
 -->
     <style>
-      /* The first padding value clears the fixed site header, which otherwise sits over
-         the signed-in email. Wide and centred: the rail and its pane want the room, and
-         the prose inside stays capped by .acct__fine so lines never run long. */
-      .acct { padding: clamp(96px, 11vw, 140px) var(--pad) clamp(48px, 7vw, 88px);
-              max-width: 93rem; margin: 10px auto 40px; }
-      .acct__intro { max-width: 40rem; color: var(--night-muted); margin: 0 0 1.75rem; }
-      .acct__hello { color: var(--gold); font-weight: 600; margin: 0 0 .35rem; }
-      .acct__title { margin: 0 0 1.5rem; }
-      .acct__fine { color: var(--night-muted); font-size: .92rem; max-width: 42rem;
-                    padding-bottom: 20px; }
-      .acct__note { color: var(--gold); min-height: 1.4rem; margin: .9rem 0 0; }
+      /* One question organises this page: what does the client need to do next?
+         The answer sits at the top with its button. Everything else is a tab, not a
+         scroll, and every milestone appears once - the previous version showed the same
+         nine items five different ways and buried the one action that mattered. */
 
-      .acct__signin { max-width: 26rem; }
-      .acct__signin input { width: 100%; padding: .85rem; border-radius: 10px; font: inherit;
-                            border: 1px solid var(--night-line); background: #fff; color: var(--ink);
-                            margin: .75rem 0 1rem; }
+      .acc { padding: clamp(96px, 11vw, 140px) var(--pad) clamp(48px, 7vw, 88px);
+             max-width: 72rem; margin: 10px auto 40px; }
+      .acc [hidden] { display: none !important; }
+      .acc p { margin: 0; }
+      .acc-muted { color: var(--night-muted); }
+      .acc-note { color: var(--gold); min-height: 1.3rem; margin-top: .8rem !important;
+                  font-size: .9rem; }
+      .acc-link { background: none; border: 0; padding: 0; font: inherit; color: var(--gold);
+                  text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+      .acc-link--quiet { color: var(--night-muted); }
 
-      .acct__cards { list-style: none; margin: 1.5rem 0 0; padding: 0; display: grid; gap: .75rem; }
-      .acct__cards button { width: 100%; text-align: left; background: transparent; color: inherit;
-                            border: 1px solid var(--night-line); border-radius: 12px;
-                            padding: 1.1rem 1.25rem; font: inherit; cursor: pointer; }
-      .acct__cards button:hover { border-color: var(--gold); }
-      .acct__cards strong { display: block; font-size: 1.05rem; }
-      .acct__cards span { color: var(--night-muted); font-size: .88rem; }
+      /* --- sign in and the project list ---------------------------------------- */
+      .acc-narrow { max-width: 30rem; }
+      .acc-narrow h1 { margin: 0 0 .8rem; }
+      .acc-narrow .acc-muted { margin-bottom: 1.5rem; }
+      .acc-input { width: 100%; padding: .85rem 1rem; border-radius: 12px; font: inherit;
+                   border: 1px solid var(--night-line); background: #fff; color: var(--ink); }
+      .acc-narrow .acc-input { margin: .5rem 0 1rem; }
 
-      .acct__back { background: none; border: 0; color: var(--gold); font: inherit; cursor: pointer;
-                    padding: 0; margin-bottom: 1.25rem; }
-      .acct__bar { height: 6px; border-radius: 99px; background: rgba(255,255,255,.12);
-                   overflow: hidden; margin: .6rem 0 2rem; }
-      .acct__bar i { display: block; height: 100%; background: var(--gold); }
+      .acc-listhead { display: flex; justify-content: space-between; align-items: baseline;
+                      gap: 1rem; flex-wrap: wrap; margin-bottom: 1.75rem; }
+      .acc-listhead h1 { margin: 0; }
+      .acc-projects { list-style: none; margin: 0; padding: 0; display: grid; gap: .8rem; }
+      .acc-projects button { width: 100%; text-align: left; font: inherit; color: inherit;
+                             cursor: pointer; background: rgba(255,255,255,.035);
+                             border: 1px solid var(--night-line); border-radius: 16px;
+                             padding: 1.2rem 1.35rem; display: grid; gap: .35rem; }
+      .acc-projects button:hover { border-color: var(--gold); }
+      .acc-projects strong { font-size: 1.1rem; }
+      .acc-projects .acc-mini { height: 4px; border-radius: 99px; background: rgba(255,255,255,.1);
+                                overflow: hidden; margin-top: .45rem; }
+      .acc-projects .acc-mini i { display: block; height: 100%; background: var(--gold); }
 
-      .acct__block { margin-top: 2.5rem; border-top: 1px solid var(--night-line); padding-top: 1.75rem; }
-      .acct__block h2 { font-size: clamp(1.1rem, 2.4vw, 1.4rem); margin: 0 0 .6rem; }
+      /* --- project header ------------------------------------------------------- */
+      .acc-head { display: flex; align-items: flex-start; justify-content: space-between;
+                  gap: 1.25rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+      .acc-head h1 { margin: .2rem 0 0; font-size: clamp(1.5rem, 3.4vw, 2.3rem); }
+      .acc-eyebrow { color: var(--gold); font-size: .85rem; font-weight: 600; }
+      .acc-headside { display: grid; justify-items: end; gap: .4rem; text-align: right; }
+      .acc-headside .acc-muted { font-size: .85rem; }
 
-      .acct__steps { list-style: none; margin: 0; padding: 0; }
-      .acct__steps li { display: grid; grid-template-columns: 1.6rem 1fr auto; gap: .85rem;
-                        padding: .95rem 0; border-bottom: 1px solid var(--night-line); }
-      .acct__steps .tick { width: 1.4rem; height: 1.4rem; border-radius: 50%; margin-top: .15rem;
-                           border: 1px solid var(--night-line); display: grid; place-items: center;
-                           font-size: .8rem; }
-      .acct__steps .tick--done { background: var(--gold); color: var(--ink); border-color: var(--gold); }
-      .acct__steps .detail { color: var(--night-muted); font-size: .88rem; display: block;
-                             margin-top: .2rem; }
-      .acct__steps li.done strong { text-decoration: line-through; opacity: .65; }
-      .acct__who { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase;
-                   white-space: nowrap; align-self: start; padding: .25rem .55rem; border-radius: 99px; }
-      .acct__who--you { background: var(--gold); color: var(--ink); font-weight: 700; }
-      .acct__who--us { border: 1px solid var(--night-line); color: var(--night-muted); }
+      .acc-progress { display: flex; align-items: center; gap: .9rem; margin-bottom: 1.75rem; }
+      .acc-progress .acc-bar { flex: 1; height: 6px; border-radius: 99px; overflow: hidden;
+                               background: rgba(255,255,255,.1); }
+      .acc-progress .acc-bar i { display: block; height: 100%; background: var(--gold);
+                                 transition: width .4s ease; }
+      .acc-progress span { font-size: .88rem; white-space: nowrap; }
 
-      .acct__dates { color: var(--night-muted); font-size: .82rem; display: block; margin-top: .3rem; }
-      .acct__move { background: none; border: 0; color: var(--gold); font: inherit; font-size: .82rem;
-                    text-decoration: underline; cursor: pointer; padding: 0; margin-top: .35rem; }
-      .acct__move input { margin-left: .5rem; font: inherit; font-size: .82rem; border-radius: 6px;
-                          border: 1px solid var(--night-line); padding: .2rem .4rem; }
+      /* --- the hero: the one thing to do -------------------------------------- */
+      .acc-hero { border-radius: 20px; padding: clamp(1.4rem, 3vw, 2.1rem);
+                  background: linear-gradient(135deg, rgba(255,209,71,.14), rgba(255,209,71,.03));
+                  border: 1px solid rgba(255,209,71,.35); margin-bottom: 2rem; }
+      .acc-hero--calm { background: rgba(255,255,255,.035); border-color: var(--night-line); }
+      .acc-kicker { font-size: .74rem; letter-spacing: .12em; text-transform: uppercase;
+                    color: var(--gold); font-weight: 700; }
+      .acc-hero--calm .acc-kicker { color: var(--night-muted); }
+      .acc-hero h2 { margin: .45rem 0 .6rem; font-size: clamp(1.35rem, 3vw, 1.9rem); }
+      .acc-hero .acc-muted { max-width: 40rem; line-height: 1.6; }
+      .acc-due { margin-top: .9rem !important; font-weight: 600; }
+      .acc-actions { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem 1.25rem;
+                     margin-top: 1.3rem; }
+      .acc-after { margin-top: 1.4rem !important; padding-top: 1.1rem;
+                   border-top: 1px solid var(--night-line); font-size: .92rem; }
+      .acc-cheer { color: var(--gold); font-weight: 600; margin-bottom: .9rem !important; }
 
-      .acct__views { display: flex; gap: .5rem; margin: 0 0 1.25rem; }
-      .acct__views button { background: none; border: 1px solid var(--night-line); color: inherit;
-                            border-radius: 99px; padding: .35rem .95rem; font: inherit;
-                            font-size: .85rem; cursor: pointer; }
-      .acct__views button[aria-pressed="true"] { background: var(--gold); color: var(--ink);
-                                                 border-color: var(--gold); font-weight: 600; }
+      .acc-video { position: relative; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden;
+                   border: 1px solid var(--night-line); max-width: 46rem; margin-bottom: 2rem; }
+      .acc-video iframe, .acc-video video { position: absolute; inset: 0; width: 100%; height: 100%;
+                                            border: 0; }
 
-      .acct__gantt { margin: 0; padding: 0; list-style: none; }
-      .acct__gantt li { padding: .55rem 0; border-bottom: 1px solid var(--night-line); }
-      .acct__gantt .row { display: grid; grid-template-columns: 11rem 1fr; gap: .9rem;
-                          align-items: center; }
-      .acct__gantt .label { font-size: .85rem; overflow: hidden; text-overflow: ellipsis;
-                            white-space: nowrap; }
-      .acct__gantt .track { position: relative; height: 1.4rem; border-radius: 99px;
-                            background: rgba(255,255,255,.07); }
-      .acct__gantt .bar { position: absolute; top: 0; bottom: 0; border-radius: 99px;
-                          background: var(--night-line); min-width: 3px; }
-      .acct__gantt .bar--you { background: var(--gold); }
-      .acct__gantt .bar--done { background: rgba(255,255,255,.22); }
-      .acct__gantt .when { font-size: .75rem; color: var(--night-muted); padding-left: 11.9rem; }
-      @media (max-width: 620px) {
-        .acct__gantt .row { grid-template-columns: 7rem 1fr; }
-        .acct__gantt .when { padding-left: 7.9rem; }
+      /* --- tabs ----------------------------------------------------------------- */
+      .acc-tabs { display: flex; gap: .35rem; overflow-x: auto; margin-bottom: 1.5rem;
+                  border-bottom: 1px solid var(--night-line); }
+      .acc-tabs button { flex: none; background: none; border: 0; font: inherit; color: var(--night-muted);
+                         padding: .8rem 1.05rem; cursor: pointer; border-bottom: 2px solid transparent;
+                         margin-bottom: -1px; font-weight: 600; }
+      .acc-tabs button[aria-selected="true"] { color: #fff; border-bottom-color: var(--gold); }
+      .acc-tabs button:hover { color: #fff; }
+      .acc-tabs .acc-badge { display: inline-grid; place-items: center; min-width: 1.25rem;
+                             height: 1.25rem; padding: 0 .35rem; margin-left: .35rem; border-radius: 99px;
+                             background: var(--gold); color: var(--ink); font-size: .7rem; }
+      .acc-panel { min-height: 16rem; }
+      .acc-panel h3 { margin: 0 0 .4rem; font-size: 1.15rem; }
+      .acc-panel > .acc-muted { margin-bottom: 1.25rem; max-width: 42rem; line-height: 1.6; }
+
+      /* --- plan: the rail and its detail ------------------------------------- */
+      .acc-switch { display: inline-flex; border: 1px solid var(--night-line); border-radius: 99px;
+                    padding: .2rem; margin-bottom: 1.25rem; }
+      .acc-switch button { background: none; border: 0; font: inherit; font-size: .85rem;
+                           color: var(--night-muted); padding: .35rem .95rem; border-radius: 99px;
+                           cursor: pointer; }
+      .acc-switch button[aria-pressed="true"] { background: var(--gold); color: var(--ink); font-weight: 700; }
+
+      .acc-plan { display: grid; grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
+                  gap: 1.75rem; align-items: start; }
+      .acc-rail { list-style: none; margin: 0; padding: 0; position: relative; }
+      .acc-rail::before { content: ""; position: absolute; left: .74rem; top: 1rem; bottom: 1rem;
+                          width: 2px; background: var(--night-line); }
+      .acc-rail li { position: relative; display: grid; grid-template-columns: 1.5rem 1fr; gap: .8rem;
+                     padding: .6rem .6rem .6rem 0; border-radius: 10px; cursor: pointer; }
+      .acc-rail li:hover strong, .acc-rail li[aria-current="true"] strong { color: var(--gold); }
+      .acc-dot { width: 1.5rem; height: 1.5rem; border-radius: 50%; z-index: 1; margin-top: .05rem;
+                 display: grid; place-items: center; font-size: .7rem; font-weight: 700;
+                 background: var(--ink, #0d1b2a); border: 2px solid var(--night-line); }
+      .acc-dot--done { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+      .acc-dot--you { border-color: var(--gold); color: var(--gold); }
+      .acc-rail li[aria-current="true"] .acc-dot { box-shadow: 0 0 0 5px rgba(255,209,71,.2); }
+      .acc-rail strong { display: block; font-size: .92rem; line-height: 1.3; }
+      .acc-rail small { color: var(--night-muted); font-size: .76rem; }
+
+      .acc-detail { border: 1px solid var(--night-line); border-radius: 16px; padding: 1.5rem;
+                    background: rgba(255,255,255,.03); position: sticky; top: 7rem; }
+      .acc-tag { display: inline-block; font-size: .7rem; letter-spacing: .08em; text-transform: uppercase;
+                 padding: .25rem .6rem; border-radius: 99px; border: 1px solid var(--night-line);
+                 color: var(--night-muted); font-weight: 700; }
+      .acc-tag--you { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+      .acc-tag--done { border-color: rgba(255,209,71,.5); color: var(--gold); }
+      .acc-detail h3 { margin: .7rem 0 .5rem; font-size: 1.3rem; }
+      .acc-detail .acc-muted { line-height: 1.6; }
+      .acc-when { margin-top: .8rem !important; font-size: .9rem; }
+      .acc-stepnav { display: flex; justify-content: space-between; gap: .75rem; margin-top: 1.4rem;
+                     padding-top: 1.1rem; border-top: 1px solid var(--night-line); }
+
+      .acc-months { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 1.25rem; }
+      .acc-month h4 { margin: 0; font-size: 1rem; }
+      .acc-month > small { display: block; color: var(--night-muted); font-size: .76rem; margin: .15rem 0 .8rem; }
+      .acc-mcard { border: 1px solid var(--night-line); border-radius: 12px; padding: .8rem .9rem;
+                   margin-bottom: .55rem; cursor: pointer; background: rgba(255,255,255,.03); }
+      .acc-mcard:hover { border-color: var(--gold); }
+      .acc-mcard--you { border-left: 3px solid var(--gold); }
+      .acc-mcard--done { opacity: .5; }
+      .acc-mcard strong { display: block; font-size: .9rem; }
+      .acc-mcard small { color: var(--night-muted); font-size: .76rem; }
+
+      .acc-verdict { border-left: 3px solid var(--gold); padding: .7rem 0 .7rem 1rem; margin-bottom: 1.5rem;
+                     font-size: .92rem; color: var(--night-muted); max-width: 44rem; }
+      .acc-verdict strong { color: #fff; display: block; margin-bottom: .2rem; }
+
+      /* --- brief, files, help ---------------------------------------------------- */
+      .acc-q { margin: 0 0 1.35rem; max-width: 44rem; }
+      .acc-q label { display: block; font-weight: 600; margin-bottom: .45rem; }
+      .acc-q textarea, .acc-q input { width: 100%; padding: .8rem; border-radius: 12px; font: inherit;
+                                      border: 1px solid var(--night-line); background: #fff; color: var(--ink); }
+      .acc-suggest { border: 1px solid var(--night-line); border-left: 3px solid var(--gold);
+                     border-radius: 12px; padding: 1rem 1.1rem; margin-top: .6rem; }
+      .acc-suggest p { margin: .35rem 0 .9rem !important; }
+      .acc-done { border: 1px solid rgba(255,209,71,.35); border-radius: 16px; padding: 1.3rem 1.4rem;
+                  max-width: 40rem; }
+      .acc-done strong { color: var(--gold); display: block; margin-bottom: .3rem; }
+
+      .acc-drop { border: 2px dashed var(--night-line); border-radius: 16px; padding: 2rem 1.5rem;
+                  text-align: center; max-width: 40rem; cursor: pointer; }
+      .acc-drop:hover, .acc-drop--over { border-color: var(--gold); }
+      .acc-drop strong { display: block; margin-bottom: .3rem; }
+      .acc-files { list-style: none; margin: 1.5rem 0 0; padding: 0; max-width: 40rem; }
+      .acc-files li { display: flex; justify-content: space-between; gap: 1rem; padding: .75rem 0;
+                      border-bottom: 1px solid var(--night-line); }
+      .acc-files small { color: var(--night-muted); white-space: nowrap; }
+
+      .acc-help { display: grid; grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); gap: 1.5rem; }
+      .acc-card { border: 1px solid var(--night-line); border-radius: 16px; padding: 1.4rem;
+                  background: rgba(255,255,255,.03); }
+      .acc-card > .acc-muted { margin: .3rem 0 1.1rem !important; line-height: 1.55; font-size: .92rem; }
+      .acc-slots { display: flex; flex-wrap: wrap; gap: .45rem; }
+      .acc-slots button { background: none; border: 1px solid var(--night-line); color: inherit;
+                          font: inherit; font-size: .85rem; padding: .5rem .8rem; border-radius: 10px;
+                          cursor: pointer; }
+      .acc-slots button:hover { border-color: var(--gold); }
+      .acc-slots button[aria-pressed="true"] { background: var(--gold); color: var(--ink);
+                                               border-color: var(--gold); font-weight: 700; }
+      .acc-requests { list-style: none; margin: 1.25rem 0 0; padding: 0; }
+      .acc-requests li { padding: .65rem 0; border-top: 1px solid var(--night-line); font-size: .9rem; }
+      .acc-requests small { display: block; color: var(--night-muted); font-size: .78rem; }
+
+      /* --- the date dialog and confetti ------------------------------------------ */
+      .acc-dialog { border: 0; border-radius: 18px; padding: 1.75rem; max-width: 26rem; width: 92vw;
+                    background: #0d1b2a; color: #fff; }
+      .acc-dialog::backdrop { background: rgba(4,12,28,.75); }
+      .acc-dialog h3 { margin: 0 0 .6rem; }
+      .acc-dialog .acc-muted { color: rgba(255,255,255,.66); line-height: 1.55; margin-bottom: 1rem; }
+      .acc-dialog input { width: 100%; padding: .75rem; border-radius: 10px; font: inherit; border: 0;
+                          margin-top: .4rem; }
+      .acc-dialogbar { display: flex; align-items: center; gap: 1rem; margin-top: 1.25rem; }
+      .acc-confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none;
+                      z-index: 60; display: none; }
+
+      @media (max-width: 760px) {
+        .acc-plan { grid-template-columns: 1fr; }
+        .acc-detail { position: static; }
+        .acc-headside { justify-items: start; text-align: left; }
       }
-
-      .acct__slots { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
-      .acct__slots button { background: transparent; color: inherit; border: 1px solid var(--night-line);
-                            border-radius: 10px; padding: .55rem .9rem; font: inherit; font-size: .88rem;
-                            cursor: pointer; }
-      .acct__slots button:hover { border-color: var(--gold); color: var(--gold); }
-      .acct__slots .booked { border-color: var(--gold); background: var(--gold); color: var(--ink);
-                             font-weight: 600; }
-
-      .acct__verdict { border-left: 3px solid var(--gold); padding: .6rem 0 .6rem .9rem;
-                       margin: -1rem 0 2rem; font-size: .92rem; color: var(--night-muted); }
-      .acct__verdict strong { color: #fff; display: block; margin-bottom: .15rem; }
-
-      /* The pane is capped rather than filling the full width: on a wide screen a line of
-         text running 70rem is unreadable, while the board and the timeline below genuinely
-         want the room. */
-      .acct__wizard { display: grid; grid-template-columns: 17rem minmax(0, 52rem);
-                      gap: 2.5rem; align-items: start; }
-      /* A class that sets display beats the browser's own [hidden] rule, so switching to
-         the Timeline left the rail sitting underneath it. */
-      .acct__wizard[hidden] { display: none; }
-      .acct__rail { list-style: none; margin: 0; padding: 0 0 0 .25rem; position: relative; }
-      .acct__rail::before { content: ""; position: absolute; left: 1.05rem; top: .9rem; bottom: .9rem;
-                            width: 1px; background: var(--night-line); }
-      .acct__rail li { position: relative; display: grid; grid-template-columns: 2.1rem 1fr;
-                       gap: .8rem; align-items: start; padding: .55rem 0; cursor: pointer; }
-      .acct__rail .dot { width: 1.5rem; height: 1.5rem; border-radius: 50%; margin-top: .1rem;
-                         border: 1px solid var(--night-line); background: var(--ink, #0d1b2a);
-                         display: grid; place-items: center; font-size: .72rem; z-index: 1; }
-      .acct__rail .dot--done { background: var(--gold); color: var(--ink); border-color: var(--gold); }
-      .acct__rail .dot--you { border-color: var(--gold); color: var(--gold); }
-      .acct__rail strong { font-size: .92rem; font-weight: 600; display: block; line-height: 1.3; }
-      .acct__rail span { font-size: .78rem; color: var(--night-muted); }
-      .acct__rail li:hover strong { color: var(--gold); }
-      .acct__rail li[aria-current="true"] strong { color: var(--gold); }
-      .acct__rail li[aria-current="true"] .dot { box-shadow: 0 0 0 4px rgba(255, 209, 71, .18); }
-      .acct__pane { border: 1px solid var(--night-line); border-radius: 14px; padding: 1.75rem;
-                    min-height: 18rem; }
-      @media (max-width: 720px) {
-        .acct__wizard { grid-template-columns: 1fr; gap: 1.25rem; }
-        .acct__pane { padding: 1.25rem; min-height: 0; }
-      }
-      .acct__steps li:hover strong { color: var(--gold); }
-      .acct__pane h3 { margin: .4rem 0 .6rem; font-size: clamp(1.1rem, 2.6vw, 1.45rem); }
-      .acct__stepcount { color: var(--night-muted); font-size: .8rem; letter-spacing: .08em;
-                         text-transform: uppercase; margin: 0; }
-      .acct__stepactions { margin: 1.25rem 0 .5rem; display: flex; flex-wrap: wrap; gap: .6rem; }
-      .acct__stepnav { display: flex; gap: .6rem; margin-top: 1.5rem;
-                       border-top: 1px solid var(--night-line); padding-top: 1.25rem; }
-
-      /* --- the console header -------------------------------------------------------
-         Borrowed shapes, not borrowed colours: a pill nav, a strip of figures you can
-         read without reading, and rounded panels on the brand's own navy. */
-      .acct__console { border: 1px solid var(--night-line); border-radius: 18px;
-                       padding: 1.4rem 1.5rem 1.5rem; margin: 0 0 2rem;
-                       background: rgba(255,255,255,.03); }
-      .acct__consoletop { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
-                          margin-bottom: 1.4rem; }
-      .acct__consoletop .acct__title { margin: 0; font-size: clamp(1.4rem, 3.2vw, 2.1rem);
-                                       flex: 1 1 14rem; }
-      .acct__close { width: 2.4rem; height: 2.4rem; border-radius: 50%; flex: none;
-                     border: 1px solid var(--night-line); background: transparent;
-                     color: inherit; font: inherit; cursor: pointer; }
-      .acct__close:hover { border-color: var(--gold); color: var(--gold); }
-      .acct__pills { display: flex; gap: .4rem; flex-wrap: wrap; }
-      .acct__pills a { border: 1px solid var(--night-line); border-radius: 99px;
-                       padding: .42rem .95rem; font-size: .82rem; text-decoration: none;
-                       color: inherit; white-space: nowrap; }
-      .acct__pills a:hover { border-color: var(--gold); color: var(--gold); }
-
-      .acct__stats { display: grid; gap: .75rem;
-                     grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); }
-      .acct__stat { border: 1px solid var(--night-line); border-radius: 14px; padding: .9rem 1rem;
-                    background: rgba(4,12,28,.35); }
-      .acct__stat .label { display: block; font-size: .7rem; letter-spacing: .1em;
-                           text-transform: uppercase; color: var(--night-muted); }
-      .acct__stat strong { display: block; margin-top: .3rem; font-size: 1.12rem; line-height: 1.25;
-                           overflow-wrap: anywhere; }
-      .acct__stat .sub { display: block; margin-top: .25rem; font-size: .78rem;
-                         color: var(--night-muted); overflow-wrap: anywhere; }
-      .acct__stat .acct__bar { margin: .6rem 0 0; }
-      /* The client tile holds an email address, which wraps mid-word in a narrow column.
-         Given the room, it takes two. */
-      @media (min-width: 1000px) { .acct__stat--wide { grid-column: span 2; } }
-
-      /* --- the timeline as cards strung along the months --------------------------- */
-      .acct__months { display: flex; gap: 1rem; overflow-x: auto; padding: .5rem .2rem 1rem;
-                      scroll-snap-type: x proximity; }
-      .acct__month { flex: 0 0 17rem; scroll-snap-align: start; }
-      .acct__month > h4 { margin: 0 0 .1rem; font-size: 1rem; }
-      .acct__month > .count { font-size: .74rem; letter-spacing: .08em; text-transform: uppercase;
-                              color: var(--night-muted); display: block; margin-bottom: .7rem; }
-      .acct__month .line { height: 1px; background: var(--night-line); margin: 0 0 .9rem;
-                           position: relative; }
-      .acct__month .line i { position: absolute; left: 0; top: -4px; width: 9px; height: 9px;
-                             border-radius: 50%; background: var(--gold); }
-      .acct__mcard { border: 1px solid var(--night-line); border-radius: 14px; padding: .85rem .95rem;
-                     margin-bottom: .6rem; cursor: pointer; background: rgba(4,12,28,.35); }
-      .acct__mcard:hover { border-color: var(--gold); }
-      .acct__mcard--you { border-left: 3px solid var(--gold); }
-      .acct__mcard--done { opacity: .5; }
-      .acct__mcard strong { display: block; font-size: .92rem; }
-      .acct__mcard .when { display: block; margin-top: .3rem; font-size: .76rem;
-                           color: var(--night-muted); }
-      .acct__mcard .who { display: inline-block; margin-top: .5rem; font-size: .68rem;
-                          letter-spacing: .08em; text-transform: uppercase; padding: .2rem .5rem;
-                          border-radius: 99px; border: 1px solid var(--night-line);
-                          color: var(--night-muted); }
-      .acct__mcard--you .who { background: var(--gold); color: var(--ink); border-color: var(--gold);
-                               font-weight: 700; }
-
-      .acct__scrub { display: flex; gap: .4rem; overflow-x: auto; padding: .6rem .5rem;
-                     border: 1px solid var(--night-line); border-radius: 99px; margin: 0 0 1.5rem;
-                     background: rgba(4,12,28,.5); }
-      .acct__scrub button { flex: none; border: 0; background: transparent; color: var(--night-muted);
-                            font: inherit; font-size: .76rem; letter-spacing: .06em;
-                            text-transform: uppercase; padding: .3rem .7rem; border-radius: 99px;
-                            cursor: pointer; }
-      .acct__scrub button[aria-current="true"] { background: var(--gold); color: var(--ink);
-                                                 font-weight: 700; }
-      .acct__scrub button:hover { color: var(--gold); }
-      .acct__scrub button[aria-current="true"]:hover { color: var(--ink); }
-
-      .acct__video { position: relative; aspect-ratio: 16 / 9; border-radius: 12px;
-                     overflow: hidden; border: 1px solid var(--night-line);
-                     background: rgba(255,255,255,.03); max-width: 46rem; }
-      .acct__video iframe, .acct__video video { position: absolute; inset: 0; width: 100%;
-                                                height: 100%; border: 0; display: block; }
-      .acct__video p { position: absolute; inset: 0; display: grid; place-items: center;
-                       text-align: center; padding: 1.5rem; margin: 0; color: var(--night-muted);
-                       font-size: .92rem; }
-
-      .acct__dialog { border: 0; border-radius: 16px; padding: 1.75rem; max-width: 26rem;
-                      background: var(--ink, #0d1b2a); color: #fff; }
-      .acct__dialog::backdrop { background: rgba(4, 12, 28, .72); }
-      .acct__dialog h3 { margin: 0 0 .6rem; }
-      .acct__dialog input { width: 100%; padding: .7rem; border-radius: 10px; font: inherit;
-                            border: 1px solid var(--night-line); margin: .5rem 0 0;
-                            background: #fff; color: var(--ink); }
-      .acct__dialog .acct__fine { color: rgba(255,255,255,.66); }
-      .acct__dialogbuttons { display: flex; align-items: center; gap: 1rem; margin-top: 1.25rem; }
-
-      .acct__kanban { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
-                      gap: .75rem; }
-      .acct__col h3 { font-size: .78rem; letter-spacing: .09em; text-transform: uppercase;
-                      color: var(--night-muted); margin: 0 0 .6rem; }
-      .acct__col--you h3 { color: var(--gold); }
-      .acct__card { border: 1px solid var(--night-line); border-radius: 10px; padding: .7rem .8rem;
-                    margin-bottom: .55rem; font-size: .88rem; cursor: pointer; }
-      .acct__card:hover { border-color: var(--gold); }
-      .acct__card--you { border-left: 3px solid var(--gold); }
-      .acct__card--done { opacity: .55; }
-      .acct__card .date { display: block; color: var(--night-muted); font-size: .78rem;
-                          margin-top: .25rem; }
-      .acct__col--empty { color: var(--night-muted); font-size: .82rem; }
-      @media (max-width: 760px) { .acct__kanban { grid-template-columns: repeat(2, minmax(0,1fr)); } }
-
-      .acct__suggestion { border: 1px solid var(--night-line); border-left: 3px solid var(--gold);
-                          border-radius: 10px; padding: 1rem 1.1rem; margin: .6rem 0 0; }
-      .acct__suggestiontext { margin: .35rem 0 1rem; }
-
-      .acct__progress { margin-bottom: 0; }
-      .acct__cheer { color: var(--gold); font-weight: 600; margin: 1rem 0 0; }
-      .acct__confetti { position: fixed; inset: 0; width: 100%; height: 100%;
-                        pointer-events: none; z-index: 60; display: none; }
-
-      .acct__q { margin: 0 0 1.25rem; }
-      .acct__q label { display: block; font-weight: 600; margin: 0 0 .45rem; }
-      .acct__q textarea { width: 100%; padding: .8rem; border-radius: 10px; font: inherit;
-                          border: 1px solid var(--night-line); background: #fff; color: var(--ink); }
-
-      .acct__files { list-style: none; margin: 0 0 1.1rem; padding: 0; }
-      .acct__files li { display: flex; justify-content: space-between; gap: 1rem; padding: .7rem 0;
-                        border-bottom: 1px solid var(--night-line); }
-      .acct__files .meta { color: var(--night-muted); font-size: .88rem; white-space: nowrap; }
-
-      .acct__out { background: none; border: 0; color: var(--night-muted); font: inherit;
-                   text-decoration: underline; cursor: pointer; padding: 0; margin-top: 3rem; }
     </style>
-    <dialog id="acct-move" class="acct__dialog">
-      <form method="dialog">
-        <h3 id="acct-move-title">Move this date</h3>
-        <p class="acct__fine">Pick a date that suits you. Everything after it moves with it —
-          that is how the finish date really works, so you always see the truth rather than a
-          date we quietly missed.</p>
-        <label for="acct-move-date"><strong>New date</strong></label>
-        <input id="acct-move-date" type="date">
-        <p id="acct-move-note" class="acct__note" aria-live="polite"></p>
-        <div class="acct__dialogbuttons">
-          <button type="button" class="btn btn--accent" id="acct-move-save">Move it</button>
-          <button type="button" class="acct__out" id="acct-move-cancel" style="margin:0">Cancel</button>
-        </div>
-      </form>
+
+    <dialog id="acc-move" class="acc-dialog">
+      <h3 id="acc-move-title">Move this date</h3>
+      <p class="acc-muted">Pick a date that suits you. Everything after it moves with it, so the
+        finish date you see is always the real one.</p>
+      <label for="acc-move-date"><strong>New date</strong></label>
+      <input id="acc-move-date" type="date">
+      <p id="acc-move-note" class="acc-note" aria-live="polite"></p>
+      <div class="acc-dialogbar">
+        <button type="button" class="btn btn--accent" id="acc-move-save">Move it</button>
+        <button type="button" class="acc-link acc-link--quiet" id="acc-move-cancel">Cancel</button>
+      </div>
     </dialog>
 
-    <canvas id="acct-confetti" class="acct__confetti" aria-hidden="true"></canvas>
+    <canvas id="acc-confetti" class="acc-confetti" aria-hidden="true"></canvas>
+    <input id="acc-upload" type="file" multiple hidden>
 
-    <section class="frame frame--dark on-dark acct">
-      <p id="acct-status" class="acct__fine">Checking…</p>
+    <section class="frame frame--dark on-dark acc">
+      <p id="acc-status" class="acc-muted">Checking…</p>
 
-      <!-- signed out -->
-      <div id="acct-signin" hidden>
-        <h1 class="acct__title">Your projects</h1>
-        <form class="acct__signin" id="acct-signin-form">
-          <label for="acct-email"><strong>Sign in with your email</strong></label>
-          <p class="acct__fine">No password. We send a link that signs you in for 30 days — use the
-            address we already have for your project.</p>
-          <input id="acct-email" type="email" autocomplete="email" required
+      <!-- ======================================================= signed out -->
+      <div id="acc-signin" class="acc-narrow" hidden>
+        <h1>Your project</h1>
+        <p class="acc-muted">Sign in with the email address we have for your project. No
+          password — we send you a link, and it keeps you signed in for 30 days.</p>
+        <form id="acc-signin-form">
+          <label for="acc-email"><strong>Email address</strong></label>
+          <input id="acc-email" class="acc-input" type="email" autocomplete="email" required
                  placeholder="you@yourcompany.co.za">
-          <button type="submit" class="btn btn--accent">Send my sign-in link</button>
-          <p id="acct-signin-note" class="acct__note" aria-live="polite"></p>
+          <button type="submit" class="btn btn--accent">Email me a sign-in link</button>
+          <p id="acc-signin-note" class="acc-note" aria-live="polite"></p>
         </form>
       </div>
 
-      <!-- project list -->
-      <div id="acct-list" hidden>
-        <p class="acct__hello" id="acct-who"></p>
-        <h1 class="acct__title">Your projects</h1>
-        <p class="acct__intro">Everything we are building for you, with what it is waiting on and
-          when it currently finishes. Open one to send your brief, upload files, move your own
-          dates or book a call.</p>
-        <ul class="acct__cards" id="acct-projects"></ul>
-        <button type="button" class="acct__out" id="acct-signout">Sign out</button>
+      <!-- ======================================================= project list -->
+      <div id="acc-list" hidden>
+        <div class="acc-listhead">
+          <div>
+            <p class="acc-eyebrow" id="acc-who"></p>
+            <h1>Your projects</h1>
+          </div>
+          <button type="button" class="acc-link acc-link--quiet" data-signout>Sign out</button>
+        </div>
+        <ul class="acc-projects" id="acc-projects"></ul>
       </div>
 
-      <!-- one project -->
-      <div id="acct-project" hidden>
-        <!-- console header: who and what, then where to go -->
-        <div class="acct__console">
-          <div class="acct__consoletop">
-            <button type="button" class="acct__close" id="acct-back" title="All projects">&larr;</button>
-            <h1 class="acct__title" id="acct-project-name"></h1>
-            <nav class="acct__pills" id="acct-jump">
-              <a href="#acct-video-block">Welcome</a>
-              <a href="#acct-board-block">Progress</a>
-              <a href="#acct-brief-block">Brief</a>
-              <a href="#acct-docs-block">Documents</a>
-              <a href="#acct-ask-block">Ask</a>
-              <a href="#acct-meet-block">Book a call</a>
-            </nav>
+      <!-- ======================================================= one project -->
+      <div id="acc-project" hidden>
+        <header class="acc-head">
+          <div>
+            <button type="button" class="acc-link acc-link--quiet" id="acc-back">&larr; All projects</button>
+            <h1 id="acc-name"></h1>
           </div>
+          <div class="acc-headside">
+            <span class="acc-muted" id="acc-signedin"></span>
+            <button type="button" class="acc-link acc-link--quiet" data-signout>Sign out</button>
+          </div>
+        </header>
 
-          <!-- the numbers a client wants without reading anything -->
-          <div class="acct__stats">
-            <div class="acct__stat acct__stat--wide">
-              <span class="label">Client</span>
-              <strong id="acct-stat-client"></strong>
-              <span class="sub" id="acct-stat-email"></span>
-            </div>
-            <div class="acct__stat">
-              <span class="label">Progress</span>
-              <strong id="acct-stat-progress"></strong>
-              <div class="acct__bar"><i id="acct-bar" style="width:0"></i></div>
-            </div>
-            <div class="acct__stat">
-              <span class="label">Next up</span>
-              <strong id="acct-stat-next"></strong>
-              <span class="sub" id="acct-stat-nextwho"></span>
-            </div>
-            <div class="acct__stat">
-              <span class="label">Finishes</span>
-              <strong id="acct-stat-end"></strong>
-              <span class="sub" id="acct-stat-target"></span>
-            </div>
-            <div class="acct__stat">
-              <span class="label">Brief</span>
-              <strong id="acct-stat-brief"></strong>
-              <span class="sub" id="acct-stat-requests"></span>
-            </div>
-          </div>
+        <div class="acc-progress">
+          <div class="acc-bar"><i id="acc-bar" style="width:0"></i></div>
+          <span id="acc-progress-text"></span>
         </div>
 
-        <p class="acct__cheer" id="acct-cheer" hidden></p>
-        <p class="acct__verdict" id="acct-verdict" hidden></p>
+        <!-- the one thing to do -->
+        <section class="acc-hero" id="acc-hero" aria-live="polite">
+          <p class="acc-cheer" id="acc-cheer" hidden></p>
+          <p class="acc-kicker" id="acc-hero-kicker"></p>
+          <h2 id="acc-hero-title"></h2>
+          <p class="acc-muted" id="acc-hero-detail"></p>
+          <p class="acc-due" id="acc-hero-due"></p>
+          <div class="acc-actions" id="acc-hero-actions"></div>
+          <p class="acc-muted acc-after" id="acc-hero-after" hidden></p>
+        </section>
 
-        <div class="acct__block" id="acct-video-block" style="border-top:0;padding-top:0">
-          <h2>Welcome</h2>
-          <div class="acct__video" id="acct-video"></div>
-        </div>
+        <div class="acc-video" id="acc-video" hidden></div>
 
-        <div class="acct__block" id="acct-board-block">
-          <h2>Where things stand</h2>
-          <p class="acct__fine">Your real board. Ticked milestones are done, each one says who it is
-            waiting on, and the dates are the plan — we do not work weekends or public holidays.</p>
-          <div class="acct__views">
-            <button type="button" id="acct-view-list" aria-pressed="true">Milestones</button>
-            <button type="button" id="acct-view-time" aria-pressed="false">Timeline</button>
-            <button type="button" id="acct-view-board" aria-pressed="false">Board</button>
+        <nav class="acc-tabs" role="tablist" aria-label="Project sections">
+          <button type="button" role="tab" data-tab="plan" aria-selected="true">Plan</button>
+          <button type="button" role="tab" data-tab="brief" aria-selected="false">Brief</button>
+          <button type="button" role="tab" data-tab="files" aria-selected="false">Files</button>
+          <button type="button" role="tab" data-tab="help" aria-selected="false">Help</button>
+        </nav>
+
+        <!-- plan -->
+        <section class="acc-panel" data-panel="plan" role="tabpanel">
+          <div class="acc-verdict" id="acc-verdict" hidden></div>
+          <div class="acc-switch">
+            <button type="button" data-planview="steps" aria-pressed="true">Step by step</button>
+            <button type="button" data-planview="months" aria-pressed="false">By month</button>
           </div>
-          <div class="acct__wizard" id="acct-steps">
-            <ol class="acct__rail" id="acct-rail"></ol>
 
-            <div class="acct__pane">
-              <p class="acct__stepcount" id="acct-step-count"></p>
-              <h3 id="acct-step-title"></h3>
-              <p class="acct__fine" id="acct-step-detail"></p>
-              <p class="acct__fine" id="acct-step-when"></p>
-              <div id="acct-step-actions" class="acct__stepactions"></div>
-              <div class="acct__stepnav">
-                <button type="button" class="btn btn--ghost" id="acct-step-prev">&larr; Previous</button>
-                <button type="button" class="btn btn--ghost" id="acct-step-next">Next &rarr;</button>
+          <div class="acc-plan" id="acc-steps">
+            <ol class="acc-rail" id="acc-rail"></ol>
+            <article class="acc-detail">
+              <span class="acc-tag" id="acc-step-tag"></span>
+              <h3 id="acc-step-title"></h3>
+              <p class="acc-muted" id="acc-step-detail"></p>
+              <p class="acc-when" id="acc-step-when"></p>
+              <div class="acc-actions" id="acc-step-actions"></div>
+              <div class="acc-stepnav">
+                <button type="button" class="acc-link" id="acc-prev">&larr; Previous</button>
+                <span class="acc-muted" id="acc-step-count"></span>
+                <button type="button" class="acc-link" id="acc-next">Next &rarr;</button>
               </div>
+            </article>
+          </div>
+
+          <div class="acc-months" id="acc-months" hidden></div>
+        </section>
+
+        <!-- brief -->
+        <section class="acc-panel" data-panel="brief" role="tabpanel" hidden>
+          <div id="acc-brief-open">
+            <h3>Your brief</h3>
+            <p class="acc-muted">What we need to stop guessing. Rough is fine — there is an
+              <em>Improve this</em> under each answer if you want it tidied, and nothing is added
+              that you did not say.</p>
+            <form id="acc-brief-form">
+              <div id="acc-questions"></div>
+              <button type="submit" class="btn btn--accent">Send the brief</button>
+              <p id="acc-brief-note" class="acc-note" aria-live="polite"></p>
+            </form>
+          </div>
+          <div class="acc-done" id="acc-brief-done" hidden>
+            <strong>Your brief is in — thank you.</strong>
+            <p class="acc-muted">Anything to add, send it through Help and it lands on this project.</p>
+          </div>
+        </section>
+
+        <!-- files -->
+        <section class="acc-panel" data-panel="files" role="tabpanel" hidden>
+          <h3>Files</h3>
+          <p class="acc-muted">Logos, brand guides, photos, copy, access notes — anything we will
+            need. Up to 8 MB each. Everything you send is filed straight onto this project.</p>
+          <div class="acc-drop" id="acc-drop" role="button" tabindex="0">
+            <strong>Drop files here, or click to choose</strong>
+            <span class="acc-muted">PDF, images, Word, Excel, zip and design files</span>
+          </div>
+          <p id="acc-upload-note" class="acc-note" aria-live="polite"></p>
+          <ul class="acc-files" id="acc-files"></ul>
+        </section>
+
+        <!-- help -->
+        <section class="acc-panel" data-panel="help" role="tabpanel" hidden>
+          <div class="acc-help">
+            <div class="acc-card" id="acc-meet">
+              <h3>Book a call with Santi</h3>
+              <p class="acc-muted">45 minutes. He will have your brief and this page in front of
+                him. Calls are Tuesday and Thursday afternoons.</p>
+              <div class="acc-slots" id="acc-slots"></div>
+              <div id="acc-booking" hidden style="margin-top:1.1rem">
+                <div class="acc-q" style="margin-bottom:.9rem">
+                  <label for="acc-agenda">What do you want to cover?</label>
+                  <textarea id="acc-agenda" rows="3"
+                    placeholder="Even a line helps — “the homepage direction” is plenty."></textarea>
+                </div>
+                <button type="button" class="btn btn--accent" id="acc-book">Book it</button>
+              </div>
+              <p id="acc-book-note" class="acc-note" aria-live="polite"></p>
+            </div>
+
+            <div class="acc-card">
+              <h3>Ask for something</h3>
+              <p class="acc-muted" id="acc-rates"></p>
+              <form id="acc-ask-form">
+                <div class="acc-q" style="margin-bottom:.8rem">
+                  <label for="acc-ask-subject">What do you need?</label>
+                  <input id="acc-ask-subject" type="text" maxlength="140" placeholder="Add a blog section">
+                </div>
+                <div class="acc-q" style="margin-bottom:.9rem">
+                  <label for="acc-ask-detail">Any detail <span class="acc-muted">(optional)</span></label>
+                  <textarea id="acc-ask-detail" rows="2"></textarea>
+                </div>
+                <button type="submit" class="btn btn--ghost">Send to Santi</button>
+                <p id="acc-ask-note" class="acc-note" aria-live="polite"></p>
+              </form>
+              <ul class="acc-requests" id="acc-requests"></ul>
             </div>
           </div>
-
-          <div id="acct-board" hidden>
-            <div class="acct__kanban" id="acct-kanban"></div>
-          </div>
-
-          <div id="acct-timeline" hidden>
-            <p class="acct__fine" id="acct-span"></p>
-            <div class="acct__months" id="acct-months"></div>
-            <div class="acct__scrub" id="acct-scrub"></div>
-            <ul class="acct__gantt" id="acct-gantt"></ul>
-            <p class="acct__fine" style="margin-top:1rem">Gold is waiting on you. Move one of your
-              own dates and everything behind it moves with it — that is how the end date really
-              works.</p>
-          </div>
-        </div>
-
-        <div class="acct__block" id="acct-brief-block">
-          <h2>Your brief</h2>
-          <p class="acct__fine" id="acct-brief-intro">The more you tell us, the less we guess.</p>
-          <form id="acct-brief-form">
-            <div id="acct-questions"></div>
-            <button type="submit" class="btn btn--accent">Send the brief</button>
-            <p id="acct-brief-note" class="acct__note" aria-live="polite"></p>
-          </form>
-          <p id="acct-brief-done" class="acct__fine" hidden style="color:var(--gold)">
-            Your brief is in. Anything to add, email santi@santi.co.za and it goes onto this project.
-          </p>
-        </div>
-
-        <div class="acct__block" id="acct-docs-block">
-          <h2>Documents</h2>
-          <p class="acct__fine">Logo files, brand guides, photos, copy, access notes — up to 8 MB per
-            file. Everything lands straight on this project.</p>
-          <ul class="acct__files" id="acct-files"></ul>
-          <p id="acct-files-empty" class="acct__fine">Nothing received yet.</p>
-          <label for="acct-upload" class="btn btn--ghost" style="display:inline-block;cursor:pointer">
-            Choose files
-          </label>
-          <input id="acct-upload" type="file" multiple style="position:absolute;left:-9999px">
-          <p id="acct-upload-note" class="acct__note" aria-live="polite"></p>
-        </div>
-
-        <div class="acct__block" id="acct-ask-block">
-          <h2>Ask for something</h2>
-          <p class="acct__fine" id="acct-rates"></p>
-          <form id="acct-request-form" style="margin-top:1rem;max-width:34rem">
-            <label class="acct__q" style="display:block">
-              <span style="font-weight:600;display:block;margin-bottom:.45rem">What do you need?</span>
-              <input id="acct-request-subject" type="text" maxlength="140"
-                placeholder="Add a blog section"
-                style="width:100%;padding:.8rem;border-radius:10px;font:inherit;
-                       border:1px solid var(--night-line);background:#fff;color:var(--ink)">
-            </label>
-            <label class="acct__q" style="display:block">
-              <span style="font-weight:600;display:block;margin-bottom:.45rem">Any detail
-                (optional)</span>
-              <textarea id="acct-request-detail" rows="3"></textarea>
-            </label>
-            <button type="submit" class="btn btn--ghost">Send it to Santi</button>
-            <p id="acct-request-note" class="acct__note" aria-live="polite"></p>
-          </form>
-        </div>
-
-        <div class="acct__block" id="acct-meet-block">
-          <h2>Talk to a person</h2>
-          <p class="acct__fine">A 45-minute call with Santi. Everything on this page goes with the
-            booking, so you are not starting from the beginning. We meet on Tuesday and Thursday
-            afternoons — mornings are build time.</p>
-          <div id="acct-slots" class="acct__slots"></div>
-          <div id="acct-booking" hidden style="margin-top:1.5rem">
-            <p class="acct__fine" style="color:var(--gold)">Selected: <strong id="acct-chosen"></strong></p>
-            <label class="acct__q" style="display:block">
-              <span style="font-weight:600;display:block;margin-bottom:.45rem">What do you want to
-                cover? <span style="color:var(--gold)">Required</span></span>
-              <textarea id="acct-note" rows="3" required
-                placeholder="Even a line helps — “the homepage direction” is plenty."></textarea>
-            </label>
-            <button type="button" class="btn btn--accent" id="acct-book-go">Book this time</button>
-            <button type="button" class="acct__out" id="acct-book-cancel"
-              style="margin:0 0 0 1rem">Pick another time</button>
-          </div>
-          <p id="acct-book-note" class="acct__note" aria-live="polite"></p>
-        </div>
-
-        <button type="button" class="acct__out" id="acct-signout-2">Sign out</button>
+        </section>
       </div>
     </section>
