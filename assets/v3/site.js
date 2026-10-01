@@ -396,24 +396,55 @@
     })(0);
   }
 
+  /* ---------- Google Analytics (GA4) — loads only after the visitor accepts ---------- */
+  var GA_ID = "G-2RPKK1TL21", gaLoaded = false;
+  function loadAnalytics() {
+    if (gaLoaded) return;
+    gaLoaded = true;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    window.gtag("js", new Date());
+    window.gtag("config", GA_ID);
+    var tag = document.createElement("script");
+    tag.async = true;
+    tag.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
+    document.head.appendChild(tag);
+  }
+
   /* ---------- cookie consent (POPIA / GDPR) ---------- */
-  var CK = "santi-cookie-consent";
+  var CK = "santi-cookie-consent-v2"; // v2: the choice now also covers Google Analytics, so earlier answers are asked again
   var consent = null; try { consent = localStorage.getItem(CK); } catch (e) {}
-  if (consent === "accepted") personaliseGeo();
+  function onAccept() { personaliseGeo(); loadAnalytics(); }
+  if (consent === "accepted") onAccept();
   if (!consent) {
     var bar = document.createElement("div");
     bar.className = "cookie"; bar.setAttribute("role", "dialog"); bar.setAttribute("aria-label", "Cookie consent");
-    bar.innerHTML = '<p>No tracking here. We only remember your choice, and with your OK show a location-aware message. See our <a href="cookies.html">Cookie Policy</a>.</p>' +
+    bar.innerHTML = '<p>With your OK we use Google Analytics to see how the site is used, and show a location-aware message. See our <a href="cookies.html">Cookie Policy</a>.</p>' +
       '<div><button type="button" class="btn btn--ghost" data-c="rejected">Decline</button><button type="button" class="btn btn--accent" data-c="accepted">Accept</button></div>';
     document.body.appendChild(bar);
     requestAnimationFrame(function () { bar.classList.add("is-visible"); });
     $$("button", bar).forEach(function (b) {
       b.addEventListener("click", function () {
         try { localStorage.setItem(CK, b.dataset.c); } catch (e) {}
-        if (b.dataset.c === "accepted") personaliseGeo();
+        if (b.dataset.c === "accepted") onAccept();
         bar.classList.remove("is-visible");
         setTimeout(function () { bar.remove(); }, 400);
       });
     });
   }
+
+  // "Change my cookie choice" (Cookie Policy): forget the answer, clear Analytics cookies, ask again
+  $$("[data-cookie-reset]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      try { localStorage.removeItem(CK); } catch (e) {}
+      document.cookie.split(";").forEach(function (c) {
+        var name = c.split("=")[0].trim();
+        if (name.indexOf("_ga") === 0) {
+          document.cookie = name + "=; Max-Age=0; path=/";
+          document.cookie = name + "=; Max-Age=0; path=/; domain=." + location.hostname.replace(/^www\./, "");
+        }
+      });
+      location.reload();
+    });
+  });
 })();
