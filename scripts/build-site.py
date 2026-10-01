@@ -29,7 +29,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CONTENT = ROOT / "content" / "case-studies"
 PAGES = ROOT / "content" / "pages"
 SITE = "https://santi.co.za/"
-V = "v=36"  # cache stamp for v3.css / case.css / pages.css / site.js
+V = "v=37"  # cache stamp for v3.css / case.css / pages.css / site.js
 
 
 def t(s):  # text node
@@ -68,6 +68,7 @@ def between(src, start, end):
 
 # ---------- chrome lifted from the homepage ----------
 home = (ROOT / "index.html").read_text(encoding="utf-8")
+GTAG = between(home, "  <!-- Google tag", "  <!-- /Google tag -->") + "  <!-- /Google tag -->\n"  # same tag + consent defaults on every page
 NAV = between(home, "  <!-- navigation -->", '  <main id="main">')
 FOOTER = between(home, "  <!-- footer -->", "  <!-- quote pop-up -->")
 MODAL = between(home, "  <!-- quote pop-up -->", '  <div class="pblur"')
@@ -101,7 +102,7 @@ def head(title, description, canonical, image, og_type, schemas, css=("case.css"
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{t(title)}</title>
+{GTAG}  <title>{t(title)}</title>
   <meta name="description" content="{a(description)}">{robots}
   <link rel="canonical" href="{a(canonical)}">
   <meta property="og:type" content="{og_type}">

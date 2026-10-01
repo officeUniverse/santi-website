@@ -396,19 +396,11 @@
     })(0);
   }
 
-  /* ---------- Google Analytics (GA4) — loads only after the visitor accepts ---------- */
-  var GA_ID = "G-2RPKK1TL21", gaLoaded = false;
-  function loadAnalytics() {
-    if (gaLoaded) return;
-    gaLoaded = true;
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = function () { window.dataLayer.push(arguments); };
-    window.gtag("js", new Date());
-    window.gtag("config", GA_ID);
-    var tag = document.createElement("script");
-    tag.async = true;
-    tag.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
-    document.head.appendChild(tag);
+  /* ---------- Google Analytics (GA4) via Consent Mode ----------
+     The tag itself is in every page's <head> with consent defaulting to "denied"
+     (no cookies, no visitor identity). Accept flips analytics storage on. */
+  function grantAnalytics(on) {
+    if (typeof window.gtag === "function") window.gtag("consent", "update", { analytics_storage: on ? "granted" : "denied" });
   }
 
   /* ---------- Hotjar (heatmaps + session recordings) — loads only after the visitor accepts ---------- */
@@ -428,12 +420,12 @@
   /* ---------- cookie consent (POPIA / GDPR) ---------- */
   var CK = "santi-cookie-consent-v3"; // v3: the choice covers Google Analytics and Hotjar, so earlier answers are asked again
   var consent = null; try { consent = localStorage.getItem(CK); } catch (e) {}
-  function onAccept() { personaliseGeo(); loadAnalytics(); loadHotjar(); }
-  if (consent === "accepted") onAccept();
+  function onAccept() { personaliseGeo(); grantAnalytics(true); loadHotjar(); }
+  if (consent === "accepted") { personaliseGeo(); loadHotjar(); } // analytics consent is already restored in the <head> tag
   if (!consent) {
     var bar = document.createElement("div");
     bar.className = "cookie"; bar.setAttribute("role", "dialog"); bar.setAttribute("aria-label", "Cookie consent");
-    bar.innerHTML = '<p>With your OK we use Google Analytics and Hotjar to see how the site is used, and show a location-aware message. See our <a href="cookies.html">Cookie Policy</a>.</p>' +
+    bar.innerHTML = '<p>With your OK we use Google Analytics cookies and Hotjar to see how the site is used, and show a location-aware message. See our <a href="cookies.html">Cookie Policy</a>.</p>' +
       '<div><button type="button" class="btn btn--ghost" data-c="rejected">Decline</button><button type="button" class="btn btn--accent" data-c="accepted">Accept</button></div>';
     document.body.appendChild(bar);
     requestAnimationFrame(function () { bar.classList.add("is-visible"); });
@@ -451,6 +443,7 @@
   $$("[data-cookie-reset]").forEach(function (b) {
     b.addEventListener("click", function () {
       try { localStorage.removeItem(CK); } catch (e) {}
+      grantAnalytics(false);
       document.cookie.split(";").forEach(function (c) {
         var name = c.split("=")[0].trim();
         if (name.indexOf("_ga") === 0 || name.indexOf("_hj") === 0) {
