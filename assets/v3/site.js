@@ -109,6 +109,16 @@
   }
   function say(el, text, cls) { if (!el) return; el.textContent = text; el.className = "form-msg" + (cls ? " " + cls : ""); }
 
+  /* ---------- lead tracking (Google Analytics events; never any personal details) ---------- */
+  function track(name, params) { if (typeof window.gtag === "function") window.gtag("event", name, params || {}); }
+  window.SantiTrack = track; // used by aeo.js
+  document.addEventListener("click", function (e) {
+    var link = e.target.closest && e.target.closest('a[href^="tel:"], a[href^="mailto:"], a[href*="wa.me"]');
+    if (!link) return;
+    var href = link.getAttribute("href");
+    track("contact_click", { method: href.indexOf("tel:") === 0 ? "phone" : href.indexOf("mailto:") === 0 ? "email" : "whatsapp" });
+  });
+
   /* ---------- nav: solid state + mobile sheet ---------- */
   var nav = $(".nav"), hero = $(".hero, .page-hero, .frame--hero");
   if (nav) {
@@ -158,6 +168,7 @@
     };
 
     var open = function () {
+      track("quote_start");
       lastFocus = document.activeElement;
       form.reset(); form.hidden = false; done.hidden = true; navRow.hidden = false; prog.hidden = false;
       modal.classList.add("is-open"); modal.setAttribute("aria-hidden", "false");
@@ -202,6 +213,7 @@
         services: services, budget: budget, timeline: timeline,
         page: location.href, submittedAt: new Date().toISOString()
       }).then(function () {
+        track("generate_lead", { lead_type: "quote" });
         form.hidden = true; navRow.hidden = true; prog.hidden = true; done.hidden = false;
         $("h3", done).focus();
       }).catch(function () {
@@ -363,6 +375,7 @@
         subject: field("subject"), message: field("message"),
         page: location.href, submittedAt: new Date().toISOString()
       }).then(function () {
+        track("generate_lead", { lead_type: "contact" });
         say(out, "Thank you! Your message is on its way — we'll reply within one business day.", "ok");
         cForm.reset();
       }).catch(function () {

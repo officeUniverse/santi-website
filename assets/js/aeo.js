@@ -253,6 +253,7 @@
 
   // Send the AEO check as a qualified lead (with their score) to n8n.
   function captureAeoLead(email, phone, report) {
+    if (window.SantiTrack) window.SantiTrack("generate_lead", { lead_type: "aeo_check" }); // count only, no personal details
     var hook = window.SANTI_LEAD_WEBHOOK || "https://n8n.santi.co.za/webhook/santi-leads";
     var fails = report.checks.filter(function (c) { return c.status === "fail"; }).map(function (c) { return c.label; });
     var warns = report.checks.filter(function (c) { return c.status === "warn"; }).map(function (c) { return c.label; });
