@@ -153,6 +153,7 @@
     var show = function (n) {
       i = n;
       steps.forEach(function (s, k) { s.hidden = k !== i; });
+      if ($('input[name="budget"]', steps[i])) fitBudgets();
       bars.forEach(function (b, k) { b.classList.toggle("is-on", k <= i); });
       back.disabled = i === 0;
       next.innerHTML = i === steps.length - 1 ? 'Send request <span class="arr">→</span>' : 'Next <span class="arr">→</span>';
@@ -160,6 +161,24 @@
       var f = $("input, textarea", steps[i]); if (f) f.focus({ preventScroll: true });
     };
     var picked = function (name) { return $$('input[name="' + name + '"]:checked', form).map(function (x) { return x.value; }); };
+    // Budget step follows the services picked: ranges that top out at or below the combined
+    // starting price are hidden. Add a service's starting price (in rand) to SERVICE_MIN.
+    var SERVICE_MIN = { "Website": 5000 };
+    var BUDGET_MAX = { "Under R5k": 5000, "R5k–R15k": 15000, "R15k–R30k": 30000, "R30k–R60k": 60000,
+      "R60k–R100k": 100000, "R100k–R250k": 250000, "R250k+": Infinity };
+    var fitBudgets = function () {
+      var min = picked("service").reduce(function (sum, s) { return sum + (SERVICE_MIN[s] || 0); }, 0);
+      $$('input[name="budget"]', form).forEach(function (inp) {
+        var hide = BUDGET_MAX[inp.value] !== undefined && BUDGET_MAX[inp.value] <= min;
+        inp.closest(".chip").hidden = hide;
+        if (hide) inp.checked = false;
+      });
+      var hint = $(".budget-hint", form);
+      if (hint) {
+        hint.hidden = !min;
+        hint.textContent = min ? "For what you picked, projects start from R" + min.toLocaleString("en-ZA") + "." : "";
+      }
+    };
     var check = function () {
       if (i === 0 && !picked("service").length) { say(msg, "Pick at least one — or choose “Not sure yet”.", "err"); return false; }
       if (i === 1 && !picked("budget").length) { say(msg, "Choose a budget range — “Not sure” is fine.", "err"); return false; }

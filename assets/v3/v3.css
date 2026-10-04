@@ -375,6 +375,8 @@ p { margin: 0; }
 .step legend { font-size: 20px; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 14px; padding: 0; }
 .step fieldset, fieldset.step { border: 0; margin: 0; padding: 0; min-width: 0; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip[hidden] { display: none; }
+.budget-hint { margin-top: 12px; font-size: 14px; color: var(--muted); }
 .chip input { position: absolute; opacity: 0; pointer-events: none; }
 .chip span {
   display: inline-block; padding: 11px 15px; border-radius: 999px; cursor: pointer;
