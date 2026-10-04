@@ -371,6 +371,7 @@ p { margin: 0; }
 .progress { display: flex; gap: 6px; margin: 24px 0 26px; }
 .progress span { flex: 1; height: 3px; border-radius: 3px; background: var(--line); transition: background .3s var(--ease); }
 .progress span.is-on { background: var(--brand); }
+.progress[hidden], .modal__nav[hidden] { display: none; }
 .step[hidden] { display: none; }
 .step legend { font-size: 20px; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 14px; padding: 0; }
 .step fieldset, fieldset.step { border: 0; margin: 0; padding: 0; min-width: 0; }
@@ -401,6 +402,16 @@ p { margin: 0; }
 .done { text-align: center; padding: 24px 0 8px; }
 .done h3 { font-size: 30px; margin: 14px 0 8px; }
 .done p { color: var(--muted); }
+.estimate { margin: 22px auto 0; max-width: 440px; text-align: left; padding: 18px 20px; border-radius: 16px; background: #fff; border: 1px solid var(--line); }
+.estimate h4 { font-family: var(--mono); font-size: 11px; font-weight: 400; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.estimate__lines { margin: 0; }
+.estimate__lines div { display: flex; justify-content: space-between; gap: 16px; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+.estimate__lines dt { color: var(--ink); }
+.estimate__lines dd { margin: 0; color: var(--ink-2); text-align: right; }
+.estimate__meta dt, .estimate__meta dd { color: var(--muted); }
+.estimate__total { border-bottom: 0 !important; font-weight: 600; }
+.estimate__total dt, .estimate__total dd { color: var(--brand); }
+.estimate .estimate__note { margin-top: 10px; font-size: 13px; }
 
 /* ---------- cookie banner ---------- */
 .cookie {

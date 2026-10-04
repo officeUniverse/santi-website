@@ -166,6 +166,29 @@
     var SERVICE_MIN = { "Website": 5000 };
     var BUDGET_MAX = { "Under R5k": 5000, "R5k–R15k": 15000, "R15k–R30k": 30000, "R30k–R60k": 60000,
       "R60k–R100k": 100000, "R100k–R250k": 250000, "R250k+": Infinity };
+    var rand = function (n) { return "R" + n.toLocaleString("en-ZA"); };
+    // Thank-you screen: each picked service with its starting price, then budget, timeline and a "from" total.
+    var showEstimate = function (services, budget, timeline) {
+      var box = $(".estimate", done), lines = $(".estimate__lines", done);
+      if (!box || !lines) return;
+      var row = function (k, v, cls) {
+        var d = document.createElement("div"); if (cls) d.className = cls;
+        var dt = document.createElement("dt"); dt.textContent = k;
+        var dd = document.createElement("dd"); dd.textContent = v;
+        d.appendChild(dt); d.appendChild(dd); lines.appendChild(d);
+      };
+      lines.textContent = "";
+      var total = 0;
+      services.forEach(function (s) {
+        var from = SERVICE_MIN[s];
+        if (from) total += from;
+        row(s, from ? "from " + rand(from) : "priced after a quick chat");
+      });
+      row("Your budget", budget === "Not sure" ? "Not sure yet" : budget, "estimate__meta");
+      row("Timeline", timeline, "estimate__meta");
+      if (total) row("Starting from", rand(total), "estimate__total");
+      box.hidden = false;
+    };
     var fitBudgets = function () {
       var min = picked("service").reduce(function (sum, s) { return sum + (SERVICE_MIN[s] || 0); }, 0);
       $$('input[name="budget"]', form).forEach(function (inp) {
@@ -176,7 +199,7 @@
       var hint = $(".budget-hint", form);
       if (hint) {
         hint.hidden = !min;
-        hint.textContent = min ? "For what you picked, projects start from R" + min.toLocaleString("en-ZA") + "." : "";
+        hint.textContent = min ? "For what you picked, projects start from " + rand(min) + "." : "";
       }
     };
     var check = function () {
@@ -233,6 +256,8 @@
         page: location.href, submittedAt: new Date().toISOString()
       }).then(function () {
         track("generate_lead", { lead_type: "quote" });
+        showEstimate(services, budget, timeline);
+        say(msg, "");
         form.hidden = true; navRow.hidden = true; prog.hidden = true; done.hidden = false;
         $("h3", done).focus();
       }).catch(function () {
