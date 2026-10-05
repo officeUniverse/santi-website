@@ -157,9 +157,8 @@
       bars.forEach(function (b, k) { b.classList.toggle("is-on", k <= i); });
       back.disabled = i === 0;
       var onAssist = steps[i].classList.contains("step--assistant");
-      next.hidden = onAssist && !canGo();
       card.classList.toggle("is-chat", onAssist); // chat scrolls on its own; answer box and buttons stay put
-      next.innerHTML = i === steps.length - 1 ? 'Send request <span class="arr">→</span>' : 'Next <span class="arr">→</span>';
+      paintNext();
       say(msg, "");
       if (onAssist && !assist.started) startAssistant();
       var f = $("input, textarea", steps[i]); if (f) f.focus({ preventScroll: true });
@@ -217,7 +216,41 @@
     var aInput = $("#assist-input", aStep), aSend = $("[data-assist-send]", aStep);
     // Next shows once there is an estimate to send, or the assistant is unavailable
     var canGo = function () { return assist.failed || !!(assist.quote && assist.quote.lines.length); };
-    var syncNext = function () { if (steps[i] === aStep) next.hidden = !canGo(); };
+    // with an estimate on screen, Next becomes the "let's work" button
+    var paintNext = function () {
+      var onAssist = steps[i] === aStep, fancy = onAssist && !!(assist.quote && assist.quote.lines.length);
+      next.hidden = onAssist && !canGo();
+      next.classList.toggle("btn--celebrate", fancy);
+      next.innerHTML = fancy ? 'Not broke? Let’s work <span class="arr">→</span>'
+        : i === steps.length - 1 ? 'Send request <span class="arr">→</span>' : 'Next <span class="arr">→</span>';
+    };
+    var syncNext = paintNext;
+    var confetti = function (fromEl) {
+      if (reduce) return;
+      var c = document.createElement("canvas"), x = c.getContext("2d"), dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var W = window.innerWidth, H = window.innerHeight, r = fromEl.getBoundingClientRect();
+      c.className = "confetti"; c.width = W * dpr; c.height = H * dpr; x.scale(dpr, dpr);
+      document.body.appendChild(c);
+      var cols = ["#173B9A", "#08BECC", "#FFD147", "#03707A", "#F4F7F8"], bits = [];
+      for (var k = 0; k < 90; k++) {
+        var a = -Math.PI / 2 + (Math.random() - .5) * 1.9, v = 7 + Math.random() * 8;
+        bits.push({ x: r.left + r.width / 2, y: r.top + r.height / 2, vx: Math.cos(a) * v, vy: Math.sin(a) * v,
+          w: 6 + Math.random() * 6, h: 3 + Math.random() * 4, rot: Math.random() * 6, vr: (Math.random() - .5) * .4, c: cols[k % cols.length] });
+      }
+      var t0 = performance.now();
+      var tick = function (t) {
+        var life = (t - t0) / 1600;
+        x.clearRect(0, 0, W, H);
+        if (life >= 1) { c.remove(); return; }
+        x.globalAlpha = 1 - Math.max(0, life - .6) / .4;
+        bits.forEach(function (b) {
+          b.vy += .32; b.vx *= .985; b.x += b.vx; b.y += b.vy; b.rot += b.vr;
+          x.save(); x.translate(b.x, b.y); x.rotate(b.rot); x.fillStyle = b.c; x.fillRect(-b.w / 2, -b.h / 2, b.w, b.h); x.restore();
+        });
+        requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
     var bubble = function (who, text, extra) {
       var b = document.createElement("div");
       b.className = "assist__msg assist__msg--" + who + (extra ? " " + extra : "");
@@ -363,7 +396,7 @@
     });
     next.addEventListener("click", function () {
       if (!check()) return;
-      if (steps[i] === aStep && assist.quote) track("assistant_accept");
+      if (steps[i] === aStep && assist.quote) { track("assistant_accept"); confetti(next); }
       if (i < steps.length - 1) { show(i + 1); return; }
       var em = validateEmail(form.email.value, { businessOnly: false });
       if (!form.name.value.trim()) { say(msg, "Please tell us your name.", "err"); form.name.focus(); return; }
