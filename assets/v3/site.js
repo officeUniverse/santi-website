@@ -211,17 +211,20 @@
     /* ---- project assistant (n8n + Claude): asks scoping questions, then quotes and coaches on budget ---- */
     var ASSIST_URL = "https://n8n.santi.co.za/webhook/santi-project-assistant";
     var aStep = $(".step--assistant", form);
-    var assist = { started: false, turns: [], status: null, quote: null, summary: "", busy: false, failed: false, removed: [], conv: "" };
+    var assist = { started: false, turns: [], status: null, quote: null, summary: "", busy: false, failed: false, removed: [], conv: "", gen: 0 };
     var aLog = $(".assist__log", aStep), aQuote = $(".assist__quote", aStep), aAsk = $(".assist__ask", aStep);
     var aInput = $("#assist-input", aStep), aSend = $("[data-assist-send]", aStep);
     // Next shows once there is an estimate to send, or the assistant is unavailable
     var canGo = function () { return assist.failed || !!(assist.quote && assist.quote.lines.length); };
     // with an estimate on screen, Next becomes the "let's work" button
+    // on the chat step the button is always visible, but locked until there is an estimate (or the assistant is down)
     var paintNext = function () {
-      var onAssist = steps[i] === aStep, fancy = onAssist && !!(assist.quote && assist.quote.lines.length);
-      next.hidden = onAssist && !canGo();
-      next.classList.toggle("btn--celebrate", fancy);
-      next.innerHTML = fancy ? 'Not broke? Let’s work <span class="arr">→</span>'
+      var onAssist = steps[i] === aStep, ready = onAssist && canGo() && !assist.busy;
+      next.hidden = false;
+      next.disabled = onAssist && !ready;
+      next.title = next.disabled ? "Available once you have an estimate" : "";
+      next.classList.toggle("btn--celebrate", ready && !!assist.quote);
+      next.innerHTML = onAssist && !(assist.failed && !assist.quote) ? 'Ready to start <span class="arr">→</span>'
         : i === steps.length - 1 ? 'Send request <span class="arr">→</span>' : 'Next <span class="arr">→</span>';
     };
     var syncNext = paintNext;
@@ -317,22 +320,43 @@
       syncNext();
     };
     var resetAssistant = function () {
+      assist.gen++;
       assist.started = false; assist.turns = []; assist.status = null; assist.quote = null; assist.summary = ""; assist.busy = false;
       assist.failed = false; assist.removed = []; assist.conv = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
       aLog.textContent = ""; aQuote.hidden = true; aQuote.textContent = "";
       aAsk.hidden = false; aInput.value = ""; aInput.placeholder = "Type your answer…";
     };
-    var askAssistant = function () {
-      if (assist.busy) return;
-      assist.busy = true; aSend.disabled = true; aInput.disabled = true;
-      var thinking = bubble("bot", "Thinking…", "is-thinking");
+    var formKey = function () { return JSON.stringify([picked("service"), picked("budget"), picked("timeline")]); };
+    var callAssistant = function () {
       var ctrl = window.AbortController ? new AbortController() : null;
       var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 45000);
-      fetch(ASSIST_URL, {
+      var req = fetch(ASSIST_URL, {
         method: "POST", headers: { "Content-Type": "application/json" }, signal: ctrl ? ctrl.signal : undefined,
         body: JSON.stringify({ services: picked("service"), budget: picked("budget")[0], timeline: picked("timeline")[0], page: location.href, turns: assist.turns,
           conv: assist.conv, removed: assist.removed, estimate: assist.quote ? assist.quote.lines.map(function (l) { return l.item; }) : [] })
-      }).then(function (r) { return r.json(); }).then(function (res) {
+      }).then(function (r) { return r.json(); });
+      req.then(function () { clearTimeout(timer); }, function () { clearTimeout(timer); });
+      return req;
+    };
+    // head start: the opening message is requested as soon as the timeline is picked, so it's ready on arrival
+    var pre = null, preTimer = 0;
+    var prefetch = function () {
+      if (!picked("timeline").length || (pre && pre.key === formKey())) return;
+      resetAssistant();
+      var mine = pre = { key: formKey(), conv: assist.conv, req: callAssistant() };
+      var drop = function () { if (pre === mine) pre = null; }; // don't reuse a failed head start
+      mine.req.then(function (r) { if (!r || !r.ok) drop(); }, drop);
+    };
+    form.addEventListener("change", function (e) {
+      if (e.target.name !== "timeline") return;
+      clearTimeout(preTimer); preTimer = setTimeout(prefetch, 500); // wait for the visitor to settle on one
+    });
+    var askAssistant = function (req) {
+      if (assist.busy) return;
+      assist.busy = true; aSend.disabled = true; aInput.disabled = true; syncNext();
+      var gen = assist.gen, thinking = bubble("bot", "Thinking…", "is-thinking");
+      (req || callAssistant()).then(function (res) {
+        if (gen !== assist.gen) return; // conversation was reset meanwhile
         thinking.remove();
         if (!res || typeof res.reply !== "string") throw new Error("bad reply");
         bubble("bot", res.reply);
@@ -345,15 +369,22 @@
           aInput.placeholder = "Add something, or ask about the estimate…";
         }
       }).catch(function () {
+        if (gen !== assist.gen) return;
         thinking.remove();
         bubble("bot", "Sorry, the assistant isn’t available right now. You can still send us your details and we’ll reply within one business day.");
         aAsk.hidden = true; assist.failed = true;
       }).then(function () {
-        clearTimeout(timer); assist.busy = false; aSend.disabled = false; aInput.disabled = false; syncNext();
+        if (gen !== assist.gen) return;
+        assist.busy = false; aSend.disabled = false; aInput.disabled = false; syncNext();
         if (!aAsk.hidden) aInput.focus({ preventScroll: true });
       });
     };
-    var startAssistant = function () { resetAssistant(); assist.started = true; askAssistant(); };
+    var startAssistant = function () {
+      var head = pre && pre.key === formKey() ? pre : null;
+      resetAssistant();
+      if (head) assist.conv = head.conv;
+      assist.started = true; askAssistant(head && head.req);
+    };
     aSend.addEventListener("click", function () {
       var text = aInput.value.trim().slice(0, 1200);
       if (!text || assist.busy) return;
