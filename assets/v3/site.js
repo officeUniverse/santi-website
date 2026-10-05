@@ -225,29 +225,46 @@
         : i === steps.length - 1 ? 'Send request <span class="arr">→</span>' : 'Next <span class="arr">→</span>';
     };
     var syncNext = paintNext;
+    // a big pop from the button, then side cannons; pieces flutter down slowly (time-based, so 120 Hz screens aren't faster)
     var confetti = function (fromEl) {
       if (reduce) return;
       var c = document.createElement("canvas"), x = c.getContext("2d"), dpr = Math.min(window.devicePixelRatio || 1, 2);
       var W = window.innerWidth, H = window.innerHeight, r = fromEl.getBoundingClientRect();
       c.className = "confetti"; c.width = W * dpr; c.height = H * dpr; x.scale(dpr, dpr);
       document.body.appendChild(c);
-      var cols = ["#173B9A", "#08BECC", "#FFD147", "#03707A", "#F4F7F8"], bits = [];
-      for (var k = 0; k < 90; k++) {
-        var a = -Math.PI / 2 + (Math.random() - .5) * 1.9, v = 7 + Math.random() * 8;
-        bits.push({ x: r.left + r.width / 2, y: r.top + r.height / 2, vx: Math.cos(a) * v, vy: Math.sin(a) * v,
-          w: 6 + Math.random() * 6, h: 3 + Math.random() * 4, rot: Math.random() * 6, vr: (Math.random() - .5) * .4, c: cols[k % cols.length] });
-      }
-      var t0 = performance.now();
+      var cols = ["#173B9A", "#08BECC", "#FFD147", "#FFD147", "#03707A", "#F4F7F8"], bits = [], R = Math.random;
+      var burst = function (ox, oy, n, dir, spread, vmin, vmax, delay) {
+        for (var k = 0; k < n; k++) {
+          var a = dir + (R() - .5) * spread, v = vmin + R() * (vmax - vmin), kind = R();
+          bits.push({ x: ox, y: oy, vx: Math.cos(a) * v, vy: Math.sin(a) * v, delay: delay,
+            w: kind < .2 ? 4 : 8 + R() * 7, h: kind < .2 ? 14 + R() * 8 : 5 + R() * 4, round: kind > .85,
+            rot: R() * 6.3, vr: (R() - .5) * .2, flip: R() * 6.3, vf: .05 + R() * .1, sway: R() * 6.3,
+            life: 4500 + R() * 2000, c: cols[k % cols.length] });
+        }
+      };
+      var bx = r.left + r.width / 2, by = r.top + r.height / 2, up = -Math.PI / 2;
+      burst(bx, by, 160, up, 1.5, 22, 38, 0);
+      burst(-10, H + 10, 100, up + .5, .45, 30, 46, 250);           // bottom-left cannon
+      burst(W + 10, H + 10, 100, up - .5, .45, 30, 46, 250);        // bottom-right cannon
+      var t0 = performance.now(), last = t0;
       var tick = function (t) {
-        var life = (t - t0) / 1600;
+        var f = Math.min((t - last) / 16.67, 3), el = t - t0, alive = 0; last = t;
         x.clearRect(0, 0, W, H);
-        if (life >= 1) { c.remove(); return; }
-        x.globalAlpha = 1 - Math.max(0, life - .6) / .4;
         bits.forEach(function (b) {
-          b.vy += .32; b.vx *= .985; b.x += b.vx; b.y += b.vy; b.rot += b.vr;
-          x.save(); x.translate(b.x, b.y); x.rotate(b.rot); x.fillStyle = b.c; x.fillRect(-b.w / 2, -b.h / 2, b.w, b.h); x.restore();
+          var age = el - b.delay;
+          if (age < 0) { alive++; return; }
+          if (age > b.life || b.y > H + 40) return;
+          alive++;
+          var drag = Math.pow(.955, f);
+          b.vx *= drag; b.vy = b.vy * drag + .1 * f;                   // quick pop, then a slow float (~2px/frame)
+          b.x += (b.vx + Math.sin(b.sway + age / 380) * .9) * f; b.y += b.vy * f;
+          b.rot += b.vr * f; b.flip += b.vf * f;
+          x.globalAlpha = Math.min(1, (b.life - age) / 700);
+          x.save(); x.translate(b.x, b.y); x.rotate(b.rot); x.scale(1, Math.cos(b.flip)); x.fillStyle = b.c;
+          if (b.round) { x.beginPath(); x.arc(0, 0, b.w / 2, 0, 6.3); x.fill(); } else x.fillRect(-b.w / 2, -b.h / 2, b.w, b.h);
+          x.restore();
         });
-        requestAnimationFrame(tick);
+        if (alive) requestAnimationFrame(tick); else c.remove();
       };
       requestAnimationFrame(tick);
     };

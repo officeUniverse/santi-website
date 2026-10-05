@@ -29,7 +29,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CONTENT = ROOT / "content" / "case-studies"
 PAGES = ROOT / "content" / "pages"
 SITE = "https://santi.co.za/"
-V = "v=48"  # cache stamp for v3.css / case.css / pages.css / site.js
+V = "v=49"  # cache stamp for v3.css / case.css / pages.css / site.js
 
 
 def t(s):  # text node
