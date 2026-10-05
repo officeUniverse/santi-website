@@ -220,6 +220,8 @@
       b.className = "assist__msg assist__msg--" + who + (extra ? " " + extra : "");
       b.textContent = text; // textContent: model and visitor text never become markup
       aLog.appendChild(b); aLog.scrollTop = aLog.scrollHeight;
+      // bring the new message into view inside the pop-up (it can sit above the estimate card)
+      b.scrollIntoView({ block: who === "bot" ? "start" : "nearest", behavior: reduce ? "auto" : "smooth" });
       return b;
     };
     var quoteCard = function (q, intoEl, note) {
