@@ -156,8 +156,11 @@
       if ($('input[name="budget"]', steps[i])) fitBudgets();
       bars.forEach(function (b, k) { b.classList.toggle("is-on", k <= i); });
       back.disabled = i === 0;
+      var onAssist = steps[i].classList.contains("step--assistant");
+      next.hidden = onAssist;
       next.innerHTML = i === steps.length - 1 ? 'Send request <span class="arr">→</span>' : 'Next <span class="arr">→</span>';
       say(msg, "");
+      if (onAssist && !assist.started) startAssistant();
       var f = $("input, textarea", steps[i]); if (f) f.focus({ preventScroll: true });
     };
     var picked = function (name) { return $$('input[name="' + name + '"]:checked', form).map(function (x) { return x.value; }); };
@@ -202,6 +205,98 @@
         hint.textContent = min ? "For what you picked, projects start from " + rand(min) + "." : "";
       }
     };
+    /* ---- project assistant (n8n + Claude): asks scoping questions, then quotes or explains the budget ---- */
+    var ASSIST_URL = "https://n8n.santi.co.za/webhook/santi-project-assistant";
+    var aStep = $(".step--assistant", form);
+    var assist = { started: false, turns: [], status: null, quote: null, summary: "", busy: false };
+    var aLog = $(".assist__log", aStep), aQuote = $(".assist__quote", aStep), aAsk = $(".assist__ask", aStep);
+    var aInput = $("#assist-input", aStep), aSend = $("[data-assist-send]", aStep);
+    var aActions = $(".assist__actions", aStep), aFallback = $(".assist__fallback", aStep), aRestart = $(".assist__restart", aStep);
+    var bubble = function (who, text, extra) {
+      var b = document.createElement("div");
+      b.className = "assist__msg assist__msg--" + who + (extra ? " " + extra : "");
+      b.textContent = text; // textContent: model and visitor text never become markup
+      aLog.appendChild(b); aLog.scrollTop = aLog.scrollHeight;
+      return b;
+    };
+    var quoteCard = function (q, intoEl, note) {
+      intoEl.textContent = "";
+      var box = document.createElement("div"); box.className = "estimate";
+      var h = document.createElement("h4"); h.textContent = "Your estimate"; box.appendChild(h);
+      var dl = document.createElement("dl"); dl.className = "estimate__lines"; box.appendChild(dl);
+      var row = function (k, v, cls) {
+        var d = document.createElement("div"); if (cls) d.className = cls;
+        var dt = document.createElement("dt"); dt.textContent = k;
+        var dd = document.createElement("dd"); dd.textContent = v;
+        d.appendChild(dt); d.appendChild(dd); dl.appendChild(d);
+      };
+      var range = function (a, b) { return a === b ? rand(a) : rand(a) + " – " + rand(b); };
+      q.lines.filter(function (l) { return !l.monthly; }).forEach(function (l) { row(l.item, range(l.min, l.max)); });
+      if (q.total_max) row("Once-off total", range(q.total_min, q.total_max), "estimate__total");
+      q.lines.filter(function (l) { return l.monthly; }).forEach(function (l) { row(l.item, range(l.min, l.max) + " / month", "estimate__meta"); });
+      var p = document.createElement("p"); p.className = "estimate__note";
+      p.textContent = note || "Estimate only — subject to change once we’ve reviewed your project.";
+      box.appendChild(p); intoEl.appendChild(box); intoEl.hidden = false;
+    };
+    var resetAssistant = function () {
+      assist.started = false; assist.turns = []; assist.status = null; assist.quote = null; assist.summary = ""; assist.busy = false;
+      aLog.textContent = ""; aQuote.hidden = true; aQuote.textContent = "";
+      aAsk.hidden = false; aActions.hidden = true; aFallback.hidden = true; aRestart.hidden = true; aInput.value = "";
+    };
+    var askAssistant = function () {
+      if (assist.busy) return;
+      assist.busy = true; aSend.disabled = true; aInput.disabled = true;
+      var thinking = bubble("bot", "Thinking…", "is-thinking");
+      var ctrl = window.AbortController ? new AbortController() : null;
+      var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 45000);
+      fetch(ASSIST_URL, {
+        method: "POST", headers: { "Content-Type": "application/json" }, signal: ctrl ? ctrl.signal : undefined,
+        body: JSON.stringify({ services: picked("service"), budget: picked("budget")[0], timeline: picked("timeline")[0], page: location.href, turns: assist.turns })
+      }).then(function (r) { return r.json(); }).then(function (res) {
+        thinking.remove();
+        if (!res || typeof res.reply !== "string") throw new Error("bad reply");
+        bubble("bot", res.reply);
+        if (!res.ok) { aAsk.hidden = true; aFallback.hidden = false; return; }
+        assist.turns.push({ role: "assistant", content: res.reply });
+        assist.status = res.status; assist.summary = res.summary || "";
+        track("assistant_reply", { status: res.status });
+        if (res.status === "quoted" && res.quote) {
+          assist.quote = res.quote; quoteCard(res.quote, aQuote); aActions.hidden = false;
+          aInput.placeholder = "Questions about the estimate? Ask here…";
+        } else if (res.status === "not_ready") {
+          assist.quote = null; aAsk.hidden = true; aActions.hidden = true; aRestart.hidden = false;
+        }
+      }).catch(function () {
+        thinking.remove();
+        bubble("bot", "Sorry, the assistant isn’t available right now. You can still send us your details and we’ll reply within one business day.");
+        aAsk.hidden = true; aFallback.hidden = false;
+      }).then(function () {
+        clearTimeout(timer); assist.busy = false; aSend.disabled = false; aInput.disabled = false;
+        if (!aAsk.hidden) aInput.focus({ preventScroll: true });
+      });
+    };
+    var startAssistant = function () { resetAssistant(); assist.started = true; askAssistant(); };
+    aSend.addEventListener("click", function () {
+      var text = aInput.value.trim().slice(0, 1200);
+      if (!text || assist.busy) return;
+      bubble("you", text); assist.turns.push({ role: "user", content: text }); aInput.value = "";
+      askAssistant();
+    });
+    aInput.addEventListener("keydown", function (e) { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); aSend.click(); } });
+    $("[data-assist-accept]", aStep).addEventListener("click", function () { track("assistant_accept"); show(i + 1); });
+    $("[data-assist-skip]", aStep).addEventListener("click", function () { show(i + 1); });
+    $("[data-assist-restart]", aStep).addEventListener("click", function () { resetAssistant(); show(0); });
+    var estimateText = function () {
+      if (!assist.quote) return "";
+      var q = assist.quote, out = ["", "— Assistant estimate (subject to change) —"];
+      q.lines.forEach(function (l) { out.push("• " + l.item + ": " + rand(l.min) + " – " + rand(l.max) + (l.monthly ? " / month" : "")); });
+      out.push("Once-off total: " + rand(q.total_min) + " – " + rand(q.total_max));
+      if (assist.summary) out.push("", "Assistant summary: " + assist.summary);
+      out.push("", "Conversation:");
+      assist.turns.forEach(function (t) { out.push((t.role === "user" ? "Client: " : "Assistant: ") + t.content.replace(/\s+/g, " ").slice(0, 600)); });
+      return out.join("\n");
+    };
+
     var check = function () {
       if (i === 0 && !picked("service").length) { say(msg, "Pick at least one — or choose “Not sure yet”.", "err"); return false; }
       if (i === 1 && !picked("budget").length) { say(msg, "Choose a budget range — “Not sure” is fine.", "err"); return false; }
@@ -213,6 +308,7 @@
       track("quote_start");
       lastFocus = document.activeElement;
       form.reset(); form.hidden = false; done.hidden = true; navRow.hidden = false; prog.hidden = false;
+      resetAssistant();
       modal.classList.add("is-open"); modal.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
       show(0);
@@ -236,7 +332,10 @@
         else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
       }
     });
-    back.addEventListener("click", function () { if (i > 0) show(i - 1); });
+    back.addEventListener("click", function () {
+      if (i > 0 && steps[i].classList.contains("step--assistant")) resetAssistant(); // answers may change
+      if (i > 0) show(i - 1);
+    });
     next.addEventListener("click", function () {
       if (!check()) return;
       if (i < steps.length - 1) { show(i + 1); return; }
@@ -251,12 +350,18 @@
         type: "quote",
         name: form.name.value.trim(), email: em.value, phone: ph.value,
         subject: "Quote — " + services.join(", ") + " · " + budget + " · " + timeline,
-        message: form.details.value.trim() || "(no extra details)",
+        message: (form.details.value.trim() || "(no extra details)") + estimateText(),
+        estimate_min: assist.quote ? assist.quote.total_min : null,
+        estimate_max: assist.quote ? assist.quote.total_max : null,
+        assistant_summary: assist.summary || "",
         services: services, budget: budget, timeline: timeline,
         page: location.href, submittedAt: new Date().toISOString()
       }).then(function () {
         track("generate_lead", { lead_type: "quote" });
-        showEstimate(services, budget, timeline);
+        var slot = $(".done__quote", done);
+        if (!slot) { slot = document.createElement("div"); slot.className = "done__quote"; done.insertBefore(slot, $(".estimate", done)); }
+        if (assist.quote) { $(".estimate", done).hidden = true; quoteCard(assist.quote, slot); }
+        else { slot.hidden = true; showEstimate(services, budget, timeline); }
         say(msg, "");
         form.hidden = true; navRow.hidden = true; prog.hidden = true; done.hidden = false;
         $("h3", done).focus();

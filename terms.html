@@ -35,9 +35,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Space+Mono:wght@400;700&display=swap">
-  <link rel="stylesheet" href="assets/v3/v3.css?v=41">
-  <link rel="stylesheet" href="assets/v3/case.css?v=41">
-  <link rel="stylesheet" href="assets/v3/pages.css?v=41">
+  <link rel="stylesheet" href="assets/v3/v3.css?v=42">
+  <link rel="stylesheet" href="assets/v3/case.css?v=42">
+  <link rel="stylesheet" href="assets/v3/pages.css?v=42">
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -358,8 +358,8 @@
       <button type="button" class="modal__close" data-q-close aria-label="Close">✕</button>
       <span class="eyebrow">Get an estimate</span>
       <h2 id="quote-title">Tell us about your project<span class="star" aria-hidden="true">°</span></h2>
-      <p class="modal__sub">Four quick steps. We reply within one business day.</p>
-      <div class="progress" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+      <p class="modal__sub">A few quick steps, then a fair estimate straight away.</p>
+      <div class="progress" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
 
       <form novalidate>
         <fieldset class="step">
@@ -398,6 +398,28 @@
             <label class="chip"><input type="radio" name="timeline" value="Flexible"><span>Flexible</span></label>
           </div>
         </fieldset>
+        <fieldset class="step step--assistant" hidden>
+          <legend>Let’s scope it together</legend>
+          <div class="assist">
+            <div class="assist__log" role="log" aria-live="polite"></div>
+            <div class="assist__quote" hidden></div>
+          </div>
+          <div class="assist__ask">
+            <label class="visually-hidden" for="assist-input">Your answer</label>
+            <textarea id="assist-input" rows="2" maxlength="1200" placeholder="Type your answer…"></textarea>
+            <button type="button" class="btn btn--dark" data-assist-send>Send</button>
+          </div>
+          <div class="assist__actions" hidden>
+            <button type="button" class="btn btn--accent" data-assist-accept>This works — continue <span class="arr">→</span></button>
+          </div>
+          <div class="assist__fallback" hidden>
+            <button type="button" class="btn btn--accent" data-assist-skip>Continue to contact details <span class="arr">→</span></button>
+          </div>
+          <div class="assist__restart" hidden>
+            <button type="button" class="btn btn--ghost" data-assist-restart>Start again with a different scope</button>
+          </div>
+          <p class="assist__note">Our assistant estimates from our price list. Any estimate is subject to change once we’ve reviewed your project.</p>
+        </fieldset>
         <fieldset class="step" hidden>
           <legend>Where should we send your estimate?</legend>
           <div class="fields">
@@ -432,6 +454,6 @@
   <div class="pblur" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 
   <script src="assets/v3/universe.js?v=4"></script>
-  <script src="assets/v3/site.js?v=41"></script>
+  <script src="assets/v3/site.js?v=42"></script>
 </body>
 </html>
