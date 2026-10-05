@@ -408,6 +408,8 @@ p { margin: 0; }
 .estimate__lines div { display: flex; justify-content: space-between; gap: 16px; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
 .estimate__lines dt { color: var(--ink); }
 .estimate__lines dd { margin: 0; color: var(--ink-2); text-align: right; }
+.estimate__gets { display: block; margin-top: 4px; font-size: 13px; line-height: 1.45; color: var(--muted); }
+.estimate__lines dd { white-space: nowrap; }
 .estimate__meta dt, .estimate__meta dd { color: var(--muted); }
 .estimate__total { border-bottom: 0 !important; font-weight: 600; }
 .estimate__total dt, .estimate__total dd { color: var(--brand); }

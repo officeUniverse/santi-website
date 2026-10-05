@@ -166,7 +166,8 @@
     var picked = function (name) { return $$('input[name="' + name + '"]:checked', form).map(function (x) { return x.value; }); };
     // Budget step follows the services picked: ranges that top out at or below the combined
     // starting price are hidden. Add a service's starting price (in rand) to SERVICE_MIN.
-    var SERVICE_MIN = { "Website": 5000 };
+    var SERVICE_MIN = { "Website": 4500, "Brand identity": 2950, "Graphic design": 650, "AI solution": 7500,
+      "AEO": 2950, "Hosting": 299, "WordPress plugin": 6500 }; // keep in step with PRICE_LIST in the n8n assistant
     var BUDGET_MAX = { "Under R5k": 5000, "R5k–R15k": 15000, "R15k–R30k": 30000, "R30k–R60k": 60000,
       "R60k–R100k": 100000, "R100k–R250k": 250000, "R250k+": Infinity };
     var rand = function (n) { return "R" + n.toLocaleString("en-ZA"); };
@@ -224,16 +225,17 @@
       var box = document.createElement("div"); box.className = "estimate";
       var h = document.createElement("h4"); h.textContent = "Your estimate"; box.appendChild(h);
       var dl = document.createElement("dl"); dl.className = "estimate__lines"; box.appendChild(dl);
-      var row = function (k, v, cls) {
+      var row = function (k, v, cls, gets) {
         var d = document.createElement("div"); if (cls) d.className = cls;
         var dt = document.createElement("dt"); dt.textContent = k;
+        if (gets) { var g = document.createElement("span"); g.className = "estimate__gets"; g.textContent = "You get: " + gets; dt.appendChild(g); }
         var dd = document.createElement("dd"); dd.textContent = v;
         d.appendChild(dt); d.appendChild(dd); dl.appendChild(d);
       };
       var range = function (a, b) { return a === b ? rand(a) : rand(a) + " – " + rand(b); };
-      q.lines.filter(function (l) { return !l.monthly; }).forEach(function (l) { row(l.item, range(l.min, l.max)); });
+      q.lines.filter(function (l) { return !l.monthly; }).forEach(function (l) { row(l.item, range(l.min, l.max), "", l.includes); });
       if (q.total_max) row("Once-off total", range(q.total_min, q.total_max), "estimate__total");
-      q.lines.filter(function (l) { return l.monthly; }).forEach(function (l) { row(l.item, range(l.min, l.max) + " / month", "estimate__meta"); });
+      q.lines.filter(function (l) { return l.monthly; }).forEach(function (l) { row(l.item, range(l.min, l.max) + " / month", "estimate__meta", l.includes); });
       var p = document.createElement("p"); p.className = "estimate__note";
       p.textContent = note || "Estimate only — subject to change once we’ve reviewed your project.";
       box.appendChild(p); intoEl.appendChild(box); intoEl.hidden = false;
@@ -289,7 +291,7 @@
     var estimateText = function () {
       if (!assist.quote) return "";
       var q = assist.quote, out = ["", "— Assistant estimate (subject to change) —"];
-      q.lines.forEach(function (l) { out.push("• " + l.item + ": " + rand(l.min) + " – " + rand(l.max) + (l.monthly ? " / month" : "")); });
+      q.lines.forEach(function (l) { out.push("• " + l.item + ": " + rand(l.min) + " – " + rand(l.max) + (l.monthly ? " / month" : "") + (l.includes ? " (includes " + l.includes + ")" : "")); });
       out.push("Once-off total: " + rand(q.total_min) + " – " + rand(q.total_max));
       if (assist.summary) out.push("", "Assistant summary: " + assist.summary);
       out.push("", "Conversation:");
