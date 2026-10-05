@@ -167,9 +167,9 @@
     // Budget step follows the services picked: ranges that top out at or below the combined
     // starting price are hidden. Add a service's starting price (in rand) to SERVICE_MIN.
     // Once-off starting prices; keep in step with PRICE_LIST in the n8n assistant (monthly items left out on purpose)
-    var SERVICE_MIN = { "Website": 4500, "Online store": 17500, "Website copywriting": 1500, "Bookings or payments": 3000,
-      "Logo": 1500, "Brand identity": 9500, "Stationery / social kit": 2000, "Graphic design": 750, "Company profile": 3800,
-      "AI solution": 7500, "AEO": 2950, "WordPress plugin": 6500 };
+    var SERVICE_MIN = { "Website": 3600, "Online store": 14000, "Website copywriting": 1200, "Bookings or payments": 2400,
+      "Logo": 1200, "Brand identity": 7600, "Stationery / social kit": 1600, "Graphic design": 600, "Company profile": 3000,
+      "AI solution": 6000, "AEO": 2400, "WordPress plugin": 5200 };
     var BUDGET_MAX = { "Under R5k": 5000, "R5k–R15k": 15000, "R15k–R30k": 30000, "R30k–R60k": 60000,
       "R60k–R100k": 100000, "R100k–R250k": 250000, "R250k+": Infinity };
     var rand = function (n) { return "R" + n.toLocaleString("en-ZA"); };
