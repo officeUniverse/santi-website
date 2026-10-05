@@ -148,7 +148,7 @@
     var form = $("form", modal), steps = $$(".step", modal), bars = $$(".progress span", modal);
     var back = $("[data-q-back]", modal), next = $("[data-q-next]", modal), msg = $(".form-msg", modal);
     var done = $(".done", modal), navRow = $(".modal__nav", modal), prog = $(".progress", modal);
-    var i = 0, lastFocus = null;
+    var i = 0, lastFocus = null, card = $(".modal__card", modal);
 
     var show = function (n) {
       i = n;
@@ -158,6 +158,7 @@
       back.disabled = i === 0;
       var onAssist = steps[i].classList.contains("step--assistant");
       next.hidden = onAssist && !canGo();
+      card.classList.toggle("is-chat", onAssist); // chat scrolls on its own; answer box and buttons stay put
       next.innerHTML = i === steps.length - 1 ? 'Send request <span class="arr">→</span>' : 'Next <span class="arr">→</span>';
       say(msg, "");
       if (onAssist && !assist.started) startAssistant();
