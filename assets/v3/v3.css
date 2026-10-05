@@ -410,6 +410,10 @@ p { margin: 0; }
 .estimate__lines dd { margin: 0; color: var(--ink-2); text-align: right; }
 .estimate__gets { display: block; margin-top: 4px; font-size: 13px; line-height: 1.45; color: var(--muted); }
 .estimate__lines dd { white-space: nowrap; }
+.estimate__lines dt { flex: 1; }
+.estimate__rm { flex: none; align-self: flex-start; width: 30px; height: 30px; margin: -4px -6px 0 -6px; border: 0; border-radius: 50%; background: transparent; color: var(--muted); font: 20px/1 var(--sans); cursor: pointer; }
+.estimate__rm:hover { background: var(--line); color: var(--ink); }
+.estimate__rm:focus-visible { outline: 2px solid var(--brand); outline-offset: 1px; }
 .estimate__meta dt, .estimate__meta dd { color: var(--muted); }
 .estimate__total { border-bottom: 0 !important; font-weight: 600; }
 .estimate__total dt, .estimate__total dd { color: var(--brand); }
@@ -426,8 +430,7 @@ p { margin: 0; }
 .assist__ask { display: flex; gap: 8px; align-items: flex-end; margin-top: 14px; }
 .assist__ask textarea { flex: 1; min-width: 0; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: #fff; color: var(--ink); font: 16px var(--sans); resize: vertical; }
 .assist__ask textarea:focus { outline: 2px solid var(--brand); outline-offset: 0; border-color: transparent; }
-.assist__actions, .assist__fallback, .assist__restart { margin-top: 14px; }
-.assist__actions[hidden], .assist__fallback[hidden], .assist__restart[hidden], .assist__ask[hidden], .assist__quote[hidden] { display: none; }
+.assist__ask[hidden], .assist__quote[hidden] { display: none; }
 .assist__note { margin-top: 12px; font-size: 12px; color: var(--muted); }
 .done__quote { margin: 22px auto 0; max-width: 440px; text-align: left; }
 .done__quote[hidden] { display: none; }

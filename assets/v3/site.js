@@ -157,7 +157,7 @@
       bars.forEach(function (b, k) { b.classList.toggle("is-on", k <= i); });
       back.disabled = i === 0;
       var onAssist = steps[i].classList.contains("step--assistant");
-      next.hidden = onAssist;
+      next.hidden = onAssist && !canGo();
       next.innerHTML = i === steps.length - 1 ? 'Send request <span class="arr">→</span>' : 'Next <span class="arr">→</span>';
       say(msg, "");
       if (onAssist && !assist.started) startAssistant();
@@ -208,13 +208,15 @@
         hint.textContent = min ? "For what you picked, projects start from " + rand(min) + "." : "";
       }
     };
-    /* ---- project assistant (n8n + Claude): asks scoping questions, then quotes or explains the budget ---- */
+    /* ---- project assistant (n8n + Claude): asks scoping questions, then quotes and coaches on budget ---- */
     var ASSIST_URL = "https://n8n.santi.co.za/webhook/santi-project-assistant";
     var aStep = $(".step--assistant", form);
-    var assist = { started: false, turns: [], status: null, quote: null, summary: "", busy: false };
+    var assist = { started: false, turns: [], status: null, quote: null, summary: "", busy: false, failed: false, removed: [], conv: "" };
     var aLog = $(".assist__log", aStep), aQuote = $(".assist__quote", aStep), aAsk = $(".assist__ask", aStep);
     var aInput = $("#assist-input", aStep), aSend = $("[data-assist-send]", aStep);
-    var aActions = $(".assist__actions", aStep), aFallback = $(".assist__fallback", aStep), aRestart = $(".assist__restart", aStep);
+    // Next shows once there is an estimate to send, or the assistant is unavailable
+    var canGo = function () { return assist.failed || !!(assist.quote && assist.quote.lines.length); };
+    var syncNext = function () { if (steps[i] === aStep) next.hidden = !canGo(); };
     var bubble = function (who, text, extra) {
       var b = document.createElement("div");
       b.className = "assist__msg assist__msg--" + who + (extra ? " " + extra : "");
@@ -224,30 +226,50 @@
       b.scrollIntoView({ block: who === "bot" ? "start" : "nearest", behavior: reduce ? "auto" : "smooth" });
       return b;
     };
-    var quoteCard = function (q, intoEl, note) {
+    var quoteCard = function (q, intoEl, note, onRemove) {
       intoEl.textContent = "";
       var box = document.createElement("div"); box.className = "estimate";
       var h = document.createElement("h4"); h.textContent = "Your estimate"; box.appendChild(h);
       var dl = document.createElement("dl"); dl.className = "estimate__lines"; box.appendChild(dl);
-      var row = function (k, v, cls, gets) {
+      var row = function (k, v, cls, gets, line) {
         var d = document.createElement("div"); if (cls) d.className = cls;
         var dt = document.createElement("dt"); dt.textContent = k;
         if (gets) { var g = document.createElement("span"); g.className = "estimate__gets"; g.textContent = "You get: " + gets; dt.appendChild(g); }
         var dd = document.createElement("dd"); dd.textContent = v;
-        d.appendChild(dt); d.appendChild(dd); dl.appendChild(d);
+        d.appendChild(dt); d.appendChild(dd);
+        if (line && onRemove) {
+          var x = document.createElement("button"); x.type = "button"; x.className = "estimate__rm";
+          x.setAttribute("aria-label", "Remove " + k); x.title = "Remove"; x.textContent = "×";
+          x.addEventListener("click", function () { onRemove(line); });
+          d.appendChild(x);
+        }
+        dl.appendChild(d);
       };
       var range = function (a, b) { return a === b ? rand(a) : rand(a) + " – " + rand(b); };
-      q.lines.filter(function (l) { return !l.monthly; }).forEach(function (l) { row(l.item, range(l.min, l.max), "", l.includes); });
+      q.lines.filter(function (l) { return !l.monthly; }).forEach(function (l) { row(l.item, range(l.min, l.max), "", l.includes, l); });
       if (q.total_max) row("Once-off total", range(q.total_min, q.total_max), "estimate__total");
-      q.lines.filter(function (l) { return l.monthly; }).forEach(function (l) { row(l.item, range(l.min, l.max) + " / month", "estimate__meta", l.includes); });
+      q.lines.filter(function (l) { return l.monthly; }).forEach(function (l) { row(l.item, range(l.min, l.max) + " / month", "estimate__meta", l.includes, l); });
       var p = document.createElement("p"); p.className = "estimate__note";
       p.textContent = note || "Estimate only — subject to change once we’ve reviewed your project.";
       box.appendChild(p); intoEl.appendChild(box); intoEl.hidden = false;
     };
+    var sum = function (ls, monthly, k) { return ls.filter(function (l) { return l.monthly === monthly; }).reduce(function (s, l) { return s + l[k]; }, 0); };
+    // the visitor drops a line: totals recompute here, and the assistant is told on the next message
+    var removeLine = function (line) {
+      var q = assist.quote;
+      q.lines = q.lines.filter(function (l) { return l !== line; });
+      q.total_min = sum(q.lines, false, "min"); q.total_max = sum(q.lines, false, "max");
+      assist.removed.push(line.item);
+      track("assistant_remove");
+      if (q.lines.length) quoteCard(q, aQuote, null, removeLine);
+      else { assist.quote = null; aQuote.hidden = true; aQuote.textContent = ""; }
+      syncNext();
+    };
     var resetAssistant = function () {
       assist.started = false; assist.turns = []; assist.status = null; assist.quote = null; assist.summary = ""; assist.busy = false;
+      assist.failed = false; assist.removed = []; assist.conv = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
       aLog.textContent = ""; aQuote.hidden = true; aQuote.textContent = "";
-      aAsk.hidden = false; aActions.hidden = true; aFallback.hidden = true; aRestart.hidden = true; aInput.value = "";
+      aAsk.hidden = false; aInput.value = ""; aInput.placeholder = "Type your answer…";
     };
     var askAssistant = function () {
       if (assist.busy) return;
@@ -257,27 +279,26 @@
       var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 45000);
       fetch(ASSIST_URL, {
         method: "POST", headers: { "Content-Type": "application/json" }, signal: ctrl ? ctrl.signal : undefined,
-        body: JSON.stringify({ services: picked("service"), budget: picked("budget")[0], timeline: picked("timeline")[0], page: location.href, turns: assist.turns })
+        body: JSON.stringify({ services: picked("service"), budget: picked("budget")[0], timeline: picked("timeline")[0], page: location.href, turns: assist.turns,
+          conv: assist.conv, removed: assist.removed, estimate: assist.quote ? assist.quote.lines.map(function (l) { return l.item; }) : [] })
       }).then(function (r) { return r.json(); }).then(function (res) {
         thinking.remove();
         if (!res || typeof res.reply !== "string") throw new Error("bad reply");
         bubble("bot", res.reply);
-        if (!res.ok) { aAsk.hidden = true; aFallback.hidden = false; return; }
+        if (!res.ok) { aAsk.hidden = true; assist.failed = true; return; }
         assist.turns.push({ role: "assistant", content: res.reply });
         assist.status = res.status; assist.summary = res.summary || "";
         track("assistant_reply", { status: res.status });
         if (res.status === "quoted" && res.quote) {
-          assist.quote = res.quote; quoteCard(res.quote, aQuote); aActions.hidden = false;
-          aInput.placeholder = "Questions about the estimate? Ask here…";
-        } else if (res.status === "not_ready") {
-          assist.quote = null; aAsk.hidden = true; aActions.hidden = true; aRestart.hidden = false;
+          assist.quote = res.quote; quoteCard(res.quote, aQuote, null, removeLine);
+          aInput.placeholder = "Add something, or ask about the estimate…";
         }
       }).catch(function () {
         thinking.remove();
         bubble("bot", "Sorry, the assistant isn’t available right now. You can still send us your details and we’ll reply within one business day.");
-        aAsk.hidden = true; aFallback.hidden = false;
+        aAsk.hidden = true; assist.failed = true;
       }).then(function () {
-        clearTimeout(timer); assist.busy = false; aSend.disabled = false; aInput.disabled = false;
+        clearTimeout(timer); assist.busy = false; aSend.disabled = false; aInput.disabled = false; syncNext();
         if (!aAsk.hidden) aInput.focus({ preventScroll: true });
       });
     };
@@ -289,9 +310,6 @@
       askAssistant();
     });
     aInput.addEventListener("keydown", function (e) { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); aSend.click(); } });
-    $("[data-assist-accept]", aStep).addEventListener("click", function () { track("assistant_accept"); show(i + 1); });
-    $("[data-assist-skip]", aStep).addEventListener("click", function () { show(i + 1); });
-    $("[data-assist-restart]", aStep).addEventListener("click", function () { resetAssistant(); show(0); });
     var estimateText = function () {
       if (!assist.quote) return "";
       var q = assist.quote, out = ["", "— Assistant estimate (subject to change) —"];
@@ -344,6 +362,7 @@
     });
     next.addEventListener("click", function () {
       if (!check()) return;
+      if (steps[i] === aStep && assist.quote) track("assistant_accept");
       if (i < steps.length - 1) { show(i + 1); return; }
       var em = validateEmail(form.email.value, { businessOnly: false });
       if (!form.name.value.trim()) { say(msg, "Please tell us your name.", "err"); form.name.focus(); return; }
