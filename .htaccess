@@ -13,9 +13,11 @@ DirectoryIndex index.html
   </IfModule>
 </FilesMatch>
 
-# Make sure the WordPress front-controller rewrite is OFF for this site
+# Map the links directory without a front-controller or catch-all rewrite.
 <IfModule mod_rewrite.c>
-  RewriteEngine Off
+  RewriteEngine On
+  RewriteRule ^links/$ /links [R=301,L]
+  RewriteRule ^links$ links.html [L]
 </IfModule>
 
 # Retired pages

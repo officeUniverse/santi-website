@@ -1,0 +1,83 @@
+<!--meta
+{
+  "file": "links.html",
+  "canonical": "links",
+  "title": "Links | Santi Universe",
+  "description": "Quick links to Santi Universe websites and tools.",
+  "robots": "noindex, nofollow",
+  "referrer": "no-referrer"
+}
+-->
+    <style>
+      /* Internal: kept out of search, the sitemap and the menu. Same frame as the client pages. */
+      .link-directory { padding: clamp(110px, 11vw, 140px) calc(max(0px, (100% - 60rem) / 2 - var(--gutter)) + var(--pad))
+              clamp(48px, 7vw, 88px); }
+      .link-directory h1 { margin: .6rem 0 1rem; font-size: clamp(2.2rem, 5vw, 3.6rem); letter-spacing: -0.04em; }
+      .link-directory__lead { color: var(--night-muted); max-width: 44rem; margin: 0 0 2rem; }
+      .link-directory__grid { display: grid; gap: 1rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .link-directory__group { min-width: 0; padding: clamp(12px, 2vw, 20px); border: 1px solid var(--night-line);
+                    border-radius: var(--radius-sm); background: rgba(255,255,255,.04); }
+      .link-directory__group h2 { margin: 0 0 .5rem; padding-inline: .55rem; font-size: 1.25rem; }
+      .link-directory__links { list-style: none; margin: 0; padding: 0; }
+      .link-directory__links li + li { border-top: 1px solid var(--night-line); }
+      .link-directory__links a { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center;
+                      gap: .6rem; padding: .55rem; border-radius: 8px; font-size: .97rem; }
+      .link-directory__links a:hover { background: rgba(255,255,255,.09); }
+      .link-directory__links a > span[aria-hidden] { color: var(--gold); }
+      .link-directory__address { display: block; color: var(--night-muted); font: .72rem/1.5 var(--mono);
+                      overflow-wrap: anywhere; }
+      @media (max-width: 720px) { .link-directory__grid { grid-template-columns: minmax(0, 1fr); } }
+    </style>
+    <section class="frame frame--dark frame--hero on-dark link-directory" aria-labelledby="links-heading">
+      <span class="eyebrow">Santi Universe</span>
+      <h1 id="links-heading">Links</h1>
+      <p class="link-directory__lead">Each link opens in a new tab.</p>
+
+      <div class="link-directory__grid">
+        <section class="link-directory__group" aria-labelledby="links-public">
+          <h2 id="links-public">Public sites</h2>
+          <ul class="link-directory__links">
+            <li><a href="https://santi.co.za" target="_blank" rel="noopener noreferrer"><span>Santi Universe<span class="link-directory__address">santi.co.za</span></span><span aria-hidden="true">↗</span></a></li>
+            <li><a href="https://www.santi.co.za" target="_blank" rel="noopener noreferrer"><span>Santi Universe (www)<span class="link-directory__address">www.santi.co.za</span></span><span aria-hidden="true">↗</span></a></li>
+            <li><a href="https://santiu.co.za" target="_blank" rel="noopener noreferrer"><span>Santi Universe (alternate domain)<span class="link-directory__address">santiu.co.za</span></span><span aria-hidden="true">↗</span></a></li>
+            <li><a href="https://santi.co.za/films" target="_blank" rel="noopener noreferrer"><span>Films on santi.co.za<span class="link-directory__address">santi.co.za/films</span></span><span aria-hidden="true">↗</span></a></li>
+            <li><a href="https://santiu.co.za/films" target="_blank" rel="noopener noreferrer"><span>Films on santiu.co.za<span class="link-directory__address">santiu.co.za/films</span></span><span aria-hidden="true">↗</span></a></li>
+            <li><a href="https://films.santiu.co.za" target="_blank" rel="noopener noreferrer"><span>Films site<span class="link-directory__address">films.santiu.co.za</span></span><span aria-hidden="true">↗</span></a></li>
+            <li><a href="https://summitav.santiu.co.za" target="_blank" rel="noopener noreferrer"><span>Summit AV<span class="link-directory__address">summitav.santiu.co.za</span></span><span aria-hidden="true">↗</span></a></li>
+          </ul>
+        </section>
+
+        <section class="link-directory__group" aria-labelledby="links-pages">
+          <h2 id="links-pages">Website pages</h2>
+          <ul class="link-directory__links">
+            <li><a href="https://santi.co.za/privacy" target="_blank" rel="noopener noreferrer"><span>Privacy policy<span class="link-directory__address">santi.co.za/privacy</span></span><span aria-hidden="true">↗</span></a></li>
+            <li><a href="https://santi.co.za/aeo.html" target="_blank" rel="noopener noreferrer"><span>AEO checker<span class="link-directory__address">santi.co.za/aeo.html</span></span><span aria-hidden="true">↗</span></a></li>
+            <li><a href="https://santi.co.za/account.html" target="_blank" rel="noopener noreferrer"><span>Client account<span class="link-directory__address">santi.co.za/account.html</span></span><span aria-hidden="true">↗</span></a></li>
+            <li><a href="https://santi.co.za/project-algafusion.html" target="_blank" rel="noopener noreferrer"><span>AlgaFusion case study<span class="link-directory__address">santi.co.za/project-algafusion.html</span></span><span aria-hidden="true">↗</span></a></li>
+            <li><a href="https://santi.co.za/project-latroforce.html" target="_blank" rel="noopener noreferrer"><span>Latroforce case study<span class="link-directory__address">santi.co.za/project-latroforce.html</span></span><span aria-hidden="true">↗</span></a></li>
+          </ul>
+        </section>
+
+        <section class="link-directory__group" aria-labelledby="links-office">
+          <h2 id="links-office">Office and hosting</h2>
+          <ul class="link-directory__links">
+            <li><a href="https://office.santiu.co.za" target="_blank" rel="noopener noreferrer"><span>ERPNext office<span class="link-directory__address">office.santiu.co.za</span></span><span aria-hidden="true">↗</span></a></li>
+            <li><a href="https://office.santiu.co.za/app/lead" target="_blank" rel="noopener noreferrer"><span>CRM leads<span class="link-directory__address">office.santiu.co.za/app/lead</span></span><span aria-hidden="true">↗</span></a></li>
+            <li><a href="https://drop.santi.co.za" target="_blank" rel="noopener noreferrer"><span>Santi Drop<span class="link-directory__address">drop.santi.co.za</span></span><span aria-hidden="true">↗</span></a></li>
+            <li><a href="https://santi.co.za/spanel/login" target="_blank" rel="noopener noreferrer"><span>SPanel sign-in<span class="link-directory__address">santi.co.za/spanel/login</span></span><span aria-hidden="true">↗</span></a></li>
+          </ul>
+        </section>
+
+        <section class="link-directory__group" aria-labelledby="links-tools">
+          <h2 id="links-tools">Floor and Go</h2>
+          <ul class="link-directory__links">
+            <li><a href="https://floor.santiu.co.za" target="_blank" rel="noopener noreferrer"><span>Floor<span class="link-directory__address">floor.santiu.co.za</span></span><span aria-hidden="true">↗</span></a></li>
+            <li><a href="https://floor.santiu.co.za/voice" target="_blank" rel="noopener noreferrer"><span>Floor voice<span class="link-directory__address">floor.santiu.co.za/voice</span></span><span aria-hidden="true">↗</span></a></li>
+            <li><a href="https://floor.santiu.co.za/api/state?since=0" target="_blank" rel="noopener noreferrer"><span>Floor state API<span class="link-directory__address">floor.santiu.co.za/api/state?since=0</span></span><span aria-hidden="true">↗</span></a></li>
+            <li><a href="https://go.santiu.co.za" target="_blank" rel="noopener noreferrer"><span>Go<span class="link-directory__address">go.santiu.co.za</span></span><span aria-hidden="true">↗</span></a></li>
+            <li><a href="https://go.santiu.co.za/demo/" target="_blank" rel="noopener noreferrer"><span>Go demo<span class="link-directory__address">go.santiu.co.za/demo/</span></span><span aria-hidden="true">↗</span></a></li>
+            <li><a href="https://go.santiu.co.za/admin/" target="_blank" rel="noopener noreferrer"><span>Go admin<span class="link-directory__address">go.santiu.co.za/admin/</span></span><span aria-hidden="true">↗</span></a></li>
+          </ul>
+        </section>
+      </div>
+    </section>

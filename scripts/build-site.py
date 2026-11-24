@@ -13,7 +13,7 @@ tags, which is what scripts/sync-case-studies.py reads.
 A page fragment starts with a JSON meta comment, then the <main> content:
     <!--meta {"file": "about.html", "title": "...", "description": "...", "crumb": "About"} -->
 Optional meta: "current" (menu href to highlight, default = file), "scripts" (extra JS),
-"robots", "referrer". The marker <!-- cards:N --> inserts the first N case-study cards.
+"robots", "referrer", "canonical" (site-relative path). The marker <!-- cards:N --> inserts the first N case-study cards.
 """
 from html import escape
 from pathlib import Path
@@ -349,7 +349,7 @@ def render_page(src, projects):
     meta, body = json.loads(m.group(1)), raw[m.end():]
     body = re.sub(r"<!-- cards:(\d+) -->", lambda c: cards_html(projects[:int(c.group(1))]), body)
     f = meta["file"]
-    url = SITE + f
+    url = SITE + meta.get("canonical", f)
     schemas = [ORG] + ([crumbs((meta["crumb"], url))] if meta.get("crumb") else [])
     if meta.get("faq"):  # visible <details class="faq__item"> Q&As -> FAQPage data AI search can quote
         qa = re.findall(r'<details class="faq__item[^"]*">\s*<summary>(.*?)</summary>\s*<div class="faq__a">(.*?)</div>', body, re.S)
